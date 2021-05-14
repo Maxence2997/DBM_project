@@ -45,6 +45,11 @@ public class Progect_test {
 	//private JLabel label_empID;
 	
 	private JTextField field_empID;
+	private JTable table;
+	private JTextField text_orderID;
+	private JTextField textField;
+	private JTextField text_date;
+	private JTextField textField_1;
 	/*private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;*/
@@ -248,7 +253,83 @@ public class Progect_test {
 			inq_panel = new JPanel();
 			inq_panel.setBounds(0, 0, 666, 348);
 			order_container_panel.add(inq_panel);
-			inq_panel.setLayout(null);
+			inq_panel.setLayout(new FormLayout(new ColumnSpec[] {
+					FormSpecs.RELATED_GAP_COLSPEC,
+					FormSpecs.DEFAULT_COLSPEC,
+					FormSpecs.RELATED_GAP_COLSPEC,
+					ColumnSpec.decode("default:grow"),
+					ColumnSpec.decode("max(47dlu;default)"),
+					FormSpecs.RELATED_GAP_COLSPEC,
+					ColumnSpec.decode("max(36dlu;default):grow"),
+					ColumnSpec.decode("default:grow"),
+					FormSpecs.DEFAULT_COLSPEC,
+					FormSpecs.RELATED_GAP_COLSPEC,
+					FormSpecs.DEFAULT_COLSPEC,
+					FormSpecs.RELATED_GAP_COLSPEC,
+					FormSpecs.DEFAULT_COLSPEC,
+					FormSpecs.RELATED_GAP_COLSPEC,
+					FormSpecs.DEFAULT_COLSPEC,
+					ColumnSpec.decode("default:grow"),
+					FormSpecs.RELATED_GAP_COLSPEC,
+					ColumnSpec.decode("default:grow"),
+					FormSpecs.DEFAULT_COLSPEC,
+					FormSpecs.RELATED_GAP_COLSPEC,
+					FormSpecs.DEFAULT_COLSPEC,
+					FormSpecs.RELATED_GAP_COLSPEC,
+					FormSpecs.DEFAULT_COLSPEC,
+					FormSpecs.RELATED_GAP_COLSPEC,
+					FormSpecs.DEFAULT_COLSPEC,
+					FormSpecs.RELATED_GAP_COLSPEC,
+					FormSpecs.DEFAULT_COLSPEC,
+					FormSpecs.RELATED_GAP_COLSPEC,
+					FormSpecs.DEFAULT_COLSPEC,
+					FormSpecs.RELATED_GAP_COLSPEC,
+					FormSpecs.DEFAULT_COLSPEC,
+					FormSpecs.RELATED_GAP_COLSPEC,
+					FormSpecs.DEFAULT_COLSPEC,},
+				new RowSpec[] {
+					FormSpecs.RELATED_GAP_ROWSPEC,
+					FormSpecs.DEFAULT_ROWSPEC,
+					FormSpecs.RELATED_GAP_ROWSPEC,
+					FormSpecs.DEFAULT_ROWSPEC,
+					FormSpecs.RELATED_GAP_ROWSPEC,
+					FormSpecs.DEFAULT_ROWSPEC,
+					FormSpecs.RELATED_GAP_ROWSPEC,
+					RowSpec.decode("default:grow"),}));
+			
+			JLabel lbl_orderID = new JLabel("Order ID :");
+			inq_panel.add(lbl_orderID, "4, 2, 3, 1, right, default");
+			
+			text_orderID = new JTextField();
+			inq_panel.add(text_orderID, "7, 2, 5, 1, fill, default");
+			text_orderID.setColumns(10);
+			
+			JLabel lbl_date = new JLabel("Order Date :");
+			inq_panel.add(lbl_date, "15, 2, right, default");
+			
+			text_date = new JTextField();
+			inq_panel.add(text_date, "16, 2, 8, 1, fill, default");
+			text_date.setColumns(10);
+			
+			JLabel lbl_empID = new JLabel("Employee ID :");
+			inq_panel.add(lbl_empID, "4, 4, 3, 1, right, default");
+			
+			textField = new JTextField();
+			inq_panel.add(textField, "7, 4, 5, 1, fill, default");
+			textField.setColumns(10);
+			
+			JLabel lbl_product = new JLabel("Product Module :");
+			inq_panel.add(lbl_product, "15, 4");
+			
+			textField_1 = new JTextField();
+			inq_panel.add(textField_1, "16, 4, 8, 1, fill, default");
+			textField_1.setColumns(10);
+			
+			JLabel lbl_note = new JLabel("Note : To inquire orders, at least one of Order ID and Employee ID must be filled in  ");
+			inq_panel.add(lbl_note, "5, 6, 23, 1");
+			
+			table = new JTable();
+			inq_panel.add(table, "3, 8, 30, 1, fill, fill");
 			order_core_panels();
 			
 		}
