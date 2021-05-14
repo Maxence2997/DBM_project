@@ -38,6 +38,7 @@ public class Progect_test {
 	private JPanel container_panel;
 	private JPanel order_container_panel;
 	private JPanel inq_panel;
+	private JPanel mod_panel;
 	
 	private CardLayout card_layout;
 	private CardLayout cl_home;
@@ -46,13 +47,7 @@ public class Progect_test {
 	
 	private JTextField field_empID;
 	private JTable table;
-	private JTextField text_orderID;
-	private JTextField textField;
-	private JTextField text_date;
-	private JTextField textField_1;
-	/*private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;*/
+	
 	
 	
 	
@@ -214,6 +209,11 @@ public class Progect_test {
 			core_home_panel.setLayout(null);
 			
 			JButton btn_order = new JButton("Order");
+			btn_order.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					cl_home.show(container_panel, "order");
+				}
+			});
 			btn_order.setBounds(91, 95, 103, 29);
 			core_home_panel.add(btn_order);
 			
@@ -240,6 +240,8 @@ public class Progect_test {
 		}
 		
 		private void order_panels() {
+			
+			
 			core_order_panel = new JPanel();
 			container_panel.add(core_order_panel,"order");
 			core_order_panel.setLayout(null);
@@ -250,39 +252,70 @@ public class Progect_test {
 			core_order_panel.add(order_container_panel);
 			order_container_panel.setLayout(null);
 			
-			inq_panel = new JPanel();
+			
+			//default panel - Inquire order
+			/*inq_panel = new JPanel();
 			inq_panel.setBounds(0, 0, 666, 348);
-			order_container_panel.add(inq_panel);
-			inq_panel.setLayout(new FormLayout(new ColumnSpec[] {
-					FormSpecs.RELATED_GAP_COLSPEC,
-					FormSpecs.DEFAULT_COLSPEC,
-					FormSpecs.RELATED_GAP_COLSPEC,
-					ColumnSpec.decode("default:grow"),
-					ColumnSpec.decode("max(47dlu;default)"),
-					FormSpecs.RELATED_GAP_COLSPEC,
-					ColumnSpec.decode("max(36dlu;default):grow"),
-					ColumnSpec.decode("default:grow"),
-					FormSpecs.DEFAULT_COLSPEC,
-					FormSpecs.RELATED_GAP_COLSPEC,
-					FormSpecs.DEFAULT_COLSPEC,
-					FormSpecs.RELATED_GAP_COLSPEC,
-					FormSpecs.DEFAULT_COLSPEC,
-					FormSpecs.RELATED_GAP_COLSPEC,
-					FormSpecs.DEFAULT_COLSPEC,
-					ColumnSpec.decode("default:grow"),
-					FormSpecs.RELATED_GAP_COLSPEC,
-					ColumnSpec.decode("default:grow"),
-					FormSpecs.DEFAULT_COLSPEC,
-					FormSpecs.RELATED_GAP_COLSPEC,
-					FormSpecs.DEFAULT_COLSPEC,
-					FormSpecs.RELATED_GAP_COLSPEC,
-					FormSpecs.DEFAULT_COLSPEC,
-					FormSpecs.RELATED_GAP_COLSPEC,
-					FormSpecs.DEFAULT_COLSPEC,
-					FormSpecs.RELATED_GAP_COLSPEC,
-					FormSpecs.DEFAULT_COLSPEC,
-					FormSpecs.RELATED_GAP_COLSPEC,
-					FormSpecs.DEFAULT_COLSPEC,
+			order_container_panel.add(inq_panel, "inquire");
+			inq_panel.setLayout(null);
+			
+			JLabel lbl_orderID = new JLabel("Order ID :");
+			lbl_orderID.setBounds(75, 11, 61, 16);
+			inq_panel.add(lbl_orderID);
+			
+			JTextField text_orderID = new JTextField();
+			text_orderID.setBounds(136, 6, 141, 26);
+			inq_panel.add(text_orderID);
+			text_orderID.setColumns(10);
+			
+			JLabel lbl_date = new JLabel("Order Date :");
+			lbl_date.setBounds(340, 11, 76, 16);
+			inq_panel.add(lbl_date);
+			
+			JTextField text_date = new JTextField();
+			text_date.setBounds(416, 6, 105, 26);
+			inq_panel.add(text_date);
+			text_date.setColumns(10);
+			
+			JButton btn_inquire = new JButton("Inquire");
+			btn_inquire.setBounds(554, 5, 87, 29);
+			inq_panel.add(btn_inquire);
+			
+			JLabel lbl_empID = new JLabel("Employee ID :");
+			lbl_empID.setBounds(50, 45, 86, 16);
+			inq_panel.add(lbl_empID);
+			
+			JTextField textField = new JTextField();
+			textField.setBounds(136, 40, 141, 26);
+			inq_panel.add(textField);
+			textField.setColumns(10);
+			
+			JLabel lbl_product = new JLabel("Product Module :");
+			lbl_product.setBounds(310, 45, 106, 16);
+			inq_panel.add(lbl_product);
+			
+			JTextField textField_1 = new JTextField();
+			textField_1.setBounds(416, 40, 105, 26);
+			inq_panel.add(textField_1);
+			textField_1.setColumns(10);
+			
+			JButton btn_last20 = new JButton("Last 20");
+			btn_last20.setBounds(554, 39, 87, 29);
+			inq_panel.add(btn_last20);
+			
+			JLabel lbl_note = new JLabel("Note : To inquire orders, at least one of Order ID and Employee ID must be filled in  ");
+			lbl_note.setBounds(29, 73, 550, 16);
+			inq_panel.add(lbl_note);
+			
+			table = new JTable();
+			table.setBounds(29, 94, 612, 254);
+			inq_panel.add(table);*/
+			
+			//Second panel - Modify order
+			mod_panel = new JPanel();
+			mod_panel.setBounds(0, 0, 666, 348);
+			order_container_panel.add(mod_panel, "inquire");
+			mod_panel.setLayout(new FormLayout(new ColumnSpec[] {
 					FormSpecs.RELATED_GAP_COLSPEC,
 					FormSpecs.DEFAULT_COLSPEC,
 					FormSpecs.RELATED_GAP_COLSPEC,
@@ -295,46 +328,18 @@ public class Progect_test {
 					FormSpecs.RELATED_GAP_ROWSPEC,
 					FormSpecs.DEFAULT_ROWSPEC,
 					FormSpecs.RELATED_GAP_ROWSPEC,
-					RowSpec.decode("default:grow"),}));
+					FormSpecs.DEFAULT_ROWSPEC,}));
 			
-			JLabel lbl_orderID = new JLabel("Order ID :");
-			inq_panel.add(lbl_orderID, "4, 2, 3, 1, right, default");
+			JLabel lbl_orderID = new JLabel("*Order ID :");
+			mod_panel.add(lbl_orderID, "4, 4");
 			
-			text_orderID = new JTextField();
-			inq_panel.add(text_orderID, "7, 2, 5, 1, fill, default");
-			text_orderID.setColumns(10);
+			JLabel lblNewLabel = new JLabel("New label");
+			mod_panel.add(lblNewLabel, "4, 8");
 			
-			JLabel lbl_date = new JLabel("Order Date :");
-			inq_panel.add(lbl_date, "15, 2, right, default");
 			
-			text_date = new JTextField();
-			inq_panel.add(text_date, "16, 2, 8, 1, fill, default");
-			text_date.setColumns(10);
-			
-			JLabel lbl_empID = new JLabel("Employee ID :");
-			inq_panel.add(lbl_empID, "4, 4, 3, 1, right, default");
-			
-			textField = new JTextField();
-			inq_panel.add(textField, "7, 4, 5, 1, fill, default");
-			textField.setColumns(10);
-			
-			JLabel lbl_product = new JLabel("Product Module :");
-			inq_panel.add(lbl_product, "15, 4");
-			
-			textField_1 = new JTextField();
-			inq_panel.add(textField_1, "16, 4, 8, 1, fill, default");
-			textField_1.setColumns(10);
-			
-			JLabel lbl_note = new JLabel("Note : To inquire orders, at least one of Order ID and Employee ID must be filled in  ");
-			inq_panel.add(lbl_note, "5, 6, 23, 1");
-			
-			table = new JTable();
-			inq_panel.add(table, "3, 8, 30, 1, fill, fill");
-			order_core_panels();
 			
 		}
 		
 		
-		private void order_core_panels() {
-		}
+		
 }
