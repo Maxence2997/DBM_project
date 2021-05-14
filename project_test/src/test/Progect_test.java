@@ -24,29 +24,30 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JScrollBar;
 import javax.swing.JTable;
+import java.awt.SystemColor;
 
 public class Progect_test {
 
 	private JFrame frame;
 	
-	//private JPanel login_panel;
-	//private JPanel home_panel;
-	private CardLayout card_layout;
-	//private JLabel label_empID;
-	private JTextField field_empID;
+	private JPanel login_panel;
+	private JPanel home_panel;
 	
-	/*private JTextField text_order;
-	private JTextField text_sup;
-	private JTextField text_inv;
-	private JTextField text_;
-	private JPanel order_panel;
-	private JButton btn_reminder;*/
+	private JPanel core_home_panel;
+	private JPanel core_order_panel;
+	private JPanel container_panel;
+	private JPanel order_container_panel;
+	private JPanel inq_panel;
+	
+	private CardLayout card_layout;
+	private CardLayout cl_home;
 	private CardLayout cl_order;
-	private JTable table;
-	private JTextField text_ID;
-	private JTextField text_empID;
-	private JTextField text_date;
-	private JTextField textField;
+	//private JLabel label_empID;
+	
+	private JTextField field_empID;
+	/*private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;*/
 	
 	
 	
@@ -58,14 +59,14 @@ public class Progect_test {
 			public void run() {
 				
 				  
-				try {
+				/*try {
 					connection conn = new connection(); 
 					conn.instruction("sss");
 					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				}*/
 				
 				try {
 					Progect_test window = new Progect_test();
@@ -100,7 +101,7 @@ public class Progect_test {
 		
 		login_panel();
 		home_panel();
-		order_panel();
+		//order_panel();
 		
 		
 		
@@ -119,7 +120,7 @@ public class Progect_test {
 		private void login_panel() {
 			
 			
-			JPanel login_panel = new JPanel();
+			login_panel = new JPanel();
 			frame.getContentPane().add(login_panel,"login");
 			login_panel.setLayout(null);
 			
@@ -142,7 +143,7 @@ public class Progect_test {
 			button_login.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					if (verification(field_empID) == false){
+					if (verification(field_empID) == true){
 						
 						login_result.setText("Employee ID is invalid, please refill it.");
 					}
@@ -162,26 +163,15 @@ public class Progect_test {
 		
 		private void home_panel() {
 			
-			JPanel home_panel = new JPanel();
+			home_panel = new JPanel();
 			frame.getContentPane().add(home_panel, "home");
 			home_panel.setLayout(new FormLayout(new ColumnSpec[] {
 					ColumnSpec.decode("179px"),
-					ColumnSpec.decode("48px"),
-					ColumnSpec.decode("331px:grow"),
-					ColumnSpec.decode("18dlu"),
-					ColumnSpec.decode("21dlu"),
-					FormSpecs.DEFAULT_COLSPEC,},
+					ColumnSpec.decode("447px"),
+					ColumnSpec.decode("40px"),},
 				new RowSpec[] {
 					RowSpec.decode("26px"),
-					RowSpec.decode("45px"),
-					RowSpec.decode("38px"),
-					FormSpecs.DEFAULT_ROWSPEC,
-					RowSpec.decode("38px"),
-					FormSpecs.DEFAULT_ROWSPEC,
-					RowSpec.decode("38px"),
-					FormSpecs.DEFAULT_ROWSPEC,
-					RowSpec.decode("38px"),
-					RowSpec.decode("91px:grow"),
+					RowSpec.decode("383px"),
 					RowSpec.decode("29px"),}));
 			
 			JLabel lbl_empID = new JLabel(" Employee ID: " + field_empID.getText());
@@ -196,150 +186,74 @@ public class Progect_test {
 			});
 			
 			JButton btn_reminder = new JButton("R");
-			home_panel.add(btn_reminder, "5, 1");
+			home_panel.add(btn_reminder, "3, 1, fill, fill");
 			
-			home_panel.add(btn_logout, "1, 11, left, top");
+			cl_home = new CardLayout();
+			container_panel = new JPanel(cl_home);
+			container_panel.setBackground(Color.CYAN);
+			home_panel.add(container_panel, "1, 2, 3, 1, fill, fill");
 			
-			JButton btn_order = new JButton("   Order   ");
-			btn_order.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					card_layout.show(frame.getContentPane(), "order");
-				}
-			});
-			home_panel.add(btn_order, "1, 3, center, center");
+			home_core_panel();
+			order_panels();
 			
-			JButton btn_sup = new JButton("  Supplier ");
-			home_panel.add(btn_sup, "1, 5, center, center");
-			
-			JButton btn_inv = new JButton(" Inventory ");
-			home_panel.add(btn_inv, "1, 7, center, bottom");
-			
-			JButton btnNewButton = new JButton("New button");
-			home_panel.add(btnNewButton, "1, 9, center, bottom");
-			
-			JTextField text_order = new JTextField();
-			home_panel.add(text_order, "3, 3, fill, fill");
-			text_order.setColumns(10);
-			
-			JTextField text_sup = new JTextField();
-			text_sup.setColumns(10);
-			home_panel.add(text_sup, "3, 5, fill, fill");
-			
-			JTextField text_inv = new JTextField();
-			text_inv.setColumns(10);
-			home_panel.add(text_inv, "3, 7, fill, fill");
-			
-			JTextField text_ = new JTextField();
-			text_.setColumns(10);
-			home_panel.add(text_, "3, 9, fill, fill");
+			home_panel.add(btn_logout, "1, 3, left, top");
 		}
 		
 		
 		
-		private void order_panel() {
-			
-			JPanel order_panel = new JPanel();
-			frame.getContentPane().add(order_panel, "order");
-			order_panel.setLayout(new FormLayout(new ColumnSpec[] {
-					ColumnSpec.decode("179px:grow"),
-					ColumnSpec.decode("48px"),
-					ColumnSpec.decode("331px:grow"),
-					ColumnSpec.decode("18dlu"),
-					ColumnSpec.decode("21dlu"),
-					FormSpecs.DEFAULT_COLSPEC,},
-				new RowSpec[] {
-					RowSpec.decode("26px"),
-					RowSpec.decode("30px"),
-					RowSpec.decode("38px"),
-					RowSpec.decode("default:grow"),
-					RowSpec.decode("38px"),
-					FormSpecs.DEFAULT_ROWSPEC,
-					RowSpec.decode("38px"),
-					FormSpecs.DEFAULT_ROWSPEC,
-					RowSpec.decode("38px"),
-					RowSpec.decode("91px:grow"),
-					RowSpec.decode("29px"),}));
-			
-			JLabel lbl_empID = new JLabel(" Employee ID: " + field_empID.getText());
-			order_panel.add(lbl_empID, "1, 1, fill, center");
-			
-			JButton btn_logout = new JButton("Log-out");
-			btn_logout.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					card_layout.show(frame.getContentPane(),"login");
-				}
-			});
-			
-			JButton btn_reminder = new JButton("R");
-			order_panel.add(btn_reminder, "5, 1");
+		private void home_core_panel() {
 			
 			
-			order_panel.add(btn_logout, "1, 11, left, top");
-			JPanel panel = new JPanel();
-			panel.setBackground(Color.CYAN);
-			order_panel.add(panel, "1, 4, 6, 7, fill, fill");
+			core_home_panel = new JPanel();
+			container_panel.add(core_home_panel,"home");
+			core_home_panel.setLayout(null);
 			
-			cl_order = new CardLayout();
-			cl_order.setVgap(5);
-			cl_order.setHgap(10);
-			panel.setLayout(cl_order);
+			JButton btn_order = new JButton("Order");
+			btn_order.setBounds(91, 95, 103, 29);
+			core_home_panel.add(btn_order);
 			
-			JPanel inq_panel = new JPanel();
+			JLabel lbl_order = new JLabel("Inquire Order, Modify Order, Delete Order, Append Order");
+			lbl_order.setBounds(227, 101, 385, 16);
+			core_home_panel.add(lbl_order);
+			
+			JButton btn_invent = new JButton("Inventory");
+			btn_invent.setBounds(91, 189, 103, 29);
+			core_home_panel.add(btn_invent);
+			
+			JLabel lbl_invent = new JLabel("Inquire Inventory, Modify Volumn");
+			lbl_invent.setBounds(227, 195, 352, 16);
+			core_home_panel.add(lbl_invent);
+			
+			JButton btn_sup = new JButton("Supplier");
+			btn_sup.setBounds(91, 283, 103, 29);
+			core_home_panel.add(btn_sup);
+			
+			JLabel lbl_sup = new JLabel("Inquire Suppliers' information");
+			lbl_sup.setBounds(227, 289, 352, 16);
+			core_home_panel.add(lbl_sup);
+			
+		}
+		
+		private void order_panels() {
+			core_order_panel = new JPanel();
+			container_panel.add(core_order_panel,"order");
+			core_order_panel.setLayout(null);
+			
+			order_container_panel = new JPanel(cl_order);
+			order_container_panel.setBounds(0, 35, 666, 348);
+			order_container_panel.setBackground(Color.CYAN);
+			core_order_panel.add(order_container_panel);
+			order_container_panel.setLayout(null);
+			
+			inq_panel = new JPanel();
+			inq_panel.setBounds(0, 0, 666, 348);
+			order_container_panel.add(inq_panel);
 			inq_panel.setLayout(null);
+			order_core_panels();
 			
-			
-			panel.add(inq_panel,"inquire");	
-			
-			JButton btn_inq = new JButton("Inquire");
-			btn_inq.setBounds(552, 270, 88, 29);
-			inq_panel.add(btn_inq);
-			
-			JButton btn_inquiire_20 = new JButton("Last 10 orders");
-			btn_inquiire_20.setBounds(437, 270, 117, 29);
-			inq_panel.add(btn_inquiire_20);
-			
-			table = new JTable();
-			table.setBounds(22, 87, 607, 171);
-			inq_panel.add(table);
-			
-			JLabel lbl_orderID = new JLabel("Order ID : ");
-			lbl_orderID.setBounds(69, 6, 80, 16);
-			inq_panel.add(lbl_orderID);
-			
-			text_ID = new JTextField();
-			text_ID.setBounds(154, 1, 130, 26);
-			inq_panel.add(text_ID);
-			text_ID.setColumns(10);
-			
-			JLabel lblNewLabel = new JLabel("Employee ID :");
-			lblNewLabel.setBounds(61, 43, 88, 16);
-			inq_panel.add(lblNewLabel);
-			
-			text_empID = new JTextField();
-			text_empID.setBounds(154, 39, 130, 26);
-			inq_panel.add(text_empID);
-			text_empID.setColumns(10);
-			
-			JLabel lbl_date = new JLabel("Created Dated : ");
-			lbl_date.setBounds(337, 6, 101, 16);
-			inq_panel.add(lbl_date);
-			
-			text_date = new JTextField();
-			text_date.setBounds(450, 1, 130, 26);
-			inq_panel.add(text_date);
-			text_date.setColumns(10);
-			
-			JLabel lbl_product = new JLabel("Product Module :");
-			lbl_product.setBounds(337, 43, 117, 16);
-			inq_panel.add(lbl_product);
-			
-			textField = new JTextField();
-			textField.setBounds(450, 38, 130, 26);
-			inq_panel.add(textField);
-			textField.setColumns(10);
-			
-			
-			
-			
+		}
+		
+		
+		private void order_core_panels() {
 		}
 }
