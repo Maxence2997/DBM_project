@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -19,12 +21,14 @@ import javax.swing.JTextPane;
 import java.awt.BorderLayout;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.SystemColor;
 import javax.swing.SwingConstants;
@@ -42,8 +46,12 @@ public class Progect_test {
 	private JPanel core_order_panel;
 	private JPanel container_panel;
 	private JPanel order_container_panel;
+	private JPanel default_panel;
 	private JPanel inq_panel;
 	private JPanel mod_panel;
+	private JPanel remove_panel;
+	private JPanel remove_container_panel;
+	private JPanel remove_core_panel;
 	
 	private JPanel append_panel;
 	private JLabel lbl_price;
@@ -61,12 +69,18 @@ public class Progect_test {
 	private CardLayout card_layout;
 	private CardLayout cl_home;
 	private CardLayout cl_order;
+	private CardLayout cl_remove;
 	//private JLabel label_empID;
 	
 	
 	private JTable inq_table;
 	private JTable mod_table;
 	private JTable append_table;
+	private JTextField text_orderID;
+	private JTable table;
+	private JTable table_1;
+	private JTextField textField_3;
+	
 	
 	
 	
@@ -188,34 +202,31 @@ public class Progect_test {
 			
 			home_panel = new JPanel();
 			frame.getContentPane().add(home_panel, "home");
-			home_panel.setLayout(new FormLayout(new ColumnSpec[] {
-					ColumnSpec.decode("179px"),
-					ColumnSpec.decode("447px"),
-					ColumnSpec.decode("40px"),},
-				new RowSpec[] {
-					RowSpec.decode("26px"),
-					RowSpec.decode("383px"),
-					RowSpec.decode("29px"),}));
+			home_panel.setLayout(null);
 			
 			JLabel lbl_empID = new JLabel(" Employee ID: " + field_empID.getText());
-			home_panel.add(lbl_empID, "1, 1, fill, center");
+			lbl_empID.setBounds(0, 5, 179, 16);
+			home_panel.add(lbl_empID);
 			
 			
 			JButton btn_logout = new JButton("Log-out");
+			btn_logout.setBounds(0, 409, 96, 29);
 			btn_logout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					card_layout.show(frame.getContentPane(),"login");
 				}
 			});
-			home_panel.add(btn_logout, "1, 3, left, top");
+			home_panel.add(btn_logout);
 			
 			JButton btn_reminder = new JButton("R");
-			home_panel.add(btn_reminder, "3, 1, fill, fill");
+			btn_reminder.setBounds(626, 0, 40, 26);
+			home_panel.add(btn_reminder);
 			
 			cl_home = new CardLayout();
 			container_panel = new JPanel(cl_home);
+			container_panel.setBounds(0, 26, 666, 383);
 			container_panel.setBackground(Color.CYAN);
-			home_panel.add(container_panel, "1, 2, 3, 1, fill, fill");
+			home_panel.add(container_panel);
 			
 			
 			
@@ -252,6 +263,15 @@ public class Progect_test {
 			JLabel lbl_sup = new JLabel("Inquire Suppliers' information");
 			lbl_sup.setBounds(227, 289, 352, 16);
 			core_home_panel.add(lbl_sup);
+			
+			JButton btn_home = new JButton("Home");
+			btn_home.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					cl_home.show(container_panel, "home");
+				}
+			});
+			btn_home.setBounds(579, 409, 81, 29);
+			home_panel.add(btn_home);
 			order_panels();
 			
 			
@@ -304,25 +324,57 @@ public class Progect_test {
 			container_panel.add(core_order_panel,"order");
 			core_order_panel.setLayout(null);
 			
+			cl_order = new CardLayout();
 			order_container_panel = new JPanel(cl_order);
+			
 			order_container_panel.setBounds(0, 35, 666, 348);
 			order_container_panel.setBackground(Color.CYAN);
 			core_order_panel.add(order_container_panel);
-			order_container_panel.setLayout(null);
 			
+			add_default_panel();
 			add_inquire_panel();
 			add_modify_panel();
 			add_append_panel();
+			add_remove_panel();
+			
+			JComboBox comboBox = new JComboBox();
+			comboBox.setBounds(23, 6, 105, 27);
+			comboBox.addItem("Inquire");
+			comboBox.addItem("Modify");
+			comboBox.addItem("Append");
+			comboBox.addItem("Remove");
+			
+			 comboBox.addActionListener(new ActionListener() {
+		            @Override
+		            public void actionPerformed(ActionEvent e) {
+		            	String fuction = (String) comboBox.getSelectedItem(); //get the selected item
+
+		                cl_order.show(order_container_panel, fuction);		                   
+		            }
+		        });
+
+			core_order_panel.add(comboBox);
+			
+			
+			
 			
 		}
 		
-		//default panel - Inquire order
+		private void add_default_panel() {
+			default_panel = new JPanel();
+			default_panel.setBounds(0, 0, 666, 348);
+			order_container_panel.add(default_panel, "Modify");
+			default_panel.setLayout(null);
+		}
+		
+		//first panel - Inquire order
 		private void add_inquire_panel() {
-					
+			
 			inq_panel = new JPanel();
 			inq_panel.setBounds(0, 0, 666, 348);
-			order_container_panel.add(inq_panel, "inquire");
-			inq_panel.setLayout(null);
+			order_container_panel.add(inq_panel, "Inquire");
+			inq_panel.setLayout(null);	
+			
 					
 			JLabel lbl_orderID = new JLabel("Order ID :");
 			lbl_orderID.setBounds(75, 11, 61, 16);
@@ -376,12 +428,14 @@ public class Progect_test {
 					inq_table.setBounds(29, 94, 612, 254);
 					inq_panel.add(inq_table);
 				}
+		
+		
 		//Second panel - Modify order
 		private void add_modify_panel() {
 			
 			mod_panel = new JPanel();
 			mod_panel.setBounds(0, 0, 666, 348);
-			order_container_panel.add(mod_panel, "modify");
+			order_container_panel.add(mod_panel, "Modify");
 			mod_panel.setLayout(null);
 			
 			JLabel lbl_orderID = new JLabel("*Order ID :");
@@ -465,7 +519,7 @@ public class Progect_test {
 			
 			append_panel = new JPanel();
 			append_panel.setBounds(0, 0, 666, 348);
-			order_container_panel.add(append_panel, "append");
+			order_container_panel.add(append_panel, "Append");
 			append_panel.setLayout(null);
 			
 			JLabel lbl_order_type = new JLabel("*Oder type:");
@@ -721,4 +775,79 @@ public class Progect_test {
 			append_panel.add(append_table);
 			
 		}
+		
+		//Second panel - Modify order
+		private void add_remove_panel() {
+					
+			remove_panel = new JPanel();
+			remove_panel.setBounds(0, 0, 666, 348);
+			order_container_panel.add(remove_panel, "Remove");
+			remove_panel.setLayout(null);
+			
+			JLabel lbl_orderID = new JLabel("*Order ID :");
+			lbl_orderID.setBounds(81, 41, 67, 16);
+			remove_panel.add(lbl_orderID);
+			
+			text_orderID = new JTextField();
+			text_orderID.setBounds(167, 36, 159, 26);
+			remove_panel.add(text_orderID);
+			text_orderID.setColumns(10);
+			
+			JButton btnNewButton = new JButton("Remove");
+			btnNewButton.setBounds(515, 35, 93, 29);
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					cl_remove.show(remove_container_panel,"remove_core");
+			
+				
+				}
+			});
+			remove_panel.add(btnNewButton);
+			
+			cl_remove = new CardLayout();
+			
+			remove_container_panel = new JPanel(cl_remove);
+			remove_container_panel.setBounds(33, 130, 579, 193);
+			remove_container_panel.setBackground(Color.CYAN);
+			remove_panel.add(remove_container_panel);
+			
+			JPanel remove_cover_panel = new JPanel();
+			remove_container_panel.add(remove_cover_panel, "remove_cover");
+			
+			remove_core_panel = new JPanel();
+			remove_container_panel.add(remove_core_panel, "remove_core");
+			remove_core_panel.setLayout(null);
+			
+			table_1 = new JTable();
+			table_1.setBounds(33, 35, 447, 42);
+			remove_core_panel.add(table_1);
+			
+			JLabel lbl_confirm = new JLabel("Please write down \"I'm PRETTY SURE that I would like to remove this order.\"");
+			lbl_confirm.setBounds(33, 82, 472, 16);
+			remove_core_panel.add(lbl_confirm);
+			
+			JTextField text_confirm = new JTextField();
+			text_confirm.setBounds(33, 103, 447, 26);
+			remove_core_panel.add(text_confirm);
+			text_confirm.setColumns(10);
+			
+			JButton btn_confirm = new JButton("Confirm");
+			btn_confirm.setBounds(484, 164, 95, 29);
+			remove_core_panel.add(btn_confirm);
+			
+			
+			/*table = new JTable();
+			remove_panel.add(table, "6, 12, 9, 1, fill, fill");
+		
+			JLabel lbl_confirm = new JLabel("Please write down \" I'm PRETTY SURE that I would like to remove this order.\"");
+			remove_panel.add(lbl_confirm, "6, 14, 9, 1");
+		
+			JTextField text_confirm = new JTextField();
+			remove_panel.add(text_confirm, "6, 16, 9, 1, fill, default");
+			text_confirm.setColumns(10);
+		
+			JButton btn_confirm = new JButton("Confirm");
+			remove_panel.add(btn_confirm, "16, 20");*/
+			
+			}
 }
