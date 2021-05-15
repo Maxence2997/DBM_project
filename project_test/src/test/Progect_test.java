@@ -836,18 +836,7 @@ public class Progect_test {
 			remove_core_panel.add(btn_confirm);
 			
 			
-			/*table = new JTable();
-			remove_panel.add(table, "6, 12, 9, 1, fill, fill");
-		
-			JLabel lbl_confirm = new JLabel("Please write down \" I'm PRETTY SURE that I would like to remove this order.\"");
-			remove_panel.add(lbl_confirm, "6, 14, 9, 1");
-		
-			JTextField text_confirm = new JTextField();
-			remove_panel.add(text_confirm, "6, 16, 9, 1, fill, default");
-			text_confirm.setColumns(10);
-		
-			JButton btn_confirm = new JButton("Confirm");
-			remove_panel.add(btn_confirm, "16, 20");*/
+			
 			
 			}
 }
