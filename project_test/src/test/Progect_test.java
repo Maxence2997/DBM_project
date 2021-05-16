@@ -50,8 +50,7 @@ public class Progect_test {
 	private JPanel inq_panel;
 	private JPanel mod_panel;
 	private JPanel remove_panel;
-	private JPanel remove_container_panel;
-	private JPanel remove_core_panel;
+	
 	
 	private JPanel append_panel;
 	private JLabel lbl_price;
@@ -69,17 +68,19 @@ public class Progect_test {
 	private CardLayout card_layout;
 	private CardLayout cl_home;
 	private CardLayout cl_order;
-	private CardLayout cl_remove;
+	
 	//private JLabel label_empID;
 	
 	
 	private JTable inq_table;
 	private JTable mod_table;
 	private JTable append_table;
-	private JTextField text_orderID;
-	private JTable table;
-	private JTable table_1;
-	private JTextField textField_3;
+	
+	
+	
+	private JTable remove_table;
+	
+	
 	
 	
 	
@@ -339,6 +340,7 @@ public class Progect_test {
 			
 			JComboBox comboBox = new JComboBox();
 			comboBox.setBounds(23, 6, 105, 27);
+			comboBox.addItem("------");
 			comboBox.addItem("Inquire");
 			comboBox.addItem("Modify");
 			comboBox.addItem("Append");
@@ -771,7 +773,7 @@ public class Progect_test {
 			text_result.setColumns(10);
 			
 			append_table = new JTable();
-			append_table.setBounds(33, 292, 622, 49);
+			append_table.setBounds(33, 292, 603, 49);
 			append_panel.add(append_table);
 			
 		}
@@ -788,54 +790,39 @@ public class Progect_test {
 			lbl_orderID.setBounds(81, 41, 67, 16);
 			remove_panel.add(lbl_orderID);
 			
-			text_orderID = new JTextField();
-			text_orderID.setBounds(167, 36, 159, 26);
+			JTextField text_orderID = new JTextField();
+			text_orderID.setBounds(167, 36, 146, 26);
 			remove_panel.add(text_orderID);
 			text_orderID.setColumns(10);
 			
-			JButton btnNewButton = new JButton("Remove");
-			btnNewButton.setBounds(515, 35, 93, 29);
-			btnNewButton.addActionListener(new ActionListener() {
+			JButton btn_remove = new JButton("Remove");
+			btn_remove.setBounds(494, 35, 93, 29);
+			btn_remove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					cl_remove.show(remove_container_panel,"remove_core");
+					
 			
 				
 				}
 			});
-			remove_panel.add(btnNewButton);
+			remove_panel.add(btn_remove);
 			
-			cl_remove = new CardLayout();
-			
-			remove_container_panel = new JPanel(cl_remove);
-			remove_container_panel.setBounds(33, 130, 579, 193);
-			remove_container_panel.setBackground(Color.CYAN);
-			remove_panel.add(remove_container_panel);
-			
-			JPanel remove_cover_panel = new JPanel();
-			remove_container_panel.add(remove_cover_panel, "remove_cover");
-			
-			remove_core_panel = new JPanel();
-			remove_container_panel.add(remove_core_panel, "remove_core");
-			remove_core_panel.setLayout(null);
-			
-			table_1 = new JTable();
-			table_1.setBounds(33, 35, 447, 42);
-			remove_core_panel.add(table_1);
+			remove_table = new JTable();
+			remove_table.setBounds(81, 159, 506, 25);
+			remove_panel.add(remove_table);
+			//remove_table.setVisible(arg0);
 			
 			JLabel lbl_confirm = new JLabel("Please write down \"I'm PRETTY SURE that I would like to remove this order.\"");
-			lbl_confirm.setBounds(33, 82, 472, 16);
-			remove_core_panel.add(lbl_confirm);
+			lbl_confirm.setBounds(81, 189, 506, 16);
+			remove_panel.add(lbl_confirm);
 			
 			JTextField text_confirm = new JTextField();
-			text_confirm.setBounds(33, 103, 447, 26);
-			remove_core_panel.add(text_confirm);
+			text_confirm.setBounds(81, 210, 506, 26);
+			remove_panel.add(text_confirm);
 			text_confirm.setColumns(10);
 			
 			JButton btn_confirm = new JButton("Confirm");
-			btn_confirm.setBounds(484, 164, 95, 29);
-			remove_core_panel.add(btn_confirm);
-			
-			
+			btn_confirm.setBounds(494, 301, 93, 29);
+			remove_panel.add(btn_confirm);
 			
 			
 			}
