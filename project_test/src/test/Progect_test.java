@@ -37,6 +37,8 @@ import javax.swing.JRadioButton;
 public class Progect_test {
 
 	private JFrame frame;
+	private Library library;
+	
 	
 	private JPanel login_panel;
 	private JPanel home_panel;
@@ -49,7 +51,15 @@ public class Progect_test {
 	private JPanel default_panel;
 	private JPanel inq_panel;
 	private JPanel mod_panel;
+	
 	private JPanel remove_panel;
+	private JLabel lbl_confirm;
+	private JTextField text_confirm;
+	private JButton btn_confirm;
+	
+	
+	private JPanel sign_panel;
+	
 	
 	
 	private JPanel append_panel;
@@ -74,11 +84,9 @@ public class Progect_test {
 	
 	private JTable inq_table;
 	private JTable mod_table;
-	private JTable append_table;
-	
-	
-	
+	private JTable append_table;	
 	private JTable remove_table;
+	private JTable sign_table;
 	
 	
 	
@@ -129,6 +137,9 @@ public class Progect_test {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		library = new Library();
+		
 		frame = new JFrame("System");
 		frame.setBounds(100, 100, 666, 466);
 		
@@ -146,14 +157,6 @@ public class Progect_test {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
-		private boolean verification(JTextField field_empID2) {
-			/** To Verify if the ID inputed by user is registered in EMPLOYEE or not
-			 **/
-			
-				
-			
-			return false;
-		}
 		
 		private void login_panel() {
 			
@@ -181,7 +184,7 @@ public class Progect_test {
 			button_login.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					if (verification(field_empID) == true){
+					if (library.is_existed(field_empID) == true){
 						
 						login_result.setText("Employee ID is invalid, please refill it.");
 					}
@@ -231,7 +234,7 @@ public class Progect_test {
 			
 			
 			
-			//home_core_panel();
+			//home_core_panel
 			core_home_panel = new JPanel();
 			container_panel.add(core_home_panel,"home");
 			core_home_panel.setLayout(null);
@@ -240,6 +243,7 @@ public class Progect_test {
 			btn_order.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					cl_home.show(container_panel, "order");
+					
 				}
 			});
 			btn_order.setBounds(91, 95, 103, 29);
@@ -280,47 +284,9 @@ public class Progect_test {
 		
 		
 		
-		/*private void home_core_panel() {
-			
-			core_home_panel = new JPanel();
-			container_panel.add(core_home_panel,"home");
-			core_home_panel.setLayout(null);
-			
-			JButton btn_order = new JButton("Order");
-			btn_order.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					cl_home.show(container_panel, "order");
-				}
-			});
-			btn_order.setBounds(91, 95, 103, 29);
-			core_home_panel.add(btn_order);
-			
-			JLabel lbl_order = new JLabel("Inquire Order, Modify Order, Delete Order, Append Order");
-			lbl_order.setBounds(227, 101, 385, 16);
-			core_home_panel.add(lbl_order);
-			
-			JButton btn_invent = new JButton("Inventory");
-			btn_invent.setBounds(91, 189, 103, 29);
-			core_home_panel.add(btn_invent);
-			
-			JLabel lbl_invent = new JLabel("Inquire Inventory, Modify Volume");
-			lbl_invent.setBounds(227, 195, 352, 16);
-			core_home_panel.add(lbl_invent);
-			
-			JButton btn_sup = new JButton("Supplier");
-			btn_sup.setBounds(91, 283, 103, 29);
-			core_home_panel.add(btn_sup);
-			
-			JLabel lbl_sup = new JLabel("Inquire Suppliers' information");
-			lbl_sup.setBounds(227, 289, 352, 16);
-			core_home_panel.add(lbl_sup);
-			
-			
-		}*/
-		
 		private void order_panels() {
 			
-			
+			//core order panel which contains comboBox
 			core_order_panel = new JPanel();
 			container_panel.add(core_order_panel,"order");
 			core_order_panel.setLayout(null);
@@ -332,26 +298,33 @@ public class Progect_test {
 			order_container_panel.setBackground(Color.CYAN);
 			core_order_panel.add(order_container_panel);
 			
-			add_default_panel();
+			
+			//add 5 sub order panels
+			
+			//add_default_panel();
 			add_inquire_panel();
 			add_modify_panel();
 			add_append_panel();
 			add_remove_panel();
+			add_sign_panel();
 			
 			JComboBox comboBox = new JComboBox();
-			comboBox.setBounds(23, 6, 105, 27);
-			comboBox.addItem("------");
+			comboBox.setBounds(23, 6, 126, 27);
+			//comboBox.addItem("--------");
 			comboBox.addItem("Inquire");
 			comboBox.addItem("Modify");
 			comboBox.addItem("Append");
 			comboBox.addItem("Remove");
+			comboBox.addItem("Signature");
+			
 			
 			 comboBox.addActionListener(new ActionListener() {
 		            @Override
 		            public void actionPerformed(ActionEvent e) {
-		            	String fuction = (String) comboBox.getSelectedItem(); //get the selected item
+		            	String function = (String) comboBox.getSelectedItem(); //get the selected item
 
-		                cl_order.show(order_container_panel, fuction);		                   
+		                
+		            	cl_order.show(order_container_panel, function);		                   
 		            }
 		        });
 
@@ -362,12 +335,13 @@ public class Progect_test {
 			
 		}
 		
-		private void add_default_panel() {
+		//default panel
+		/*private void add_default_panel() {
 			default_panel = new JPanel();
 			default_panel.setBounds(0, 0, 666, 348);
-			order_container_panel.add(default_panel, "Modify");
+			order_container_panel.add(default_panel, "--------");
 			default_panel.setLayout(null);
-		}
+		}*/
 		
 		//first panel - Inquire order
 		private void add_inquire_panel() {
@@ -778,7 +752,7 @@ public class Progect_test {
 			
 		}
 		
-		//Second panel - Modify order
+		//forth panel - remove order
 		private void add_remove_panel() {
 					
 			remove_panel = new JPanel();
@@ -800,8 +774,11 @@ public class Progect_test {
 			btn_remove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-			
-				
+					library.btn_remove();
+					remove_table.setVisible(true);
+					lbl_confirm.setVisible(true);
+					text_confirm.setVisible(true);
+					btn_confirm.setVisible(true);
 				}
 			});
 			remove_panel.add(btn_remove);
@@ -809,21 +786,69 @@ public class Progect_test {
 			remove_table = new JTable();
 			remove_table.setBounds(81, 159, 506, 25);
 			remove_panel.add(remove_table);
-			//remove_table.setVisible(arg0);
+			remove_table.setVisible(false);
 			
-			JLabel lbl_confirm = new JLabel("Please write down \"I'm PRETTY SURE that I would like to remove this order.\"");
+			lbl_confirm = new JLabel("Please write down \"I'm PRETTY SURE that I would like to remove this order.\"");
 			lbl_confirm.setBounds(81, 189, 506, 16);
 			remove_panel.add(lbl_confirm);
+			lbl_confirm.setVisible(false);
 			
-			JTextField text_confirm = new JTextField();
+			text_confirm = new JTextField();
 			text_confirm.setBounds(81, 210, 506, 26);
 			remove_panel.add(text_confirm);
 			text_confirm.setColumns(10);
+			text_confirm.setVisible(false);
 			
-			JButton btn_confirm = new JButton("Confirm");
+			btn_confirm = new JButton("Confirm");
 			btn_confirm.setBounds(494, 301, 93, 29);
 			remove_panel.add(btn_confirm);
-			
-			
+			btn_confirm.setVisible(false);
+	
 			}
+		
+		//fifth panel - sign order only supervisor
+		private void add_sign_panel() {
+			
+			
+				
+				sign_panel = new JPanel();
+				sign_panel.setBounds(0, 0, 666, 348);
+				order_container_panel.add(sign_panel, "Signature");
+				sign_panel.setLayout(null);
+				
+				JLabel lbl_sorry = new JLabel("Sorry, no right to access this page, work harder for the promotion.");
+				lbl_sorry.setBounds(62, 34, 517, 16);
+				sign_panel.add(lbl_sorry);
+				
+				JLabel lbl_instruction = new JLabel("Please sign the orders below after reading.");
+				lbl_instruction.setBounds(62, 68, 411, 16);
+				sign_panel.add(lbl_instruction);
+				
+				sign_table = new JTable();
+				sign_table.setBounds(62, 97, 546, 192);
+				sign_panel.add(sign_table);
+				
+				JButton btn_sign = new JButton("Sign all");
+				btn_sign.setBounds(497, 301, 112, 29);
+				sign_panel.add(btn_sign);
+				
+				JButton btn_refresh = new JButton("Refresh");
+				btn_refresh.setBounds(497, 63, 112, 29);
+				sign_panel.add(btn_refresh);
+				
+				if (library.is_supervisor()==true) {
+					lbl_sorry.setVisible(false);
+					
+				}
+				
+				else {
+					lbl_sorry.setVisible(true);
+					lbl_instruction.setVisible(false);
+					sign_table.setVisible(false);
+					btn_sign.setVisible(false);
+					btn_refresh.setVisible(false);
+				}
+			
+			
+		}
 }
