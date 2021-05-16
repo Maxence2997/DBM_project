@@ -121,4 +121,21 @@ public class Library {
 		
 	}
 	
+	public void btn_inquire_invent() {
+		/**
+		 * the action after click btn_inquire on inventory panel
+		 * 
+		 * set instruction of SQL to inquire stock
+		 */
+		
+	}
+	
+	
+	public void btn_inquire_sup() {
+		/**
+		 * the action after click btn_inquire on inventory panel
+		 * 
+		 * set instruction of SQL to inquire stock
+		 */
+	}
 }
