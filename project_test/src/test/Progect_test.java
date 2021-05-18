@@ -42,7 +42,7 @@ public class Progect_test {
 	
 	private JPanel login_panel;
 	private JPanel home_panel;
-	private JTextField field_empID;
+	public static JTextField field_empID;
 	
 	private JPanel core_home_panel;
 	private JPanel core_order_panel;
@@ -63,7 +63,10 @@ public class Progect_test {
 	
 	
 	private JPanel sign_panel;
-	
+	private JLabel lbl_sorry;
+	private JLabel lbl_instruction;
+	private JButton btn_sign;
+	private JButton btn_refresh;
 	
 	private JPanel append_panel;
 	private JLabel lbl_price;
@@ -100,7 +103,7 @@ public class Progect_test {
 	private JTable sup_table;
 	
 	
-	
+	private boolean supervisor;
 	
 	
 	
@@ -116,14 +119,7 @@ public class Progect_test {
 			public void run() {
 				
 				  
-				/*try {
-					connection conn = new connection(); 
-					conn.instruction("sss");
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}*/
+				
 				
 				try {
 					Progect_test window = new Progect_test();
@@ -181,7 +177,7 @@ public class Progect_test {
 			label_empID.setBounds(100, 191, 104, 16);
 			login_panel.add(label_empID);
 			
-			field_empID = new JTextField();
+			field_empID = new JTextField("11047601");
 			field_empID.setBounds(229, 186, 163, 26);
 			login_panel.add(field_empID);
 			field_empID.setColumns(10);
@@ -195,14 +191,29 @@ public class Progect_test {
 			button_login.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					if (library.is_existed(field_empID) == true){
+					if (library.is_existed(field_empID) == true) {
+						card_layout.show(frame.getContentPane(), "home");
+						supervisor = library.is_supervisor();
+						System.out.print("Supervisor:"+supervisor);
+						
+						if (supervisor==true) lbl_sorry.setVisible(false);
+						
+						
+						else {
+							lbl_instruction.setVisible(false);
+							sign_table.setVisible(false);
+							btn_sign.setVisible(false);
+							btn_refresh.setVisible(false);
+						}
+					}
+										
+						
+					else {
 						
 						login_result.setText("Employee ID is invalid, please refill it.");
+
+						}
 					}
-					else {
-						card_layout.show(frame.getContentPane(), "home");
-					}
-				}
 				
 				
 			});
@@ -220,9 +231,10 @@ public class Progect_test {
 			frame.getContentPane().add(home_panel, "home");
 			home_panel.setLayout(null);
 			
-			JLabel lbl_empID = new JLabel(" Employee ID: " + field_empID.getText());
+			JLabel lbl_empID = new JLabel();
 			lbl_empID.setBounds(0, 5, 179, 16);
 			home_panel.add(lbl_empID);
+			lbl_empID.setText(" Employee ID: " + field_empID.getText());
 			
 			
 			JButton btn_logout = new JButton("Log-out");
@@ -383,7 +395,7 @@ public class Progect_test {
 			inq_panel.add(text_orderID);
 			text_orderID.setColumns(10);
 					
-			JLabel lbl_date = new JLabel("Release Date :");
+			JLabel lbl_date = new JLabel("Realized Date :");
 			lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
 			lbl_date.setBounds(310, 11, 106, 16);
 			inq_panel.add(lbl_date);
@@ -394,6 +406,12 @@ public class Progect_test {
 			text_date.setColumns(10);
 					
 			JButton btn_inquire = new JButton("Inquire");
+			btn_inquire.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					library.btn_inquire();
+					inq_table.setVisible(true);
+				}
+			});
 			btn_inquire.setBounds(554, 5, 87, 29);
 			inq_panel.add(btn_inquire);
 					
@@ -412,21 +430,28 @@ public class Progect_test {
 					
 			JTextField textField_1 = new JTextField();
 			textField_1.setBounds(416, 40, 105, 26);
-					inq_panel.add(textField_1);
-					textField_1.setColumns(10);
+			inq_panel.add(textField_1);
+			textField_1.setColumns(10);
 					
-					JButton btn_last20 = new JButton("Last 20");
-					btn_last20.setBounds(554, 39, 87, 29);
-					inq_panel.add(btn_last20);
-					
-					JLabel lbl_note = new JLabel("Note : To inquire orders, at least one of Order ID and Employee ID must be filled in  ");
-					lbl_note.setBounds(29, 73, 550, 16);
-					inq_panel.add(lbl_note);
-					
-					inq_table = new JTable();
-					inq_table.setBounds(29, 94, 612, 254);
-					inq_panel.add(inq_table);
+			JButton btn_last20 = new JButton("Last 20");
+			btn_last20.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					library.btn_inquire();
+					inq_table.setVisible(true);
 				}
+			});
+			btn_last20.setBounds(554, 39, 87, 29);
+			inq_panel.add(btn_last20);
+					
+			JLabel lbl_note = new JLabel("Note : To inquire orders, at least one of Order ID and Employee ID must be filled in  ");
+			lbl_note.setBounds(29, 73, 550, 16);
+			inq_panel.add(lbl_note);
+					
+			inq_table = new JTable();
+			inq_table.setBounds(29, 94, 612, 254);
+			inq_panel.add(inq_table);
+			inq_table.setVisible(false);
+		}
 		
 		//Second panel - Modify order
 		private void add_modify_panel() {
@@ -487,7 +512,7 @@ public class Progect_test {
 			mod_panel.add(textField_1);
 			textField_1.setColumns(10);
 			
-			JLabel lbl_date = new JLabel("Release Date :");
+			JLabel lbl_date = new JLabel("Realized Date :");
 			lbl_date.setBounds(299, 165, 88, 16);
 			lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
 			mod_panel.add(lbl_date);
@@ -659,7 +684,7 @@ public class Progect_test {
 		    });
 			bg.add(rb_purchase);
 			
-			JLabel lbl_date = new JLabel("Release Date :");
+			JLabel lbl_date = new JLabel("Realized Date :");
 			lbl_date.setBounds(280, 106, 134, 16);
 			lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
 			append_panel.add(lbl_date);
@@ -835,37 +860,33 @@ public class Progect_test {
 				order_container_panel.add(sign_panel, "Signature");
 				sign_panel.setLayout(null);
 				
-				JLabel lbl_sorry = new JLabel("Sorry, no right to access this page, work harder for the promotion.");
+				
+				lbl_sorry = new JLabel("Sorry, no right to access this page, work harder for the promotion.");
 				lbl_sorry.setBounds(62, 34, 517, 16);
 				sign_panel.add(lbl_sorry);
+				//lbl_sorry.setVisible(true);
 				
-				JLabel lbl_instruction = new JLabel("Please sign the orders below after reading.");
+				lbl_instruction = new JLabel("Please sign the orders below after reading.");
 				lbl_instruction.setBounds(62, 68, 411, 16);
 				sign_panel.add(lbl_instruction);
+				//lbl_instruction.setVisible(true);
 				
 				sign_table = new JTable();
 				sign_table.setBounds(62, 97, 546, 192);
 				sign_panel.add(sign_table);
+				//sign_table.setVisible(true);
 				
-				JButton btn_sign = new JButton("Sign all");
+				btn_sign = new JButton("Sign all");
 				btn_sign.setBounds(497, 301, 112, 29);
 				sign_panel.add(btn_sign);
+				//btn_sign.setVisible(true);
 				
-				JButton btn_refresh = new JButton("Refresh");
+				btn_refresh = new JButton("Refresh");
 				btn_refresh.setBounds(497, 63, 112, 29);
 				sign_panel.add(btn_refresh);
+				//btn_refresh.setVisible(true);
 				
-				if (library.is_supervisor()==true) {
-					lbl_sorry.setVisible(false);
-					
-				}
-				else {
-					lbl_sorry.setVisible(true);
-					lbl_instruction.setVisible(false);
-					sign_table.setVisible(false);
-					btn_sign.setVisible(false);
-					btn_refresh.setVisible(false);
-				}
+				
 		}
 		
 		private void inventory_panel() {
@@ -972,4 +993,9 @@ public class Progect_test {
 			supplier_panel.add(sup_table);
 			sup_table.setVisible(false);
 		}
+		
+	public JTextField get_field_empID() {
+		
+		return field_empID;
+	}
 }

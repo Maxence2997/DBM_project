@@ -50,20 +50,5 @@ public class connection {
 			  }
 	}
 
-	public void instruction(String sql_lan) throws SQLException {
-		/**
-		 * This method is used to input SQL_instruction/language
-		 * 
-		 */
-		
-			try (ResultSet resultSet = st.executeQuery(sql_lan)) {
-				while (resultSet.next()) {
-					System.out.println(resultSet.getString("Name") + "    " + resultSet.getString(
-							"CountryCode") + "   " + resultSet.getString("District"));
-				}
-		   } catch (SQLException e) {
-			   e.printStackTrace();
-			}
-			
-	}
+	
 }
