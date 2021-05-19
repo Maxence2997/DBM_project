@@ -42,7 +42,7 @@ public class Progect_test {
 	
 	private JPanel login_panel;
 	private JPanel home_panel;
-	public static JTextField field_empID;
+	private JTextField field_empID;
 	
 	private JPanel core_home_panel;
 	private JPanel core_order_panel;
@@ -103,7 +103,7 @@ public class Progect_test {
 	private JTable sup_table;
 	
 	
-	private boolean supervisor;
+	
 	
 	
 	
@@ -193,10 +193,10 @@ public class Progect_test {
 					
 					if (library.is_existed(field_empID) == true) {
 						card_layout.show(frame.getContentPane(), "home");
-						supervisor = library.is_supervisor();
-						System.out.print("Supervisor:"+supervisor);
 						
-						if (supervisor==true) lbl_sorry.setVisible(false);
+						//System.out.print("Supervisor:"+ library.is_supervisor(field_empID));
+						
+						if (library.is_supervisor(field_empID)==true) lbl_sorry.setVisible(false);
 						
 						
 						else {

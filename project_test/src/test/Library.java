@@ -62,7 +62,7 @@ public class Library {
 	}
 	
 	
-	public boolean is_supervisor() {
+	public boolean is_supervisor(JTextField field_empID) {
 		/**
 		 * To verify the ID logged in is supervisor or not
 		 * 
@@ -72,7 +72,7 @@ public class Library {
 		boolean supervisor;
 		
 		try {
-			ResultSet resultSet = conn.st.executeQuery("SELECT Supervisor FROM EMPLOYEE WHERE Supervisor=" + Progect_test.field_empID.getText());
+			ResultSet resultSet = conn.st.executeQuery("SELECT Supervisor FROM EMPLOYEE WHERE Supervisor=" + field_empID.getText());
 			if (resultSet.next()) {
 				System.out.println(resultSet.getString("Supervisor"));
 		
