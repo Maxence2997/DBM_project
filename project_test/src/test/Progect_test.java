@@ -383,11 +383,11 @@ public class Progect_test {
 			inq_panel = new JPanel();
 			inq_panel.setBounds(0, 0, 666, 348);
 			sheet_container_panel.add(inq_panel, "Inquire");
-			inq_panel.setLayout(null);	
+			inq_panel.setLayout(null);
 			
 					
 			JLabel lbl_sheetID = new JLabel("sheet ID :");
-			lbl_sheetID.setBounds(75, 11, 61, 16);
+			lbl_sheetID.setBounds(76, 11, 60, 16);
 			inq_panel.add(lbl_sheetID);
 					
 			JTextField text_sheetID = new JTextField();
@@ -396,8 +396,8 @@ public class Progect_test {
 			text_sheetID.setColumns(10);
 					
 			JLabel lbl_date = new JLabel("Realized Date :");
-			lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
 			lbl_date.setBounds(310, 11, 106, 16);
+			lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
 			inq_panel.add(lbl_date);
 					
 			JTextField text_date = new JTextField();
@@ -406,13 +406,13 @@ public class Progect_test {
 			text_date.setColumns(10);
 					
 			JButton btn_inquire = new JButton("Inquire");
+			btn_inquire.setBounds(554, 5, 87, 29);
 			btn_inquire.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					library.btn_inquire();
 					inq_table.setVisible(true);
 				}
 			});
-			btn_inquire.setBounds(554, 5, 87, 29);
 			inq_panel.add(btn_inquire);
 					
 			JLabel lbl_empID = new JLabel("Employee ID :");
@@ -434,17 +434,17 @@ public class Progect_test {
 			textField_1.setColumns(10);
 					
 			JButton btn_last20 = new JButton("Last 20");
+			btn_last20.setBounds(554, 39, 87, 29);
 			btn_last20.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					library.btn_inquire();
 					inq_table.setVisible(true);
 				}
 			});
-			btn_last20.setBounds(554, 39, 87, 29);
 			inq_panel.add(btn_last20);
 					
 			JLabel lbl_note = new JLabel("Note : To inquire sheets, at least one of sheet ID and Employee ID must be filled in  ");
-			lbl_note.setBounds(29, 73, 550, 16);
+			lbl_note.setBounds(29, 73, 529, 16);
 			inq_panel.add(lbl_note);
 					
 			inq_table = new JTable();
