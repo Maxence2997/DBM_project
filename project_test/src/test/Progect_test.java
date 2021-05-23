@@ -45,9 +45,9 @@ public class Progect_test {
 	private JTextField field_empID;
 	
 	private JPanel core_home_panel;
-	private JPanel core_order_panel;
+	private JPanel core_sheet_panel;
 	private JPanel container_panel;
-	private JPanel order_container_panel;
+	private JPanel sheet_container_panel;
 	
 	//private JPanel default_panel;
 	
@@ -75,17 +75,17 @@ public class Progect_test {
 	private JTextField text_esd;
 	private JLabel lbl_result;
 	private JTextField text_result;
-	private JLabel lbl_next_order;
-	private JTextField text_next_order;
-	private JLabel lbl_last_order;
-	private JTextField text_last_order;
+	private JLabel lbl_next_sheet;
+	private JTextField text_next_sheet;
+	private JLabel lbl_last_sheet;
+	private JTextField text_last_sheet;
 	
 	
 	private JPanel inventory_panel;
 	
 	private CardLayout card_layout;
 	private CardLayout cl_home;
-	private CardLayout cl_order;
+	private CardLayout cl_sheet;
 	
 	//private JLabel label_empID;
 	
@@ -157,7 +157,7 @@ public class Progect_test {
 		
 		login_panel();
 		home_panel();
-		//order_panel();
+		//sheet_panel();
 		
 		
 		
@@ -263,19 +263,19 @@ public class Progect_test {
 			container_panel.add(core_home_panel,"home");
 			core_home_panel.setLayout(null);
 			
-			JButton btn_order = new JButton("Order");
-			btn_order.addActionListener(new ActionListener() {
+			JButton btn_project = new JButton("Project");
+			btn_project.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					cl_home.show(container_panel, "order");
+					cl_home.show(container_panel, "sheet");
 					
 				}
 			});
-			btn_order.setBounds(91, 95, 103, 29);
-			core_home_panel.add(btn_order);
+			btn_project.setBounds(91, 95, 103, 29);
+			core_home_panel.add(btn_project);
 			
-			JLabel lbl_order = new JLabel("Inquire Order, Modify Order, Delete Order, Append Order");
-			lbl_order.setBounds(227, 101, 385, 16);
-			core_home_panel.add(lbl_order);
+			JLabel lbl_sheet = new JLabel("Project management ( Inquiring, Modifying...)");
+			lbl_sheet.setBounds(227, 101, 385, 16);
+			core_home_panel.add(lbl_sheet);
 			
 			JButton btn_invent = new JButton("Inventory");
 			btn_invent.addActionListener(new ActionListener() {
@@ -314,30 +314,30 @@ public class Progect_test {
 			btn_home.setBounds(579, 409, 81, 29);
 			home_panel.add(btn_home);
 			
-			order_panels();
+			sheet_panels();
 			inventory_panel();
 			supplier_panel();
 			
 			
 		}
 		
-		private void order_panels() {
+		private void sheet_panels() {
 			
-			//core order panel which contains comboBox
-			core_order_panel = new JPanel();
-			container_panel.add(core_order_panel,"order");
-			core_order_panel.setLayout(null);
+			//core sheet panel which contains comboBox
+			core_sheet_panel = new JPanel();
+			container_panel.add(core_sheet_panel,"sheet");
+			core_sheet_panel.setLayout(null);
 			
-			//smaller panel on the core order panel
-			cl_order = new CardLayout();
-			order_container_panel = new JPanel(cl_order);
+			//smaller panel on the core sheet panel
+			cl_sheet = new CardLayout();
+			sheet_container_panel = new JPanel(cl_sheet);
 			
-			order_container_panel.setBounds(0, 35, 666, 348);
-			order_container_panel.setBackground(Color.CYAN);
-			core_order_panel.add(order_container_panel);
+			sheet_container_panel.setBounds(0, 35, 666, 348);
+			sheet_container_panel.setBackground(Color.CYAN);
+			core_sheet_panel.add(sheet_container_panel);
 			
 			
-			//add 5 sub order panels
+			//add 5 sub sheet panels
 			
 			//add_default_panel();
 			add_inquire_panel();
@@ -362,38 +362,38 @@ public class Progect_test {
 		            	String function = (String) comboBox.getSelectedItem(); //get the selected item
 
 		                
-		            	cl_order.show(order_container_panel, function);		                   
+		            	cl_sheet.show(sheet_container_panel, function);		                   
 		            }
 		        });
 
-			core_order_panel.add(comboBox);
+			core_sheet_panel.add(comboBox);
 		}
 		
 		//default panel
 		/*private void add_default_panel() {
 			default_panel = new JPanel();
 			default_panel.setBounds(0, 0, 666, 348);
-			order_container_panel.add(default_panel, "--------");
+			sheet_container_panel.add(default_panel, "--------");
 			default_panel.setLayout(null);
 		}*/
 		
-		//first panel - Inquire order
+		//first panel - Inquire sheet
 		private void add_inquire_panel() {
 			
 			inq_panel = new JPanel();
 			inq_panel.setBounds(0, 0, 666, 348);
-			order_container_panel.add(inq_panel, "Inquire");
+			sheet_container_panel.add(inq_panel, "Inquire");
 			inq_panel.setLayout(null);	
 			
 					
-			JLabel lbl_orderID = new JLabel("Order ID :");
-			lbl_orderID.setBounds(75, 11, 61, 16);
-			inq_panel.add(lbl_orderID);
+			JLabel lbl_sheetID = new JLabel("sheet ID :");
+			lbl_sheetID.setBounds(75, 11, 61, 16);
+			inq_panel.add(lbl_sheetID);
 					
-			JTextField text_orderID = new JTextField();
-			text_orderID.setBounds(136, 6, 141, 26);
-			inq_panel.add(text_orderID);
-			text_orderID.setColumns(10);
+			JTextField text_sheetID = new JTextField();
+			text_sheetID.setBounds(136, 6, 141, 26);
+			inq_panel.add(text_sheetID);
+			text_sheetID.setColumns(10);
 					
 			JLabel lbl_date = new JLabel("Realized Date :");
 			lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -443,7 +443,7 @@ public class Progect_test {
 			btn_last20.setBounds(554, 39, 87, 29);
 			inq_panel.add(btn_last20);
 					
-			JLabel lbl_note = new JLabel("Note : To inquire orders, at least one of Order ID and Employee ID must be filled in  ");
+			JLabel lbl_note = new JLabel("Note : To inquire sheets, at least one of sheet ID and Employee ID must be filled in  ");
 			lbl_note.setBounds(29, 73, 550, 16);
 			inq_panel.add(lbl_note);
 					
@@ -453,32 +453,32 @@ public class Progect_test {
 			inq_table.setVisible(false);
 		}
 		
-		//Second panel - Modify order
+		//Second panel - Modify sheet
 		private void add_modify_panel() {
 			
 			mod_panel = new JPanel();
 			mod_panel.setBounds(0, 0, 666, 348);
-			order_container_panel.add(mod_panel, "Modify");
+			sheet_container_panel.add(mod_panel, "Modify");
 			mod_panel.setLayout(null);
 			
-			JLabel lbl_orderID = new JLabel("*Order ID :");
-			lbl_orderID.setBounds(72, 41, 67, 16);
-			mod_panel.add(lbl_orderID);
+			JLabel lbl_sheetID = new JLabel("*sheet ID :");
+			lbl_sheetID.setBounds(72, 41, 67, 16);
+			mod_panel.add(lbl_sheetID);
 			
-			JTextField text_orderID = new JTextField();
-			text_orderID.setBounds(143, 36, 115, 26);
-			mod_panel.add(text_orderID);
-			text_orderID.setColumns(10);
+			JTextField text_sheetID = new JTextField();
+			text_sheetID.setBounds(143, 36, 115, 26);
+			mod_panel.add(text_sheetID);
+			text_sheetID.setColumns(10);
 			
-			JLabel lbl_next_order = new JLabel("Next Order ID :");
-			lbl_next_order.setBounds(292, 41, 95, 16);
-			lbl_next_order.setHorizontalAlignment(SwingConstants.RIGHT);
-			mod_panel.add(lbl_next_order);
+			JLabel lbl_next_sheet = new JLabel("Next sheet ID :");
+			lbl_next_sheet.setBounds(292, 41, 95, 16);
+			lbl_next_sheet.setHorizontalAlignment(SwingConstants.RIGHT);
+			mod_panel.add(lbl_next_sheet);
 			
-			JTextField text_next_order = new JTextField();
-			text_next_order.setBounds(391, 36, 115, 26);
-			mod_panel.add(text_next_order);
-			text_next_order.setColumns(10);
+			JTextField text_next_sheet = new JTextField();
+			text_next_sheet.setBounds(391, 36, 115, 26);
+			mod_panel.add(text_next_sheet);
+			text_next_sheet.setColumns(10);
 			
 			JButton btn_modify = new JButton("Modify");
 			btn_modify.setBounds(539, 35, 87, 29);
@@ -493,15 +493,15 @@ public class Progect_test {
 			mod_panel.add(textField);
 			textField.setColumns(10);
 			
-			JLabel lbl_last_order = new JLabel("Last Order ID :");
-			lbl_last_order.setBounds(296, 104, 91, 16);
-			lbl_last_order.setHorizontalAlignment(SwingConstants.RIGHT);
-			mod_panel.add(lbl_last_order);
+			JLabel lbl_last_sheet = new JLabel("Last sheet ID :");
+			lbl_last_sheet.setBounds(296, 104, 91, 16);
+			lbl_last_sheet.setHorizontalAlignment(SwingConstants.RIGHT);
+			mod_panel.add(lbl_last_sheet);
 			
-			JTextField text_last_order = new JTextField();
-			text_last_order.setBounds(391, 99, 115, 26);
-			mod_panel.add(text_last_order);
-			text_last_order.setColumns(10);
+			JTextField text_last_sheet = new JTextField();
+			text_last_sheet.setBounds(391, 99, 115, 26);
+			mod_panel.add(text_last_sheet);
+			text_last_sheet.setColumns(10);
 			
 			JLabel lbl_productID = new JLabel("Product Module :");
 			lbl_productID.setBounds(33, 165, 106, 16);
@@ -536,18 +536,18 @@ public class Progect_test {
 			mod_panel.add(mod_table);
 		}
 		
-		//third panel - Append order
+		//third panel - Append sheet
 		private void add_append_panel() {
 			
 			append_panel = new JPanel();
 			append_panel.setBounds(0, 0, 666, 348);
-			order_container_panel.add(append_panel, "Append");
+			sheet_container_panel.add(append_panel, "Append");
 			append_panel.setLayout(null);
 			
-			JLabel lbl_order_type = new JLabel("*Oder type:");
-			lbl_order_type.setBounds(62, 11, 71, 16);
-			lbl_order_type.setHorizontalAlignment(SwingConstants.RIGHT);
-			append_panel.add(lbl_order_type);
+			JLabel lbl_sheet_type = new JLabel("*Oder type:");
+			lbl_sheet_type.setBounds(62, 11, 71, 16);
+			lbl_sheet_type.setHorizontalAlignment(SwingConstants.RIGHT);
+			append_panel.add(lbl_sheet_type);
 			
 			ButtonGroup bg = new ButtonGroup();
 			
@@ -566,11 +566,11 @@ public class Progect_test {
 		            lbl_result.setVisible(false);
 		            text_result.setVisible(false);
 		            
-		            lbl_last_order.setVisible(false);
-		            text_last_order.setVisible(false);
+		            lbl_last_sheet.setVisible(false);
+		            text_last_sheet.setVisible(false);
 		            
-		            lbl_next_order.setVisible(true);
-		            text_next_order.setVisible(true);
+		            lbl_next_sheet.setVisible(true);
+		            text_next_sheet.setVisible(true);
 		            
 		        }
 		    });
@@ -606,11 +606,11 @@ public class Progect_test {
 		            lbl_esd.setVisible(true);
 		            text_esd.setVisible(true);
 		            
-		            lbl_last_order.setVisible(true);
-		            text_last_order.setVisible(true);
+		            lbl_last_sheet.setVisible(true);
+		            text_last_sheet.setVisible(true);
 		            
-		            lbl_next_order.setVisible(true);
-		            text_next_order.setVisible(true);
+		            lbl_next_sheet.setVisible(true);
+		            text_next_sheet.setVisible(true);
 		            
 		        }
 		    });
@@ -641,11 +641,11 @@ public class Progect_test {
 		            lbl_result.setVisible(false);
 		            text_result.setVisible(false);
 		            
-		            lbl_last_order.setVisible(true);
-		            text_last_order.setVisible(true);
+		            lbl_last_sheet.setVisible(true);
+		            text_last_sheet.setVisible(true);
 		            
-		            lbl_next_order.setVisible(true);
-		            text_next_order.setVisible(true);
+		            lbl_next_sheet.setVisible(true);
+		            text_next_sheet.setVisible(true);
 		        }
 		    });
 			bg.add(rb_req);
@@ -675,11 +675,11 @@ public class Progect_test {
 		            lbl_esd.setVisible(true);
 		            text_esd.setVisible(true);
 		            
-		            lbl_last_order.setVisible(true);
-		            text_last_order.setVisible(true);
+		            lbl_last_sheet.setVisible(true);
+		            text_last_sheet.setVisible(true);
 		            
-		            lbl_next_order.setVisible(true);
-		            text_next_order.setVisible(true);
+		            lbl_next_sheet.setVisible(true);
+		            text_next_sheet.setVisible(true);
 		        }
 		    });
 			bg.add(rb_purchase);
@@ -709,24 +709,24 @@ public class Progect_test {
 		            lbl_esd.setVisible(false);
 		            text_esd.setVisible(false);
 		            
-		            lbl_last_order.setVisible(true);
-		            text_last_order.setVisible(true);
+		            lbl_last_sheet.setVisible(true);
+		            text_last_sheet.setVisible(true);
 		            
-		            lbl_next_order.setVisible(true);
-		            text_next_order.setVisible(true);
+		            lbl_next_sheet.setVisible(true);
+		            text_next_sheet.setVisible(true);
 		        }
 		    });
 			bg.add(rb_exam);
 			
-			lbl_next_order = new JLabel("Next Order :");
-			lbl_next_order.setBounds(280, 137, 134, 16);
-			lbl_next_order.setHorizontalAlignment(SwingConstants.RIGHT);
-			append_panel.add(lbl_next_order);
+			lbl_next_sheet = new JLabel("Next sheet :");
+			lbl_next_sheet.setBounds(280, 137, 134, 16);
+			lbl_next_sheet.setHorizontalAlignment(SwingConstants.RIGHT);
+			append_panel.add(lbl_next_sheet);
 			
-			text_next_order = new JTextField();
-			text_next_order.setBounds(414, 132, 116, 26);
-			append_panel.add(text_next_order);
-			text_next_order.setColumns(10);
+			text_next_sheet = new JTextField();
+			text_next_sheet.setBounds(414, 132, 116, 26);
+			append_panel.add(text_next_sheet);
+			text_next_sheet.setColumns(10);
 			
 			JRadioButton rb_receipt = new JRadioButton("Receipt");
 			rb_receipt.setBounds(137, 164, 110, 23);
@@ -743,24 +743,24 @@ public class Progect_test {
 		            lbl_esd.setVisible(false);
 		            text_esd.setVisible(false);
 		            
-		            lbl_last_order.setVisible(true);
-		            text_last_order.setVisible(true);
+		            lbl_last_sheet.setVisible(true);
+		            text_last_sheet.setVisible(true);
 		            
-		            lbl_next_order.setVisible(false);
-		            text_next_order.setVisible(false);
+		            lbl_next_sheet.setVisible(false);
+		            text_next_sheet.setVisible(false);
 		        }
 		    });
 			bg.add(rb_receipt);
 			
-			lbl_last_order = new JLabel("Last Order :");
-			lbl_last_order.setBounds(341, 168, 73, 16);
-			lbl_last_order.setHorizontalAlignment(SwingConstants.RIGHT);
-			append_panel.add(lbl_last_order);
+			lbl_last_sheet = new JLabel("Last sheet :");
+			lbl_last_sheet.setBounds(341, 168, 73, 16);
+			lbl_last_sheet.setHorizontalAlignment(SwingConstants.RIGHT);
+			append_panel.add(lbl_last_sheet);
 			
-			text_last_order = new JTextField();
-			text_last_order.setBounds(414, 163, 116, 26);
-			append_panel.add(text_last_order);
-			text_last_order.setColumns(10);
+			text_last_sheet = new JTextField();
+			text_last_sheet.setBounds(414, 163, 116, 26);
+			append_panel.add(text_last_sheet);
+			text_last_sheet.setColumns(10);
 			
 			lbl_price = new JLabel("Price :");
 			lbl_price.setBounds(376, 200, 38, 16);
@@ -798,22 +798,22 @@ public class Progect_test {
 			
 		}
 		
-		//forth panel - remove order
+		//forth panel - remove sheet
 		private void add_remove_panel() {
 					
 			remove_panel = new JPanel();
 			remove_panel.setBounds(0, 0, 666, 348);
-			order_container_panel.add(remove_panel, "Remove");
+			sheet_container_panel.add(remove_panel, "Remove");
 			remove_panel.setLayout(null);
 			
-			JLabel lbl_orderID = new JLabel("*Order ID :");
-			lbl_orderID.setBounds(81, 41, 67, 16);
-			remove_panel.add(lbl_orderID);
+			JLabel lbl_sheetID = new JLabel("*sheet ID :");
+			lbl_sheetID.setBounds(81, 41, 67, 16);
+			remove_panel.add(lbl_sheetID);
 			
-			JTextField text_orderID = new JTextField();
-			text_orderID.setBounds(167, 36, 146, 26);
-			remove_panel.add(text_orderID);
-			text_orderID.setColumns(10);
+			JTextField text_sheetID = new JTextField();
+			text_sheetID.setBounds(167, 36, 146, 26);
+			remove_panel.add(text_sheetID);
+			text_sheetID.setColumns(10);
 			
 			JButton btn_remove = new JButton("Remove");
 			btn_remove.setBounds(494, 35, 93, 29);
@@ -834,7 +834,7 @@ public class Progect_test {
 			remove_panel.add(remove_table);
 			remove_table.setVisible(false);
 			
-			lbl_confirm = new JLabel("Please write down \"I'm PRETTY SURE that I would like to remove this order.\"");
+			lbl_confirm = new JLabel("Please write down \"I'm PRETTY SURE that I would like to remove this sheet.\"");
 			lbl_confirm.setBounds(81, 189, 506, 16);
 			remove_panel.add(lbl_confirm);
 			lbl_confirm.setVisible(false);
@@ -852,12 +852,12 @@ public class Progect_test {
 	
 			}
 		
-		//fifth panel - sign order only supervisor
+		//fifth panel - sign sheet only supervisor
 		private void add_sign_panel() {
 				
 				sign_panel = new JPanel();
 				sign_panel.setBounds(0, 0, 666, 348);
-				order_container_panel.add(sign_panel, "Signature");
+				sheet_container_panel.add(sign_panel, "Signature");
 				sign_panel.setLayout(null);
 				
 				
@@ -866,7 +866,7 @@ public class Progect_test {
 				sign_panel.add(lbl_sorry);
 				//lbl_sorry.setVisible(true);
 				
-				lbl_instruction = new JLabel("Please sign the orders below after reading.");
+				lbl_instruction = new JLabel("Please sign the sheets below after reading.");
 				lbl_instruction.setBounds(62, 68, 411, 16);
 				sign_panel.add(lbl_instruction);
 				//lbl_instruction.setVisible(true);

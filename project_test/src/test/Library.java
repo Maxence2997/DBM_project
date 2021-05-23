@@ -16,13 +16,13 @@ public class Library {
 		
 	}
 	
-	public void instruction(String sql_lan) throws SQLException {
+	/*public void instruction(String sql_lan) throws SQLException {
 		/**
 		 * This method is used to input SQL_instruction/language
 		 * 
 		 */
 		
-			try (ResultSet resultSet = conn.st.executeQuery(sql_lan)) {
+			/*try (ResultSet resultSet = conn.st.executeQuery(sql_lan)) {
 				while (resultSet.next()) {
 					System.out.println(resultSet.getString("Name") + "    " + resultSet.getString(
 							"CountryCode") + "   " + resultSet.getString("District"));
@@ -31,7 +31,7 @@ public class Library {
 			   //e.printStackTrace();
 			}
 			
-	}
+	}*/
 	
 	public boolean is_existed(JTextField field_empID) {  
 		/** To verify if the ID inputed by user is registered in EMPLOYEE or not
