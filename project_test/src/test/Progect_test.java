@@ -44,7 +44,6 @@ public class Progect_test {
 	private JPanel home_panel;
 	private JTextField field_empID;
 	private JLabel lbl_emp;
-	private JButton btn_emp;
 	
 	private JPanel core_home_panel;
 	private JPanel core_sheet_panel;
@@ -88,6 +87,8 @@ public class Progect_test {
 	private JTextField text_supID;
 	private JTextField text_sup_name;
 	private JTable sup_table;
+	
+	private JPanel employee_panel;
 	
 	private JPanel default_panel;
 	
@@ -170,7 +171,7 @@ public class Progect_test {
 	 */
 	private void initialize() {
 		
-		library = new Library();
+		//library = new Library();
 		
 		frame = new JFrame("System");
 		frame.setBounds(100, 100, 666, 466);
@@ -216,32 +217,34 @@ public class Progect_test {
 			button_login.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					if (library.is_existed(field_empID) == true) {
-						card_layout.show(frame.getContentPane(), "home");
-						
-						//System.out.print("Supervisor:"+ library.is_supervisor(field_empID));
-						
-						if (library.is_supervisor(field_empID)==true) lbl_sorry.setVisible(false);
-						
-						
-						else {
-							lbl_instruction.setVisible(false);
-							sign_table.setVisible(false);
-							btn_sign.setVisible(false);
-							btn_refresh.setVisible(false);
-						}
-					}
-										
-						
-					else {
-						
-						login_result.setText("Employee ID is invalid, please refill it.");
-
-						}
-					}
+					card_layout.show(frame.getContentPane(), "home");
+					
+//					if (library.is_existed(field_empID) == true) {
+//						card_layout.show(frame.getContentPane(), "home");
+//						
+//						//System.out.print("Supervisor:"+ library.is_supervisor(field_empID));
+//						
+//						if (library.is_supervisor(field_empID)==true) lbl_sorry.setVisible(false);
+//						
+//						
+//						else {
+//							lbl_instruction.setVisible(false);
+//							sign_table.setVisible(false);
+//							btn_sign.setVisible(false);
+//							btn_refresh.setVisible(false);
+//						}
+//					}
+//										
+//						
+//					else {
+//						
+//						login_result.setText("Employee ID is invalid, please refill it.");
+//
+//						}
+//					}
 				
 				
-			});
+			}});
 			button_login.setBounds(421, 186, 117, 29);
 			login_panel.add(button_login);
 			
@@ -330,9 +333,16 @@ public class Progect_test {
 			lbl_sup.setBounds(227, 228, 385, 16);
 			core_home_panel.add(lbl_sup);
 			
-			btn_emp = new JButton("Employee");
+			JButton btn_emp = new JButton("Employee");
+			btn_emp.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					cl_home.show(container_panel, "employee");
+				}
+			});
 			btn_emp.setBounds(91, 314, 103, 29);
 			core_home_panel.add(btn_emp);
+			
 			
 			lbl_emp = new JLabel("Employees' information maintenance");
 			lbl_emp.setBounds(227, 321, 385, 16);
@@ -827,8 +837,151 @@ public class Progect_test {
 		
 		
 		private void employee_panel() {
-			//wrote by ,05/25
-		}
+			//wrote by Ray ,05/25
+			// by Ray - employee panel
+						employee_panel = new JPanel();
+						container_panel.add(employee_panel, "employee");
+						employee_panel.setLayout(null);
+						
+						JComboBox comboBox_employeeAction = new JComboBox();
+						comboBox_employeeAction.setBounds(251, 35, 160, 27);
+						comboBox_employeeAction.setModel(new DefaultComboBoxModel(new String[] {"Show & Adjust", "Add Employee", "Delete Employee"}));
+						employee_panel.add(comboBox_employeeAction);
+						
+						JLabel lbl_employeeID = new JLabel("Employee ID :");
+						lbl_employeeID.setBounds(115, 73, 86, 16);
+						employee_panel.add(lbl_employeeID);
+						
+						JTextField textField_employeeID = new JTextField();
+						textField_employeeID.setBounds(230, 68, 202, 26);
+						employee_panel.add(textField_employeeID);
+						textField_employeeID.setColumns(16);
+						
+						JButton btn_IDConfirm = new JButton("Confirm");
+						btn_IDConfirm.setBounds(449, 67, 95, 29);
+						employee_panel.add(btn_IDConfirm);
+						
+						JLabel lbl_employeeFirstName = new JLabel("First Name :");
+						lbl_employeeFirstName.setBounds(115, 101, 76, 16);
+						employee_panel.add(lbl_employeeFirstName);
+						
+						JTextField textField_employeeFirstName = new JTextField();
+						textField_employeeFirstName.setBounds(230, 96, 202, 26);
+						employee_panel.add(textField_employeeFirstName);
+						textField_employeeFirstName.setColumns(16);
+						
+						JLabel lbl_employeeLastName = new JLabel("Last Name :");
+						lbl_employeeLastName.setBounds(115, 127, 74, 16);
+						employee_panel.add(lbl_employeeLastName);
+						
+						JTextField textField_employeeLastName = new JTextField();
+						textField_employeeLastName.setBounds(230, 122, 202, 26);
+						employee_panel.add(textField_employeeLastName);
+						textField_employeeLastName.setColumns(16);
+						
+						JLabel lbl_address = new JLabel("Address :");
+						lbl_address.setBounds(115, 153, 59, 16);
+						employee_panel.add(lbl_address);
+						
+						JTextField textField_employeeAddress = new JTextField();
+						textField_employeeAddress.setBounds(230, 148, 202, 26);
+						employee_panel.add(textField_employeeAddress);
+						textField_employeeAddress.setColumns(16);
+						
+						JLabel lbl_employeePhoneNo = new JLabel("Phone Number :");
+						lbl_employeePhoneNo.setBounds(115, 179, 100, 16);
+						employee_panel.add(lbl_employeePhoneNo);
+						
+						JTextField textField_employeePhoneNo = new JTextField();
+						textField_employeePhoneNo.setBounds(230, 174, 202, 26);
+						employee_panel.add(textField_employeePhoneNo);
+						textField_employeePhoneNo.setColumns(16);
+						
+						JLabel lbl_employeeSupervisorID = new JLabel("Supervisor ID :");
+						lbl_employeeSupervisorID.setBounds(115, 205, 92, 16);
+						employee_panel.add(lbl_employeeSupervisorID);
+						
+						JTextField textField_employeeSupervisorID = new JTextField();
+						textField_employeeSupervisorID.setBounds(230, 200, 202, 26);
+						employee_panel.add(textField_employeeSupervisorID);
+						textField_employeeSupervisorID.setColumns(16);
+						
+						JLabel lbl_employeePerformance = new JLabel("Performance :");
+						lbl_employeePerformance.setBounds(115, 234, 86, 16);
+						employee_panel.add(lbl_employeePerformance);
+						
+						JComboBox comboBox_employeePerformance = new JComboBox();
+						comboBox_employeePerformance.setBounds(230, 229, 65, 27);
+						comboBox_employeePerformance.setForeground(Color.BLACK);
+						comboBox_employeePerformance.setModel(new DefaultComboBoxModel(new String[] {"A", "B", "C"}));
+						employee_panel.add(comboBox_employeePerformance);
+						
+						JButton btn_saveChange = new JButton("Save Changes");
+						btn_saveChange.setBounds(266, 290, 130, 29);
+						employee_panel.add(btn_saveChange);
+						
+						inventory_panel = new JPanel();
+						container_panel.add(inventory_panel,"inventory");
+						inventory_panel.setLayout(null);
+						
+						JLabel lbl_stockID = new JLabel("Stock ID :");
+						lbl_stockID.setBounds(111, 40, 61, 16);
+						lbl_stockID.setHorizontalAlignment(SwingConstants.RIGHT);
+						inventory_panel.add(lbl_stockID);
+						
+						JTextField text_stockID = new JTextField();
+						text_stockID.setBounds(176, 35, 108, 26);
+						inventory_panel.add(text_stockID);
+						text_stockID.setColumns(10);
+						
+						JLabel lbl_item = new JLabel("Item Type :");
+						lbl_item.setBounds(364, 40, 70, 16);
+						lbl_item.setHorizontalAlignment(SwingConstants.RIGHT);
+						inventory_panel.add(lbl_item);
+						
+						JTextField textField_3 = new JTextField();
+						textField_3.setBounds(438, 35, 112, 26);
+						inventory_panel.add(textField_3);
+						textField_3.setColumns(10);
+						
+						JLabel lbl_product = new JLabel("Product Module : ");
+						lbl_product.setBounds(62, 102, 110, 16);
+						lbl_product.setHorizontalAlignment(SwingConstants.RIGHT);
+						inventory_panel.add(lbl_product);
+						
+						JTextField text_item = new JTextField();
+						text_item.setBounds(176, 97, 108, 26);
+						inventory_panel.add(text_item);
+						text_item.setColumns(10);
+						
+						JLabel lbl_date = new JLabel("Receive Date : ");
+						lbl_date.setBounds(342, 102, 92, 16);
+						lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
+						inventory_panel.add(lbl_date);
+						
+						JTextField text_date = new JTextField();
+						text_date.setBounds(438, 97, 112, 26);
+						inventory_panel.add(text_date);
+						text_date.setColumns(10);
+						
+						JButton btn_inquire_1 = new JButton("Inquire");
+						btn_inquire_1.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent arg0) {
+								
+								library.btn_inquire_invent();
+								invent_table.setVisible(true);
+							}
+						});
+						btn_inquire_1.setBounds(554, 160, 88, 29);
+						inventory_panel.add(btn_inquire_1);
+						
+						invent_table = new JTable();
+						invent_table.setBounds(33, 194, 609, 189);
+						inventory_panel.add(invent_table);
+						invent_table.setVisible(false);		
+						sup_table.setVisible(false);
+					}
+					
 		
 		
 		private void sheet_panels() {
