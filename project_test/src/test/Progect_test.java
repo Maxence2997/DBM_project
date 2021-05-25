@@ -121,6 +121,8 @@ public class Progect_test {
 	private JTextField text_projectID;
 	private JTextField text_empID;
 	private JTable maint_table;
+	private JTextField textField_4;
+	private JTable table;
 	
 	
 	
@@ -470,7 +472,8 @@ public class Progect_test {
 			
 					
 			JLabel lbl_projectID = new JLabel("project ID :");
-			lbl_projectID.setBounds(76, 11, 60, 16);
+			lbl_projectID.setHorizontalAlignment(SwingConstants.RIGHT);
+			lbl_projectID.setBounds(50, 11, 86, 16);
 			inq_panel2.add(lbl_projectID);
 					
 			JTextField text_projectID = new JTextField();
@@ -538,7 +541,8 @@ public class Progect_test {
 			mod_panel2.setLayout(null);
 			
 			JLabel lbl_projectID = new JLabel("*project ID :");
-			lbl_projectID.setBounds(72, 41, 67, 16);
+			lbl_projectID.setHorizontalAlignment(SwingConstants.RIGHT);
+			lbl_projectID.setBounds(53, 41, 86, 16);
 			mod_panel2.add(lbl_projectID);
 			
 			JTextField text_projectID = new JTextField();
@@ -561,12 +565,12 @@ public class Progect_test {
 			textField.setColumns(10);
 			
 			JLabel lbl_date = new JLabel("Est. Date :");
-			lbl_date.setBounds(299, 165, 88, 16);
+			lbl_date.setBounds(288, 41, 88, 16);
 			lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
 			mod_panel2.add(lbl_date);
 			
 			JTextField text_date = new JTextField();
-			text_date.setBounds(391, 160, 115, 26);
+			text_date.setBounds(388, 36, 115, 26);
 			mod_panel2.add(text_date);
 			text_date.setColumns(10);
 			
@@ -583,6 +587,28 @@ public class Progect_test {
 			maint_container_panel.add(append_panel2, "Append");
 			append_panel2.setLayout(null);
 			
+			JLabel lbl_empID = new JLabel("Employee ID :");
+			lbl_empID.setBounds(62, 101, 86, 16);
+			append_panel2.add(lbl_empID);
+			
+			textField_4 = new JTextField();
+			textField_4.setBounds(148, 96, 116, 26);
+			append_panel2.add(textField_4);
+			textField_4.setColumns(10);
+			
+			JButton btn_append = new JButton("Append");
+			btn_append.setBounds(471, 95, 92, 29);
+			append_panel2.add(btn_append);
+			
+			JLabel lbl_error = new JLabel("Employee ID inputed is invalid, please verify it.");
+			lbl_error.setBounds(62, 159, 318, 16);
+			append_panel2.add(lbl_error);
+			lbl_error.setVisible(false);
+			
+			table = new JTable();
+			table.setBounds(58, 205, 563, 39);
+			append_panel2.add(table);
+			
 			
 			
 		}
@@ -596,7 +622,7 @@ public class Progect_test {
 			remove_panel2.setLayout(null);
 			
 			JLabel lbl_projectID = new JLabel("*project ID :");
-			lbl_projectID.setBounds(81, 41, 67, 16);
+			lbl_projectID.setBounds(81, 41, 86, 16);
 			remove_panel2.add(lbl_projectID);
 			
 			JTextField text_projectID = new JTextField();
