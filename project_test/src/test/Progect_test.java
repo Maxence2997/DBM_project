@@ -125,6 +125,8 @@ public class Progect_test {
 	private JTextField textField_4;
 	private JTable table;
 	
+	private JButton btn_back2Project;
+	
 	
 	
 	
@@ -353,10 +355,23 @@ public class Progect_test {
 				public void actionPerformed(ActionEvent arg0) {
 					
 					cl_home.show(container_panel, "home");
+					btn_back2Project.setVisible(false);
 				}
 			});
 			btn_home.setBounds(579, 409, 81, 29);
 			home_panel.add(btn_home);
+			
+			btn_back2Project = new JButton("Project");
+			btn_back2Project.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					cl_home.show(container_panel, "project");
+					btn_back2Project.setVisible(false);
+				}
+			});
+			btn_back2Project.setBounds(491, 409, 90, 29);
+			btn_back2Project.setVisible(false);
+			home_panel.add(btn_back2Project);
 			
 			project_panel();
 			
@@ -376,6 +391,7 @@ public class Progect_test {
 			btn_maint.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					 cl_home.show(container_panel,"maintenance");
+					 btn_back2Project.setVisible(true);
 				}
 			});
 			btn_maint.setBounds(130, 98, 123, 29);
@@ -389,6 +405,7 @@ public class Progect_test {
 			btn_progress.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					 cl_home.show(container_panel,"progress");
+					 btn_back2Project.setVisible(true);
 				}
 			});
 			btn_progress.setBounds(130, 192, 123, 29);
@@ -402,6 +419,7 @@ public class Progect_test {
 			btn_sheet.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					 cl_home.show(container_panel,"sheet");
+					 btn_back2Project.setVisible(true);
 				}
 			});
 			btn_sheet.setBounds(130, 286, 123, 29);
