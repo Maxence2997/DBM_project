@@ -352,6 +352,7 @@ public class Progect_test {
 			
 			inventory_panel();
 			supplier_panel();
+			employee_panel();
 			
 			
 		}
@@ -824,6 +825,10 @@ public class Progect_test {
 		}
 		
 		
+		
+		private void employee_panel() {
+			//wrote by ,05/25
+		}
 		
 		
 		private void sheet_panels() {
