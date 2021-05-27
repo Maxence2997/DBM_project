@@ -127,10 +127,20 @@ public class Progect_test {
 	
 	private JButton btn_back2Project;
 	
-	
-	
-	
-	
+	//employee panel variables needed for comboBox actionListener
+	private JLabel lbl_employeeFirstName;
+	private JTextField textField_employeeFirstName;
+	private JLabel lbl_employeeLastName;
+	private JTextField textField_employeeLastName;
+	private JLabel lbl_address;
+	private JTextField textField_employeeAddress;
+	private JLabel lbl_employeePhoneNo;
+	private JTextField textField_employeePhoneNo;
+	private JLabel lbl_employeeSupervisorID;
+	private JTextField textField_employeeSupervisorID;
+	private JLabel lbl_employeePerformance;
+	private JComboBox comboBox_employeePerformance;
+	private JButton btn_saveChange;
 	
 	
 	
@@ -864,6 +874,28 @@ public class Progect_test {
 						JComboBox comboBox_employeeAction = new JComboBox();
 						comboBox_employeeAction.setBounds(251, 35, 160, 27);
 						comboBox_employeeAction.setModel(new DefaultComboBoxModel(new String[] {"Show & Adjust", "Add Employee", "Delete Employee"}));
+						comboBox_employeeAction.addActionListener(new ActionListener() {
+				            @Override
+				            public void actionPerformed(ActionEvent e) {
+				            	String function = (String) comboBox_employeeAction.getSelectedItem(); //get the selected item
+				            	
+				            	if (function.equals("Show & Adjust")) {
+				            		lbl_employeeFirstName.setVisible(false);
+				            		textField_employeeFirstName.setVisible(false);
+				            		lbl_employeeLastName.setVisible(false);
+				            		textField_employeeLastName.setVisible(false);
+				            		lbl_address.setVisible(false);
+				            		textField_employeeAddress.setVisible(false);
+				            		lbl_employeePhoneNo.setVisible(false);
+				            		textField_employeePhoneNo.setVisible(false);
+				            		lbl_employeeSupervisorID.setVisible(false);
+				            		textField_employeeSupervisorID.setVisible(false);
+				            		lbl_employeePerformance.setVisible(false);
+				            		comboBox_employeePerformance.setVisible(false);
+				            		btn_saveChange.setVisible(false);
+				            	}
+				            }
+				        });
 						employee_panel.add(comboBox_employeeAction);
 						
 						JLabel lbl_employeeID = new JLabel("Employee ID :");
@@ -877,64 +909,82 @@ public class Progect_test {
 						
 						JButton btn_IDConfirm = new JButton("Confirm");
 						btn_IDConfirm.setBounds(449, 67, 95, 29);
+						btn_IDConfirm.addActionListener(new ActionListener() {
+				            @Override
+				            public void actionPerformed(ActionEvent e) {
+			            		lbl_employeeFirstName.setVisible(true);
+			            		textField_employeeFirstName.setVisible(true);
+			            		lbl_employeeLastName.setVisible(true);
+			            		textField_employeeLastName.setVisible(true);
+			            		lbl_address.setVisible(true);
+			            		textField_employeeAddress.setVisible(true);
+			            		lbl_employeePhoneNo.setVisible(true);
+			            		textField_employeePhoneNo.setVisible(true);
+			            		lbl_employeeSupervisorID.setVisible(true);
+			            		textField_employeeSupervisorID.setVisible(true);
+			            		lbl_employeePerformance.setVisible(true);
+			            		comboBox_employeePerformance.setVisible(true);
+			            		btn_saveChange.setVisible(true);
+				            }
+				        });
 						employee_panel.add(btn_IDConfirm);
 						
-						JLabel lbl_employeeFirstName = new JLabel("First Name :");
+						lbl_employeeFirstName = new JLabel("First Name :");
 						lbl_employeeFirstName.setBounds(115, 101, 76, 16);
 						employee_panel.add(lbl_employeeFirstName);
 						
-						JTextField textField_employeeFirstName = new JTextField();
+						textField_employeeFirstName = new JTextField();
 						textField_employeeFirstName.setBounds(230, 96, 202, 26);
 						employee_panel.add(textField_employeeFirstName);
 						textField_employeeFirstName.setColumns(16);
 						
-						JLabel lbl_employeeLastName = new JLabel("Last Name :");
+						lbl_employeeLastName = new JLabel("Last Name :");
 						lbl_employeeLastName.setBounds(115, 127, 74, 16);
 						employee_panel.add(lbl_employeeLastName);
 						
-						JTextField textField_employeeLastName = new JTextField();
+						textField_employeeLastName = new JTextField();
 						textField_employeeLastName.setBounds(230, 122, 202, 26);
 						employee_panel.add(textField_employeeLastName);
 						textField_employeeLastName.setColumns(16);
 						
-						JLabel lbl_address = new JLabel("Address :");
+						lbl_address = new JLabel("Address :");
 						lbl_address.setBounds(115, 153, 59, 16);
 						employee_panel.add(lbl_address);
 						
-						JTextField textField_employeeAddress = new JTextField();
+						textField_employeeAddress = new JTextField();
 						textField_employeeAddress.setBounds(230, 148, 202, 26);
 						employee_panel.add(textField_employeeAddress);
 						textField_employeeAddress.setColumns(16);
 						
-						JLabel lbl_employeePhoneNo = new JLabel("Phone Number :");
+						lbl_employeePhoneNo = new JLabel("Phone Number :");
 						lbl_employeePhoneNo.setBounds(115, 179, 100, 16);
 						employee_panel.add(lbl_employeePhoneNo);
 						
-						JTextField textField_employeePhoneNo = new JTextField();
+						textField_employeePhoneNo = new JTextField();
 						textField_employeePhoneNo.setBounds(230, 174, 202, 26);
 						employee_panel.add(textField_employeePhoneNo);
 						textField_employeePhoneNo.setColumns(16);
 						
-						JLabel lbl_employeeSupervisorID = new JLabel("Supervisor ID :");
+						lbl_employeeSupervisorID = new JLabel("Supervisor ID :");
 						lbl_employeeSupervisorID.setBounds(115, 205, 92, 16);
 						employee_panel.add(lbl_employeeSupervisorID);
 						
-						JTextField textField_employeeSupervisorID = new JTextField();
+						textField_employeeSupervisorID = new JTextField();
 						textField_employeeSupervisorID.setBounds(230, 200, 202, 26);
 						employee_panel.add(textField_employeeSupervisorID);
 						textField_employeeSupervisorID.setColumns(16);
 						
-						JLabel lbl_employeePerformance = new JLabel("Performance :");
+						lbl_employeePerformance = new JLabel("Performance :");
 						lbl_employeePerformance.setBounds(115, 234, 86, 16);
 						employee_panel.add(lbl_employeePerformance);
 						
-						JComboBox comboBox_employeePerformance = new JComboBox();
+						comboBox_employeePerformance = new JComboBox();
 						comboBox_employeePerformance.setBounds(230, 229, 65, 27);
 						comboBox_employeePerformance.setForeground(Color.BLACK);
 						comboBox_employeePerformance.setModel(new DefaultComboBoxModel(new String[] {"A", "B", "C"}));
 						employee_panel.add(comboBox_employeePerformance);
 						
-						JButton btn_saveChange = new JButton("Save Changes");
+						btn_saveChange = new JButton("Save Changes");
 						btn_saveChange.setBounds(266, 290, 130, 29);
 						employee_panel.add(btn_saveChange);
 						
