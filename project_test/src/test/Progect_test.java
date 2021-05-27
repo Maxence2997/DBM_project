@@ -860,7 +860,7 @@ public class Progect_test {
 					RowSpec.decode("25px"),}));
 			
 			comboBox_supplierAction = new JComboBox();
-			comboBox_supplierAction.setModel(new DefaultComboBoxModel(new String[] {"Inquire", "Maintainence"}));
+			comboBox_supplierAction.setModel(new DefaultComboBoxModel(new String[] {"Inquire", "Maintenance"}));
 			supplierFunction = (String) comboBox_supplierAction.getSelectedItem();
 			comboBox_supplierAction.addActionListener(new ActionListener() {
 	            @Override
@@ -881,7 +881,7 @@ public class Progect_test {
 	            		text_sup_mail.setVisible(false);
 	            		
 	            	}
-	            	else if (supplierFunction.equals("Maintainence")) {
+	            	else if (supplierFunction.equals("Maintenance")) {
 	            		btn_sup_inquire.setVisible(false);
 	            		btn_sup_add.setVisible(true);
 	            		btn_sup_delete.setVisible(true);
