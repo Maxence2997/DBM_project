@@ -28,14 +28,14 @@ public class Project_panels {
 	private void panels() {
 		
 		project_panel = new JPanel();
-		Project_main.container_panel.add(project_panel,"project");
+		Term_project_main.container_panel.add(project_panel,"project");
 		project_panel.setLayout(null);
 		
 		JButton btn_maint = new JButton("Maintenance");
 		btn_maint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				project_subpanels.get_comboBox_project().setSelectedIndex(0);
-				 Project_main.cl_home.show(Project_main.container_panel,"maintenance");
+				 Term_project_main.cl_home.show(Term_project_main.container_panel,"maintenance");
 				// btn_back2Project.setVisible(true);
 			}
 		});
@@ -49,7 +49,7 @@ public class Project_panels {
 		JButton btn_progress= new JButton("Progress ");
 		btn_progress.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Project_main.cl_home.show(Project_main.container_panel,"progress");
+				Term_project_main.cl_home.show(Term_project_main.container_panel,"progress");
 				// btn_back2Project.setVisible(true);
 			}
 		});
@@ -64,7 +64,7 @@ public class Project_panels {
 		btn_sheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				 sheets_panel.get_comboBox_sheets().setSelectedIndex(0);
-				 Project_main.cl_home.show(Project_main.container_panel,"sheets");
+				 Term_project_main.cl_home.show(Term_project_main.container_panel,"sheets");
 				 //btn_back2Project.setVisible(true);
 			}
 		});

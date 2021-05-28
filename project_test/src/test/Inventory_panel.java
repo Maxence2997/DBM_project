@@ -27,7 +27,7 @@ public class Inventory_panel {
 	private void panel() {
 		
 		inventory_panel = new JPanel();
-		Project_main.container_panel.add(inventory_panel,"inventory");
+		Term_project_main.container_panel.add(inventory_panel,"inventory");
 		inventory_panel.setLayout(null);
 		
 		JLabel lbl_stockID = new JLabel("Stock ID :");

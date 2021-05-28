@@ -72,7 +72,7 @@ public class Project_subpanels  {
 			
 			//core sheet panel which contains comboBox
 			core_maint_panel = new JPanel();
-			Project_main.container_panel.add(core_maint_panel,"maintenance");
+			Term_project_main.container_panel.add(core_maint_panel,"maintenance");
 			core_maint_panel.setLayout(null);
 			
 			//smaller panel on the core maint panel
@@ -118,7 +118,7 @@ public class Project_subpanels  {
 			JButton btn_back2project = new JButton("");
 			btn_back2project.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Project_main.cl_home.show(Project_main.container_panel, "project");
+					Term_project_main.cl_home.show(Term_project_main.container_panel, "project");
 				}
 			});
 			Image go_back = new ImageIcon(this.getClass().getResource("/go_back.jpeg")).getImage();
@@ -349,7 +349,7 @@ public class Project_subpanels  {
 		private void proj_progress() {
 			
 			progress_panel = new JPanel();
-			Project_main.container_panel.add(progress_panel,"progress");
+			Term_project_main.container_panel.add(progress_panel,"progress");
 			progress_panel.setLayout(null);
 			
 			JLabel lbl_progress = new JLabel("Progress");
