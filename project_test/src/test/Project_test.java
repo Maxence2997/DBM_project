@@ -50,57 +50,42 @@ public class Project_test {
 	public static JPanel container_panel;
 	
 	
-	private JPanel project_panel;
-	
-	private Project_subpanels project_subpanels; //project subpanels 
-	
-	private Sheets_panel sheets_panel;  // sheets panels
-	
 	private Employee_panel emp_panel;
 	
-	private JPanel inventory_panel;
+	private Supplier_panel sup_panel;
 	
-	private CardLayout card_layout;
-	private CardLayout cl_home;
+	private Inventory_panel inv_panel;
 	
-	
-	//private JLabel label_empID;
-	
-	
-	
-	
-	private JTable invent_table;
-	private JPanel supplier_panel;
-	private JTextField text_supID;
-	private JTextField text_sup_name;
-	private JTable sup_table;
+	private Project_panels pj_panels;
+	public static CardLayout card_layout;
+	public static CardLayout cl_home;
 	
 	
 	
 	
 	
 	
-	private JButton btn_back2Project;
+	/**
+	 * Launch the application.
+	 */
 	
-	//employee panel variables needed for comboBox actionListener
-	
-	
-	//supplier panel variables needed for comboBox actionListener
-	private String supplierFunction;
-	private JLabel lbl_sup_address;
-	private JLabel lbl_sup_contact;
-	private JLabel lbl_sup_mobile;
-	private JLabel lbl_sup_mail;
-	private JComboBox comboBox_supplierAction;
-	private JButton btn_sup_inquire;
-	private JButton btn_sup_add;
-	private JButton btn_sup_delete;
-	private JTextField text_sup_address;
-	private JTextField text_sup_contact;
-	private JTextField text_sup_mobile;
-	private JTextField text_sup_mail;
-	
-
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				
+				  
+				
+				
+				try {
+					Project_test window = new Project_test();
+					window.frame.setVisible(true);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the application.
@@ -115,11 +100,11 @@ public class Project_test {
 	 */
 	private void initialize() {
 		
-		//library = new Library();
+		
 		
 		frame = new JFrame("System");
 		frame.setBounds(100, 100, 666, 466);
-		frame.setVisible(true);
+		
 		card_layout = new CardLayout();
 		
 		frame.getContentPane().setLayout(card_layout);
@@ -127,9 +112,6 @@ public class Project_test {
 		
 		login_panel();
 		home_panel();
-		
-		
-		
 		
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -165,6 +147,8 @@ public class Project_test {
 					card_layout.show(frame.getContentPane(), "home");
 					
 //					if (library.is_existed(field_empID) == true) {
+						
+						//library = new Library();
 //						card_layout.show(frame.getContentPane(), "home");
 //						
 //						//System.out.print("Supervisor:"+ library.is_supervisor(field_empID));
@@ -199,7 +183,7 @@ public class Project_test {
 		
 		private void home_panel() {
 			
-			//home panel which contains only EMPID, button log-out and button home
+			//home panel which contains only EMPID, button log-out, btn_reminder and button home
 			home_panel = new JPanel();
 			frame.getContentPane().add(home_panel, "home");
 			home_panel.setLayout(null);
@@ -268,7 +252,7 @@ public class Project_test {
 			btn_sup.setBounds(91, 222, 103, 29);
 			btn_sup.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					comboBox_supplierAction.setSelectedIndex(0);
+					sup_panel.get_comboBox_supplierAction().setSelectedIndex(0);
 					cl_home.show(container_panel, "supplier");
 					
 				}
@@ -299,306 +283,24 @@ public class Project_test {
 				public void actionPerformed(ActionEvent arg0) {
 					
 					cl_home.show(container_panel, "home");
-					btn_back2Project.setVisible(false);
+					
 				}
 			});
 			btn_home.setBounds(579, 409, 81, 29);
 			home_panel.add(btn_home);
 			
-			btn_back2Project = new JButton("Project");
-			btn_back2Project.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					
-					cl_home.show(container_panel, "project");
-					btn_back2Project.setVisible(false);
-				}
-			});
-			btn_back2Project.setBounds(491, 409, 90, 29);
-			btn_back2Project.setVisible(false);
-			home_panel.add(btn_back2Project);
-			
-			project_panels();
-			inventory_panel();
-			supplier_panel();
+			pj_panels = new Project_panels();
+			inv_panel = new Inventory_panel();
+			sup_panel = new Supplier_panel();
 			emp_panel = new Employee_panel(); 
 			
 			
 		}
 		
 		
-		private void project_panels() {
-			
-			project_panel = new JPanel();
-			container_panel.add(project_panel,"project");
-			project_panel.setLayout(null);
-			
-			JButton btn_maint = new JButton("Maintenance");
-			btn_maint.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					project_subpanels.get_comboBox_project().setSelectedIndex(0);
-					 cl_home.show(container_panel,"maintenance");
-					 btn_back2Project.setVisible(true);
-				}
-			});
-			btn_maint.setBounds(130, 98, 123, 29);
-			project_panel.add(btn_maint);
-			
-			JLabel lbl_project2 = new JLabel("Project Inquiring, Modifying...");
-			lbl_project2.setBounds(315, 104, 187, 16);
-			project_panel.add(lbl_project2);
-			
-			JButton btn_progress= new JButton("Progress ");
-			btn_progress.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					 cl_home.show(container_panel,"progress");
-					 btn_back2Project.setVisible(true);
-				}
-			});
-			btn_progress.setBounds(130, 192, 123, 29);
-			project_panel.add(btn_progress);
-			
-			JLabel lbl_progess = new JLabel("Project Progess Inquiring");
-			lbl_progess.setBounds(315, 198, 187, 16);
-			project_panel.add(lbl_progess);
-			
-			JButton btn_sheet = new JButton("Sheets");
-			btn_sheet.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					 sheets_panel.get_comboBox_sheets().setSelectedIndex(0);
-					 cl_home.show(container_panel,"sheets");
-					 btn_back2Project.setVisible(true);
-				}
-			});
-			btn_sheet.setBounds(130, 286, 123, 29);
-			project_panel.add(btn_sheet);
-			
-			JLabel lbl_sheet = new JLabel("Sheets' Maintenance");
-			lbl_sheet.setBounds(315, 292, 187, 16);
-			project_panel.add(lbl_sheet);
-			
-			JLabel lbl_project = new JLabel("Project");
-			lbl_project.setBounds(6, 6, 61, 16);
-			project_panel.add(lbl_project);
-			
-			project_subpanels = new Project_subpanels();
-			sheets_panel = new Sheets_panel();
-		}
-		
-		
-		private void inventory_panel() {
-			
-			inventory_panel = new JPanel();
-			container_panel.add(inventory_panel,"inventory");
-			inventory_panel.setLayout(null);
-			
-			JLabel lbl_stockID = new JLabel("Stock ID :");
-			lbl_stockID.setBounds(111, 40, 61, 16);
-			lbl_stockID.setHorizontalAlignment(SwingConstants.RIGHT);
-			inventory_panel.add(lbl_stockID);
-			
-			JTextField text_stockID = new JTextField();
-			text_stockID.setBounds(176, 35, 108, 26);
-			inventory_panel.add(text_stockID);
-			text_stockID.setColumns(10);
-			
-			JLabel lbl_item = new JLabel("Item Type :");
-			lbl_item.setBounds(364, 40, 70, 16);
-			lbl_item.setHorizontalAlignment(SwingConstants.RIGHT);
-			inventory_panel.add(lbl_item);
-			
-			JTextField textField_3 = new JTextField();
-			textField_3.setBounds(438, 35, 112, 26);
-			inventory_panel.add(textField_3);
-			textField_3.setColumns(10);
-			
-			JLabel lbl_product = new JLabel("Product Module : ");
-			lbl_product.setBounds(62, 102, 110, 16);
-			lbl_product.setHorizontalAlignment(SwingConstants.RIGHT);
-			inventory_panel.add(lbl_product);
-			
-			JTextField text_item = new JTextField();
-			text_item.setBounds(176, 97, 108, 26);
-			inventory_panel.add(text_item);
-			text_item.setColumns(10);
-			
-			JLabel lbl_date = new JLabel("Receive Date : ");
-			lbl_date.setBounds(342, 102, 92, 16);
-			lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
-			inventory_panel.add(lbl_date);
-			
-			JTextField text_date = new JTextField();
-			text_date.setBounds(438, 97, 112, 26);
-			inventory_panel.add(text_date);
-			text_date.setColumns(10);
-			
-			JButton btn_inquire = new JButton("Inquire");
-			btn_inquire.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					
-					library.btn_inquire_invent();
-					invent_table.setVisible(true);
-				}
-			});
-			btn_inquire.setBounds(554, 160, 88, 29);
-			inventory_panel.add(btn_inquire);
-			
-			invent_table = new JTable();
-			invent_table.setBounds(33, 194, 609, 189);
-			inventory_panel.add(invent_table);
-			invent_table.setVisible(false);		
-		}
-		
 		
 		
 
-		private void supplier_panel() {
-			
-			/*
-			 *  New version GUI by Ray
-			 * 05/27/2021
-			 */
-			
-			supplier_panel = new JPanel();
-			container_panel.add(supplier_panel,"supplier");
-			
-			comboBox_supplierAction = new JComboBox();
-			comboBox_supplierAction.setBounds(266, 4, 135, 27);
-			comboBox_supplierAction.setModel(new DefaultComboBoxModel(new String[] {"Inquire", "Maintenance"}));
-			supplierFunction = (String) comboBox_supplierAction.getSelectedItem();
-			comboBox_supplierAction.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	supplierFunction = (String) comboBox_supplierAction.getSelectedItem();
-	            	
-	            	if (supplierFunction.equals("Inquire")) {
-	            		btn_sup_inquire.setVisible(true);
-	            		btn_sup_add.setVisible(false);
-	            		btn_sup_delete.setVisible(false);
-	            		lbl_sup_address.setVisible(false);
-	            		text_sup_address.setVisible(false);
-	            		lbl_sup_contact.setVisible(false);
-	            		text_sup_contact.setVisible(false);
-	            		lbl_sup_mobile.setVisible(false);
-	            		text_sup_mobile.setVisible(false);
-	            		lbl_sup_mail.setVisible(false);
-	            		text_sup_mail.setVisible(false);
-	            		
-	            	}
-	            	else if (supplierFunction.equals("Maintenance")) {
-	            		btn_sup_inquire.setVisible(false);
-	            		btn_sup_add.setVisible(true);
-	            		btn_sup_delete.setVisible(true);
-	            		lbl_sup_address.setVisible(true);
-	            		text_sup_address.setVisible(true);
-	            		lbl_sup_contact.setVisible(true);
-	            		text_sup_contact.setVisible(true);
-	            		lbl_sup_mobile.setVisible(true);
-	            		text_sup_mobile.setVisible(true);
-	            		lbl_sup_mail.setVisible(true);
-	            		text_sup_mail.setVisible(true);
-	            	}
-	            }
-	        });
-			supplier_panel.setLayout(null);
-			supplier_panel.add(comboBox_supplierAction);
-			
-			JLabel lbl_supID = new JLabel("Supplier ID :");
-			lbl_supID.setBounds(160, 55, 77, 16);
-			lbl_supID.setHorizontalAlignment(SwingConstants.RIGHT);
-			supplier_panel.add(lbl_supID);
-			
-			text_supID = new JTextField();
-			text_supID.setBounds(245, 50, 178, 26);
-			supplier_panel.add(text_supID);
-			text_supID.setColumns(14);
-			
-			JLabel lbl_sup_name = new JLabel("Supplier Name :");
-			lbl_sup_name.setBounds(138, 81, 99, 16);
-			supplier_panel.add(lbl_sup_name);
-			
-			text_sup_name = new JTextField();
-			text_sup_name.setBounds(245, 76, 178, 26);
-			supplier_panel.add(text_sup_name);
-			text_sup_name.setColumns(14);
-			
-			btn_sup_inquire = new JButton("Inquire");
-			btn_sup_inquire.setBounds(491, 76, 88, 26);
-			btn_sup_inquire.setVisible(true);
-			btn_sup_inquire.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					
-					library.btn_inquire_sup();
-					sup_table.setVisible(true);
-				}
-			});
-			supplier_panel.add(btn_sup_inquire);
-			
-			lbl_sup_address = new JLabel("Address :");
-			lbl_sup_address.setBounds(178, 107, 59, 16);
-			lbl_sup_address.setVisible(false);
-			supplier_panel.add(lbl_sup_address);
-			
-			text_sup_address = new JTextField();
-			text_sup_address.setBounds(245, 102, 178, 26);
-			text_sup_address.setVisible(false);
-			supplier_panel.add(text_sup_address);
-			text_sup_address.setColumns(14);
-			
-			lbl_sup_contact = new JLabel("Contact :");
-			lbl_sup_contact.setBounds(180, 133, 57, 16);
-			lbl_sup_contact.setVisible(false);
-			supplier_panel.add(lbl_sup_contact);
-			
-			text_sup_contact = new JTextField();
-			text_sup_contact.setBounds(245, 128, 178, 26);
-			text_sup_contact.setVisible(false);
-			supplier_panel.add(text_sup_contact);
-			text_sup_contact.setColumns(14);
-			
-			lbl_sup_mobile = new JLabel("Mobile :");
-			lbl_sup_mobile.setBounds(187, 159, 50, 16);
-			lbl_sup_mobile.setVisible(false);
-			supplier_panel.add(lbl_sup_mobile);
-			
-			text_sup_mobile = new JTextField();
-			text_sup_mobile.setBounds(245, 154, 178, 26);
-			text_sup_mobile.setVisible(false);
-			supplier_panel.add(text_sup_mobile);
-			text_sup_mobile.setColumns(14);
-			
-			lbl_sup_mail = new JLabel("Mail :");
-			lbl_sup_mail.setBounds(203, 186, 34, 16);
-			lbl_sup_mail.setVisible(false);
-			
-			btn_sup_add = new JButton("Add");
-			btn_sup_add.setBounds(491, 154, 75, 26);
-			btn_sup_add.setVisible(false);
-			btn_sup_add.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				}
-			});
-			supplier_panel.add(btn_sup_add);
-			supplier_panel.add(lbl_sup_mail);
-			
-			text_sup_mail = new JTextField();
-			text_sup_mail.setBounds(245, 181, 178, 26);
-			text_sup_mail.setVisible(false);
-			supplier_panel.add(text_sup_mail);
-			text_sup_mail.setColumns(14);
-			
-			btn_sup_delete = new JButton("Delete");
-			btn_sup_delete.setBounds(491, 180, 84, 29);
-			btn_sup_delete.setVisible(false);
-			supplier_panel.add(btn_sup_delete);
-			
-			sup_table = new JTable();
-			sup_table.setBounds(67, 262, 563, 25);
-			supplier_panel.add(sup_table);
-			sup_table.setVisible(false);
-		}
-		
-		
-		
 		public JTextField get_field_empID() {
 		
 			return this.field_empID;

@@ -13,11 +13,17 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class Employee_panel {
+		/**
+	     * @autohr Jyun-An
+	     * @ver. 1.2.2 05/28   
+	     * Seperated from Project_test
+	     **/
+		
 		
 		private JPanel employee_panel;
 		
 		private String function;
-		private JComboBox comboBox_employeeAction;
+		private JComboBox comboBox_employeeAction;  //employee panel variables needed for comboBox actionListener
 		private JLabel lbl_employeeFirstName;
 		private JTextField textField_employeeFirstName;
 		private JLabel lbl_employeeLastName;

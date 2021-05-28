@@ -17,6 +17,14 @@ import javax.swing.SwingConstants;
 
 public class Sheets_panel  {
 	
+	
+	/**
+     * @autohr Jyun-An
+     * @ver. 1.2.2 05/28   
+     * Seperated from Project_test
+     **/
+	
+	
 	private JTable inq_table;
 	private JTable mod_table;
 	private JTable append_table;	

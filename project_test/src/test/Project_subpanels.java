@@ -2,9 +2,11 @@ package test;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -15,7 +17,11 @@ import javax.swing.SwingConstants;
 
 public class Project_subpanels  {
 	
-   
+	/**
+     * @autohr Jyun-An
+     * @ver. 1.2.2 05/28   
+     * Seperated from Project_test
+     **/
 	
 		public JPanel core_maint_panel;
 		private JPanel maint_container_panel;
@@ -88,7 +94,7 @@ public class Project_subpanels  {
 			
 			
 			comboBox_project = new JComboBox();
-			comboBox_project.setBounds(23, 6, 126, 27);
+			comboBox_project.setBounds(52, 6, 126, 27);
 			comboBox_project.addItem("--------");
 			comboBox_project.addItem("Inquire");
 			comboBox_project.addItem("Modify");
@@ -108,6 +114,18 @@ public class Project_subpanels  {
 		        });
 		
 			core_maint_panel.add(comboBox_project);
+			
+			JButton btn_back2project = new JButton("");
+			btn_back2project.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Project_test.cl_home.show(Project_test.container_panel, "project");
+				}
+			});
+			Image go_back = new ImageIcon(this.getClass().getResource("/go_back.jpeg")).getImage();
+			go_back = go_back.getScaledInstance( 20, 20,  java.awt.Image.SCALE_AREA_AVERAGING) ;
+			btn_back2project.setIcon(new ImageIcon(go_back));
+			btn_back2project.setBounds(16, 4, 30, 30);
+			core_maint_panel.add(btn_back2project);
 		}
 		
 		
