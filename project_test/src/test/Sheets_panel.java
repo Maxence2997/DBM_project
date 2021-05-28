@@ -2,10 +2,12 @@ package test;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -103,7 +105,7 @@ public class Sheets_panel  {
 				add_sign_panel();
 				
 				comboBox_sheets = new JComboBox();
-				comboBox_sheets.setBounds(23, 6, 126, 27);
+				comboBox_sheets.setBounds(64, 6, 126, 27);
 				comboBox_sheets.addItem("--------");
 				comboBox_sheets.addItem("Inquire");
 				comboBox_sheets.addItem("Modify");
@@ -123,6 +125,18 @@ public class Sheets_panel  {
 			        });
 	
 				core_sheet_panel.add(comboBox_sheets);
+				
+				JButton btn_back2project = new JButton("");
+				btn_back2project.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Term_project_main.cl_home.show(Term_project_main.container_panel, "project");
+					}
+				});
+				Image go_back = new ImageIcon(this.getClass().getResource("/go_back.jpeg")).getImage();
+				go_back = go_back.getScaledInstance( 20, 20,  java.awt.Image.SCALE_AREA_AVERAGING) ;
+				btn_back2project.setIcon(new ImageIcon(go_back));
+				btn_back2project.setBounds(16, 4, 30, 30);
+				core_sheet_panel.add(btn_back2project);
 			}
 			
 			
