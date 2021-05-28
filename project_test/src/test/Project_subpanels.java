@@ -86,11 +86,11 @@ public class Project_subpanels  {
 			
 			//add 5 sub project maintenance panels
 			
-			add_default_panel2();
-			add_inquire_panel2();
-			add_modify_panel2();
-			add_append_panel2();
-			add_remove_panel2();
+			add_default_panel();
+			add_inquire_panel();
+			add_modify_panel();
+			add_append_panel();
+			add_remove_panel();
 			
 			
 			comboBox_project = new JComboBox();
@@ -132,7 +132,7 @@ public class Project_subpanels  {
 		
 		
 		//default panel2
-		private void add_default_panel2() {
+		private void add_default_panel() {
 			default_panel2 = new JPanel();
 			default_panel2.setBounds(0, 0, 666, 348);
 			maint_container_panel.add(default_panel2, "--------");
@@ -140,7 +140,7 @@ public class Project_subpanels  {
 		}
 		
 		//first panel - Inquire 
-		private void add_inquire_panel2() {
+		private void add_inquire_panel() {
 			
 			inq_panel2 = new JPanel();
 			inq_panel2.setBounds(0, 0, 666, 348);
@@ -210,7 +210,7 @@ public class Project_subpanels  {
 		}
 		
 		//Second panel - Modify 
-		private void add_modify_panel2() {
+		private void add_modify_panel() {
 			
 			mod_panel2 = new JPanel();
 			mod_panel2.setBounds(0, 0, 666, 348);
@@ -257,7 +257,7 @@ public class Project_subpanels  {
 		}
 		
 		//third panel - Append 
-		private void add_append_panel2() {
+		private void add_append_panel() {
 			
 			append_panel2 = new JPanel();
 			append_panel2.setBounds(0, 0, 666, 348);
@@ -291,7 +291,7 @@ public class Project_subpanels  {
 		}
 		
 		//forth panel - Remove 
-		private void add_remove_panel2() {
+		private void add_remove_panel() {
 					
 			remove_panel2 = new JPanel();
 			remove_panel2.setBounds(0, 0, 666, 348);
