@@ -34,7 +34,7 @@ import java.awt.SystemColor;
 import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
 
-public class Project_test {
+public class Project_main {
 
 	private JFrame frame;
 	private Library library;
@@ -77,7 +77,7 @@ public class Project_test {
 				
 				
 				try {
-					Project_test window = new Project_test();
+					Project_main window = new Project_main();
 					window.frame.setVisible(true);
 					
 				} catch (Exception e) {
@@ -91,7 +91,7 @@ public class Project_test {
 	 * Create the application.
 	 */
 	
-	public Project_test() {
+	public Project_main() {
 		initialize();
 	}
 

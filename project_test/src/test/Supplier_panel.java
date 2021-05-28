@@ -58,7 +58,7 @@ public class Supplier_panel {
 		 */
 		
 		supplier_panel = new JPanel();
-		Project_test.container_panel.add(supplier_panel,"supplier");
+		Project_main.container_panel.add(supplier_panel,"supplier");
 		
 		comboBox_supplierAction = new JComboBox();
 		comboBox_supplierAction.setBounds(266, 4, 135, 27);

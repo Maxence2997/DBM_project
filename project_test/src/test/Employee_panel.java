@@ -53,7 +53,7 @@ public class Employee_panel {
 			//wrote by Ray ,05/25
 			// by Ray - employee panel
 						employee_panel = new JPanel();
-						Project_test.container_panel.add(employee_panel, "employee");
+						Project_main.container_panel.add(employee_panel, "employee");
 						employee_panel.setLayout(null);
 						
 						comboBox_employeeAction = new JComboBox();

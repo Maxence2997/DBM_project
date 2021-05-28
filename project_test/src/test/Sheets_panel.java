@@ -81,7 +81,7 @@ public class Sheets_panel  {
 				
 				//core sheet panel which contains comboBox
 				core_sheet_panel = new JPanel();
-				Project_test.container_panel.add(core_sheet_panel,"sheets");
+				Project_main.container_panel.add(core_sheet_panel,"sheets");
 				core_sheet_panel.setLayout(null);
 				
 				//smaller panel on the core sheet panel
