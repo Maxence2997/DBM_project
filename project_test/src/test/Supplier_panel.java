@@ -32,7 +32,7 @@ public class Supplier_panel {
 		private JLabel lbl_sup_contact;
 		private JLabel lbl_sup_mobile;
 		private JLabel lbl_sup_mail;
-		private JComboBox comboBox_supplierAction;
+		private JComboBox combobox_sup;
 		private JButton btn_sup_inquire;
 		private JButton btn_sup_add;
 		private JButton btn_sup_delete;
@@ -60,14 +60,14 @@ public class Supplier_panel {
 		supplier_panel = new JPanel();
 		Term_project_main.container_panel.add(supplier_panel,"supplier");
 		
-		comboBox_supplierAction = new JComboBox();
-		comboBox_supplierAction.setBounds(266, 4, 135, 27);
-		comboBox_supplierAction.setModel(new DefaultComboBoxModel(new String[] {"Inquire", "Maintenance"}));
-		supplierFunction = (String) comboBox_supplierAction.getSelectedItem();
-		comboBox_supplierAction.addActionListener(new ActionListener() {
+		combobox_sup = new JComboBox();
+		combobox_sup.setBounds(266, 4, 135, 27);
+		combobox_sup.setModel(new DefaultComboBoxModel(new String[] {"Inquire", "Maintenance"}));
+		supplierFunction = (String) combobox_sup.getSelectedItem();
+		combobox_sup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	supplierFunction = (String) comboBox_supplierAction.getSelectedItem();
+            	supplierFunction = (String) combobox_sup.getSelectedItem();
             	
             	if (supplierFunction.equals("Inquire")) {
             		btn_sup_inquire.setVisible(true);
@@ -99,7 +99,7 @@ public class Supplier_panel {
             }
         });
 		supplier_panel.setLayout(null);
-		supplier_panel.add(comboBox_supplierAction);
+		supplier_panel.add(combobox_sup);
 		
 		JLabel lbl_supID = new JLabel("Supplier ID :");
 		lbl_supID.setBounds(160, 55, 77, 16);
@@ -196,8 +196,8 @@ public class Supplier_panel {
 		sup_table.setVisible(false);
 	}
 	
-	public JComboBox get_comboBox_supplierAction() {
+	public JComboBox get_combobox_sup() {
 		
-		return comboBox_supplierAction;
+		return combobox_sup;
 	}
 }

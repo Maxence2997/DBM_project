@@ -252,7 +252,7 @@ public class Term_project_main {
 			btn_sup.setBounds(91, 222, 103, 29);
 			btn_sup.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					sup_panel.get_comboBox_supplierAction().setSelectedIndex(0);
+					sup_panel.get_combobox_sup().setSelectedIndex(0);
 					cl_home.show(container_panel, "supplier");
 					
 				}
