@@ -3,6 +3,8 @@ package test;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -40,6 +42,8 @@ public class Employee_panel {
 		private JButton btn_employeeActionExecute;
 		
 		private JLabel lbl_employee_executeInfo;
+		
+		//JTextField textField_employeeID;
 		
 		
 		public Employee_panel() {
@@ -134,18 +138,34 @@ public class Employee_panel {
 						btn_IDConfirm.addActionListener(new ActionListener() {
 				            @Override
 				            public void actionPerformed(ActionEvent e) {
+				            	
+				            	String []temp = emp_show_adjust(textField_employeeID);
+				            	
 			            		lbl_employeeFirstName.setVisible(true);
 			            		textField_employeeFirstName.setVisible(true);
+			            		textField_employeeFirstName.setText(temp[1]);
+			            		
 			            		lbl_employeeLastName.setVisible(true);
 			            		textField_employeeLastName.setVisible(true);
+			            		textField_employeeLastName.setText(temp[2]);
+			            		
 			            		lbl_address.setVisible(true);
 			            		textField_employeeAddress.setVisible(true);
+			            		textField_employeeAddress.setText(temp[3]);
+			            		
 			            		lbl_employeePhoneNo.setVisible(true);
 			            		textField_employeePhoneNo.setVisible(true);
+			            		textField_employeePhoneNo.setText(temp[4]);
+			            		
 			            		lbl_employeeSupervisorID.setVisible(true);
 			            		textField_employeeSupervisorID.setVisible(true);
+			            		textField_employeeSupervisorID.setText(temp[5]);
+			            		
 			            		lbl_employeePerformance.setVisible(true);
+			            		
 			            		comboBox_employeePerformance.setVisible(true);
+			            		comboBox_employeePerformance.setSelectedItem(temp[6]);
+			            		
 			            		btn_employeeActionExecute.setVisible(true);
 				            }
 				        });
@@ -241,6 +261,40 @@ public class Employee_panel {
 						employee_panel.add(lbl_employee_executeInfo);
 						
 					}
+		
+		
+		public String[] emp_show_adjust(JTextField empID) {
+			/**
+			 * the action after click button confirm in employee panel- show and adjust
+			 * 
+			 * set instruction of SQL 
+			 * 
+			 * 
+			 */
+			String [] temp = new String[7];
+			try {
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM EMPLOYEE WHERE Emp_ID=" + empID.getText());
+				if(resultSet.next()) {
+//					System.out.println(resultSet.getString("Emp_ID") + "    " + resultSet.getString(
+//							"First_name") + "   " + resultSet.getString("Last_name") + "   " + resultSet.getString("Address") 
+//							+ "   " + resultSet.getString("Phone_number") + "   " + resultSet.getString("Supervisor_ID")+ "   " 
+//							+ resultSet.getString("Performance"));
+//					
+					for(int i = 1; i<8; i++) {
+						temp[i-1]= resultSet.getString(i);
+					}
+				}
+				
+				return temp;
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return temp;
+			}
+			
+			
+		}
 	
 		public JComboBox get_comboBox_employeeAction() {
 			

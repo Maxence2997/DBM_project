@@ -16,22 +16,7 @@ public class Library {
 		
 	}
 	
-	/*public void instruction(String sql_lan) throws SQLException {
-		/**
-		 * This method is used to input SQL_instruction/language
-		 * 
-		 */
-		
-			/*try (ResultSet resultSet = conn.st.executeQuery(sql_lan)) {
-				while (resultSet.next()) {
-					System.out.println(resultSet.getString("Name") + "    " + resultSet.getString(
-							"CountryCode") + "   " + resultSet.getString("District"));
-				}
-		   } catch (SQLException e) {
-			   //e.printStackTrace();
-			}
-			
-	}*/
+	
 	
 	public boolean is_existed(JTextField field_empID) {  
 		/** To verify if the ID inputed by user is registered in EMPLOYEE or not
@@ -93,15 +78,28 @@ public class Library {
 		
 	}
 	
-	public void btn_inquire() {
+	public void emp_show_adjust(JTextField empID) {
 		/**
-		 * the action after click btn_inqiure
+		 * the action after click button confirm in employee panel- show and adjust
 		 * 
 		 * set instruction of SQL 
 		 * 
-		 * return the result on Jtable 
+		 * 
 		 */
 		
+		try {
+			ResultSet resultSet = conn.st.executeQuery("SELECT * FROM EMPLOYEE WHERE Emp_ID=" + empID.getText());
+			while(resultSet.next()) {
+				System.out.println(resultSet.getString("Emp_ID") + "    " + resultSet.getString(
+						"FirstName") + "   " + resultSet.getString("LastName") + "   " + resultSet.getString("Address") 
+						+ "   " + resultSet.getString("PhoneNumber") + "   " + resultSet.getString("Supervisor_ID"));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	}

@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
@@ -35,7 +36,9 @@ import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
 
 public class Term_project_main {
-
+	
+	public static connection conn;
+	
 	private JFrame frame;
 	private Library library;
 	
@@ -115,6 +118,8 @@ public class Term_project_main {
 		
 		
 		login_panel();
+		conn = new connection(); 
+		
 		home_panel();
 		
 		
@@ -302,7 +307,65 @@ public class Term_project_main {
 		}
 		
 		
+		public boolean is_existed(JTextField field_empID) {  
+			/** To verify if the ID inputed by user is registered in EMPLOYEE or not
+			 * 
+			 * If the ID registered, return true; else return false
+			 **/
+			
+			boolean existed;
+			
+			try {
+				ResultSet resultSet = conn.st.executeQuery("SELECT Emp_ID FROM EMPLOYEE WHERE Emp_ID="+ field_empID.getText());
+				if (resultSet.next()) {
+					//System.out.println(resultSet.getString("Emp_ID"));
+			
+					existed = true;
+				}
+				
+				else 
+					existed = false;
+				
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					existed = false;
+				}
+				 
+			return existed;
+		}
 		
+		
+		public boolean is_supervisor(JTextField field_empID) {
+			/**
+			 * To verify the ID logged in is supervisor or not
+			 * 
+			 * if it's supervisor ID, return true; else return false
+			 */
+			
+			boolean supervisor;
+			
+			try {
+				ResultSet resultSet = conn.st.executeQuery("SELECT Supervisor FROM EMPLOYEE WHERE Supervisor=" + field_empID.getText());
+				if (resultSet.next()) {
+					System.out.println(resultSet.getString("Supervisor"));
+			
+					supervisor = true;
+				}
+				
+				else 
+					supervisor = false;
+				
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					supervisor = false;
+				}
+				 
+			return supervisor;
+			
+			
+		}
 		
 
 		public JTextField get_field_empID() {
