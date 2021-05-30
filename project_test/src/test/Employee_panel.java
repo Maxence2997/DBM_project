@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -252,7 +253,7 @@ public class Employee_panel {
 									save_change(textField_employeeID);
 								}
 								else if(btn_employeeActionExecute.getText().equalsIgnoreCase("Delete Employee")) {
-									
+									delete_emp(textField_employeeID);
 								}
 								lbl_employee_executeInfo.setVisible(true);
 							}
@@ -323,6 +324,14 @@ public class Employee_panel {
 		}
 		
 		private void delete_emp(JTextField empID) {
+			
+			try {
+				int resultSet = Term_project_main.conn.st.executeUpdate("DELETE FROM EMPLOYEE WHERE Emp_ID="+empID.getText());
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 		
