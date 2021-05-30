@@ -139,7 +139,7 @@ public class Employee_panel {
 				            @Override
 				            public void actionPerformed(ActionEvent e) {
 				            	
-				            	String []temp = emp_show_adjust(textField_employeeID);
+				            	String []temp = show_adjust(textField_employeeID);
 				            	
 			            		lbl_employeeFirstName.setVisible(true);
 			            		textField_employeeFirstName.setVisible(true);
@@ -240,13 +240,20 @@ public class Employee_panel {
 						
 						btn_employeeActionExecute = new JButton();
 						if (function.equals("Show & Adjust")) {
-							btn_employeeActionExecute.setText("Save Changes");
+							btn_employeeActionExecute.setText("Save Change");
 						}
 						else if (function.equals("Delete Employee")) {
 							btn_employeeActionExecute.setText("Delete");
 						}
 						btn_employeeActionExecute.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
+								if (btn_employeeActionExecute.getText().equalsIgnoreCase("Save Change")) {
+									
+									save_change(textField_employeeID);
+								}
+								else if(btn_employeeActionExecute.getText().equalsIgnoreCase("Delete Employee")) {
+									
+								}
 								lbl_employee_executeInfo.setVisible(true);
 							}
 						});
@@ -263,23 +270,24 @@ public class Employee_panel {
 					}
 		
 		
-		public String[] emp_show_adjust(JTextField empID) {
+		private String[] show_adjust(JTextField empID) {
 			/**
+			 * @author jyunanyang
+			 * @since 05/30/2021
+			 * 
 			 * the action after click button confirm in employee panel- show and adjust
-			 * 
 			 * set instruction of SQL 
-			 * 
-			 * 
 			 */
 			String [] temp = new String[7];
 			try {
 				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM EMPLOYEE WHERE Emp_ID=" + empID.getText());
 				if(resultSet.next()) {
+					
 //					System.out.println(resultSet.getString("Emp_ID") + "    " + resultSet.getString(
 //							"First_name") + "   " + resultSet.getString("Last_name") + "   " + resultSet.getString("Address") 
 //							+ "   " + resultSet.getString("Phone_number") + "   " + resultSet.getString("Supervisor_ID")+ "   " 
 //							+ resultSet.getString("Performance"));
-//					
+					
 					for(int i = 1; i<8; i++) {
 						temp[i-1]= resultSet.getString(i);
 					}
@@ -292,9 +300,32 @@ public class Employee_panel {
 				e.printStackTrace();
 				return temp;
 			}
+		}
+		
+		private void save_change(JTextField empID) {
+			/**
+			 * @author jyunanyang
+			 * @since 05/30/2021
+			 * the action after click button save_change in employee panel- show and adjust
+			 */
+			String statement = "UPDATE EMPLOYEE SET First_name=\'"+textField_employeeFirstName.getText()+
+					"\', Last_name=\'"+textField_employeeLastName.getText()+"\', Address=\'"+textField_employeeAddress.getText()
+					+"\', Phone_number=\'"+ textField_employeePhoneNo.getText()+"\', Supervisor_ID="+textField_employeeSupervisorID.getText()
+					+", Performance=\'"+comboBox_employeePerformance.getSelectedItem()+"\' WHERE Emp_ID=" + empID.getText();
+			//System.out.println(statement);
 			
+			try {
+				int resultSet = Term_project_main.conn.st.executeUpdate(statement);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		private void delete_emp(JTextField empID) {
 			
 		}
+		
 	
 		public JComboBox get_comboBox_employeeAction() {
 			
