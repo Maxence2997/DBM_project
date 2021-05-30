@@ -25,7 +25,7 @@ public class Maintenance_panel  {
 	
 		public JPanel core_maint_panel;
 		private JPanel maint_container_panel;
-		private JComboBox comboBox_project;
+		private JComboBox comboBox_pj;
 		
 		private JPanel default_panel2;
 		
@@ -36,19 +36,19 @@ public class Maintenance_panel  {
 		private JPanel append_panel2;
 		
 		private JPanel remove_panel2;
-		private JLabel lbl_confirm;
-		private JTextField text_confirm;
-		private JButton btn_confirm;
-		private JTable table;
+		private JLabel lbl_remv_confirm;
+		private JTextField text_remv_confirm;
+		private JButton btn_remv_confirm;
+		private JTable appd_table;
 		
 		private JTable inq_table2;
 		
 		private JTable mod_table2;
 		
-		private JTable remove_table2;
+		private JTable remv_table2;
 		
 		
-		private JTextField textField_4;
+		private JTextField text_appd_empID;
 		
 		
 		
@@ -91,39 +91,39 @@ public class Maintenance_panel  {
 			add_remove_panel();
 			
 			
-			comboBox_project = new JComboBox();
-			comboBox_project.setBounds(269, 7, 126, 27);
-			comboBox_project.addItem("--------");
-			comboBox_project.addItem("Inquire");
-			comboBox_project.addItem("Modify");
-			comboBox_project.addItem("Append");
-			comboBox_project.addItem("Remove");
+			comboBox_pj = new JComboBox();
+			comboBox_pj.setBounds(269, 7, 126, 27);
+			comboBox_pj.addItem("--------");
+			comboBox_pj.addItem("Inquire");
+			comboBox_pj.addItem("Modify");
+			comboBox_pj.addItem("Append");
+			comboBox_pj.addItem("Remove");
 			
 			
 			
-			comboBox_project.addActionListener(new ActionListener() {
+			comboBox_pj.addActionListener(new ActionListener() {
 		            @Override
 		            public void actionPerformed(ActionEvent e) {
-		            	String function = (String) comboBox_project.getSelectedItem(); //get the selected item
+		            	String function = (String) comboBox_pj.getSelectedItem(); //get the selected item
 		
 		                
 		            	cl_maint.show(maint_container_panel, function);		                   
 		            }
 		        });
 		
-			core_maint_panel.add(comboBox_project);
+			core_maint_panel.add(comboBox_pj);
 			
-			JButton btn_back2project = new JButton("");
-			btn_back2project.addActionListener(new ActionListener() {
+			JButton btn_back2pj = new JButton("");
+			btn_back2pj.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Term_project_main.cl_home.show(Term_project_main.container_panel, "project");
 				}
 			});
 			Image go_back = new ImageIcon(this.getClass().getResource("/go_back.jpeg")).getImage();
 			go_back = go_back.getScaledInstance( 21, 21,  java.awt.Image.SCALE_AREA_AVERAGING) ;
-			btn_back2project.setIcon(new ImageIcon(go_back));
-			btn_back2project.setBounds(16, 4, 30, 30);
-			core_maint_panel.add(btn_back2project);
+			btn_back2pj.setIcon(new ImageIcon(go_back));
+			btn_back2pj.setBounds(16, 4, 30, 30);
+			core_maint_panel.add(btn_back2pj);
 			
 			JLabel lbl_maint = new JLabel("Maintenance");
 			lbl_maint.setBounds(58, 11, 87, 16);
@@ -150,60 +150,60 @@ public class Maintenance_panel  {
 			inq_panel2.setLayout(null);
 			
 					
-			JLabel lbl_projectID = new JLabel("project ID :");
-			lbl_projectID.setHorizontalAlignment(SwingConstants.RIGHT);
-			lbl_projectID.setBounds(50, 11, 86, 16);
-			inq_panel2.add(lbl_projectID);
+			JLabel lbl_inq_pjID = new JLabel("project ID :");
+			lbl_inq_pjID.setHorizontalAlignment(SwingConstants.RIGHT);
+			lbl_inq_pjID.setBounds(50, 11, 86, 16);
+			inq_panel2.add(lbl_inq_pjID);
 					
-			JTextField text_projectID = new JTextField();
-			text_projectID.setBounds(136, 6, 141, 26);
-			inq_panel2.add(text_projectID);
-			text_projectID.setColumns(10);
+			JTextField text_inq_pjID = new JTextField();
+			text_inq_pjID.setBounds(136, 6, 141, 26);
+			inq_panel2.add(text_inq_pjID);
+			text_inq_pjID.setColumns(10);
 					
-			JLabel lbl_date = new JLabel("Est. Date :");
-			lbl_date.setBounds(310, 11, 106, 16);
-			lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
-			inq_panel2.add(lbl_date);
+			JLabel lbl_inq_date = new JLabel("Est. Date :");
+			lbl_inq_date.setBounds(310, 11, 106, 16);
+			lbl_inq_date.setHorizontalAlignment(SwingConstants.RIGHT);
+			inq_panel2.add(lbl_inq_date);
 					
-			JTextField text_date = new JTextField();
-			text_date.setBounds(416, 6, 105, 26);
-			inq_panel2.add(text_date);
-			text_date.setColumns(10);
+			JTextField text_inq_date = new JTextField();
+			text_inq_date.setBounds(416, 6, 105, 26);
+			inq_panel2.add(text_inq_date);
+			text_inq_date.setColumns(10);
 					
-			JButton btn_inquire = new JButton("Inquire");
-			btn_inquire.setBounds(554, 5, 87, 29);
-			btn_inquire.addActionListener(new ActionListener() {
+			JButton btn_inq_inquire = new JButton("Inquire");
+			btn_inq_inquire.setBounds(554, 5, 87, 29);
+			btn_inq_inquire.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					//library.btn_inquire();
 					inq_panel2.setVisible(true);
 				}
 			});
-			inq_panel2.add(btn_inquire);
+			inq_panel2.add(btn_inq_inquire);
 					
-			JLabel lbl_empID = new JLabel("Employee ID :");
-			lbl_empID.setBounds(50, 45, 86, 16);
-			inq_panel2.add(lbl_empID);
+			JLabel lbl_inq_empID = new JLabel("Employee ID :");
+			lbl_inq_empID.setBounds(50, 45, 86, 16);
+			inq_panel2.add(lbl_inq_empID);
 					
-			JTextField text_empID = new JTextField();
-			text_empID.setBounds(136, 40, 141, 26);
-			inq_panel2.add(text_empID);
-			text_empID.setColumns(10);
+			JTextField text_inq_empID = new JTextField();
+			text_inq_empID.setBounds(136, 40, 141, 26);
+			inq_panel2.add(text_inq_empID);
+			text_inq_empID.setColumns(10);
 					
 			
 					
-			JButton btn_last20 = new JButton("Last 20");
-			btn_last20.setBounds(554, 39, 87, 29);
-			btn_last20.addActionListener(new ActionListener() {
+			JButton btn_inq_last20 = new JButton("Last 20");
+			btn_inq_last20.setBounds(554, 39, 87, 29);
+			btn_inq_last20.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					//library.btn_inquire();
 					inq_panel2.setVisible(true);
 				}
 			});
-			inq_panel2.add(btn_last20);
+			inq_panel2.add(btn_inq_last20);
 					
-			JLabel lbl_note = new JLabel("Note : To inquire project, at least one of project ID and Employee ID must be filled in  ");
-			lbl_note.setBounds(29, 73, 529, 16);
-			inq_panel2.add(lbl_note);
+			JLabel lbl_inq_note = new JLabel("Note : To inquire project, at least one of project ID and Employee ID must be filled in  ");
+			lbl_inq_note.setBounds(29, 73, 529, 16);
+			inq_panel2.add(lbl_inq_note);
 					
 			inq_table2 = new JTable();
 			inq_table2.setBounds(29, 94, 612, 254);
@@ -219,39 +219,39 @@ public class Maintenance_panel  {
 			maint_container_panel.add(mod_panel2, "Modify");
 			mod_panel2.setLayout(null);
 			
-			JLabel lbl_projectID = new JLabel("*project ID :");
-			lbl_projectID.setHorizontalAlignment(SwingConstants.RIGHT);
-			lbl_projectID.setBounds(53, 41, 86, 16);
-			mod_panel2.add(lbl_projectID);
+			JLabel lbl_mod_pjID = new JLabel("*project ID :");
+			lbl_mod_pjID.setHorizontalAlignment(SwingConstants.RIGHT);
+			lbl_mod_pjID.setBounds(53, 41, 86, 16);
+			mod_panel2.add(lbl_mod_pjID);
 			
-			JTextField text_projectID = new JTextField();
-			text_projectID.setBounds(143, 36, 115, 26);
-			mod_panel2.add(text_projectID);
-			text_projectID.setColumns(10);
+			JTextField text_mod_pjID = new JTextField();
+			text_mod_pjID.setBounds(143, 36, 115, 26);
+			mod_panel2.add(text_mod_pjID);
+			text_mod_pjID.setColumns(10);
 			
 			
-			JButton btn_modify = new JButton("Modify");
-			btn_modify.setBounds(539, 35, 87, 29);
-			mod_panel2.add(btn_modify);
+			JButton btn_mod_modify = new JButton("Modify");
+			btn_mod_modify.setBounds(539, 35, 87, 29);
+			mod_panel2.add(btn_mod_modify);
 			
-			JLabel lbl_empID = new JLabel("Employee ID :");
-			lbl_empID.setBounds(53, 104, 86, 16);
-			mod_panel2.add(lbl_empID);
+			JLabel lbl_mod_empID = new JLabel("Employee ID :");
+			lbl_mod_empID.setBounds(53, 104, 86, 16);
+			mod_panel2.add(lbl_mod_empID);
 			
-			JTextField textField = new JTextField();
-			textField.setBounds(143, 99, 115, 26);
-			mod_panel2.add(textField);
-			textField.setColumns(10);
+			JTextField text_mod_empID = new JTextField();
+			text_mod_empID.setBounds(143, 99, 115, 26);
+			mod_panel2.add(text_mod_empID);
+			text_mod_empID.setColumns(10);
 			
-			JLabel lbl_date = new JLabel("Est. Date :");
-			lbl_date.setBounds(288, 41, 88, 16);
-			lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
-			mod_panel2.add(lbl_date);
+			JLabel lbl_mod_date = new JLabel("Est. Date :");
+			lbl_mod_date.setBounds(288, 41, 88, 16);
+			lbl_mod_date.setHorizontalAlignment(SwingConstants.RIGHT);
+			mod_panel2.add(lbl_mod_date);
 			
-			JTextField text_date = new JTextField();
-			text_date.setBounds(388, 36, 115, 26);
-			mod_panel2.add(text_date);
-			text_date.setColumns(10);
+			JTextField text_mod_date = new JTextField();
+			text_mod_date.setBounds(388, 36, 115, 26);
+			mod_panel2.add(text_mod_date);
+			text_mod_date.setColumns(10);
 			
 			mod_table2 = new JTable();
 			mod_table2.setBounds(33, 252, 593, 66);
@@ -266,27 +266,27 @@ public class Maintenance_panel  {
 			maint_container_panel.add(append_panel2, "Append");
 			append_panel2.setLayout(null);
 			
-			JLabel lbl_empID = new JLabel("Employee ID :");
-			lbl_empID.setBounds(62, 101, 86, 16);
-			append_panel2.add(lbl_empID);
+			JLabel lbl_appd_empID = new JLabel("Employee ID :");
+			lbl_appd_empID.setBounds(62, 101, 86, 16);
+			append_panel2.add(lbl_appd_empID);
 			
-			textField_4 = new JTextField();
-			textField_4.setBounds(148, 96, 116, 26);
-			append_panel2.add(textField_4);
-			textField_4.setColumns(10);
+			text_appd_empID = new JTextField();
+			text_appd_empID.setBounds(148, 96, 116, 26);
+			append_panel2.add(text_appd_empID);
+			text_appd_empID.setColumns(10);
 			
-			JButton btn_append = new JButton("Append");
-			btn_append.setBounds(471, 95, 92, 29);
-			append_panel2.add(btn_append);
+			JButton btn_appd_append = new JButton("Append");
+			btn_appd_append.setBounds(471, 95, 92, 29);
+			append_panel2.add(btn_appd_append);
 			
-			JLabel lbl_error = new JLabel("Employee ID inputed is invalid, please verify it.");
-			lbl_error.setBounds(62, 159, 318, 16);
-			append_panel2.add(lbl_error);
-			lbl_error.setVisible(false);
+			JLabel lbl_appd_error = new JLabel("Employee ID inputed is invalid, please verify it.");
+			lbl_appd_error.setBounds(62, 159, 318, 16);
+			append_panel2.add(lbl_appd_error);
+			lbl_appd_error.setVisible(false);
 			
-			table = new JTable();
-			table.setBounds(58, 205, 563, 39);
-			append_panel2.add(table);
+			appd_table = new JTable();
+			appd_table.setBounds(58, 205, 563, 39);
+			append_panel2.add(appd_table);
 			
 			
 			
@@ -300,49 +300,49 @@ public class Maintenance_panel  {
 			maint_container_panel.add(remove_panel2, "Remove");
 			remove_panel2.setLayout(null);
 			
-			JLabel lbl_projectID = new JLabel("*project ID :");
-			lbl_projectID.setBounds(81, 41, 86, 16);
-			remove_panel2.add(lbl_projectID);
+			JLabel lbl_remv_pjID = new JLabel("*project ID :");
+			lbl_remv_pjID.setBounds(81, 41, 86, 16);
+			remove_panel2.add(lbl_remv_pjID);
 			
-			JTextField text_projectID = new JTextField();
-			text_projectID.setBounds(167, 36, 146, 26);
-			remove_panel2.add(text_projectID);
-			text_projectID.setColumns(10);
+			JTextField text_remv_pjID = new JTextField();
+			text_remv_pjID.setBounds(167, 36, 146, 26);
+			remove_panel2.add(text_remv_pjID);
+			text_remv_pjID.setColumns(10);
 			
-			JButton btn_remove = new JButton("Remove");
-			btn_remove.setBounds(494, 35, 93, 29);
-			btn_remove.addActionListener(new ActionListener() {
+			JButton btn_remv_remove = new JButton("Remove");
+			btn_remv_remove.setBounds(494, 35, 93, 29);
+			btn_remv_remove.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
 					//library.btn_remove();
-					remove_table2.setVisible(true);
-					lbl_confirm.setVisible(true);
-					text_confirm.setVisible(true);
-					btn_confirm.setVisible(true);
+					remv_table2.setVisible(true);
+					lbl_remv_confirm.setVisible(true);
+					text_remv_confirm.setVisible(true);
+					btn_remv_confirm.setVisible(true);
 				}
 			});
-			remove_panel2.add(btn_remove);
+			remove_panel2.add(btn_remv_remove);
 			
-			remove_table2 = new JTable();
-			remove_table2.setBounds(81, 159, 506, 25);
-			remove_panel2.add(remove_table2);
-			remove_table2.setVisible(false);
+			remv_table2 = new JTable();
+			remv_table2.setBounds(81, 159, 506, 25);
+			remove_panel2.add(remv_table2);
+			remv_table2.setVisible(false);
 			
-			lbl_confirm = new JLabel("Please write down \"I'm PRETTY SURE that I would like to remove this sheet.\"");
-			lbl_confirm.setBounds(81, 189, 506, 16);
-			remove_panel2.add(lbl_confirm);
-			lbl_confirm.setVisible(false);
+			lbl_remv_confirm = new JLabel("Please write down \"I'm PRETTY SURE that I would like to remove this sheet.\"");
+			lbl_remv_confirm.setBounds(81, 189, 506, 16);
+			remove_panel2.add(lbl_remv_confirm);
+			lbl_remv_confirm.setVisible(false);
 			
-			text_confirm = new JTextField();
-			text_confirm.setBounds(81, 210, 506, 26);
-			remove_panel2.add(text_confirm);
-			text_confirm.setColumns(10);
-			text_confirm.setVisible(false);
+			text_remv_confirm = new JTextField();
+			text_remv_confirm.setBounds(81, 210, 506, 26);
+			remove_panel2.add(text_remv_confirm);
+			text_remv_confirm.setColumns(10);
+			text_remv_confirm.setVisible(false);
 			
-			btn_confirm = new JButton("Confirm");
-			btn_confirm.setBounds(494, 301, 93, 29);
-			remove_panel2.add(btn_confirm);
-			btn_confirm.setVisible(false);
+			btn_remv_confirm = new JButton("Confirm");
+			btn_remv_confirm.setBounds(494, 301, 93, 29);
+			remove_panel2.add(btn_remv_confirm);
+			btn_remv_confirm.setVisible(false);
 		
 			}
 		
@@ -354,6 +354,6 @@ public class Maintenance_panel  {
 		
 		public JComboBox get_comboBox_project() {
 			
-			return comboBox_project;
+			return comboBox_pj;
 		}
 }

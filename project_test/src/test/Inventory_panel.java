@@ -14,7 +14,7 @@ public class Inventory_panel {
 	
 	private JPanel inventory_panel;
 	
-	private JTable invent_table;
+	private JTable inv_table;
 	
 	public Inventory_panel() {
 		
@@ -30,60 +30,60 @@ public class Inventory_panel {
 		Term_project_main.container_panel.add(inventory_panel,"inventory");
 		inventory_panel.setLayout(null);
 		
-		JLabel lbl_stockID = new JLabel("Stock ID :");
-		lbl_stockID.setBounds(111, 40, 61, 16);
-		lbl_stockID.setHorizontalAlignment(SwingConstants.RIGHT);
-		inventory_panel.add(lbl_stockID);
+		JLabel lbl_inv_stockID = new JLabel("Stock ID :");
+		lbl_inv_stockID.setBounds(111, 40, 61, 16);
+		lbl_inv_stockID.setHorizontalAlignment(SwingConstants.RIGHT);
+		inventory_panel.add(lbl_inv_stockID);
 		
-		JTextField text_stockID = new JTextField();
-		text_stockID.setBounds(176, 35, 108, 26);
-		inventory_panel.add(text_stockID);
-		text_stockID.setColumns(10);
+		JTextField text_inv_stockID = new JTextField();
+		text_inv_stockID.setBounds(176, 35, 108, 26);
+		inventory_panel.add(text_inv_stockID);
+		text_inv_stockID.setColumns(10);
 		
-		JLabel lbl_item = new JLabel("Item Type :");
-		lbl_item.setBounds(364, 40, 70, 16);
-		lbl_item.setHorizontalAlignment(SwingConstants.RIGHT);
-		inventory_panel.add(lbl_item);
+		JLabel lbl_inv_item = new JLabel("Item Type :");
+		lbl_inv_item.setBounds(364, 40, 70, 16);
+		lbl_inv_item.setHorizontalAlignment(SwingConstants.RIGHT);
+		inventory_panel.add(lbl_inv_item);
 		
-		JTextField textField_3 = new JTextField();
-		textField_3.setBounds(438, 35, 112, 26);
-		inventory_panel.add(textField_3);
-		textField_3.setColumns(10);
+		JTextField text_inv_item = new JTextField();
+		text_inv_item.setBounds(438, 35, 112, 26);
+		inventory_panel.add(text_inv_item);
+		text_inv_item.setColumns(10);
 		
-		JLabel lbl_product = new JLabel("Product Module : ");
-		lbl_product.setBounds(62, 102, 110, 16);
-		lbl_product.setHorizontalAlignment(SwingConstants.RIGHT);
-		inventory_panel.add(lbl_product);
+		JLabel lbl_inv_product = new JLabel("Product Module : ");
+		lbl_inv_product.setBounds(62, 102, 110, 16);
+		lbl_inv_product.setHorizontalAlignment(SwingConstants.RIGHT);
+		inventory_panel.add(lbl_inv_product);
 		
-		JTextField text_item = new JTextField();
-		text_item.setBounds(176, 97, 108, 26);
-		inventory_panel.add(text_item);
-		text_item.setColumns(10);
+		JTextField text_inv_product = new JTextField();
+		text_inv_product.setBounds(176, 97, 108, 26);
+		inventory_panel.add(text_inv_product);
+		text_inv_product.setColumns(10);
 		
-		JLabel lbl_date = new JLabel("Receive Date : ");
-		lbl_date.setBounds(342, 102, 92, 16);
-		lbl_date.setHorizontalAlignment(SwingConstants.RIGHT);
-		inventory_panel.add(lbl_date);
+		JLabel lbl_inv_date = new JLabel("Receive Date : ");
+		lbl_inv_date.setBounds(342, 102, 92, 16);
+		lbl_inv_date.setHorizontalAlignment(SwingConstants.RIGHT);
+		inventory_panel.add(lbl_inv_date);
 		
-		JTextField text_date = new JTextField();
-		text_date.setBounds(438, 97, 112, 26);
-		inventory_panel.add(text_date);
-		text_date.setColumns(10);
+		JTextField text_inv_date = new JTextField();
+		text_inv_date.setBounds(438, 97, 112, 26);
+		inventory_panel.add(text_inv_date);
+		text_inv_date.setColumns(10);
 		
-		JButton btn_inquire = new JButton("Inquire");
-		btn_inquire.addActionListener(new ActionListener() {
+		JButton btn_inv_inquire = new JButton("Inquire");
+		btn_inv_inquire.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				//library.btn_inquire_invent();
-				invent_table.setVisible(true);
+				inv_table.setVisible(true);
 			}
 		});
-		btn_inquire.setBounds(554, 160, 88, 29);
-		inventory_panel.add(btn_inquire);
+		btn_inv_inquire.setBounds(554, 160, 88, 29);
+		inventory_panel.add(btn_inv_inquire);
 		
-		invent_table = new JTable();
-		invent_table.setBounds(33, 194, 609, 189);
-		inventory_panel.add(invent_table);
-		invent_table.setVisible(false);		
+		inv_table = new JTable();
+		inv_table.setBounds(33, 194, 609, 189);
+		inventory_panel.add(inv_table);
+		inv_table.setVisible(false);		
 	}
 }

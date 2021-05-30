@@ -22,22 +22,22 @@ public class Supplier_panel {
 	
 	
 		private JPanel supplier_panel;
-		private JTextField text_supID;
+		private JTextField text_sup_supID;
 		private JTextField text_sup_name;
 		private JTable sup_table;
 	
 	//supplier panel variables needed for comboBox actionListener
 		private String supplierFunction;
-		private JLabel lbl_sup_address;
-		private JLabel lbl_sup_contact;
+		private JLabel lbl_sup_addr;
+		private JLabel lbl_sup_ctc;
 		private JLabel lbl_sup_mobile;
 		private JLabel lbl_sup_mail;
-		private JComboBox combobox_sup;
+		private JComboBox comboBox_sup;
 		private JButton btn_sup_inquire;
 		private JButton btn_sup_add;
 		private JButton btn_sup_delete;
-		private JTextField text_sup_address;
-		private JTextField text_sup_contact;
+		private JTextField text_sup_addr;
+		private JTextField text_sup_ctc;
 		private JTextField text_sup_mobile;
 		private JTextField text_sup_mail;
 	
@@ -60,23 +60,23 @@ public class Supplier_panel {
 		supplier_panel = new JPanel();
 		Term_project_main.container_panel.add(supplier_panel,"supplier");
 		
-		combobox_sup = new JComboBox();
-		combobox_sup.setBounds(266, 4, 135, 27);
-		combobox_sup.setModel(new DefaultComboBoxModel(new String[] {"Inquire", "Maintenance"}));
-		supplierFunction = (String) combobox_sup.getSelectedItem();
-		combobox_sup.addActionListener(new ActionListener() {
+		comboBox_sup = new JComboBox();
+		comboBox_sup.setBounds(266, 4, 135, 27);
+		comboBox_sup.setModel(new DefaultComboBoxModel(new String[] {"Inquire", "Maintenance"}));
+		supplierFunction = (String) comboBox_sup.getSelectedItem();
+		comboBox_sup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	supplierFunction = (String) combobox_sup.getSelectedItem();
+            	supplierFunction = (String) comboBox_sup.getSelectedItem();
             	
             	if (supplierFunction.equals("Inquire")) {
             		btn_sup_inquire.setVisible(true);
             		btn_sup_add.setVisible(false);
             		btn_sup_delete.setVisible(false);
-            		lbl_sup_address.setVisible(false);
-            		text_sup_address.setVisible(false);
-            		lbl_sup_contact.setVisible(false);
-            		text_sup_contact.setVisible(false);
+            		lbl_sup_addr.setVisible(false);
+            		text_sup_addr.setVisible(false);
+            		lbl_sup_ctc.setVisible(false);
+            		text_sup_ctc.setVisible(false);
             		lbl_sup_mobile.setVisible(false);
             		text_sup_mobile.setVisible(false);
             		lbl_sup_mail.setVisible(false);
@@ -87,10 +87,10 @@ public class Supplier_panel {
             		btn_sup_inquire.setVisible(false);
             		btn_sup_add.setVisible(true);
             		btn_sup_delete.setVisible(true);
-            		lbl_sup_address.setVisible(true);
-            		text_sup_address.setVisible(true);
-            		lbl_sup_contact.setVisible(true);
-            		text_sup_contact.setVisible(true);
+            		lbl_sup_addr.setVisible(true);
+            		text_sup_addr.setVisible(true);
+            		lbl_sup_ctc.setVisible(true);
+            		text_sup_ctc.setVisible(true);
             		lbl_sup_mobile.setVisible(true);
             		text_sup_mobile.setVisible(true);
             		lbl_sup_mail.setVisible(true);
@@ -99,17 +99,17 @@ public class Supplier_panel {
             }
         });
 		supplier_panel.setLayout(null);
-		supplier_panel.add(combobox_sup);
+		supplier_panel.add(comboBox_sup);
 		
-		JLabel lbl_supID = new JLabel("Supplier ID :");
-		lbl_supID.setBounds(160, 55, 77, 16);
-		lbl_supID.setHorizontalAlignment(SwingConstants.RIGHT);
-		supplier_panel.add(lbl_supID);
+		JLabel lbl_sup_supID = new JLabel("Supplier ID :");
+		lbl_sup_supID.setBounds(160, 55, 77, 16);
+		lbl_sup_supID.setHorizontalAlignment(SwingConstants.RIGHT);
+		supplier_panel.add(lbl_sup_supID);
 		
-		text_supID = new JTextField();
-		text_supID.setBounds(245, 50, 178, 26);
-		supplier_panel.add(text_supID);
-		text_supID.setColumns(14);
+		text_sup_supID = new JTextField();
+		text_sup_supID.setBounds(245, 50, 178, 26);
+		supplier_panel.add(text_sup_supID);
+		text_sup_supID.setColumns(14);
 		
 		JLabel lbl_sup_name = new JLabel("Supplier Name :");
 		lbl_sup_name.setBounds(138, 81, 99, 16);
@@ -132,27 +132,27 @@ public class Supplier_panel {
 		});
 		supplier_panel.add(btn_sup_inquire);
 		
-		lbl_sup_address = new JLabel("Address :");
-		lbl_sup_address.setBounds(178, 107, 59, 16);
-		lbl_sup_address.setVisible(false);
-		supplier_panel.add(lbl_sup_address);
+		lbl_sup_addr = new JLabel("Address :");
+		lbl_sup_addr.setBounds(178, 107, 59, 16);
+		lbl_sup_addr.setVisible(false);
+		supplier_panel.add(lbl_sup_addr);
 		
-		text_sup_address = new JTextField();
-		text_sup_address.setBounds(245, 102, 178, 26);
-		text_sup_address.setVisible(false);
-		supplier_panel.add(text_sup_address);
-		text_sup_address.setColumns(14);
+		text_sup_addr = new JTextField();
+		text_sup_addr.setBounds(245, 102, 178, 26);
+		text_sup_addr.setVisible(false);
+		supplier_panel.add(text_sup_addr);
+		text_sup_addr.setColumns(14);
 		
-		lbl_sup_contact = new JLabel("Contact :");
-		lbl_sup_contact.setBounds(180, 133, 57, 16);
-		lbl_sup_contact.setVisible(false);
-		supplier_panel.add(lbl_sup_contact);
+		lbl_sup_ctc = new JLabel("Contact :");
+		lbl_sup_ctc.setBounds(180, 133, 57, 16);
+		lbl_sup_ctc.setVisible(false);
+		supplier_panel.add(lbl_sup_ctc);
 		
-		text_sup_contact = new JTextField();
-		text_sup_contact.setBounds(245, 128, 178, 26);
-		text_sup_contact.setVisible(false);
-		supplier_panel.add(text_sup_contact);
-		text_sup_contact.setColumns(14);
+		text_sup_ctc = new JTextField();
+		text_sup_ctc.setBounds(245, 128, 178, 26);
+		text_sup_ctc.setVisible(false);
+		supplier_panel.add(text_sup_ctc);
+		text_sup_ctc.setColumns(14);
 		
 		lbl_sup_mobile = new JLabel("Mobile :");
 		lbl_sup_mobile.setBounds(187, 159, 50, 16);
@@ -198,6 +198,6 @@ public class Supplier_panel {
 	
 	public JComboBox get_combobox_sup() {
 		
-		return combobox_sup;
+		return comboBox_sup;
 	}
 }
