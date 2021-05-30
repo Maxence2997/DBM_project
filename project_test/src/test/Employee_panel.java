@@ -320,6 +320,8 @@ public class Employee_panel {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				//tell user that the supervisor_ID inputed is not in the employee_id list
+				//have to deal with FK constraint
 			}
 		}
 		
