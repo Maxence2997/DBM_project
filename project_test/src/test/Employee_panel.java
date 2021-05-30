@@ -249,8 +249,8 @@ public class Employee_panel {
 						btn_employeeActionExecute.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								if (btn_employeeActionExecute.getText().equalsIgnoreCase("Save Change")) {
-									
-									save_change(textField_employeeID);
+										
+											save_change(textField_employeeID);						
 								}
 								else if(btn_employeeActionExecute.getText().equalsIgnoreCase("Delete Employee")) {
 									delete_emp(textField_employeeID);
@@ -309,21 +309,33 @@ public class Employee_panel {
 			 * @since 05/30/2021
 			 * the action after click button save_change in employee panel- show and adjust
 			 */
-			String statement = "UPDATE EMPLOYEE SET First_name=\'"+textField_employeeFirstName.getText()+
+			String statement;
+			
+			if (function.equalsIgnoreCase("Show & Adjust")) {
+					statement = "UPDATE EMPLOYEE SET First_name=\'"+textField_employeeFirstName.getText()+
 					"\', Last_name=\'"+textField_employeeLastName.getText()+"\', Address=\'"+textField_employeeAddress.getText()
 					+"\', Phone_number=\'"+ textField_employeePhoneNo.getText()+"\', Supervisor_ID="+textField_employeeSupervisorID.getText()
 					+", Performance=\'"+comboBox_employeePerformance.getSelectedItem()+"\' WHERE Emp_ID=" + empID.getText();
-			//System.out.println(statement);
 			
-			try {
-				int resultSet = Term_project_main.conn.st.executeUpdate(statement);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			}
+			else {
+				statement = "INSERT INTO EMPLOYEE(Fires_name, Last_name, Address, Phone_number, Supervisor_ID, Performance) VALUE(\'"+
+						textField_employeeFirstName.getText()+"\', \'"+textField_employeeLastName.getText()+"\', \'"+
+						textField_employeeAddress.getText()+"\', \'"+textField_employeePhoneNo.getText()+"\', "+
+						textField_employeeSupervisorID.getText()+", \'"+comboBox_employeePerformance.getSelectedItem()+ "\')";
+			}
+			System.out.println(statement);
+//			try {
+//				int resultSet = Term_project_main.conn.st.executeUpdate(statement);
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
 				//tell user that the supervisor_ID inputed is not in the employee_id list
 				//have to deal with FK constraint
-			}
+			//}
 		}
+		
+		
 		
 		private void delete_emp(JTextField empID) {
 			
