@@ -16,6 +16,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class Sheets_panel  {
 	
@@ -89,8 +93,7 @@ public class Sheets_panel  {
 				//smaller panel on the core sheet panel
 				cl_sheet = new CardLayout();
 				sheet_container_panel = new JPanel(cl_sheet);
-				
-				sheet_container_panel.setBounds(0, 35, 666, 348);
+				sheet_container_panel.setBounds(0, 36, 662, 348);
 				sheet_container_panel.setBackground(Color.CYAN);
 				core_sheet_panel.add(sheet_container_panel);
 				
@@ -105,7 +108,7 @@ public class Sheets_panel  {
 				add_sign_panel();
 				
 				comboBox_sheets = new JComboBox();
-				comboBox_sheets.setBounds(64, 6, 126, 27);
+				comboBox_sheets.setBounds(262, 6, 120, 27);
 				comboBox_sheets.addItem("--------");
 				comboBox_sheets.addItem("Inquire");
 				comboBox_sheets.addItem("Modify");
@@ -127,16 +130,21 @@ public class Sheets_panel  {
 				core_sheet_panel.add(comboBox_sheets);
 				
 				JButton btn_back2project = new JButton("");
+				btn_back2project.setBounds(10, 3, 36, 30);
 				btn_back2project.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Term_project_main.cl_home.show(Term_project_main.container_panel, "project");
 					}
 				});
 				Image go_back = new ImageIcon(this.getClass().getResource("/go_back.jpeg")).getImage();
-				go_back = go_back.getScaledInstance( 20, 20,  java.awt.Image.SCALE_AREA_AVERAGING) ;
+				go_back = go_back.getScaledInstance( 21, 21,  java.awt.Image.SCALE_AREA_AVERAGING) ;
 				btn_back2project.setIcon(new ImageIcon(go_back));
-				btn_back2project.setBounds(16, 4, 30, 30);
 				core_sheet_panel.add(btn_back2project);
+				
+				JLabel lbl_sheets = new JLabel("Sheets");
+				lbl_sheets.setBounds(54, 10, 41, 16);
+				lbl_sheets.setHorizontalAlignment(SwingConstants.CENTER);
+				core_sheet_panel.add(lbl_sheets);
 			}
 			
 			

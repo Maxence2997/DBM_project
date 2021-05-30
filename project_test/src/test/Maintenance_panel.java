@@ -15,7 +15,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class Project_subpanels  {
+public class Maintenance_panel  {
 	
 	/**
      * @autohr Jyun-An
@@ -47,12 +47,10 @@ public class Project_subpanels  {
 		
 		private JTable remove_table2;
 		
-		private JTextField text_projectID;
-		private JTextField text_empID;
-		private JTable maint_table;
+		
 		private JTextField textField_4;
 		
-		public JPanel progress_panel;
+		
 		
 		private CardLayout cl_maint;
 		
@@ -60,9 +58,9 @@ public class Project_subpanels  {
 		
 		
 		
-		public Project_subpanels() {
+		public Maintenance_panel() {
 			proj_maintc_panels();
-			proj_progress();
+			
 			
 			
 		}
@@ -94,7 +92,7 @@ public class Project_subpanels  {
 			
 			
 			comboBox_project = new JComboBox();
-			comboBox_project.setBounds(52, 6, 126, 27);
+			comboBox_project.setBounds(269, 7, 126, 27);
 			comboBox_project.addItem("--------");
 			comboBox_project.addItem("Inquire");
 			comboBox_project.addItem("Modify");
@@ -122,10 +120,14 @@ public class Project_subpanels  {
 				}
 			});
 			Image go_back = new ImageIcon(this.getClass().getResource("/go_back.jpeg")).getImage();
-			go_back = go_back.getScaledInstance( 20, 20,  java.awt.Image.SCALE_AREA_AVERAGING) ;
+			go_back = go_back.getScaledInstance( 21, 21,  java.awt.Image.SCALE_AREA_AVERAGING) ;
 			btn_back2project.setIcon(new ImageIcon(go_back));
 			btn_back2project.setBounds(16, 4, 30, 30);
 			core_maint_panel.add(btn_back2project);
+			
+			JLabel lbl_maint = new JLabel("Maintenance");
+			lbl_maint.setBounds(58, 11, 87, 16);
+			core_maint_panel.add(lbl_maint);
 		}
 		
 		
@@ -346,46 +348,7 @@ public class Project_subpanels  {
 		
 		
 		
-		private void proj_progress() {
-			
-			progress_panel = new JPanel();
-			Term_project_main.container_panel.add(progress_panel,"progress");
-			progress_panel.setLayout(null);
-			
-			JLabel lbl_progress = new JLabel("Progress");
-			lbl_progress.setBounds(4, 5, 58, 16);
-			progress_panel.add(lbl_progress);
-			
-			JLabel lbl_projectID = new JLabel("Project ID :");
-			lbl_projectID.setBounds(79, 26, 69, 33);
-			progress_panel.add(lbl_projectID);
-			
-			text_projectID = new JTextField();
-			text_projectID.setBounds(152, 29, 119, 26);
-			progress_panel.add(text_projectID);
-			text_projectID.setColumns(10);
-			
-			JButton btn_proj_inquire = new JButton("Inquire");
-			btn_proj_inquire.setBounds(507, 28, 88, 29);
-			progress_panel.add(btn_proj_inquire);
-			
-			JLabel lbl_empID = new JLabel("Employee ID :");
-			lbl_empID.setBounds(62, 94, 86, 33);
-			progress_panel.add(lbl_empID);
-			
-			text_empID = new JTextField();
-			text_empID.setBounds(152, 97, 119, 26);
-			progress_panel.add(text_empID);
-			text_empID.setColumns(10);
-			
-			JButton btn_proj_last20 = new JButton("Last 20");
-			btn_proj_last20.setBounds(507, 96, 90, 29);
-			progress_panel.add(btn_proj_last20);
-			
-			maint_table = new JTable();
-			maint_table.setBounds(62, 162, 622, 191);
-			progress_panel.add(maint_table);
-		}
+		
 		
 		
 		

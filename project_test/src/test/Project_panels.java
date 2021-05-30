@@ -13,9 +13,10 @@ public class Project_panels {
 
 	private JPanel project_panel;
 	
-	private Project_subpanels project_subpanels; //project subpanels 
+	private Maintenance_panel pj_subpanels; //project subpanels 
 	
 	private Sheets_panel sheets_panel;  // sheets panels
+	private Progress_panel prog_panel;
 	
 	public Project_panels() {
 		
@@ -34,7 +35,7 @@ public class Project_panels {
 		JButton btn_maint = new JButton("Maintenance");
 		btn_maint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				project_subpanels.get_comboBox_project().setSelectedIndex(0);
+				pj_subpanels.get_comboBox_project().setSelectedIndex(0);
 				 Term_project_main.cl_home.show(Term_project_main.container_panel,"maintenance");
 				// btn_back2Project.setVisible(true);
 			}
@@ -79,7 +80,8 @@ public class Project_panels {
 		lbl_project.setBounds(6, 6, 61, 16);
 		project_panel.add(lbl_project);
 		
-		project_subpanels = new Project_subpanels();
+		pj_subpanels = new Maintenance_panel();
 		sheets_panel = new Sheets_panel();
+		prog_panel = new Progress_panel();
 	}
 }

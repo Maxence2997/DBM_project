@@ -57,6 +57,10 @@ public class Term_project_main {
 	private Inventory_panel inv_panel;
 	
 	private Project_panels pj_panels;
+	
+	
+	
+	
 	public static CardLayout card_layout;
 	public static CardLayout cl_home;
 	
