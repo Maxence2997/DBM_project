@@ -70,6 +70,7 @@ public class Supplier_panel {
             	supplierFunction = (String) comboBox_sup.getSelectedItem();
             	
             	if (supplierFunction.equals("Inquire")) {
+            		//visibility
             		btn_sup_inquire.setVisible(true);
             		btn_sup_add.setVisible(false);
             		btn_sup_delete.setVisible(false);
@@ -81,9 +82,11 @@ public class Supplier_panel {
             		text_sup_mobile.setVisible(false);
             		lbl_sup_mail.setVisible(false);
             		text_sup_mail.setVisible(false);
-            		
+            		//textField
+            		clear_text();
             	}
             	else if (supplierFunction.equals("Maintenance")) {
+            		//visibility
             		btn_sup_inquire.setVisible(false);
             		btn_sup_add.setVisible(true);
             		btn_sup_delete.setVisible(true);
@@ -95,6 +98,8 @@ public class Supplier_panel {
             		text_sup_mobile.setVisible(true);
             		lbl_sup_mail.setVisible(true);
             		text_sup_mail.setVisible(true);
+            		//textField
+            		clear_text();
             	}
             }
         });
@@ -194,6 +199,19 @@ public class Supplier_panel {
 		sup_table.setBounds(67, 262, 563, 25);
 		supplier_panel.add(sup_table);
 		sup_table.setVisible(false);
+	}
+	
+	//Author: Ray
+	//Date: 05/31
+	//clear all input in JTextField
+	public void clear_text() {
+		
+		text_sup_supID.setText("");
+		text_sup_name.setText("");
+		text_sup_addr.setText("");
+		text_sup_ctc.setText("");
+		text_sup_mobile.setText("");
+		text_sup_mail.setText("");
 	}
 	
 	public JComboBox get_combobox_sup() {

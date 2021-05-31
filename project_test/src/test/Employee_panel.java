@@ -71,6 +71,7 @@ public class Employee_panel {
 				            	function = (String) comboBox_emp_action.getSelectedItem();
 				            	
 				            	if (function.equals("Show & Adjust")) {
+				            		//visibility
 				            		lbl_emp_first.setVisible(false);
 				            		text_emp_first.setVisible(false);
 				            		lbl_emp_last.setVisible(false);
@@ -86,8 +87,12 @@ public class Employee_panel {
 				            		btn_emp_execute.setVisible(false);
 				            		lbl_emp_info.setVisible(false);
 				            		btn_emp_confirmID.setVisible(true);
+				            		
+				            		//textField
+				            		clear_text();
 				            	}
 				            	else if (function.equals("Add Employee")) {
+				            		//visibility
 				            		lbl_emp_first.setVisible(true);
 				            		text_emp_first.setVisible(true);
 				            		lbl_emp_last.setVisible(true);
@@ -103,8 +108,12 @@ public class Employee_panel {
 				            		btn_emp_execute.setVisible(true);
 				            		lbl_emp_info.setVisible(false);
 				            		btn_emp_confirmID.setVisible(false);
+				            		
+				            		//textField
+				            		clear_text();
 				            	}
 				            	else {
+				            		//visibility
 				            		lbl_emp_first.setVisible(false);
 				            		text_emp_first.setVisible(false);
 				            		lbl_emp_last.setVisible(false);
@@ -120,6 +129,8 @@ public class Employee_panel {
 				            		btn_emp_execute.setVisible(false);
 				            		lbl_emp_info.setVisible(false);
 				            		btn_emp_confirmID.setVisible(true);
+				            		//textField
+				            		clear_text();
 				            	}
 				            }
 				        });
@@ -346,6 +357,19 @@ public class Employee_panel {
 				e.printStackTrace();
 			}
 			
+		}
+		
+		//Author: Ray
+		//Date: 05/31
+		//clear all input in JTextField
+		public void clear_text() {
+			
+			text_emp_empID.setText("");
+    		text_emp_first.setText("");
+    		text_emp_last.setText("");
+    		text_emp_addr.setText("");
+    		text_emp_phone.setText("");
+    		text_emp_supervID.setText("");
 		}
 		
 	
