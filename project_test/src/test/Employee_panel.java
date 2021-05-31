@@ -248,11 +248,11 @@ public class Employee_panel {
 						}
 						btn_emp_execute.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								if (btn_employeeActionExecute.getText().equalsIgnoreCase("Save Change")) {
+								if (btn_emp_execute.getText().equalsIgnoreCase("Save Change")) {
 									save_change(text_emp_empID);
 								}
-								else if(btn_employeeActionExecute.getText().equalsIgnoreCase("Delete Employee")) {
-									delete_emp(textField_employeeID);
+								else if(btn_emp_execute.getText().equalsIgnoreCase("Delete Employee")) {
+									delete_emp(text_emp_empID);
 								}
 								lbl_emp_info.setVisible(true);
 							}
@@ -311,17 +311,17 @@ public class Employee_panel {
 			String statement;
 			
 			if (function.equalsIgnoreCase("Show & Adjust")) {
-					statement = "UPDATE EMPLOYEE SET First_name=\'"+textField_employeeFirstName.getText()+
-					"\', Last_name=\'"+textField_employeeLastName.getText()+"\', Address=\'"+textField_employeeAddress.getText()
-					+"\', Phone_number=\'"+ textField_employeePhoneNo.getText()+"\', Supervisor_ID="+textField_employeeSupervisorID.getText()
-					+", Performance=\'"+comboBox_employeePerformance.getSelectedItem()+"\' WHERE Emp_ID=" + empID.getText();
+					statement = "UPDATE EMPLOYEE SET First_name=\'"+text_emp_first.getText()+
+					"\', Last_name=\'"+text_emp_last.getText()+"\', Address=\'"+text_emp_addr.getText()
+					+"\', Phone_number=\'"+ text_emp_phone.getText()+"\', Supervisor_ID="+text_emp_supervID.getText()
+					+", Performance=\'"+comboBox_emp_perf.getSelectedItem()+"\' WHERE Emp_ID=" + empID.getText();
 			
 			}
 			else {
 				statement = "INSERT INTO EMPLOYEE(Fires_name, Last_name, Address, Phone_number, Supervisor_ID, Performance) VALUE(\'"+
-						textField_employeeFirstName.getText()+"\', \'"+textField_employeeLastName.getText()+"\', \'"+
-						textField_employeeAddress.getText()+"\', \'"+textField_employeePhoneNo.getText()+"\', "+
-						textField_employeeSupervisorID.getText()+", \'"+comboBox_employeePerformance.getSelectedItem()+ "\')";
+						text_emp_first.getText()+"\', \'"+text_emp_last.getText()+"\', \'"+
+						text_emp_addr.getText()+"\', \'"+text_emp_phone.getText()+"\', "+
+						text_emp_supervID.getText()+", \'"+comboBox_emp_perf.getSelectedItem()+ "\')";
 			}
 			System.out.println(statement);
 //			try {
