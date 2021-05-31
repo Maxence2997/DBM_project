@@ -197,11 +197,6 @@ public class Term_project_main {
 			frame.getContentPane().add(home_panel, "home");
 			home_panel.setLayout(null);
 			
-			JLabel lbl_empID = new JLabel();
-			lbl_empID.setBounds(0, 5, 179, 16);
-			home_panel.add(lbl_empID);
-			lbl_empID.setText(" Employee ID: " + field_empID.getText());
-			
 			
 			JButton btn_logout = new JButton("Log-out");
 			btn_logout.setBounds(0, 409, 96, 29);
@@ -211,6 +206,11 @@ public class Term_project_main {
 				}
 			});
 			home_panel.add(btn_logout);
+			
+			JLabel lbl_empID = new JLabel();
+			lbl_empID.setBounds(0, 5, 179, 16);
+			home_panel.add(lbl_empID);
+			lbl_empID.setText(" Employee ID: " + field_empID.getText());
 			
 			JButton btn_reminder = new JButton("R");
 			btn_reminder.setBounds(626, 0, 40, 26);
@@ -243,10 +243,17 @@ public class Term_project_main {
 			lbl_sheet.setBounds(227, 45, 385, 16);
 			core_home_panel.add(lbl_sheet);
 			
+			//Author: Ray
+			//Date: 05/31
+			//Default text field as empty
 			JButton btn_invent = new JButton("Inventory");
 			btn_invent.setBounds(91, 131, 103, 29);
 			btn_invent.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					inv_panel.get_text_inv_stockID().setText("");
+					inv_panel.get_text_inv_item().setText("");
+					inv_panel.get_text_inv_pd().setText("");
+					inv_panel.get_text_inv_date().setText("");
 					cl_home.show(container_panel, "inventory");
 					
 				}
@@ -257,11 +264,24 @@ public class Term_project_main {
 			lbl_invent.setBounds(227, 137, 385, 16);
 			core_home_panel.add(lbl_invent);
 			
+			//Author: Ray
+			//Date: 05/31
+			//Default text field as empty
 			JButton btn_sup = new JButton("Supplier");
 			btn_sup.setBounds(91, 222, 103, 29);
 			btn_sup.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					sup_panel.get_combobox_sup().setSelectedIndex(0);
+					sup_panel.get_text_sup_supID().setText("");
+					sup_panel.get_text_sup_name().setText("");
+					sup_panel.get_text_sup_addr().setText("");
+					sup_panel.get_text_sup_ctc().setText("");
+					sup_panel.get_text_sup_mobile().setText("");
+					sup_panel.get_text_sup_mail().setText("");
+					
+					//clear table
+					//sup_panel.get_sup_table().
+					
 					cl_home.show(container_panel, "supplier");
 					
 				}
@@ -272,10 +292,20 @@ public class Term_project_main {
 			lbl_sup.setBounds(227, 228, 385, 16);
 			core_home_panel.add(lbl_sup);
 			
+			//Author: Ray
+			//Date: 05/31
+			//Default text field as empty
 			JButton btn_emp = new JButton("Employee");
 			btn_emp.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					emp_panel.get_comboBox_employeeAction().setSelectedIndex(0);
+					emp_panel.get_text_emp_empID().setText("");
+					emp_panel.get_text_emp_first().setText("");
+					emp_panel.get_text_emp_last().setText("");
+					emp_panel.get_text_emp_addr().setText("");
+					emp_panel.get_text_emp_phone().setText("");
+					emp_panel.get_text_emp_supervID().setText("");
+					emp_panel.get_comboBox_emp_perf().setSelectedIndex(0);
 					cl_home.show(container_panel, "employee");
 				}
 			});

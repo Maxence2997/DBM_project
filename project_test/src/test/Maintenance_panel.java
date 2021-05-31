@@ -50,6 +50,8 @@ public class Maintenance_panel  {
 		
 		private JTextField text_appd_empID;
 		
+		//private JTextField text_inq_pjID;
+		
 		
 		
 		private CardLayout cl_maint;
@@ -135,10 +137,6 @@ public class Maintenance_panel  {
 		
 		//default panel2
 		private void add_default_panel() {
-			default_panel2 = new JPanel();
-			default_panel2.setBounds(0, 0, 666, 348);
-			maint_container_panel.add(default_panel2, "--------");
-			default_panel2.setLayout(null);
 		}
 		
 		//first panel - Inquire 
@@ -208,6 +206,10 @@ public class Maintenance_panel  {
 			inq_table2 = new JTable();
 			inq_table2.setBounds(29, 94, 612, 254);
 			inq_panel2.add(inq_table2);
+			default_panel2 = new JPanel();
+			inq_panel2.add(default_panel2);
+			default_panel2.setBounds(0, 0, 666, 348);
+			default_panel2.setLayout(null);
 			inq_table2.setVisible(false);
 		}
 		
@@ -356,4 +358,9 @@ public class Maintenance_panel  {
 			
 			return comboBox_pj;
 		}
+		
+//		public JTextField get_text_inq_pjID() {
+//			
+//			return text_inq_pjID;
+//		}
 }

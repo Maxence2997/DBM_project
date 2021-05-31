@@ -16,6 +16,11 @@ public class Inventory_panel {
 	
 	private JTable inv_table;
 	
+	private JTextField text_inv_stockID;
+	private JTextField text_inv_item;
+	private JTextField text_inv_pd;
+	private JTextField text_inv_date;
+	
 	public Inventory_panel() {
 		
 		
@@ -35,7 +40,7 @@ public class Inventory_panel {
 		lbl_inv_stockID.setHorizontalAlignment(SwingConstants.RIGHT);
 		inventory_panel.add(lbl_inv_stockID);
 		
-		JTextField text_inv_stockID = new JTextField();
+		text_inv_stockID = new JTextField();
 		text_inv_stockID.setBounds(176, 35, 108, 26);
 		inventory_panel.add(text_inv_stockID);
 		text_inv_stockID.setColumns(10);
@@ -45,27 +50,27 @@ public class Inventory_panel {
 		lbl_inv_item.setHorizontalAlignment(SwingConstants.RIGHT);
 		inventory_panel.add(lbl_inv_item);
 		
-		JTextField text_inv_item = new JTextField();
+		text_inv_item = new JTextField();
 		text_inv_item.setBounds(438, 35, 112, 26);
 		inventory_panel.add(text_inv_item);
 		text_inv_item.setColumns(10);
 		
-		JLabel lbl_inv_product = new JLabel("Product Module : ");
-		lbl_inv_product.setBounds(62, 102, 110, 16);
-		lbl_inv_product.setHorizontalAlignment(SwingConstants.RIGHT);
-		inventory_panel.add(lbl_inv_product);
+		JLabel lbl_inv_pd = new JLabel("Product Module : ");
+		lbl_inv_pd.setBounds(62, 102, 110, 16);
+		lbl_inv_pd.setHorizontalAlignment(SwingConstants.RIGHT);
+		inventory_panel.add(lbl_inv_pd);
 		
-		JTextField text_inv_product = new JTextField();
-		text_inv_product.setBounds(176, 97, 108, 26);
-		inventory_panel.add(text_inv_product);
-		text_inv_product.setColumns(10);
+		text_inv_pd = new JTextField();
+		text_inv_pd.setBounds(176, 97, 108, 26);
+		inventory_panel.add(text_inv_pd);
+		text_inv_pd.setColumns(10);
 		
 		JLabel lbl_inv_date = new JLabel("Receive Date : ");
 		lbl_inv_date.setBounds(342, 102, 92, 16);
 		lbl_inv_date.setHorizontalAlignment(SwingConstants.RIGHT);
 		inventory_panel.add(lbl_inv_date);
 		
-		JTextField text_inv_date = new JTextField();
+		text_inv_date = new JTextField();
 		text_inv_date.setBounds(438, 97, 112, 26);
 		inventory_panel.add(text_inv_date);
 		text_inv_date.setColumns(10);
@@ -85,5 +90,25 @@ public class Inventory_panel {
 		inv_table.setBounds(33, 194, 609, 189);
 		inventory_panel.add(inv_table);
 		inv_table.setVisible(false);		
+	}
+	
+	public JTextField get_text_inv_stockID() {
+		
+		return text_inv_stockID;
+	}
+	
+	public JTextField get_text_inv_item() {
+		
+		return text_inv_item;
+	}
+	
+	public JTextField get_text_inv_pd() {
+		
+		return text_inv_pd;
+	}
+	
+	public JTextField get_text_inv_date() {
+		
+		return text_inv_date;
 	}
 }

@@ -200,4 +200,39 @@ public class Supplier_panel {
 		
 		return comboBox_sup;
 	}
+	
+	public JTextField get_text_sup_supID() {
+		
+		return text_sup_supID;
+	}
+	
+	public JTextField get_text_sup_name() {
+		
+		return text_sup_name;
+	}
+	
+	public JTextField get_text_sup_addr() {
+		
+		return text_sup_addr;
+	}
+	
+	public JTextField get_text_sup_ctc() {
+		
+		return text_sup_ctc;
+	}
+	
+	public JTextField get_text_sup_mobile() {
+		
+		return text_sup_mobile;
+	}
+	
+	public JTextField get_text_sup_mail() {
+		
+		return text_sup_mail;
+	}
+	
+	public JTable get_sup_table() {
+		
+		return sup_table;
+	}
 }

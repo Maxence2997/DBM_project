@@ -44,7 +44,7 @@ public class Employee_panel {
 		
 		private JLabel lbl_emp_info;
 		
-		//JTextField textField_employeeID;
+		private JTextField text_emp_empID;
 		
 		
 		public Employee_panel() {
@@ -129,7 +129,7 @@ public class Employee_panel {
 						lbl_emp_empID.setBounds(115, 73, 86, 16);
 						employee_panel.add(lbl_emp_empID);
 						
-						JTextField text_emp_empID = new JTextField();
+						text_emp_empID = new JTextField();
 						text_emp_empID.setBounds(230, 68, 202, 26);
 						employee_panel.add(text_emp_empID);
 						text_emp_empID.setColumns(16);
@@ -352,6 +352,41 @@ public class Employee_panel {
 		public JComboBox get_comboBox_employeeAction() {
 			
 			return comboBox_emp_action;
+		}
+		
+		public JTextField get_text_emp_empID() {
+			
+			return text_emp_empID;
+		}
+		
+		public JTextField get_text_emp_first() {
+			
+			return text_emp_first;
+		}
+		
+		public JTextField get_text_emp_last() {
+			
+			return text_emp_last;
+		}
+		
+		public JTextField get_text_emp_addr() {
+			
+			return text_emp_addr;
+		}
+		
+		public JTextField get_text_emp_phone() {
+			
+			return text_emp_phone;
+		}
+		
+		public JTextField get_text_emp_supervID() {
+			
+			return text_emp_supervID;
+		}
+		
+		public JComboBox get_comboBox_emp_perf() {
+			
+			return comboBox_emp_perf;
 		}
 		
 }
