@@ -1,5 +1,6 @@
 package test;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -10,9 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollBar;
 
 public class Supplier_panel {
 		
@@ -42,7 +46,9 @@ public class Supplier_panel {
 		private JTextField text_sup_ctc;
 		private JTextField text_sup_mobile;
 		private JTextField text_sup_mail;
-	
+		
+		private DefaultTableModel table_model;
+		private DefaultTableModel sup_table_model;
 	
 	public Supplier_panel() {
 		
@@ -76,12 +82,16 @@ public class Supplier_panel {
             		btn_sup_inquire.setVisible(true);
             		btn_sup_add.setVisible(false);
             		btn_sup_delete.setVisible(false);
+            		
             		lbl_sup_addr.setVisible(false);
             		text_sup_addr.setVisible(false);
+            		
             		lbl_sup_ctc.setVisible(false);
             		text_sup_ctc.setVisible(false);
+            		
             		lbl_sup_mobile.setVisible(false);
             		text_sup_mobile.setVisible(false);
+            		
             		lbl_sup_mail.setVisible(false);
             		text_sup_mail.setVisible(false);
             		//textField
@@ -92,12 +102,16 @@ public class Supplier_panel {
             		btn_sup_inquire.setVisible(false);
             		btn_sup_add.setVisible(true);
             		btn_sup_delete.setVisible(true);
+            		
             		lbl_sup_addr.setVisible(true);
             		text_sup_addr.setVisible(true);
+            		
             		lbl_sup_ctc.setVisible(true);
             		text_sup_ctc.setVisible(true);
+            		
             		lbl_sup_mobile.setVisible(true);
             		text_sup_mobile.setVisible(true);
+            		
             		lbl_sup_mail.setVisible(true);
             		text_sup_mail.setVisible(true);
             		//textField
@@ -133,9 +147,17 @@ public class Supplier_panel {
 		btn_sup_inquire.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				inquire();
-				//library.btn_inquire_sup();
-				sup_table.setVisible(true);
+				String [] table_test_data = {"SP0000002", "Q-TIP", "Taoyuan", "Smith", "(02)25450002", "supplier002@gmail.com"};
+				
+				String [] temp = inquire();
+
+				if (temp.length != 0){ // found data match
+
+					sup_table_model.addRow(temp);
+					sup_table.setVisible(true); 
+	
+				}
+				//sup_table_model.addRow(table_test_data); //for test table
 			}
 		});
 		supplier_panel.add(btn_sup_inquire);
@@ -198,10 +220,36 @@ public class Supplier_panel {
 		btn_sup_delete.setVisible(false);
 		supplier_panel.add(btn_sup_delete);
 		
-		sup_table = new JTable();
-		sup_table.setBounds(67, 262, 563, 25);
+		String[] column_names = { "Supplier_ID", "Supplier_name", "Supplier_Address", "Contact_name", "Contact_mobile",
+		"Contact_email"};
+		
+		sup_table_model = new DefaultTableModel();
+		for(int i=0; i<6; i++) {
+			sup_table_model.addColumn(column_names[i]);
+		}
+		
+		
+		sup_table = new JTable(sup_table_model){ 
+			
+			@Override
+			public boolean isCellEditable(int row, int column)
+            {
+                                  return false;}//uneditable
+            
+			}; 
+		sup_table.setBounds(48, 263, 563, 100);
+		sup_table.getColumn("Contact_email").setWidth(100);;
 		supplier_panel.add(sup_table);
+		
+		
+		JScrollPane scrollpane = new JScrollPane(sup_table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollpane.setBounds(48, 288, 563, 50);
+		supplier_panel.add(scrollpane);
 		sup_table.setVisible(false);
+		
+		
+		
+		
 	}
 	
 	
@@ -226,36 +274,67 @@ public class Supplier_panel {
 		
 		String [] temp = new String[6];
 		
-		if ((text_sup_name.getText()!="")&(text_sup_supID.getText()!="")){
-			
-			try {
-				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE (Supplier_ID=\'" + 
-										text_sup_supID.getText()+"\' AND Supplier_name=\'" +text_sup_name.getText()+"\')");
-				if(resultSet.next()) {
-					
-					
-//					System.out.println(resultSet.getString("Supplier_ID") + "    " + resultSet.getString(
-//							"Supplier_name") + "   " + resultSet.getString("Supplier_Address") + "   " + resultSet.getString("Contact_name") 
-//							+ "   " + resultSet.getString("Contact_mobbile") + "   " + resultSet.getString("Contact_email"));
-					
-					for(int i = 1; i<7; i++) {
-						temp[i-1]= resultSet.getString(i);
+		if (!(text_sup_supID.getText().isEmpty())){
+//			System.out.println("IN1");
+			if(!(text_sup_name.getText().isEmpty())) {
+//				System.out.println("IN1-1");
+				try {
+					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE (Supplier_ID=\'" + 
+											text_sup_supID.getText()+"\' AND Supplier_name=\'" +text_sup_name.getText()+"\')");
+					if(resultSet.next()) {
+						
+						
+//						System.out.println(resultSet.getString("Supplier_ID") + "    " + resultSet.getString(
+//								"Supplier_name") + "   " + resultSet.getString("Supplier_Address") + "   " + resultSet.getString("Contact_name") 
+//								+ "   " + resultSet.getString("Contact_mobile") + "   " + resultSet.getString("Contact_email"));
+						
+						for(int i = 1; i<7; i++) {
+							temp[i-1]= resultSet.getString(i);
+						}
+						return temp;
 					}
 					return temp;
-				}
-				return temp;
-				
-				
-				}catch (SQLException e) {
 					
-				// TODO Auto-generated catch block
-					e.printStackTrace();
+					
+					}catch (SQLException e) {
+						
+					// TODO Auto-generated catch block
+						e.printStackTrace();
+						return temp;
+				}
+			}else{
+				
+//				System.out.println("IN1-2");
+				try {
+					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_ID=\'" 
+											+ text_sup_supID.getText() +"\'");
+//					System.out.println("SELECT * FROM SUPPLIER WHERE Supplier_ID=\'" 
+//							+ text_sup_supID.getText() +"\'");
+					if(resultSet.next()) {
+						
+//						System.out.println(resultSet.getString("Supplier_ID") + "    " + resultSet.getString(
+//								"Supplier_name") + "   " + resultSet.getString("Supplier_Address") + "   " + resultSet.getString("Contact_name") 
+//								+ "   " + resultSet.getString("Contact_mobile") + "   " + resultSet.getString("Contact_email"));
+						
+						for(int i = 1; i<7; i++) {
+							temp[i-1]= resultSet.getString(i);
+						}
+						return temp;
+					}
+					
 					return temp;
-			}
+				
+					
+					}catch (SQLException e) {
+					// TODO Auto-generated catch block
+						e.printStackTrace();
+						return temp;
+				}			
+			}	
 		}
 		
-		else if (text_sup_name.getText()!=""){
-			
+		else if (!(text_sup_name.getText().isEmpty())){
+//			System.out.println("IN2");
 			try {
 				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_name=\'" + 
 											text_sup_name.getText()+"\'");
@@ -263,7 +342,7 @@ public class Supplier_panel {
 					
 //					System.out.println(resultSet.getString("Supplier_ID") + "    " + resultSet.getString(
 //							"Supplier_name") + "   " + resultSet.getString("Supplier_Address") + "   " + resultSet.getString("Contact_name") 
-//							+ "   " + resultSet.getString("Contact_mobbile") + "   " + resultSet.getString("Contact_email"));
+//							+ "   " + resultSet.getString("Contact_mobile") + "   " + resultSet.getString("Contact_email"));
 					
 					for(int i = 1; i<7; i++) {
 						temp[i-1]= resultSet.getString(i);
@@ -280,40 +359,11 @@ public class Supplier_panel {
 					return temp;
 			}
 		}
-		
-		else if (text_sup_supID.getText()!="") {
-			
-			try {
-				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_ID=\'" 
-										+ text_sup_supID.getText() +"\'");
-				if(resultSet.next()) {
-					
-//					System.out.println(resultSet.getString("Supplier_ID") + "    " + resultSet.getString(
-//							"Supplier_name") + "   " + resultSet.getString("Supplier_Address") + "   " + resultSet.getString("Contact_name") 
-//							+ "   " + resultSet.getString("Contact_mobbile") + "   " + resultSet.getString("Contact_email"));
-					
-					for(int i = 1; i<7; i++) {
-						temp[i-1]= resultSet.getString(i);
-					}
-					return temp;
-				}
-				
-				return temp;
-			
-				
-				}catch (SQLException e) {
-				// TODO Auto-generated catch block
-					e.printStackTrace();
-					return temp;
-			}
-			
-		}
-		
+		System.out.println("out");
 		return temp;
 		
-		
-		
 	}
+	
 	
 	
 	public JComboBox get_combobox_sup() {
