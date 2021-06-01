@@ -210,6 +210,7 @@ public class Supplier_panel {
 		btn_sup_add.setVisible(false);
 		btn_sup_add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				add();
 			}
 		});
 		supplier_panel.add(btn_sup_add);
@@ -373,6 +374,46 @@ public class Supplier_panel {
 	}
 	
 	
+	
+	private int add() {
+		
+		int resultSet=0;
+		try {
+			resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO SUPPLIER(Supplier_ID, Supplier_name, Supplier_address, "
+					+ "Contact_name, Contact_mobile, Contact_email) VALUE (\'"+ get_new_supID()+"\', \'"+text_sup_name.getText()+"\', \'"+
+					text_sup_addr.getText()+"\', \'"+ text_sup_ctc.getText()+"\', \'"+
+					text_sup_mobile.getText()+"\', \'"+text_sup_mail.getText()+"\')");
+			return 	resultSet;	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 	resultSet;	
+		}
+	}
+	
+	private String get_new_supID() {
+		
+		String new_ID = "";
+		try {
+			ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT Supplier_ID FROM SUPPLIER  ORDER  BY Supplier_ID DESC");
+			if (resultSet.next()) {
+				
+			String previous = resultSet.getString(1);
+		    new_ID = "SP" + String.format("%07d", (Integer.parseInt(previous.substring(2,previous.length()))+1));
+		   // System.out.println(new_ID);
+		    return new_ID;
+			}
+			return new_ID;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new_ID;
+		}
+		
+	}
+	private void delete() {
+		
+	}
 	
 	public JComboBox get_combobox_sup() {
 		
