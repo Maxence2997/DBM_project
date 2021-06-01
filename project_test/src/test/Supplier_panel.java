@@ -326,9 +326,8 @@ public class Supplier_panel {
 					// TODO Auto-generated catch block
 						e.printStackTrace();
 						return temp;
-				}
+					}
 			}else{
-				
 //				System.out.println("IN1-2");
 				try {
 					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_ID=\'" 
@@ -346,7 +345,6 @@ public class Supplier_panel {
 						}
 						return temp;
 					}
-					
 					return temp;
 				
 					
@@ -356,9 +354,7 @@ public class Supplier_panel {
 						return temp;
 				}			
 			}	
-		}
-		
-		else if (!(text_sup_name.getText().isEmpty())){
+		}else if (!(text_sup_name.getText().isEmpty())){
 //			System.out.println("IN2");
 			try {
 				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_name=\'" + 
@@ -374,15 +370,13 @@ public class Supplier_panel {
 					}
 					return temp;
 				}
-				
 				return temp;
-				
-				
+
 				}catch (SQLException e) {
 				// TODO Auto-generated catch block
 					e.printStackTrace();
 					return temp;
-			}
+				}
 		}
 		System.out.println("out");
 		return temp;
