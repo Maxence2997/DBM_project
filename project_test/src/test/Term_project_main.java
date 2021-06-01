@@ -250,7 +250,7 @@ public class Term_project_main {
 			btn_invent.setBounds(91, 131, 103, 29);
 			btn_invent.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					inv_panel.get_text_inv_stockID().setText("");
+					inv_panel.get_text_invID().setText("");
 					inv_panel.get_text_inv_item().setText("");
 					inv_panel.get_text_inv_pd().setText("");
 					
