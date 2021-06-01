@@ -2,6 +2,8 @@ package test;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -131,6 +133,7 @@ public class Supplier_panel {
 		btn_sup_inquire.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				inquire();
 				//library.btn_inquire_sup();
 				sup_table.setVisible(true);
 			}
@@ -201,11 +204,12 @@ public class Supplier_panel {
 		sup_table.setVisible(false);
 	}
 	
-	//Author: Ray
-	//Date: 05/31
-	//clear all input in JTextField
-	public void clear_text() {
-		
+	
+	private void clear_text() {
+		/** @Author Ray
+		 *  @since 05/31
+		 *  clear all input in JTextField
+		 **/
 		text_sup_supID.setText("");
 		text_sup_name.setText("");
 		text_sup_addr.setText("");
@@ -213,6 +217,104 @@ public class Supplier_panel {
 		text_sup_mobile.setText("");
 		text_sup_mail.setText("");
 	}
+	
+	private String[] inquire() {
+		/** 
+		 * @Author jyun-an
+		 *  @since 06/01
+		 **/
+		
+		String [] temp = new String[6];
+		
+		if ((text_sup_name.getText()!="")&(text_sup_supID.getText()!="")){
+			
+			try {
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE (Supplier_ID=\'" + 
+										text_sup_supID.getText()+"\' AND Supplier_name=\'" +text_sup_name.getText()+"\')");
+				if(resultSet.next()) {
+					
+					
+//					System.out.println(resultSet.getString("Supplier_ID") + "    " + resultSet.getString(
+//							"Supplier_name") + "   " + resultSet.getString("Supplier_Address") + "   " + resultSet.getString("Contact_name") 
+//							+ "   " + resultSet.getString("Contact_mobbile") + "   " + resultSet.getString("Contact_email"));
+					
+					for(int i = 1; i<7; i++) {
+						temp[i-1]= resultSet.getString(i);
+					}
+					return temp;
+				}
+				return temp;
+				
+				
+				}catch (SQLException e) {
+					
+				// TODO Auto-generated catch block
+					e.printStackTrace();
+					return temp;
+			}
+		}
+		
+		else if (text_sup_name.getText()!=""){
+			
+			try {
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_name=\'" + 
+											text_sup_name.getText()+"\'");
+				if(resultSet.next()) {
+					
+//					System.out.println(resultSet.getString("Supplier_ID") + "    " + resultSet.getString(
+//							"Supplier_name") + "   " + resultSet.getString("Supplier_Address") + "   " + resultSet.getString("Contact_name") 
+//							+ "   " + resultSet.getString("Contact_mobbile") + "   " + resultSet.getString("Contact_email"));
+					
+					for(int i = 1; i<7; i++) {
+						temp[i-1]= resultSet.getString(i);
+					}
+					return temp;
+				}
+				
+				return temp;
+				
+				
+				}catch (SQLException e) {
+				// TODO Auto-generated catch block
+					e.printStackTrace();
+					return temp;
+			}
+		}
+		
+		else if (text_sup_supID.getText()!="") {
+			
+			try {
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_ID=\'" 
+										+ text_sup_supID.getText() +"\'");
+				if(resultSet.next()) {
+					
+//					System.out.println(resultSet.getString("Supplier_ID") + "    " + resultSet.getString(
+//							"Supplier_name") + "   " + resultSet.getString("Supplier_Address") + "   " + resultSet.getString("Contact_name") 
+//							+ "   " + resultSet.getString("Contact_mobbile") + "   " + resultSet.getString("Contact_email"));
+					
+					for(int i = 1; i<7; i++) {
+						temp[i-1]= resultSet.getString(i);
+					}
+					return temp;
+				}
+				
+				return temp;
+			
+				
+				}catch (SQLException e) {
+				// TODO Auto-generated catch block
+					e.printStackTrace();
+					return temp;
+			}
+			
+		}
+		
+		return temp;
+		
+		
+		
+	}
+	
 	
 	public JComboBox get_combobox_sup() {
 		
