@@ -2,11 +2,15 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="image"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11"/>
-	<classpathentry kind="lib" path="/Users/yajuiliu/eclipse-workspace/mysql-connector-java-8.0.16/mysql-connector-java-8.0.16.jar"/>
-	<classpathentry kind="lib" path="/Users/yajuiliu/Desktop/DBM_Project/DBM_project/project_test/jgoodies-common-1.8.0.jar"/>
-	<classpathentry kind="lib" path="/Users/yajuiliu/Desktop/DBM_Project/DBM_project/project_test/jgoodies-forms-1.8.0-sources.jar"/>
-	<classpathentry kind="lib" path="/Users/yajuiliu/Desktop/DBM_Project/DBM_project/project_test/jgoodies-forms-1.8.0.jar"/>
-	<classpathentry kind="lib" path="/Users/yajuiliu/Desktop/DBM_Project/DBM_project/project_test/jgoodies.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jgoodies.jar"/>
+	<classpathentry kind="lib" path="lib/jgoodies-common-1.8.0.jar"/>
+	<classpathentry kind="lib" path="lib/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="lib/jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.23.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
