@@ -395,7 +395,7 @@ public class Supplier_panel {
 		/** 
 		 * @Author jyun-an
 		 *  @since 06/01
-		 *  to ADD data in SUPPLIER table, and it hasn't been tested
+		 *  to ADD data in SUPPLIER table
 		 **/
 		int resultSet=0;
 		try {
@@ -463,6 +463,7 @@ public class Supplier_panel {
 			return 	resultSet;	
 		}
 	}
+	
 	
 	public JComboBox get_combobox_sup() {
 		

@@ -253,7 +253,7 @@ public class Term_project_main {
 					inv_panel.get_text_inv_stockID().setText("");
 					inv_panel.get_text_inv_item().setText("");
 					inv_panel.get_text_inv_pd().setText("");
-					inv_panel.get_text_inv_date().setText("");
+					
 					cl_home.show(container_panel, "inventory");
 					
 				}
