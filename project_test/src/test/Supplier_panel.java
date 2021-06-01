@@ -31,6 +31,7 @@ public class Supplier_panel {
 		private JTextField text_sup_supID;
 		private JTextField text_sup_name;
 		private JTable sup_table;
+		private JScrollPane scrollpane;
 	
 	//supplier panel variables needed for comboBox actionListener
 		private String supplierFunction;
@@ -149,15 +150,20 @@ public class Supplier_panel {
 				
 				String [] table_test_data = {"SP0000002", "Q-TIP", "Taoyuan", "Smith", "(02)25450002", "supplier002@gmail.com"};
 				
-				String [] temp = inquire();
+				String [] temp = inquire();					//if want to test table without DB, mark from this line until whole if-else
 
 				if (temp.length != 0){ // found data match
 
 					sup_table_model.addRow(temp);
 					sup_table.setVisible(true); 
-	
+					scrollpane.setVisible(true);
+				}  											
+//				sup_table_model.addRow(table_test_data); //for test table
+//				sup_table.setVisible(true); 
+//				scrollpane.setVisible(true);
+				else {
+					//no found data match 
 				}
-				//sup_table_model.addRow(table_test_data); //for test table
 			}
 		});
 		supplier_panel.add(btn_sup_inquire);
@@ -239,13 +245,15 @@ public class Supplier_panel {
 			}; 
 		sup_table.setBounds(48, 263, 563, 100);
 		sup_table.getColumn("Contact_email").setWidth(100);;
+		sup_table.setVisible(false);
 		supplier_panel.add(sup_table);
 		
 		
-		JScrollPane scrollpane = new JScrollPane(sup_table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollpane = new JScrollPane(sup_table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollpane.setBounds(48, 288, 563, 50);
+		scrollpane.setVisible(false);
 		supplier_panel.add(scrollpane);
-		sup_table.setVisible(false);
+		
 		
 		
 		
