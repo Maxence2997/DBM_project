@@ -210,7 +210,12 @@ public class Supplier_panel {
 		btn_sup_add.setVisible(false);
 		btn_sup_add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				add();
+				if (add()==1) {
+					//set message to let user know it succeed. 
+				}
+				else {
+					//set message to let user know it failed. 
+				}
 			}
 		});
 		supplier_panel.add(btn_sup_add);
@@ -223,6 +228,16 @@ public class Supplier_panel {
 		text_sup_mail.setColumns(14);
 		
 		btn_sup_delete = new JButton("Delete");
+		btn_sup_delete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (delete()==1) {
+					//set message to let user know it succeed. 
+				}
+				else {
+					//set message to let user know it failed. 
+				}
+			}
+		});
 		btn_sup_delete.setBounds(491, 180, 84, 29);
 		btn_sup_delete.setVisible(false);
 		supplier_panel.add(btn_sup_delete);
@@ -279,6 +294,7 @@ public class Supplier_panel {
 		/** 
 		 * @Author jyun-an
 		 *  @since 06/01
+		 *  to inquire data in SUPPLIER table 
 		 **/
 		
 		String [] temp = new String[6];
@@ -376,13 +392,21 @@ public class Supplier_panel {
 	
 	
 	private int add() {
-		
+		/** 
+		 * @Author jyun-an
+		 *  @since 06/01
+		 *  to ADD data in SUPPLIER table, and it hasn't been tested
+		 **/
 		int resultSet=0;
 		try {
 			resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO SUPPLIER(Supplier_ID, Supplier_name, Supplier_address, "
 					+ "Contact_name, Contact_mobile, Contact_email) VALUE (\'"+ get_new_supID()+"\', \'"+text_sup_name.getText()+"\', \'"+
 					text_sup_addr.getText()+"\', \'"+ text_sup_ctc.getText()+"\', \'"+
 					text_sup_mobile.getText()+"\', \'"+text_sup_mail.getText()+"\')");
+//			System.out.print("INSERT INTO SUPPLIER(Supplier_ID, Supplier_name, Supplier_address, "
+//					+ "Contact_name, Contact_mobile, Contact_email) VALUE (\'"+ get_new_supID()+"\', \'"+text_sup_name.getText()+"\', \'"+
+//					text_sup_addr.getText()+"\', \'"+ text_sup_ctc.getText()+"\', \'"+
+//					text_sup_mobile.getText()+"\', \'"+text_sup_mail.getText()+"\')");
 			return 	resultSet;	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -392,6 +416,11 @@ public class Supplier_panel {
 	}
 	
 	private String get_new_supID() {
+		/** 
+		 * @Author jyun-an
+		 *  @since 06/01
+		 *  to get the last ID in  SUPPLIER table and product next one.
+		 **/
 		
 		String new_ID = "";
 		try {
@@ -411,8 +440,28 @@ public class Supplier_panel {
 		}
 		
 	}
-	private void delete() {
+	
+	
+	private int delete() {
+		/** 
+		 * @Author jyun-an
+		 *  @since 06/01
+		 *  to delete data in  SUPPLIER table and product next one.
+		 **/
 		
+		int resultSet=0;
+		try {
+			resultSet = Term_project_main.conn.st.executeUpdate("DELETE FROM SUPPLIER WHERE Supplier_ID=\'" + text_sup_supID.getText()+"\'");
+//			System.out.print("INSERT INTO SUPPLIER(Supplier_ID, Supplier_name, Supplier_address, "
+//					+ "Contact_name, Contact_mobile, Contact_email) VALUE (\'"+ get_new_supID()+"\', \'"+text_sup_name.getText()+"\', \'"+
+//					text_sup_addr.getText()+"\', \'"+ text_sup_ctc.getText()+"\', \'"+
+//					text_sup_mobile.getText()+"\', \'"+text_sup_mail.getText()+"\')");
+			return 	resultSet;	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 	resultSet;	
+		}
 	}
 	
 	public JComboBox get_combobox_sup() {
