@@ -74,31 +74,40 @@ public class Inventory_panel {
 		JButton btn_inv_inquire = new JButton("Inquire");
 		btn_inv_inquire.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String[][] temp =inquire();
-				for(int j=0; j<temp.length;j++) {
-					System.out.print("\n");
-					for(int i=0;i<4;i++) {
-						System.out.print(temp[j][i]+"\t");
-					
-				}}
 				
-				//library.btn_inquire_invent();
+				
+				String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
+				
+//				String[][] temp =inquire();
+				String [][] temp = {{"27000002","90000001","CPU","C0x055"},{"27000003","90000001","CPU","C0z004"},			
+														{"27000004","90000002","CPU","C0z035"}};  //for testing without connection
+  	
+	//			for(int j=0; j<temp.length;j++) {
+	//				System.out.print("\n");
+	//				for(int i=0;i<4;i++) {
+	//					System.out.print(temp[j][i]+"\t");	
+	//					}	
+	//				}
+				if (temp[0].length != 0){ // found data match
+				inv_table_model = new DefaultTableModel(temp,column_names);  
+				inv_table.setModel(inv_table_model);
 				inv_table.setVisible(true);
+				}
 			}
 		});
 		btn_inv_inquire.setBounds(554, 160, 88, 29);
 		inventory_panel.add(btn_inv_inquire);
 		
 		
-		String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
+//		String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
+//		
+//		inv_table_model = new DefaultTableModel();
+//		for(int i=0; i<4; i++) {
+//			inv_table_model.addColumn(column_names[i]);
+//		}
 		
-		inv_table_model = new DefaultTableModel();
-		for(int i=0; i<4; i++) {
-			inv_table_model.addColumn(column_names[i]);
-		}
 		
-		
-		inv_table = new JTable(inv_table_model){ 
+		inv_table = new JTable(){ 
 			@Override
 			public boolean isCellEditable(int row, int column)
             {
@@ -106,12 +115,13 @@ public class Inventory_panel {
             
 			}; 
 		inv_table.setBounds(33, 194, 604, 172);
-		inventory_panel.add(inv_table);
+		//inventory_panel.add(inv_table);
 		inv_table.setVisible(true);
 
-//		scrollpane = new JScrollPane(inv_table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-//		scrollpane.setBounds(48, 288, 563, 50);
-//		scrollpane.setVisible(true);
+		scrollpane = new JScrollPane(inv_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollpane.setBounds(49,241,563,87);
+		
+		inventory_panel.add(scrollpane);
 
 	
 	}
@@ -125,7 +135,7 @@ public class Inventory_panel {
 		/** 
 		 * @Author jyun-an
 		 *  @since 06/01
-		 *  to inquire data in SUPPLIER table 
+		 *  to inquire data in INVENTORY table 
 		 **/
 
 		String [][] temp;
@@ -144,12 +154,7 @@ public class Inventory_panel {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
 													text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\' AND Module_type=\'"
 													+text_inv_pd.getText()+"\')");
-							if(resultSet.next()) {
-
-//								System.out.println("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-//								text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\' AND Module_type=\'"
-//								+text_inv_pd.getText()+"\')");
-								
+							if(resultSet.next()) {								
 								for(int i = 1; i<5; i++) {
 									temp[0][i-1]= resultSet.getString(i);
 								}
@@ -169,11 +174,7 @@ public class Inventory_panel {
 						try {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
 													text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\')");
-							if(resultSet.next()) {
-
-//								System.out.println("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-//								text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\')");
-								
+							if(resultSet.next()) {	
 								for(int i = 1; i<5; i++) {
 									temp[0][i-1]= resultSet.getString(i);
 								}
@@ -196,11 +197,6 @@ public class Inventory_panel {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
 														text_invID.getText()+" AND Module_type=\'"+text_inv_pd.getText()+"\')");
 							if(resultSet.next()) {
-
-//								System.out.println("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-//								text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\' AND Module_type=\'"
-//								+text_inv_pd.getText()+"\')");
-									
 								for(int i = 1; i<5; i++) {
 									temp[0][i-1]= resultSet.getString(i);
 								}
@@ -209,7 +205,6 @@ public class Inventory_panel {
 							return temp;
 						
 						}catch (SQLException e) {
-								
 						// TODO Auto-generated catch block
 							e.printStackTrace();
 							return temp;
@@ -221,11 +216,6 @@ public class Inventory_panel {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Inv_ID=" + 
 													text_invID.getText());
 						if(resultSet.next()) {
-
-//							System.out.println("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-//							text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\' AND Module_type=\'"
-//							+text_inv_pd.getText()+"\')");
-								
 							for(int i = 1; i<5; i++) {
 								temp[0][i-1]= resultSet.getString(i);
 							}
@@ -250,11 +240,6 @@ public class Inventory_panel {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Item_name=\'"+
 														text_inv_item.getText()+"\' AND Module_type=\'"+text_inv_pd.getText()+"\')");
 						if(resultSet.next()) {
-
-//							System.out.println("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-//							text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\' AND Module_type=\'"
-//							+text_inv_pd.getText()+"\')");
-									
 							for(int i = 1; i<5; i++) {
 								temp[0][i-1]= resultSet.getString(i);
 							}
@@ -262,9 +247,7 @@ public class Inventory_panel {
 						}
 						return temp;
 						
-						
-					}catch (SQLException e) {
-								
+					}catch (SQLException e) {	
 						//TODO Auto-generated catch block
 						e.printStackTrace();
 						return temp;
@@ -278,26 +261,18 @@ public class Inventory_panel {
 															text_inv_item.getText()+"\'");
 						int k=0;
 						while(resultSet.next()) {
-
-//							System.out.println("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-//							text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\' AND Module_type=\'"
-//							+text_inv_pd.getText()+"\')");
-										
 							for(int i = 1; i<5; i++) {
 								temp[k][i-1]= resultSet.getString(i);
 								}
 								k++;
 							}return temp;
 							
-							
-						}catch (SQLException e) {
-									
+						}catch (SQLException e) {	
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 								return temp;
 							}
-						}
-						
+						}	
 		}else {
 			System.out.println("IN 0-0-1");
 			temp = new String[10][4];
@@ -307,16 +282,11 @@ public class Inventory_panel {
 											text_inv_pd.getText()+"\'");
 				int k=0;
 				while(resultSet.next()) {
-//					System.out.println("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-//					text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\' AND Module_type=\'"
-//					+text_inv_pd.getText()+"\')");
-						
 					for(int i = 1; i<5; i++) {
 						temp[k][i-1]= resultSet.getString(i);
 					}
 					k++;
 				}return temp;
-			
 			
 			}catch (SQLException e) {
 				// TODO Auto-generated catch block

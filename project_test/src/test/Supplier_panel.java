@@ -1,5 +1,6 @@
 package test;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.JScrollBar;
 
 public class Supplier_panel {
@@ -148,19 +150,33 @@ public class Supplier_panel {
 		btn_sup_inquire.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String [] table_test_data = {"SP0000002", "Q-TIP", "Taoyuan", "Smith", "(02)25450002", "supplier002@gmail.com"};
+				String [][] temp = {{"SP0000002", "Q-TIP", "Taoyuan", "Smith", "(02)25450002", 
+													"supplier002@gmail.com"}};  // for testing without connection
 				
-				//String [] temp = inquire();					//if want to test table without DB, mark from this line until whole if-else
+				String[] column_names = { "SupplierID", "Name", "Address", "Contact", "Mobile",
+											"Email"};
+				//String [][] temp = inquire();					//if want to test table without DB, mark from this line until whole if-else
 
-//				if (temp.length != 0){ // found data match
-//
-//					sup_table_model.addRow(temp);
-//					sup_table.setVisible(true); 
-//					scrollpane.setVisible(true);
-//				}  											
-				sup_table_model.addRow(table_test_data); //for test table
-				sup_table.setVisible(true); 
-				scrollpane.setVisible(true);
+				if (temp[0].length != 0){ // found data match
+					
+					sup_table_model = new DefaultTableModel(temp,column_names);
+
+					sup_table.setModel(sup_table_model);
+					
+					TableColumnModel column_model = sup_table.getColumnModel();
+					column_model.getColumn(0).setPreferredWidth(50);
+					column_model.getColumn(1).setPreferredWidth(50);
+					column_model.getColumn(2).setPreferredWidth(50);
+					column_model.getColumn(3).setPreferredWidth(40);
+					column_model.getColumn(4).setPreferredWidth(60);
+					column_model.getColumn(5).setPreferredWidth(120);
+					
+					sup_table.setVisible(true); 
+					scrollpane.setVisible(true);
+				}  											
+				
+				//sup_table.setVisible(true); 
+				//scrollpane.setVisible(true);
 //				else {
 //					//no found data match 
 //				}
@@ -243,33 +259,26 @@ public class Supplier_panel {
 		supplier_panel.add(btn_sup_delete);
 		
 		
-		String[] column_names = { "Supplier_ID", "Supplier_name", "Supplier_Address", "Contact_name", "Contact_mobile",
-		"Contact_email"};
 		
-		sup_table_model = new DefaultTableModel();
-		for(int i=0; i<6; i++) {
-			sup_table_model.addColumn(column_names[i]);
-		}
-		
-		System.out.print(sup_table_model.getColumnName(0));
+//		System.out.print(sup_table_model.getColumnName(0));
 		
 		
-		sup_table = new JTable(sup_table_model){ 
+		sup_table = new JTable(){ 
 			@Override
 			public boolean isCellEditable(int row, int column)
             {
                                   return false;}//uneditable    
-		}; 
-		sup_table.setBounds(48, 263, 1000, 51);
+		};
 		//sup_table.getColumn("Contact_email").setWidth(100);
+		
+		sup_table.setFillsViewportHeight(true);
+		//sup_table.setBounds(48,288,563,30);
 		sup_table.setVisible(true);
 		//supplier_panel.add(sup_table);
 		
-		scrollpane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollpane.setBounds(79,265,500,51);
-		scrollpane.setViewportView(sup_table);
-		
-		scrollpane.setVisible(true);
+		scrollpane = new JScrollPane(sup_table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollpane.setBounds(48,288,563,40);
+		//scrollpane.setPreferredSize(new Dimension(563, 50));   //whole scrollpane and table will disapear
 		supplier_panel.add(scrollpane);
 
 	}
@@ -289,14 +298,14 @@ public class Supplier_panel {
 	}
 	
 	
-	private String[] inquire() {
+	private String[][] inquire() {
 		/** 
 		 * @Author jyun-an
 		 *  @since 06/01
 		 *  to inquire data in SUPPLIER table 
 		 **/
 		
-		String [] temp = new String[6];
+		String [][] temp = new String[1][6];
 		
 		if (!(text_sup_supID.getText().isEmpty())){
 //			System.out.println("IN1");
@@ -313,7 +322,7 @@ public class Supplier_panel {
 //								+ "   " + resultSet.getString("Contact_mobile") + "   " + resultSet.getString("Contact_email"));
 						
 						for(int i = 1; i<7; i++) {
-							temp[i-1]= resultSet.getString(i);
+							temp[0][i-1]= resultSet.getString(i);
 						}
 						return temp;
 					}
@@ -340,7 +349,7 @@ public class Supplier_panel {
 //								+ "   " + resultSet.getString("Contact_mobile") + "   " + resultSet.getString("Contact_email"));
 						
 						for(int i = 1; i<7; i++) {
-							temp[i-1]= resultSet.getString(i);
+							temp[0][i-1]= resultSet.getString(i);
 						}
 						return temp;
 					}
@@ -365,7 +374,7 @@ public class Supplier_panel {
 //							+ "   " + resultSet.getString("Contact_mobile") + "   " + resultSet.getString("Contact_email"));
 					
 					for(int i = 1; i<7; i++) {
-						temp[i-1]= resultSet.getString(i);
+						temp[0][i-1]= resultSet.getString(i);
 					}
 					return temp;
 				}

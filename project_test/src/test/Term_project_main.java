@@ -84,7 +84,7 @@ public class Term_project_main {
 				
 				try {
 					Term_project_main window = new Term_project_main();
-					window.frame.setVisible(true);
+					//window.frame.setVisible(true);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -98,15 +98,6 @@ public class Term_project_main {
 	 */
 	
 	public Term_project_main() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		
-		
 		
 		frame = new JFrame("System");
 		frame.setBounds(100, 100, 666, 466);
@@ -117,14 +108,41 @@ public class Term_project_main {
 		
 		
 		login_panel();
-		conn = new connection(); 
+		frame.setVisible(true);
+		
+		//conn = new connection(); 
 		
 		home_panel();
 		
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		//initialize();
 	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+//	private void initialize() {
+//		
+//		
+//		
+//		frame = new JFrame("System");
+//		frame.setBounds(100, 100, 666, 466);
+//		
+//		card_layout = new CardLayout();
+//		
+//		frame.getContentPane().setLayout(card_layout);
+//		
+//		
+//		login_panel();
+//		conn = new connection(); 
+//		
+//		home_panel();
+//		
+//		
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		
+//	}
 		
 		private void login_panel() {
 			

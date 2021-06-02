@@ -151,7 +151,10 @@ public class Employee_panel {
 				            @Override
 				            public void actionPerformed(ActionEvent e) {
 				            	
-				            	String []temp = show_adjust(text_emp_empID);
+				            	String []temp = new String[] {"11047602","Abner","Williams",
+				            						"Taoyuan","(09)11091002","11047600","C"}; //for testing without connection
+				            	
+				            	//String []temp = show_adjust(text_emp_empID);
 				            	
 			            		lbl_emp_first.setVisible(true);
 			            		text_emp_first.setVisible(true);
@@ -260,10 +263,10 @@ public class Employee_panel {
 						btn_emp_execute.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								if (btn_emp_execute.getText().equalsIgnoreCase("Save Change")) {
-									save_change(text_emp_empID);
+									//save_change(text_emp_empID);
 								}
 								else if(btn_emp_execute.getText().equalsIgnoreCase("Delete Employee")) {
-									delete_emp(text_emp_empID);
+									//delete_emp(text_emp_empID);
 								}
 								lbl_emp_info.setVisible(true);
 							}
