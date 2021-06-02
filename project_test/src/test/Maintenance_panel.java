@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,11 +19,11 @@ import javax.swing.SwingConstants;
 
 public class Maintenance_panel  {
 	
-	/**
-     * @autohr Jyun-An
-     * @ver. 1.2.2 05/28   
-     * Seperated from Project_test
-     **/
+		/**
+	     * @autohr Jyun-An
+	     * @ver. 1.2.2 05/28   
+	     * Seperated from Project_test
+	     **/
 	
 		public JPanel core_maint_panel;
 		private JPanel maint_container_panel;
@@ -53,7 +55,7 @@ public class Maintenance_panel  {
 		
 		
 		private CardLayout cl_maint;
-		private JTextField text_inq_empID;
+		//private JTextField text_inq_empID;
 		private JButton btn_refresh;
 		
 		
@@ -195,38 +197,52 @@ public class Maintenance_panel  {
 			text_inq_pjID.setColumns(10);
 					
 			JLabel lbl_inq_date = new JLabel("Est. Date :");
-			lbl_inq_date.setBounds(310, 11, 106, 16);
+			lbl_inq_date.setBounds(30, 97, 106, 16);
 			lbl_inq_date.setHorizontalAlignment(SwingConstants.RIGHT);
 			inq_panel.add(lbl_inq_date);
 					
 			JTextField text_inq_date = new JTextField();
-			text_inq_date.setBounds(416, 6, 105, 26);
+			text_inq_date.setBounds(136, 92, 141, 26);
 			inq_panel.add(text_inq_date);
 			text_inq_date.setColumns(10);
+			
+			JLabel lbl_inq_empID = new JLabel("Employee ID :");
+			lbl_inq_empID.setHorizontalAlignment(SwingConstants.RIGHT);
+			lbl_inq_empID.setBounds(50, 57, 86, 16);
+			inq_panel.add(lbl_inq_empID);
 					
+			JTextField text_inq_empID = new JTextField();
+			text_inq_empID.setBounds(136, 54, 141, 26);
+			inq_panel.add(text_inq_empID);
+			text_inq_empID.setColumns(10);
+			
 			JButton btn_inq_inquire = new JButton("Inquire");
-			btn_inq_inquire.setBounds(554, 5, 87, 29);
+			btn_inq_inquire.setBounds(364, 52, 87, 29);
 			btn_inq_inquire.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					//library.btn_inquire();
-					inq_panel.setVisible(true);
+					
+					String [][] temp = {{"90000000","11047630","2021/3/3","EXAM","",""}, {"90000008","11047638","2021/3/11","RCPT","",""},
+												{"90000010","11047640","2021/3/13","EXAM","",""}, {"90000013","11047643","2021/3/16","RCPT","",""}};
+					//String [][] temp = inquire(text_inq_pjID,text_inq_empID,text_inq_date);
+					
+//					for(int j=0; j<temp.length;j++) {
+//							System.out.print("\n");
+//								for(int i=0;i<6;i++) {
+//									System.out.print(temp[j][i]+"\t");	
+//									}	
+//							}
+					
+					
 				}
 			});
 			inq_panel.add(btn_inq_inquire);
 					
-			JLabel lbl_inq_empID = new JLabel("Employee ID :");
-			lbl_inq_empID.setBounds(50, 45, 86, 16);
-			inq_panel.add(lbl_inq_empID);
-					
-			text_inq_empID = new JTextField();
-			text_inq_empID.setBounds(136, 40, 141, 26);
-			inq_panel.add(text_inq_empID);
-			text_inq_empID.setColumns(10);
+			
 					
 			
 					
 			JButton btn_inq_last20 = new JButton("Last 20");
-			btn_inq_last20.setBounds(554, 39, 87, 29);
+			btn_inq_last20.setBounds(364, 92, 87, 29);
 			btn_inq_last20.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					//library.btn_inquire();
@@ -235,8 +251,8 @@ public class Maintenance_panel  {
 			});
 			inq_panel.add(btn_inq_last20);
 					
-			JLabel lbl_inq_note = new JLabel("Note : To inquire project, at least one of project ID and Employee ID must be filled in  ");
-			lbl_inq_note.setBounds(29, 73, 529, 16);
+			JLabel lbl_inq_note = new JLabel("result message");
+			lbl_inq_note.setBounds(30, 152, 529, 16);
 			inq_panel.add(lbl_inq_note);
 					
 			inq_table = new JTable();
@@ -269,7 +285,7 @@ public class Maintenance_panel  {
 			maint_panel.add(btn_maint);
 			
 			lbl_maint_empID = new JLabel("Employee ID :");
-			lbl_maint_empID.setLabelFor(text_inq_empID);
+			
 			lbl_maint_empID.setBounds(162, 85, 86, 16);
 			maint_panel.add(lbl_maint_empID);
 			
@@ -326,6 +342,232 @@ public class Maintenance_panel  {
 			maint_panel.add(btn_refresh);
 		}
 
+		
+		
+		
+		
+		private String[][] inquire(JTextField projectID, JTextField empID, JTextField est_date){
+			
+			/**@author jyunanyang
+			 * @since 06/02/2021
+			 * pass in 3 JTextFields and use switch case to handle every situation which they are filled in or not. 
+			 */
+			
+			
+			String [][] temp;
+			
+			switch (check_text_fields(projectID, empID, est_date)) {
+			
+			
+					case "111":
+						
+						temp = new String[1][6];
+						try {
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Project_ID=" + 
+									projectID.getText()+" AND Emp_ID="+ empID.getText()+" AND Established_date=\'"
+													+est_date.getText()+"\')");
+							
+							if(resultSet.next()) {								
+								for(int i = 1; i<7; i++) {
+									temp[0][i-1]= resultSet.getString(i);
+								}
+								return temp;
+							}
+							return temp;
+					
+					
+						}catch (SQLException e) {
+							
+						// TODO Auto-generated catch block
+							e.printStackTrace();
+							return temp;
+							}
+						
+					case "110":
+						
+						temp = new String[1][6];
+						try {
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Project_ID=" + 
+									projectID.getText()+" AND Emp_ID="+ empID.getText()+")");
+							
+							if(resultSet.next()) {								
+								for(int i = 1; i<7; i++) {
+									temp[0][i-1]= resultSet.getString(i);
+								}
+								return temp;
+							}
+							return temp;
+					
+					
+						}catch (SQLException e) {
+							
+						// TODO Auto-generated catch block
+							e.printStackTrace();
+							return temp;
+							}
+						
+					case "101":
+						
+						temp = new String[1][6];
+						try {
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Project_ID=" + 
+									projectID.getText()+" AND Established_date=\'"+est_date.getText()+"\')");
+							
+							if(resultSet.next()) {								
+								for(int i = 1; i<7; i++) {
+									temp[0][i-1]= resultSet.getString(i);
+								}
+								return temp;
+							}
+							return temp;
+					
+					
+						}catch (SQLException e) {
+							
+						// TODO Auto-generated catch block
+							e.printStackTrace();
+							return temp;
+							}
+						
+					case "100":
+						
+						temp = new String[1][6];
+						try {
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE Project_ID=" + 
+									projectID.getText());
+							
+							if(resultSet.next()) {								
+								for(int i = 1; i<7; i++) {
+									temp[0][i-1]= resultSet.getString(i);
+								}
+								return temp;
+							}
+							return temp;
+					
+					
+						}catch (SQLException e) {
+							
+						// TODO Auto-generated catch block
+							e.printStackTrace();
+							return temp;
+							}
+					
+					case "011":
+						
+						temp = new String[5][6];
+						try {
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Emp_ID="+
+													empID.getText()+" AND Established_date=\'"+est_date.getText()+"\')");
+							int k =0;
+							while(resultSet.next()) {								
+								for(int i = 1; i<7; i++) {
+									temp[k][i-1]= resultSet.getString(i);
+								}
+								k++;
+							}
+							return temp;
+					
+					
+						}catch (SQLException e) {
+							
+						// TODO Auto-generated catch block
+							e.printStackTrace();
+							return temp;
+							}
+						
+					case "010":
+						
+						temp = new String[10][6];
+						try {
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE Emp_ID="+
+													empID.getText());
+							int k =0;
+							while(resultSet.next()) {								
+								for(int i = 1; i<7; i++) {
+									temp[k][i-1]= resultSet.getString(i);
+								}
+								k++;
+							}
+							return temp;
+
+						}catch (SQLException e) {
+							
+						// TODO Auto-generated catch block
+							e.printStackTrace();
+							return temp;
+							}
+						
+					default:
+						
+						temp = new String[10][6];
+						try {
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE Established_date=\'"+
+													est_date.getText()+"\''");
+							int k =0;
+							while(resultSet.next()) {								
+								for(int i = 1; i<7; i++) {
+									temp[k][i-1]= resultSet.getString(i);
+								}
+								k++;
+							}
+							return temp;
+
+						}catch (SQLException e) {
+							
+						// TODO Auto-generated catch block
+							e.printStackTrace();
+							return temp;
+							}
+						
+					
+			}
+			
+			
+		}
+		
+		
+		private String check_text_fields(JTextField ID, JTextField else1, JTextField else2) {
+			/**@author jyunanyang
+			 * @since 06/02/2021
+			 * to check how many JTextField are filled by user and return a String to 
+			 * be represente the status for switch case in inquire function.
+			 */
+			
+			if (!(ID.getText().isEmpty())) {
+				//1
+				if (!(else1.getText().isEmpty())) {
+					//1-1
+					if (!(else2.getText().isEmpty())) {
+						//1-1-1
+						return "111";
+					}else {
+						//1-1-0
+						return "110";
+					}
+				}else if(!(else2.getText().isEmpty())) {
+					//1-0-1
+					return "101";		
+					}else {
+						//1-0-0
+						return "100";
+					}
+			}else if (!(else1.getText().isEmpty())) {
+				//0-1
+				if (!(else2.getText().isEmpty())) {
+					//0-1-1
+					return "011";
+					}else {
+						//0-1-0
+						return "010";
+					}
+			}else {
+				//0-0-1
+				return "001";
+			}
+
+		}
+		
+		
 		private void set_visible(boolean bl) {
 			
 			lbl_maint_empID.setVisible(bl);
