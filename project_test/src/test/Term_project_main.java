@@ -40,7 +40,6 @@ public class Term_project_main {
 	public static connection conn;
 	
 	private JFrame frame;
-	private Library library;
 	
 	
 	private JPanel login_panel;

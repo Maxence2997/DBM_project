@@ -48,7 +48,7 @@ public class Supplier_panel {
 		private JTextField text_sup_mobile;
 		private JTextField text_sup_mail;
 		
-		private DefaultTableModel table_model;
+		
 		private DefaultTableModel sup_table_model;
 	
 	public Supplier_panel() {
@@ -150,20 +150,20 @@ public class Supplier_panel {
 				
 				String [] table_test_data = {"SP0000002", "Q-TIP", "Taoyuan", "Smith", "(02)25450002", "supplier002@gmail.com"};
 				
-				String [] temp = inquire();					//if want to test table without DB, mark from this line until whole if-else
+				//String [] temp = inquire();					//if want to test table without DB, mark from this line until whole if-else
 
-				if (temp.length != 0){ // found data match
-
-					sup_table_model.addRow(temp);
-					sup_table.setVisible(true); 
-					scrollpane.setVisible(true);
-				}  											
-//				sup_table_model.addRow(table_test_data); //for test table
-//				sup_table.setVisible(true); 
-//				scrollpane.setVisible(true);
-				else {
-					//no found data match 
-				}
+//				if (temp.length != 0){ // found data match
+//
+//					sup_table_model.addRow(temp);
+//					sup_table.setVisible(true); 
+//					scrollpane.setVisible(true);
+//				}  											
+				sup_table_model.addRow(table_test_data); //for test table
+				sup_table.setVisible(true); 
+				scrollpane.setVisible(true);
+//				else {
+//					//no found data match 
+//				}
 			}
 		});
 		supplier_panel.add(btn_sup_inquire);
@@ -242,6 +242,7 @@ public class Supplier_panel {
 		btn_sup_delete.setVisible(false);
 		supplier_panel.add(btn_sup_delete);
 		
+		
 		String[] column_names = { "Supplier_ID", "Supplier_name", "Supplier_Address", "Contact_name", "Contact_mobile",
 		"Contact_email"};
 		
@@ -250,30 +251,27 @@ public class Supplier_panel {
 			sup_table_model.addColumn(column_names[i]);
 		}
 		
+		System.out.print(sup_table_model.getColumnName(0));
+		
 		
 		sup_table = new JTable(sup_table_model){ 
-			
 			@Override
 			public boolean isCellEditable(int row, int column)
             {
-                                  return false;}//uneditable
-            
-			}; 
-		sup_table.setBounds(48, 263, 563, 100);
-		sup_table.getColumn("Contact_email").setWidth(100);;
-		sup_table.setVisible(false);
-		supplier_panel.add(sup_table);
+                                  return false;}//uneditable    
+		}; 
+		sup_table.setBounds(48, 263, 1000, 51);
+		//sup_table.getColumn("Contact_email").setWidth(100);
+		sup_table.setVisible(true);
+		//supplier_panel.add(sup_table);
 		
+		scrollpane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollpane.setBounds(79,265,500,51);
+		scrollpane.setViewportView(sup_table);
 		
-		scrollpane = new JScrollPane(sup_table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollpane.setBounds(48, 288, 563, 50);
-		scrollpane.setVisible(false);
+		scrollpane.setVisible(true);
 		supplier_panel.add(scrollpane);
-		
-		
-		
-		
-		
+
 	}
 	
 	
@@ -289,6 +287,7 @@ public class Supplier_panel {
 		text_sup_mobile.setText("");
 		text_sup_mail.setText("");
 	}
+	
 	
 	private String[] inquire() {
 		/** 

@@ -8,9 +8,11 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 public class Inventory_panel {
 	
@@ -21,6 +23,9 @@ public class Inventory_panel {
 	private JTextField text_invID;
 	private JTextField text_inv_item;
 	private JTextField text_inv_pd;
+	
+	private DefaultTableModel inv_table_model;
+	private JScrollPane scrollpane;
 	
 	public Inventory_panel() {
 		
@@ -69,7 +74,13 @@ public class Inventory_panel {
 		JButton btn_inv_inquire = new JButton("Inquire");
 		btn_inv_inquire.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				inquire();
+				String[][] temp =inquire();
+				for(int j=0; j<temp.length;j++) {
+					System.out.print("\n");
+					for(int i=0;i<4;i++) {
+						System.out.print(temp[j][i]+"\t");
+					
+				}}
 				
 				//library.btn_inquire_invent();
 				inv_table.setVisible(true);
@@ -78,11 +89,37 @@ public class Inventory_panel {
 		btn_inv_inquire.setBounds(554, 160, 88, 29);
 		inventory_panel.add(btn_inv_inquire);
 		
-		inv_table = new JTable();
+		
+		String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
+		
+		inv_table_model = new DefaultTableModel();
+		for(int i=0; i<4; i++) {
+			inv_table_model.addColumn(column_names[i]);
+		}
+		
+		
+		inv_table = new JTable(inv_table_model){ 
+			@Override
+			public boolean isCellEditable(int row, int column)
+            {
+                                  return false;}//uneditable
+            
+			}; 
 		inv_table.setBounds(33, 194, 604, 172);
 		inventory_panel.add(inv_table);
-		inv_table.setVisible(false);		
+		inv_table.setVisible(true);
+
+//		scrollpane = new JScrollPane(inv_table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+//		scrollpane.setBounds(48, 288, 563, 50);
+//		scrollpane.setVisible(true);
+
+	
 	}
+	
+	
+	
+	
+	
 	
 	private String[][] inquire() {
 		/** 
