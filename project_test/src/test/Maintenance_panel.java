@@ -29,32 +29,32 @@ public class Maintenance_panel  {
 		
 		private JPanel default_panel;
 		
-		private JPanel inq_panel;
-		
-		private JPanel mod_panel;
-		
-		private JPanel append_panel;
-		
-		private JPanel remove_panel;
-		private JLabel lbl_remv_confirm;
-		private JTextField text_remv_confirm;
-		private JButton btn_remv_confirm;
-		private JTable appd_table;
-		
+		private JPanel inq_panel;	
 		private JTable inq_table;
 		
-		private JTable mod_table;
+		private JPanel maint_panel;
+		private JTextField text_maint_pjID;
+		private JLabel lbl_maint_empID;
+		private JTextField text_maint_empID;
+		private JTextField text_maint_date;
+		private JLabel lbl_maint_status;
+		private JLabel lbl_maint_del_status;
+		private JLabel lbl_maint_status_show;
+		private JLabel lbl_maint_del_progress;
+		private JLabel lbl_maint_del_progress_show;
 		
-		private JTable rmv_table;
+		private JButton btn_maint;
 		
-		
-		private JTextField text_appd_empID;
-		
+		private JButton btn_maint_check;
+		private JLabel lbl_maint_date;
+		private JLabel lbl_maint_del_status_show;
 		//private JTextField text_inq_pjID;
 		
 		
 		
 		private CardLayout cl_maint;
+		private JTextField text_inq_empID;
+		private JButton btn_refresh;
 		
 		
 		
@@ -88,13 +88,12 @@ public class Maintenance_panel  {
 			
 			add_default_panel();
 			add_inquire_panel();
-			add_modify_panel();
-			add_append_panel();
-			add_remove_panel();
+			add_maintenance_panel();
 			
 			
-			comboBox_pj = new JComboBox( new String[] {"--------","Inquire","Modify","Append","Remove"});
-			comboBox_pj.setBounds(269, 7, 126, 27);
+			
+			comboBox_pj = new JComboBox( new String[] {"-----------","Inquire","Modify","Append", "Delete"});
+			comboBox_pj.setBounds(245, 7, 159, 27);
 //			comboBox_pj.addItem("--------");
 //			comboBox_pj.addItem("Inquire");
 //			comboBox_pj.addItem("Modify");
@@ -107,9 +106,42 @@ public class Maintenance_panel  {
 		            @Override
 		            public void actionPerformed(ActionEvent e) {
 		            	String function = (String) comboBox_pj.getSelectedItem(); //get the selected item
-		
-		                
-		            	cl_maint.show(maint_container_panel, function);		                   
+		            	
+		            	switch (function){
+		            	
+		            		
+		            		case "Modify":
+		            			cl_maint.show(maint_container_panel, "Maintenance");
+		            			btn_maint.setText("Modify");
+		            			
+		            			btn_maint_check.setVisible(true);
+		            			set_visible(false);
+		            			break;
+		            			
+		            		case "Append":
+		            			cl_maint.show(maint_container_panel, "Maintenance");
+		            			btn_maint.setText("Append");
+		            			
+		            			
+		            			btn_maint_check.setVisible(false);
+		            			set_visible(true);
+		            			break;
+		            			
+		            		case "Delete":
+		            			cl_maint.show(maint_container_panel, "Maintenance");
+		            			btn_maint.setText("Delete");
+		            			
+		            			
+		            			btn_maint_check.setVisible(true);
+		            			set_visible(false);
+		            			break;
+		            			
+		            		default:
+		            			cl_maint.show(maint_container_panel, function);
+		            			break;
+		            		
+		            	}
+		            	//cl_maint.show(maint_container_panel, function);		                   
 		            }
 		        });
 		
@@ -138,9 +170,8 @@ public class Maintenance_panel  {
 		//default panel2
 		private void add_default_panel() {
 			default_panel = new JPanel();
-			inq_panel.add(default_panel);
 			default_panel.setBounds(0, 0, 666, 348);
-			maint_container_panel.add(inq_panel, "--------");
+			maint_container_panel.add(default_panel, "-----------");
 			default_panel.setLayout(null);
 		}
 		
@@ -187,7 +218,7 @@ public class Maintenance_panel  {
 			lbl_inq_empID.setBounds(50, 45, 86, 16);
 			inq_panel.add(lbl_inq_empID);
 					
-			JTextField text_inq_empID = new JTextField();
+			text_inq_empID = new JTextField();
 			text_inq_empID.setBounds(136, 40, 141, 26);
 			inq_panel.add(text_inq_empID);
 			text_inq_empID.setColumns(10);
@@ -209,159 +240,116 @@ public class Maintenance_panel  {
 			inq_panel.add(lbl_inq_note);
 					
 			inq_table = new JTable();
-			inq_table.setBounds(29, 94, 612, 254);
+			inq_table.setBounds(29, 195, 612, 153);
 			inq_panel.add(inq_table);
 			inq_table.setVisible(false);
 		}
 		
 		//Second panel - Modify 
-		private void add_modify_panel() {
+		private void add_maintenance_panel() {
 			
-			mod_panel = new JPanel();
-			mod_panel.setBounds(0, 0, 666, 348);
-			maint_container_panel.add(mod_panel, "Modify");
-			mod_panel.setLayout(null);
+			maint_panel = new JPanel();
+			maint_panel.setBounds(0, 0, 666, 348);
+			maint_container_panel.add(maint_panel, "Maintenance");
+			maint_panel.setLayout(null);
 			
-			JLabel lbl_mod_pjID = new JLabel("*project ID :");
-			lbl_mod_pjID.setHorizontalAlignment(SwingConstants.RIGHT);
-			lbl_mod_pjID.setBounds(53, 41, 86, 16);
-			mod_panel.add(lbl_mod_pjID);
+			JLabel lbl_maint_pjID = new JLabel("*project ID :");
+			lbl_maint_pjID.setHorizontalAlignment(SwingConstants.RIGHT);
+			lbl_maint_pjID.setBounds(162, 41, 86, 16);
+			maint_panel.add(lbl_maint_pjID);
 			
-			JTextField text_mod_pjID = new JTextField();
-			text_mod_pjID.setBounds(143, 36, 115, 26);
-			mod_panel.add(text_mod_pjID);
-			text_mod_pjID.setColumns(10);
+			text_maint_pjID = new JTextField();
+			text_maint_pjID.setBounds(260, 36, 130, 30);
+			maint_panel.add(text_maint_pjID);
+			text_maint_pjID.setColumns(10);
 			
 			
-			JButton btn_mod_modify = new JButton("Modify");
-			btn_mod_modify.setBounds(539, 35, 87, 29);
-			mod_panel.add(btn_mod_modify);
+			btn_maint = new JButton("");
+			btn_maint.setBounds(490, 200, 87, 29);
+			maint_panel.add(btn_maint);
 			
-			JLabel lbl_mod_empID = new JLabel("Employee ID :");
-			lbl_mod_empID.setBounds(53, 104, 86, 16);
-			mod_panel.add(lbl_mod_empID);
+			lbl_maint_empID = new JLabel("Employee ID :");
+			lbl_maint_empID.setLabelFor(text_inq_empID);
+			lbl_maint_empID.setBounds(162, 85, 86, 16);
+			maint_panel.add(lbl_maint_empID);
 			
-			JTextField text_mod_empID = new JTextField();
-			text_mod_empID.setBounds(143, 99, 115, 26);
-			mod_panel.add(text_mod_empID);
-			text_mod_empID.setColumns(10);
+			text_maint_empID = new JTextField();
+			text_maint_empID.setBounds(260, 78, 130, 30);
+			maint_panel.add(text_maint_empID);
+			text_maint_empID.setColumns(10);
 			
-			JLabel lbl_mod_date = new JLabel("Est. Date :");
-			lbl_mod_date.setBounds(288, 41, 88, 16);
-			lbl_mod_date.setHorizontalAlignment(SwingConstants.RIGHT);
-			mod_panel.add(lbl_mod_date);
+			lbl_maint_date = new JLabel("Est. Date :");
+			lbl_maint_date.setBounds(142, 118, 108, 16);
+			lbl_maint_date.setHorizontalAlignment(SwingConstants.RIGHT);
+			maint_panel.add(lbl_maint_date);
 			
-			JTextField text_mod_date = new JTextField();
-			text_mod_date.setBounds(388, 36, 115, 26);
-			mod_panel.add(text_mod_date);
-			text_mod_date.setColumns(10);
+			text_maint_date = new JTextField();
+			text_maint_date.setBounds(260, 113, 130, 30);
+			maint_panel.add(text_maint_date);
+			text_maint_date.setColumns(10);
 			
-			mod_table = new JTable();
-			mod_table.setBounds(33, 252, 593, 66);
-			mod_panel.add(mod_table);
+			lbl_maint_status = new JLabel("Project Status :");
+			lbl_maint_status.setHorizontalAlignment(SwingConstants.RIGHT);
+			lbl_maint_status.setBounds(146, 163, 102, 16);
+			maint_panel.add(lbl_maint_status);
+			
+			lbl_maint_del_status = new JLabel("Delivery Status :");
+			lbl_maint_del_status.setHorizontalAlignment(SwingConstants.RIGHT);
+			lbl_maint_del_status.setBounds(146, 213, 102, 16);
+			maint_panel.add(lbl_maint_del_status);
+			
+			lbl_maint_del_status_show = new JLabel("NNNN");
+			lbl_maint_del_status_show.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_maint_del_status_show.setBounds(260, 206, 130, 30);
+			maint_panel.add(lbl_maint_del_status_show);
+			
+			lbl_maint_status_show = new JLabel("NNNN");
+			lbl_maint_status_show.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_maint_status_show.setBounds(260, 163, 130, 23);
+			maint_panel.add(lbl_maint_status_show);
+			
+			lbl_maint_del_progress = new JLabel("Delivery Progress :");
+			lbl_maint_del_progress.setBounds(130, 270, 117, 16);
+			maint_panel.add(lbl_maint_del_progress);
+			
+			lbl_maint_del_progress_show = new JLabel("NNNN");
+			lbl_maint_del_progress_show.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_maint_del_progress_show.setBounds(260, 270, 130, 16);
+			maint_panel.add(lbl_maint_del_progress_show);
+			
+			btn_maint_check = new JButton("Check ");
+			btn_maint_check.setBounds(402, 36, 78, 29);
+			maint_panel.add(btn_maint_check);
+			
+			btn_refresh = new JButton("Refresh");
+			btn_refresh.setBounds(481, 36, 86, 29);
+			maint_panel.add(btn_refresh);
 		}
-		
-		//third panel - Append 
-		private void add_append_panel() {
+
+		private void set_visible(boolean bl) {
 			
-			append_panel = new JPanel();
-			append_panel.setBounds(0, 0, 666, 348);
-			maint_container_panel.add(append_panel, "Append");
-			append_panel.setLayout(null);
+			lbl_maint_empID.setVisible(bl);
+			text_maint_empID.setVisible(bl);
 			
-			JLabel lbl_appd_empID = new JLabel("Employee ID :");
-			lbl_appd_empID.setBounds(62, 101, 86, 16);
-			append_panel.add(lbl_appd_empID);
+			lbl_maint_date.setVisible(bl);
+			text_maint_date.setVisible(bl);
 			
-			text_appd_empID = new JTextField();
-			text_appd_empID.setBounds(148, 96, 116, 26);
-			append_panel.add(text_appd_empID);
-			text_appd_empID.setColumns(10);
+			lbl_maint_status.setVisible(bl);
+			lbl_maint_status_show.setVisible(bl);
 			
-			JButton btn_appd_append = new JButton("Append");
-			btn_appd_append.setBounds(471, 95, 92, 29);
-			append_panel.add(btn_appd_append);
+			lbl_maint_del_progress.setVisible(bl);
+			lbl_maint_del_progress_show.setVisible(bl);
 			
-			JLabel lbl_appd_error = new JLabel("Employee ID inputed is invalid, please verify it.");
-			lbl_appd_error.setBounds(62, 159, 318, 16);
-			append_panel.add(lbl_appd_error);
-			lbl_appd_error.setVisible(false);
+			lbl_maint_del_status.setVisible(bl);
+			lbl_maint_del_status_show.setVisible(bl);
 			
-			appd_table = new JTable();
-			appd_table.setBounds(58, 205, 563, 39);
-			append_panel.add(appd_table);
 			
 			
 			
 		}
-		
-		//forth panel - Remove 
-		private void add_remove_panel() {
-					
-			remove_panel = new JPanel();
-			remove_panel.setBounds(0, 0, 666, 348);
-			maint_container_panel.add(remove_panel, "Remove");
-			remove_panel.setLayout(null);
-			
-			JLabel lbl_remv_pjID = new JLabel("*project ID :");
-			lbl_remv_pjID.setBounds(81, 41, 86, 16);
-			remove_panel.add(lbl_remv_pjID);
-			
-			JTextField text_remv_pjID = new JTextField();
-			text_remv_pjID.setBounds(167, 36, 146, 26);
-			remove_panel.add(text_remv_pjID);
-			text_remv_pjID.setColumns(10);
-			
-			JButton btn_remv_remove = new JButton("Remove");
-			btn_remv_remove.setBounds(494, 35, 93, 29);
-			btn_remv_remove.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					
-					//library.btn_remove();
-					rmv_table.setVisible(true);
-					lbl_remv_confirm.setVisible(true);
-					text_remv_confirm.setVisible(true);
-					btn_remv_confirm.setVisible(true);
-				}
-			});
-			remove_panel.add(btn_remv_remove);
-			
-			rmv_table = new JTable();
-			rmv_table.setBounds(81, 159, 506, 25);
-			remove_panel.add(rmv_table);
-			rmv_table.setVisible(false);
-			
-			lbl_remv_confirm = new JLabel("Please write down \"I'm PRETTY SURE that I would like to remove this sheet.\"");
-			lbl_remv_confirm.setBounds(81, 189, 506, 16);
-			remove_panel.add(lbl_remv_confirm);
-			lbl_remv_confirm.setVisible(false);
-			
-			text_remv_confirm = new JTextField();
-			text_remv_confirm.setBounds(81, 210, 506, 26);
-			remove_panel.add(text_remv_confirm);
-			text_remv_confirm.setColumns(10);
-			text_remv_confirm.setVisible(false);
-			
-			btn_remv_confirm = new JButton("Confirm");
-			btn_remv_confirm.setBounds(494, 301, 93, 29);
-			remove_panel.add(btn_remv_confirm);
-			btn_remv_confirm.setVisible(false);
-		
-			}
-		
-		
-		
-		
-		
-		
 		
 		public JComboBox get_comboBox_project() {
 			
 			return comboBox_pj;
 		}
-		
-//		public JTextField get_text_inq_pjID() {
-//			
-//			return text_inq_pjID;
-//		}
 }
