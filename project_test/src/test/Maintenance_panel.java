@@ -62,8 +62,11 @@ public class Maintenance_panel  {
 		
 		
 		
-		public Maintenance_panel() {
-			proj_maintc_panels();
+		public Maintenance_panel(String object) {
+			
+			
+			if (object.equalsIgnoreCase("panel"))
+					proj_maintc_panels();
 			
 			
 			
@@ -526,7 +529,7 @@ public class Maintenance_panel  {
 		}
 		
 		
-		private String check_text_fields(JTextField ID, JTextField else1, JTextField else2) {
+		public String check_text_fields(JTextField ID, JTextField else1, JTextField else2) {
 			/**@author jyunanyang
 			 * @since 06/02/2021
 			 * to check how many JTextField are filled by user and return a String to 

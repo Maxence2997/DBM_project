@@ -110,7 +110,7 @@ public class Term_project_main {
 		login_panel();
 		frame.setVisible(true);
 		
-		//conn = new connection(); 
+		conn = new connection(); 
 		
 		home_panel();
 		
