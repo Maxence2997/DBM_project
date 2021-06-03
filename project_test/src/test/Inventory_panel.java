@@ -148,17 +148,19 @@ public class Inventory_panel {
 		
 				case "111":
 					
-					temp = new String[1][4];
+					
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
 													InvID.getText()+" AND Item_name=\'"+ item_name.getText()+"\' AND Module_type=\'"
 												+module_type.getText()+"\')");
-						if(resultSet.next()) {								
+						if(resultSet.next()) {
+							temp = new String[1][4];
 							for(int i = 1; i<5; i++) {
 								temp[0][i-1]= resultSet.getString(i);
 							}
 							return temp;
 						}
+						temp = new String[0][0];
 						return temp;
 				
 				
@@ -167,99 +169,120 @@ public class Inventory_panel {
 						
 					// TODO Auto-generated catch block
 						e.printStackTrace();
+						temp = new String[0][0];
 						return temp;
 						}
 					
 				case "110":
 					
-					temp = new String[1][4];
+					
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
 														InvID.getText()+" AND Item_name=\'"+ item_name.getText()+"\')");
-						if(resultSet.next()) {	
+						if(resultSet.next()) {
+							temp = new String[1][4];
 							for(int i = 1; i<5; i++) {
 								temp[0][i-1]= resultSet.getString(i);
 							}
 							return temp;
 						}
+						temp = new String[0][0];
 						return temp;
+				
 				
 				
 					}catch (SQLException e) {
 						
 					// TODO Auto-generated catch block
 						e.printStackTrace();
+						temp = new String[0][0];
 						return temp;
 						}
 					
+					
 				case "101":
 					
-					temp = new String[1][4];
+					
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
 													InvID.getText()+" AND Module_type=\'"+module_type.getText()+"\')");
 						if(resultSet.next()) {
+							temp = new String[1][4];
 							for(int i = 1; i<5; i++) {
 								temp[0][i-1]= resultSet.getString(i);
 							}
 							return temp;
 						}
+						temp = new String[0][0];
 						return temp;
+				
 				
 				
 					}catch (SQLException e) {
 						
 					// TODO Auto-generated catch block
 						e.printStackTrace();
+						temp = new String[0][0];
 						return temp;
 						}
 					
+					
 				case "100":
 					
-					temp = new String[1][4];
+					
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Inv_ID=" + 
 																						InvID.getText());
 						if(resultSet.next()) {
+							temp = new String[1][4];
 							for(int i = 1; i<5; i++) {
 								temp[0][i-1]= resultSet.getString(i);
 							}
 							return temp;
-							}
+						}
+						temp = new String[0][0];
 						return temp;
+				
 				
 				
 					}catch (SQLException e) {
 						
 					// TODO Auto-generated catch block
 						e.printStackTrace();
+						temp = new String[0][0];
 						return temp;
 						}
 				
 				case "011":
 					
-					temp = new String[5][4];
+					
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Item_name=\'"+
 															item_name.getText()+"\' AND Module_type=\'"+module_type.getText()+"\')");
-						int k =0;
-						while(resultSet.next()) {
-							for(int i = 1; i<5; i++) {
-								temp[k][i-1]= resultSet.getString(i);
+						if(resultSet.next()) {
+							temp = new String[5][4];
+							resultSet.previous();
+							int k =0;
+							while(resultSet.next()) {								
+								for(int i = 1; i<7; i++) {
+									temp[k][i-1]= resultSet.getString(i);
+								}
+								k++;
 							}
-							
-							k++;
-						}
+						}else {
+						temp = new String[0][0];
 						return temp;
+					}
 				
 				
 					}catch (SQLException e) {
 						
 					// TODO Auto-generated catch block
-						e.printStackTrace();
+						//e.printStackTrace();
+						temp = new String[0][0];
 						return temp;
 						}
-					
+						
 				case "010":
 					
 					temp = new String[36][4];

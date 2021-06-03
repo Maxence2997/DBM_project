@@ -1,6 +1,7 @@
 package test;
 
 import java.awt.CardLayout;
+
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -19,7 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-
+import java.util.ArrayList;
 public class Maintenance_panel  {
 	
 		/**
@@ -38,9 +39,11 @@ public class Maintenance_panel  {
 		private JTable inq_table;
 		private DefaultTableModel inq_table_model;
 		private JScrollPane scrollpane;
+		private JLabel lbl_result;
 		
 		private JPanel maint_panel;
 		private JTextField text_maint_pjID;
+		private JLabel lbl_maint_pjID_show;
 		private JLabel lbl_maint_empID;
 		private JTextField text_maint_empID;
 		private JTextField text_maint_date;
@@ -62,6 +65,7 @@ public class Maintenance_panel  {
 		private CardLayout cl_maint;
 		//private JTextField text_inq_empID;
 		private JButton btn_refresh;
+		private JLabel lbl_maint_result;
 		
 		
 		
@@ -232,9 +236,9 @@ public class Maintenance_panel  {
 			btn_inq_inquire.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					String [] columns_name = {"Project ID", "Employee ID", "Est. Date", "Status", "Delivery Status", "Delivery Progress"};
-					String [][] temp = {{"90000000","11047630","2021/3/3","EXAM","",""}, {"90000008","11047638","2021/3/11","RCPT","",""},
-												{"90000010","11047640","2021/3/13","EXAM","",""}, {"90000013","11047643","2021/3/16","RCPT","",""}};
-//					String [][] temp = inquire(text_inq_pjID,text_inq_empID,text_inq_date);
+//					String [][] temp = {{"90000000","11047630","2021/3/3","EXAM","",""}, {"90000008","11047638","2021/3/11","RCPT","",""},
+//												{"90000010","11047640","2021/3/13","EXAM","",""}, {"90000013","11047643","2021/3/16","RCPT","",""}};
+				String[][] temp = inquire(text_inq_pjID,text_inq_empID,text_inq_date);
 					
 //					for(int j=0; j<temp.length;j++) {
 //							System.out.print("\n");
@@ -255,6 +259,10 @@ public class Maintenance_panel  {
 						column_model.getColumn(5).setPreferredWidth(80);
 						inq_table.setVisible(true);
 						scrollpane.setVisible(true);
+						lbl_result.setText("Data load succeed");
+					}
+					else {
+						lbl_result.setText("no found");
 					}
 				}
 			});
@@ -274,7 +282,7 @@ public class Maintenance_panel  {
 			});
 			inq_panel.add(btn_inq_last20);
 					
-			JLabel lbl_result = new JLabel("");
+			lbl_result = new JLabel("");
 			lbl_result.setBounds(30, 152, 529, 16);
 			inq_panel.add(lbl_result);
 					
@@ -368,12 +376,47 @@ public class Maintenance_panel  {
 			maint_panel.add(lbl_maint_del_progress_show);
 			
 			btn_maint_check = new JButton("Check ");
+			btn_maint_check.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					String[] temp = check_ID(text_maint_pjID);
+					System.out.print(temp.length);
+					if(temp.length == 0) {
+						lbl_maint_result.setText("no found");
+						
+					}else {
+						//temp.length != 0
+						
+						set_visible(true);
+						text_maint_empID.setText(temp[1]);
+						text_maint_date.setText(temp[2]);
+						lbl_maint_status_show.setText(temp[3]);
+						lbl_maint_del_status_show.setText(temp[4]);
+						lbl_maint_del_progress_show.setText(temp[5]);
+						
+						
+						text_maint_pjID.setVisible(false);     						//let projectID be uneditable
+						lbl_maint_pjID_show.setText(text_maint_pjID.getText());
+						lbl_maint_pjID_show.setVisible(true);
+						lbl_maint_result.setText("Data loading succeed");	
+						
+					}
+				}
+			});
 			btn_maint_check.setBounds(402, 36, 78, 29);
 			maint_panel.add(btn_maint_check);
 			
 			btn_refresh = new JButton("Refresh");
 			btn_refresh.setBounds(481, 36, 86, 29);
 			maint_panel.add(btn_refresh);
+			
+			lbl_maint_pjID_show = new JLabel("");
+			lbl_maint_pjID_show.setBounds(260, 41, 130, 25);
+			lbl_maint_pjID_show.setVisible(false);
+			maint_panel.add(lbl_maint_pjID_show);
+			
+			lbl_maint_result = new JLabel("");
+			lbl_maint_result.setBounds(412, 85, 61, 16);
+			maint_panel.add(lbl_maint_result);
 		}
 
 		
@@ -388,177 +431,196 @@ public class Maintenance_panel  {
 			 */
 			
 			
-			String [][] temp;
+			ArrayList<String[]> temp = new ArrayList();
 			
 			switch (check_text_fields(projectID, empID, est_date)) {
 			
 			
 					case "111":
 						
-						temp = new String[1][6];
+						
 						try {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Project_ID=" + 
 									projectID.getText()+" AND Emp_ID="+ empID.getText()+" AND Established_date=\'"
 													+est_date.getText()+"\')");
 							
-							if(resultSet.next()) {								
+							if(resultSet.next()) {
+								String [] temp_array = new String[6];
 								for(int i = 1; i<7; i++) {
-									temp[0][i-1]= resultSet.getString(i);
+									temp_array[i-1]= resultSet.getString(i);
 								}
-								return temp;
+								temp.add(temp_array);
+								break;
 							}
-							return temp;
-					
+							break;
+							
 					
 						}catch (SQLException e) {
-							
 						// TODO Auto-generated catch block
-							e.printStackTrace();
-							return temp;
+							//e.printStackTrace();
+							break;
 							}
 						
 					case "110":
 						
-						temp = new String[1][6];
+						
 						try {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Project_ID=" + 
 									projectID.getText()+" AND Emp_ID="+ empID.getText()+")");
 							
-							if(resultSet.next()) {								
+							if(resultSet.next()) {
+								String [] temp_array = new String[6];
 								for(int i = 1; i<7; i++) {
-									temp[0][i-1]= resultSet.getString(i);
+									temp_array[i-1]= resultSet.getString(i);
 								}
-								return temp;
+								temp.add(temp_array);
+								break;
 							}
-							return temp;
+							break;
 					
 					
 						}catch (SQLException e) {
 							
 						// TODO Auto-generated catch block
-							e.printStackTrace();
-							return temp;
+							//e.printStackTrace();
+							break;
 							}
 						
 					case "101":
 						
-						temp = new String[1][6];
+						
 						try {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Project_ID=" + 
 									projectID.getText()+" AND Established_date=\'"+est_date.getText()+"\')");
 							
-							if(resultSet.next()) {								
+							if(resultSet.next()) {
+								String [] temp_array = new String[6];
 								for(int i = 1; i<7; i++) {
-									temp[0][i-1]= resultSet.getString(i);
+									temp_array[i-1]= resultSet.getString(i);
 								}
-								return temp;
+								temp.add(temp_array);
+								break;
 							}
-							return temp;
+							break;
 					
 					
 						}catch (SQLException e) {
 							
 						// TODO Auto-generated catch block
-							e.printStackTrace();
-							return temp;
+							//e.printStackTrace();
+							break;
 							}
 						
 					case "100":
 						
-						temp = new String[1][6];
+						
 						try {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE Project_ID=" + 
 									projectID.getText());
 							
-							if(resultSet.next()) {								
+							if(resultSet.next()) {
+								String [] temp_array = new String[6];
 								for(int i = 1; i<7; i++) {
-									temp[0][i-1]= resultSet.getString(i);
+									temp_array[i-1]= resultSet.getString(i);
 								}
-								return temp;
+								temp.add(temp_array);
+								break;
 							}
-							return temp;
+							break;
 					
 					
 						}catch (SQLException e) {
 							
 						// TODO Auto-generated catch block
-							e.printStackTrace();
-							return temp;
+							//e.printStackTrace();
+							break;
 							}
 					
 					case "011":
 						
-						temp = new String[5][6];
+						
 						try {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Emp_ID="+
 													empID.getText()+" AND Established_date=\'"+est_date.getText()+"\')");
-							int k =0;
-							while(resultSet.next()) {								
+							int k=0;
+							while(resultSet.next()) {
+								String [] temp_array = new String[6];
 								for(int i = 1; i<7; i++) {
-									temp[k][i-1]= resultSet.getString(i);
+									temp_array[i-1]= resultSet.getString(i);
 								}
+								temp.add(temp_array);
 								k++;
 							}
-							return temp;
+							break;
 					
 					
 						}catch (SQLException e) {
 							
 						// TODO Auto-generated catch block
-							e.printStackTrace();
-							return temp;
+							//e.printStackTrace();
+							
+							break;
 							}
 						
 					case "010":
 						
-						temp = new String[10][6];
+						
 						try {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE Emp_ID="+
 													empID.getText());
-							int k =0;
-							while(resultSet.next()) {								
+							
+							int k=0;
+							while(resultSet.next()) {
+								String [] temp_array = new String[6];
 								for(int i = 1; i<7; i++) {
-									temp[k][i-1]= resultSet.getString(i);
+									temp_array[i-1]= resultSet.getString(i);
 								}
+								temp.add(temp_array);
 								k++;
 							}
-							return temp;
+							break;
 
 						}catch (SQLException e) {
 							
 						// TODO Auto-generated catch block
-							e.printStackTrace();
-							return temp;
+							//e.printStackTrace();
+							break;
 							}
 						
 					default:
 						
-						temp = new String[10][6];
+						
 						try {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE Established_date=\'"+
-													est_date.getText()+"\''");
-							int k =0;
-							while(resultSet.next()) {								
+													est_date.getText()+"\'");
+							
+							int k=0;
+							while(resultSet.next()) {
+								String [] temp_array = new String[6];
 								for(int i = 1; i<7; i++) {
-									temp[k][i-1]= resultSet.getString(i);
+									temp_array[i-1]= resultSet.getString(i);
 								}
+								temp.add(temp_array);
 								k++;
 							}
-							return temp;
+							break;
 
 						}catch (SQLException e) {
 							
 						// TODO Auto-generated catch block
 							e.printStackTrace();
-							return temp;
-							}
-						
-					
+							
+							break;
+							}		
 			}
-			
-			
+			String[][] result_array = new String[temp.size()][6];
+			int i=0;
+			for (String[] array_in_temp : temp) {
+				result_array[i++] = array_in_temp;
+			        }
+			return result_array;
 		}
-		
+
 		
 		public String check_text_fields(JTextField ID, JTextField else1, JTextField else2) {
 			/**@author jyunanyang
@@ -599,6 +661,36 @@ public class Maintenance_panel  {
 				return "001";
 			}
 
+		}
+		
+		
+		private String [] check_ID(JTextField ID) {
+			
+
+			String [] temp;
+			try {
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE Project_ID=" + ID.getText());
+				
+				if(resultSet.next()) {
+					 temp= new String[6];
+					for(int i = 1; i<7; i++) {
+						temp[i-1]= resultSet.getString(i);
+						System.out.print(resultSet.getString(i));
+					}
+					return temp;
+				}
+				temp= new String[0];
+				return temp;
+		
+		
+			}catch (SQLException e) {
+				
+			// TODO Auto-generated catch block
+				temp= new String[0];
+				e.printStackTrace();
+				return temp;
+				}
+			
 		}
 		
 		
