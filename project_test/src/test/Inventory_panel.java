@@ -26,11 +26,13 @@ public class Inventory_panel {
 	
 	private DefaultTableModel inv_table_model;
 	private JScrollPane scrollpane;
+	private Maintenance_panel mtn_function;
 	
 	public Inventory_panel() {
 		
 		
 		panel();
+		mtn_function = new Maintenance_panel("");
 		
 	}
 	
@@ -78,9 +80,9 @@ public class Inventory_panel {
 				
 				String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
 				
-//				String[][] temp =inquire();
-				String [][] temp = {{"27000002","90000001","CPU","C0x055"},{"27000003","90000001","CPU","C0z004"},			
-														{"27000004","90000002","CPU","C0z035"}};  //for testing without connection
+				String[][] temp =inquire(text_invID, text_inv_item, text_inv_pd);
+//				String [][] temp = {{"27000002","90000001","CPU","C0x055"},{"27000003","90000001","CPU","C0z004"},			
+//														{"27000004","90000002","CPU","C0z035"}};  //for testing without connection
   	
 	//			for(int j=0; j<temp.length;j++) {
 	//				System.out.print("\n");
@@ -131,90 +133,92 @@ public class Inventory_panel {
 	
 	
 	
-	private String[][] inquire() {
+	private String[][] inquire(JTextField InvID, JTextField item_name, JTextField module_type) {
 		/** 
 		 * @Author jyun-an
 		 *  @since 06/01
 		 *  to inquire data in INVENTORY table 
 		 **/
-
+		
 		String [][] temp;
 		
-		if (!(text_invID.getText().isEmpty())){
-			System.out.println("IN 1");
-			
-			temp = new String[1][4];
-			
-				if(!(text_inv_item.getText().isEmpty())) {
-					System.out.println("IN 1-1");
-					if(!(text_inv_pd.getText().isEmpty())) {
-						System.out.println("IN 1-1-1");
+		switch (mtn_function.check_text_fields(InvID, item_name, module_type)) {
+		
+		
+				case "111":
 					
-						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-													text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\' AND Module_type=\'"
-													+text_inv_pd.getText()+"\')");
-							if(resultSet.next()) {								
-								for(int i = 1; i<5; i++) {
-									temp[0][i-1]= resultSet.getString(i);
-								}
-								return temp;
+					temp = new String[1][4];
+					try {
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
+													InvID.getText()+" AND Item_name=\'"+ item_name.getText()+"\' AND Module_type=\'"
+												+module_type.getText()+"\')");
+						if(resultSet.next()) {								
+							for(int i = 1; i<5; i++) {
+								temp[0][i-1]= resultSet.getString(i);
 							}
 							return temp;
-					
-					
-						}catch (SQLException e) {
-							
-						// TODO Auto-generated catch block
-							e.printStackTrace();
-							return temp;
-							}
-					}else {
-						System.out.println("IN 1-1-0");
-						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-													text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\')");
-							if(resultSet.next()) {	
-								for(int i = 1; i<5; i++) {
-									temp[0][i-1]= resultSet.getString(i);
-								}
-								return temp;
-							}
-							return temp;
-					
-					
-						}catch (SQLException e) {
-							
-						// TODO Auto-generated catch block
-							e.printStackTrace();
-							return temp;
-							}
 						}
-				}else if(!(text_inv_pd.getText().isEmpty())) {
-						System.out.println("IN 1-0-1");
+						return temp;
+				
+				
+				
+					}catch (SQLException e) {
 						
-						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-														text_invID.getText()+" AND Module_type=\'"+text_inv_pd.getText()+"\')");
-							if(resultSet.next()) {
-								for(int i = 1; i<5; i++) {
-									temp[0][i-1]= resultSet.getString(i);
-								}
-								return temp;
+					// TODO Auto-generated catch block
+						e.printStackTrace();
+						return temp;
+						}
+					
+				case "110":
+					
+					temp = new String[1][4];
+					try {
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
+														InvID.getText()+" AND Item_name=\'"+ item_name.getText()+"\')");
+						if(resultSet.next()) {	
+							for(int i = 1; i<5; i++) {
+								temp[0][i-1]= resultSet.getString(i);
 							}
 							return temp;
+						}
+						return temp;
+				
+				
+					}catch (SQLException e) {
 						
-						}catch (SQLException e) {
-						// TODO Auto-generated catch block
-							e.printStackTrace();
-							return temp;
+					// TODO Auto-generated catch block
+						e.printStackTrace();
+						return temp;
+						}
+					
+				case "101":
+					
+					temp = new String[1][4];
+					try {
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
+													InvID.getText()+" AND Module_type=\'"+module_type.getText()+"\')");
+						if(resultSet.next()) {
+							for(int i = 1; i<5; i++) {
+								temp[0][i-1]= resultSet.getString(i);
 							}
+							return temp;
+						}
+						return temp;
+				
+				
+					}catch (SQLException e) {
 						
-				}else {
-					System.out.println("IN 1-0-0");
+					// TODO Auto-generated catch block
+						e.printStackTrace();
+						return temp;
+						}
+					
+				case "100":
+					
+					temp = new String[1][4];
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Inv_ID=" + 
-													text_invID.getText());
+																						InvID.getText());
 						if(resultSet.next()) {
 							for(int i = 1; i<5; i++) {
 								temp[0][i-1]= resultSet.getString(i);
@@ -222,43 +226,46 @@ public class Inventory_panel {
 							return temp;
 							}
 						return temp;
-					
-					}catch (SQLException e) {	
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-							return temp;
-							}
-						}
-	
-		}else if(!(text_inv_item.getText().isEmpty())) {
-				System.out.println("IN 0-1");
-				if(!(text_inv_pd.getText().isEmpty())) {
-					System.out.println("IN 0-1-1");
-					temp = new String[1][4];
+				
+				
+					}catch (SQLException e) {
 						
+					// TODO Auto-generated catch block
+						e.printStackTrace();
+						return temp;
+						}
+				
+				case "011":
+					
+					temp = new String[5][4];
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Item_name=\'"+
-														text_inv_item.getText()+"\' AND Module_type=\'"+text_inv_pd.getText()+"\')");
-						if(resultSet.next()) {
+															item_name.getText()+"\' AND Module_type=\'"+module_type.getText()+"\')");
+						int k =0;
+						while(resultSet.next()) {
 							for(int i = 1; i<5; i++) {
-								temp[0][i-1]= resultSet.getString(i);
+								temp[k][i-1]= resultSet.getString(i);
 							}
-							return temp;
+							
+							k++;
 						}
 						return temp;
+				
+				
+					}catch (SQLException e) {
 						
-					}catch (SQLException e) {	
-						//TODO Auto-generated catch block
+					// TODO Auto-generated catch block
 						e.printStackTrace();
 						return temp;
 						}
-							
-				}else {
+					
+				case "010":
+					
 					temp = new String[36][4];
-					System.out.println("IN 0-1-0");
+//					
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Item_name=\'"+
-															text_inv_item.getText()+"\'");
+																					item_name.getText()+"\'");
 						int k=0;
 						while(resultSet.next()) {
 							for(int i = 1; i<5; i++) {
@@ -266,37 +273,203 @@ public class Inventory_panel {
 								}
 								k++;
 							}return temp;
-							
-						}catch (SQLException e) {	
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-								return temp;
-							}
-						}	
-		}else {
-			System.out.println("IN 0-0-1");
-			temp = new String[10][4];
-				
-			try {
-				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Module_type=\'"+
-											text_inv_pd.getText()+"\'");
-				int k=0;
-				while(resultSet.next()) {
-					for(int i = 1; i<5; i++) {
-						temp[k][i-1]= resultSet.getString(i);
-					}
-					k++;
-				}return temp;
-			
-			}catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return temp;
+
+					}catch (SQLException e) {
+						
+					// TODO Auto-generated catch block
+						e.printStackTrace();
+						return temp;
+						}
+					
+				default:
+					
+					temp = new String[5][4];
+					
+				try {
+					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Module_type=\'"+
+																module_type.getText()+"\'");
+					int k=0;
+					while(resultSet.next()) {
+						for(int i = 1; i<5; i++) {
+							temp[k][i-1]= resultSet.getString(i);
+						}
+						k++;
+					}return temp;
+
+
+					}catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return temp;
+						}
 				}
-			}
-			
-		}
 				
+		}
+		
+		
+//	private String[][] inquire() {		
+//		String [][] temp;
+//		
+//		if (!(text_invID.getText().isEmpty())){
+//			System.out.println("IN 1");
+//			
+//			temp = new String[1][4];
+//			
+//				if(!(text_inv_item.getText().isEmpty())) {
+//					System.out.println("IN 1-1");
+//					if(!(text_inv_pd.getText().isEmpty())) {
+//						System.out.println("IN 1-1-1");
+//					
+//						try {
+//							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
+//													text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\' AND Module_type=\'"
+//													+text_inv_pd.getText()+"\')");
+//							if(resultSet.next()) {								
+//								for(int i = 1; i<5; i++) {
+//									temp[0][i-1]= resultSet.getString(i);
+//								}
+//								return temp;
+//							}
+//							return temp;
+//					
+//					
+//						}catch (SQLException e) {
+//							
+//						// TODO Auto-generated catch block
+//							e.printStackTrace();
+//							return temp;
+//							}
+//					}else {
+//						System.out.println("IN 1-1-0");
+//						try {
+//							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
+//													text_invID.getText()+" AND Item_name=\'"+ text_inv_item.getText()+"\')");
+//							if(resultSet.next()) {	
+//								for(int i = 1; i<5; i++) {
+//									temp[0][i-1]= resultSet.getString(i);
+//								}
+//								return temp;
+//							}
+//							return temp;
+//					
+//					
+//						}catch (SQLException e) {
+//							
+//						// TODO Auto-generated catch block
+//							e.printStackTrace();
+//							return temp;
+//							}
+//						}
+//				}else if(!(text_inv_pd.getText().isEmpty())) {
+//						System.out.println("IN 1-0-1");
+//						
+//						try {
+//							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
+//														text_invID.getText()+" AND Module_type=\'"+text_inv_pd.getText()+"\')");
+//							if(resultSet.next()) {
+//								for(int i = 1; i<5; i++) {
+//									temp[0][i-1]= resultSet.getString(i);
+//								}
+//								return temp;
+//							}
+//							return temp;
+//						
+//						}catch (SQLException e) {
+//						// TODO Auto-generated catch block
+//							e.printStackTrace();
+//							return temp;
+//							}
+//						
+//				}else {
+//					System.out.println("IN 1-0-0");
+//					try {
+//						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Inv_ID=" + 
+//													text_invID.getText());
+//						if(resultSet.next()) {
+//							for(int i = 1; i<5; i++) {
+//								temp[0][i-1]= resultSet.getString(i);
+//							}
+//							return temp;
+//							}
+//						return temp;
+//					
+//					}catch (SQLException e) {	
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//							return temp;
+//							}
+//						}
+//	
+//		}else if(!(text_inv_item.getText().isEmpty())) {
+//				System.out.println("IN 0-1");
+//				if(!(text_inv_pd.getText().isEmpty())) {
+//					System.out.println("IN 0-1-1");
+//					temp = new String[5][4];
+//						
+//					try {
+//						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Item_name=\'"+
+//														text_inv_item.getText()+"\' AND Module_type=\'"+text_inv_pd.getText()+"\')");
+//						int k=0;
+//						while(resultSet.next()) {
+//							for(int i = 1; i<5; i++) {
+//								temp[k][i-1]= resultSet.getString(i);
+//							}
+//							k++;
+//						}
+//						return temp;
+//						
+//					}catch (SQLException e) {	
+//						//TODO Auto-generated catch block
+//						e.printStackTrace();
+//						return temp;
+//						}
+//							
+//				}else {
+//					temp = new String[36][4];
+//					System.out.println("IN 0-1-0");
+//					try {
+//						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Item_name=\'"+
+//															text_inv_item.getText()+"\'");
+//						int k=0;
+//						while(resultSet.next()) {
+//							for(int i = 1; i<5; i++) {
+//								temp[k][i-1]= resultSet.getString(i);
+//								}
+//								k++;
+//							}return temp;
+//							
+//						}catch (SQLException e) {	
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//								return temp;
+//							}
+//						}	
+//		}else {
+//			System.out.println("IN 0-0-1");
+//			temp = new String[10][4];
+//				
+//			try {
+//				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Module_type=\'"+
+//											text_inv_pd.getText()+"\'");
+//				int k=0;
+//				while(resultSet.next()) {
+//					for(int i = 1; i<5; i++) {
+//						temp[k][i-1]= resultSet.getString(i);
+//					}
+//					k++;
+//				}return temp;
+//			
+//			}catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				return temp;
+//				}
+//			}
+//			
+//		}
+	
+	
+	
 	
 	
 	
