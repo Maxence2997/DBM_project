@@ -449,8 +449,7 @@ public class Maintenance_panel  {
 								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
-								temp.add(temp_array);
-								break;
+								temp.add(temp_array);	
 							}
 							break;
 							
@@ -474,7 +473,6 @@ public class Maintenance_panel  {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);
-								break;
 							}
 							break;
 					
@@ -499,7 +497,6 @@ public class Maintenance_panel  {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);
-								break;
 							}
 							break;
 					
@@ -524,7 +521,6 @@ public class Maintenance_panel  {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);
-								break;
 							}
 							break;
 					
@@ -667,30 +663,24 @@ public class Maintenance_panel  {
 		private String [] check_ID(JTextField ID) {
 			
 
-			String [] temp;
+			ArrayList<String>  temp = new ArrayList();
+			
 			try {
 				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE Project_ID=" + ID.getText());
 				
 				if(resultSet.next()) {
-					 temp= new String[6];
+					 
 					for(int i = 1; i<7; i++) {
-						temp[i-1]= resultSet.getString(i);
+						temp.add(resultSet.getString(i));
 						System.out.print(resultSet.getString(i));
-					}
-					return temp;
+					}	
 				}
-				temp= new String[0];
-				return temp;
-		
-		
-			}catch (SQLException e) {
-				
+			}catch (SQLException e) {	
 			// TODO Auto-generated catch block
-				temp= new String[0];
 				e.printStackTrace();
-				return temp;
 				}
 			
+			return (String[]) temp.toArray();
 		}
 		
 		
