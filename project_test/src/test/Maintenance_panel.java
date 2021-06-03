@@ -13,9 +13,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class Maintenance_panel  {
 	
@@ -33,6 +36,8 @@ public class Maintenance_panel  {
 		
 		private JPanel inq_panel;	
 		private JTable inq_table;
+		private DefaultTableModel inq_table_model;
+		private JScrollPane scrollpane;
 		
 		private JPanel maint_panel;
 		private JTextField text_maint_pjID;
@@ -62,10 +67,13 @@ public class Maintenance_panel  {
 		
 		
 		
-		public Maintenance_panel(String object) {
+		/**
+		 * @wbp.parser.entryPoint
+		 */
+		public Maintenance_panel(String st) {
 			
 			
-			if (object.equalsIgnoreCase("panel"))
+			if (st.equalsIgnoreCase("panel"))
 					proj_maintc_panels();
 			
 			
@@ -172,7 +180,7 @@ public class Maintenance_panel  {
 		
 		
 		
-		//default panel2
+		//default panel
 		private void add_default_panel() {
 			default_panel = new JPanel();
 			default_panel.setBounds(0, 0, 666, 348);
@@ -223,10 +231,10 @@ public class Maintenance_panel  {
 			btn_inq_inquire.setBounds(364, 52, 87, 29);
 			btn_inq_inquire.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					
+					String [] columns_name = {"Project ID", "Employee ID", "Est. Date", "Status", "Delivery Status", "Delivery Progress"};
 					String [][] temp = {{"90000000","11047630","2021/3/3","EXAM","",""}, {"90000008","11047638","2021/3/11","RCPT","",""},
 												{"90000010","11047640","2021/3/13","EXAM","",""}, {"90000013","11047643","2021/3/16","RCPT","",""}};
-					//String [][] temp = inquire(text_inq_pjID,text_inq_empID,text_inq_date);
+//					String [][] temp = inquire(text_inq_pjID,text_inq_empID,text_inq_date);
 					
 //					for(int j=0; j<temp.length;j++) {
 //							System.out.print("\n");
@@ -234,8 +242,20 @@ public class Maintenance_panel  {
 //									System.out.print(temp[j][i]+"\t");	
 //									}	
 //							}
-					
-					
+					if (temp.length != 0 ) {
+						inq_table_model = new DefaultTableModel(temp, columns_name);
+						inq_table.setModel(inq_table_model);
+						
+						TableColumnModel column_model = inq_table.getColumnModel();
+						column_model.getColumn(0).setPreferredWidth(50);
+						column_model.getColumn(1).setPreferredWidth(50);
+						column_model.getColumn(2).setPreferredWidth(50);
+						column_model.getColumn(3).setPreferredWidth(40);
+						column_model.getColumn(4).setPreferredWidth(60);
+						column_model.getColumn(5).setPreferredWidth(80);
+						inq_table.setVisible(true);
+						scrollpane.setVisible(true);
+					}
 				}
 			});
 			inq_panel.add(btn_inq_inquire);
@@ -254,17 +274,28 @@ public class Maintenance_panel  {
 			});
 			inq_panel.add(btn_inq_last20);
 					
-			JLabel lbl_inq_note = new JLabel("result message");
-			lbl_inq_note.setBounds(30, 152, 529, 16);
-			inq_panel.add(lbl_inq_note);
+			JLabel lbl_result = new JLabel("");
+			lbl_result.setBounds(30, 152, 529, 16);
+			inq_panel.add(lbl_result);
 					
-			inq_table = new JTable();
+			inq_table = new JTable() {
+			@Override
+			public boolean isCellEditable(int row, int column)
+            {
+                                  return false;}//uneditable
+            
+			}; 
 			inq_table.setBounds(29, 195, 612, 153);
-			inq_panel.add(inq_table);
+			//inq_panel.add(inq_table);
 			inq_table.setVisible(false);
+			
+			scrollpane = new JScrollPane(inq_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			scrollpane.setBounds(49,241,563,87);
+			scrollpane.setVisible(false);
+			inq_panel.add(scrollpane);
 		}
 		
-		//Second panel - Modify 
+		//Second panel - Maintenance
 		private void add_maintenance_panel() {
 			
 			maint_panel = new JPanel();

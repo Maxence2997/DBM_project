@@ -80,9 +80,10 @@ public class Inventory_panel {
 				
 				String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
 				
-				String[][] temp =inquire(text_invID, text_inv_item, text_inv_pd);
-//				String [][] temp = {{"27000002","90000001","CPU","C0x055"},{"27000003","90000001","CPU","C0z004"},			
-//														{"27000004","90000002","CPU","C0z035"}};  //for testing without connection
+//				String[][] temp =inquire(text_invID, text_inv_item, text_inv_pd);
+				String [][] temp = {{"27000002","90000001","CPU","C0x055"},{"27000003","90000001","CPU","C0z004"},			
+														{"27000004","90000002","CPU","C0z035"},{"27000004","90000002",
+															"CPU","C0z035"},{"27000004","90000002","CPU","C0z035"}};  //for testing without connection
   	
 	//			for(int j=0; j<temp.length;j++) {
 	//				System.out.print("\n");
