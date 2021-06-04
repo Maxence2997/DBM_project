@@ -28,8 +28,8 @@ public class Supplier_panel {
      * @ver. 1.2.2 05/28   
      * Seperated from Project_test
      **/
-	
-		private Maintenance_panel mtn_function;
+		
+		
 		
 		private JPanel supplier_panel;
 		private JTextField text_sup_supID;
@@ -59,7 +59,7 @@ public class Supplier_panel {
 	public Supplier_panel() {
 		
 		panel();
-		mtn_function = new Maintenance_panel("");
+		
 	}
 	
 	
@@ -232,7 +232,7 @@ public class Supplier_panel {
 		btn_sup_add.setVisible(false);
 		btn_sup_add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (add()==1) {
+				if (add_()==1) {
 					//set message to let user know it succeed. 
 				}
 				else {
@@ -319,7 +319,7 @@ public class Supplier_panel {
 		 **/
 		
 		ArrayList<String[]> temp = new ArrayList();
-		switch(check_text_fields(sup_ID, sup_name)) {
+		switch(Term_project_main.lib.check_text_fields(sup_ID, sup_name)) {
 		
 			case "11":
 
@@ -395,89 +395,10 @@ public class Supplier_panel {
 	}
 		
 		
-		
-//		if (!(text_sup_supID.getText().isEmpty())){
-////			System.out.println("IN1");
-//			if(!(text_sup_name.getText().isEmpty())) {
-////				System.out.println("IN1-1");
-//				try {
-//					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE (Supplier_ID=\'" + 
-//											text_sup_supID.getText()+"\' AND Supplier_name=\'" +text_sup_name.getText()+"\')");
-//					if(resultSet.next()) {
-//						
-//						for(int i = 1; i<7; i++) {
-//							temp[0][i-1]= resultSet.getString(i);
-//						}
-//						return temp;
-//					}
-//					return temp;
-//					
-//					
-//					}catch (SQLException e) {
-//						
-//					// TODO Auto-generated catch block
-//						e.printStackTrace();
-//						return temp;
-//					}
-//			}else{
-////				System.out.println("IN1-2");
-//				try {
-//					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_ID=\'" 
-//											+ text_sup_supID.getText() +"\'");
-////					System.out.println("SELECT * FROM SUPPLIER WHERE Supplier_ID=\'" 
-////							+ text_sup_supID.getText() +"\'");
-//					if(resultSet.next()) {
-//						
-////						System.out.println(resultSet.getString("Supplier_ID") + "    " + resultSet.getString(
-////								"Supplier_name") + "   " + resultSet.getString("Supplier_Address") + "   " + resultSet.getString("Contact_name") 
-////								+ "   " + resultSet.getString("Contact_mobile") + "   " + resultSet.getString("Contact_email"));
-//						
-//						for(int i = 1; i<7; i++) {
-//							temp[0][i-1]= resultSet.getString(i);
-//						}
-//						return temp;
-//					}
-//					return temp;
-//				
-//					
-//					}catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//						e.printStackTrace();
-//						return temp;
-//				}			
-//			}	
-//		}else if (!(text_sup_name.getText().isEmpty())){
-////			System.out.println("IN2");
-//			try {
-//				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_name=\'" + 
-//											text_sup_name.getText()+"\'");
-//				if(resultSet.next()) {
-//					
-////					System.out.println(resultSet.getString("Supplier_ID") + "    " + resultSet.getString(
-////							"Supplier_name") + "   " + resultSet.getString("Supplier_Address") + "   " + resultSet.getString("Contact_name") 
-////							+ "   " + resultSet.getString("Contact_mobile") + "   " + resultSet.getString("Contact_email"));
-//					
-//					for(int i = 1; i<7; i++) {
-//						temp[0][i-1]= resultSet.getString(i);
-//					}
-//					return temp;
-//				}
-//				return temp;
-//
-//				}catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//					e.printStackTrace();
-//					return temp;
-//				}
-//		}
-//		System.out.println("out");
-//		return temp;
-//		
 	
 	
 	
-	
-	private int add() {
+	private int add_() {
 		/** 
 		 * @Author jyun-an
 		 *  @since 06/01
@@ -489,10 +410,7 @@ public class Supplier_panel {
 					+ "Contact_name, Contact_mobile, Contact_email) VALUE (\'"+ get_new_supID()+"\', \'"+text_sup_name.getText()+"\', \'"+
 					text_sup_addr.getText()+"\', \'"+ text_sup_ctc.getText()+"\', \'"+
 					text_sup_mobile.getText()+"\', \'"+text_sup_mail.getText()+"\')");
-//			System.out.print("INSERT INTO SUPPLIER(Supplier_ID, Supplier_name, Supplier_address, "
-//					+ "Contact_name, Contact_mobile, Contact_email) VALUE (\'"+ get_new_supID()+"\', \'"+text_sup_name.getText()+"\', \'"+
-//					text_sup_addr.getText()+"\', \'"+ text_sup_ctc.getText()+"\', \'"+
-//					text_sup_mobile.getText()+"\', \'"+text_sup_mail.getText()+"\')");
+
 			return 	resultSet;	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -500,6 +418,8 @@ public class Supplier_panel {
 			return 	resultSet;	
 		}
 	}
+	
+	
 	
 	private String get_new_supID() {
 		/** 
@@ -552,27 +472,7 @@ public class Supplier_panel {
 	
 	
 	
-	public String check_text_fields(JTextField ID, JTextField else1) {
-		/**@author jyunanyang
-		 * @since 06/02/2021
-		 * to check how many JTextField are filled by user and return a String to 
-		 * be represente the status for switch case in inquire function.
-		 */
-		
-		if (!(ID.getText().isEmpty())) {
-			//1
-			if (!(else1.getText().isEmpty())) {
-				//1-1
-					return "11";
-				}else {
-					//1-1-0
-					return "10";
-				}
-			}else {
-				//1-0-1
-				return "01";				
-		}
-	}
+
 		
 		
 	public JComboBox get_combobox_sup() {

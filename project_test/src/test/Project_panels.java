@@ -80,7 +80,7 @@ public class Project_panels {
 		lbl_pj.setBounds(6, 6, 61, 16);
 		project_panel.add(lbl_pj);
 		
-		pj_subpanels = new Maintenance_panel("panel");
+		pj_subpanels = new Maintenance_panel();
 		sheets_panel = new Sheets_panel();
 		prog_panel = new Progress_panel();
 	}

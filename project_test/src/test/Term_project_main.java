@@ -65,6 +65,7 @@ public class Term_project_main {
 	
 	public static CardLayout card_layout;
 	public static CardLayout cl_home;
+	public static Library lib;
 	
 	
 	
@@ -110,7 +111,8 @@ public class Term_project_main {
 		login_panel();
 		frame.setVisible(true);
 		
-		conn = new connection(); 
+		conn = new connection();
+		lib = new Library();
 		
 		home_panel();
 		
@@ -172,6 +174,7 @@ public class Term_project_main {
 					
 					card_layout.show(frame.getContentPane(), "home");
 					
+					lib.adjust_PROJECT();
 //					if (library.is_existed(field_empID) == true) {
 						
 						//library = new Library();

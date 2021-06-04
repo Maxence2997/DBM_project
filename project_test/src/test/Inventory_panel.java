@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 public class Inventory_panel {
 	
 	private JPanel inventory_panel;
-	
+	private Library lib;
 	private JTable inv_table;
 	
 	private JTextField text_invID;
@@ -33,7 +33,7 @@ public class Inventory_panel {
 		
 		
 		panel();
-		mtn_function = new Maintenance_panel("");
+		lib = new Library();
 		
 	}
 	
@@ -144,7 +144,7 @@ public class Inventory_panel {
 		
 		ArrayList<String[]> temp = new ArrayList();
 		
-		switch (mtn_function.check_text_fields(InvID, item_name, module_type)) {
+		switch (lib.check_text_fields(InvID, item_name, module_type)) {
 		
 		
 				case "111":
