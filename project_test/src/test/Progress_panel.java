@@ -49,9 +49,9 @@ public class Progress_panel {
 		progress_panel.add(text_prog_pjID);
 		text_prog_pjID.setColumns(10);
 		
-		JButton btn_prog_inquire = new JButton("Inquire");
-		btn_prog_inquire.setBounds(501, 85, 88, 29);
-		progress_panel.add(btn_prog_inquire);
+		JButton btn_prog_inquire_all = new JButton("All");
+		btn_prog_inquire_all.setBounds(501, 85, 88, 29);
+		progress_panel.add(btn_prog_inquire_all);
 		
 		JLabel lbl_prog_empID = new JLabel("Employee ID :");
 		lbl_prog_empID.setBounds(56, 139, 86, 33);

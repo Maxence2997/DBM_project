@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -41,8 +42,20 @@ public class Sheets_panel  {
 	public JPanel core_sheet_panel;
 	
 	private JPanel sheet_container_panel;
+	
 	private JPanel default_panel;
+	
 	private JPanel inq_panel;
+	private JLabel lbl_inq_sheetID;
+	private JTextField text_inq_sheetID;
+	private JLabel lbl_inq_projectID;
+	private JTextField text_inq_projectID;
+	private JButton btn_inq_inquire;
+	private JLabel lbl_inq_pd;
+	private JTextField text_inq_pd;
+	private JButton btn_inq_last20;
+	private JScrollPane scrollpane;
+	
 	private JPanel mod_panel;
 	private JPanel remove_panel;
 	private JLabel lbl_remv_confirm;
@@ -167,99 +180,280 @@ public class Sheets_panel  {
 				inq_panel.setLayout(null);
 				
 						
-				JLabel lbl_inq_sheetID = new JLabel("sheet ID :");
-				lbl_inq_sheetID.setBounds(76, 11, 60, 16);
+				lbl_inq_sheetID = new JLabel("");
+				lbl_inq_sheetID.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_inq_sheetID.setBounds(310, 44, 103, 16);
+				lbl_inq_sheetID.setVisible(false);
 				inq_panel.add(lbl_inq_sheetID);
 						
-				JTextField text_inq_sheetID = new JTextField();
-				text_inq_sheetID.setBounds(136, 6, 141, 26);
+				text_inq_sheetID = new JTextField();
+				text_inq_sheetID.setBounds(426, 39, 105, 26);
+				text_inq_sheetID.setVisible(false);
 				inq_panel.add(text_inq_sheetID);
 				text_inq_sheetID.setColumns(10);
 						
-				JLabel lbl_inq_date = new JLabel("Realized Date :");
-				lbl_inq_date.setBounds(310, 11, 106, 16);
-				lbl_inq_date.setHorizontalAlignment(SwingConstants.RIGHT);
-				inq_panel.add(lbl_inq_date);
+				lbl_inq_projectID = new JLabel("Project ID :");
+				lbl_inq_projectID.setBounds(310, 86, 106, 16);
+				lbl_inq_projectID.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_inq_projectID.setVisible(false);
+				inq_panel.add(lbl_inq_projectID);
 						
-				JTextField text_inq_date = new JTextField();
-				text_inq_date.setBounds(416, 6, 105, 26);
-				inq_panel.add(text_inq_date);
-				text_inq_date.setColumns(10);
+				text_inq_projectID = new JTextField();
+				text_inq_projectID.setBounds(426, 81, 105, 26);
+				text_inq_projectID.setVisible(false);
+				inq_panel.add(text_inq_projectID);
+				text_inq_projectID.setColumns(10);
 						
-				JButton btn_inq_inquire = new JButton("Inquire");
-				btn_inq_inquire.setBounds(554, 5, 87, 29);
+				btn_inq_inquire = new JButton("Inquire");
+				btn_inq_inquire.setBounds(554, 39, 87, 29);
 				btn_inq_inquire.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						//library.btn_inquire();
 						inq_table.setVisible(true);
 					}
 				});
+				btn_inq_inquire.setVisible(false);
 				inq_panel.add(btn_inq_inquire);
 						
-				JLabel lbl_inq_empID = new JLabel("Employee ID :");
-				lbl_inq_empID.setBounds(50, 45, 86, 16);
-				inq_panel.add(lbl_inq_empID);
-						
-				JTextField text_inq_empID = new JTextField();
-				text_inq_empID.setBounds(136, 40, 141, 26);
-				inq_panel.add(text_inq_empID);
-				text_inq_empID.setColumns(10);
-						
-				JLabel lbl_inq_pd = new JLabel("Product Module :");
-				lbl_inq_pd.setBounds(310, 45, 106, 16);
+				lbl_inq_pd = new JLabel("Product :");
+				lbl_inq_pd.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_inq_pd.setVisible(false);
+				lbl_inq_pd.setBounds(310, 126, 106, 16);
 				inq_panel.add(lbl_inq_pd);
 						
-				JTextField text_inq_pd = new JTextField();
-				text_inq_pd.setBounds(416, 40, 105, 26);
+				text_inq_pd = new JTextField();
+				text_inq_pd.setBounds(426, 119, 105, 26);
+				text_inq_pd.setVisible(false);
 				inq_panel.add(text_inq_pd);
 				text_inq_pd.setColumns(10);
 						
-				JButton btn_inq_last20 = new JButton("Last 20");
-				btn_inq_last20.setBounds(554, 39, 87, 29);
+				btn_inq_last20 = new JButton("Last 20");
+				btn_inq_last20.setBounds(554, 81, 87, 29);
 				btn_inq_last20.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						//library.btn_inquire();
 						inq_table.setVisible(true);
+						
 					}
 				});
+				btn_inq_last20.setVisible(false);
 				inq_panel.add(btn_inq_last20);
 						
-				JLabel lbl_inq_note = new JLabel("Note : To inquire sheets, at least one of sheet ID and Employee ID must be filled in  ");
-				lbl_inq_note.setBounds(29, 73, 529, 16);
-				inq_panel.add(lbl_inq_note);
+				JLabel lbl_inq_result = new JLabel("");
+				lbl_inq_result.setBounds(349, 164, 262, 16);
+				inq_panel.add(lbl_inq_result);
 						
-				inq_table = new JTable();
-				inq_table.setBounds(29, 94, 612, 254);
-				inq_panel.add(inq_table);
+				
+				inq_table = new JTable(){ 
+					@Override
+					public boolean isCellEditable(int row, int column)
+		            {
+		                                  return false;}//uneditable
+		            
+					}; 
+				inq_table.setBounds(29, 194, 612, 130);
 				inq_table.setVisible(false);
+
+				scrollpane = new JScrollPane(inq_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				scrollpane.setBounds(52,219,559,100);
+				
+				inq_panel.add(scrollpane);
+				
+				ButtonGroup bg = new ButtonGroup();
+				
+				
+				JRadioButton rb_inq_all = new JRadioButton("All  Sheets");
+				rb_inq_all.setBounds(137, 28, 180, 23);
+				inq_panel.add(rb_inq_all);
+				rb_inq_all.addActionListener(new ActionListener() {
+			        @Override
+			        public void actionPerformed(ActionEvent e) {
+			        
+			        	lbl_inq_sheetID.setVisible(false);
+			        	text_inq_sheetID.setVisible(false);
+			        	lbl_inq_projectID.setVisible(true);
+			        	text_inq_projectID.setVisible(true);
+			        	
+			        	lbl_inq_pd.setText("Product :");
+			        	lbl_inq_pd.setVisible(true);
+			        	text_inq_pd.setVisible(true);
+			        	
+			        	btn_inq_last20.setVisible(true);
+			        	btn_inq_inquire.setVisible(true);
+			        	
+			        	
+			            
+			        }
+			    });
+				bg.add(rb_inq_all);
+				
+				JRadioButton rb_inq_RFQ = new JRadioButton("R.F.Q  Sheets");
+				rb_inq_RFQ.setBounds(137, 56, 180, 23);
+				inq_panel.add(rb_inq_RFQ);
+				rb_inq_RFQ.addActionListener(new ActionListener() {
+			        @Override
+			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	lbl_inq_sheetID.setText("RFQ_Sheet_ID :");
+			        	lbl_inq_sheetID.setVisible(true);
+			        	text_inq_sheetID.setVisible(true);
+			        	
+			        	lbl_inq_projectID.setVisible(true);
+			        	text_inq_projectID.setVisible(true);
+			        	
+			        	lbl_inq_pd.setText("Inquiring Product :");
+			        	lbl_inq_pd.setVisible(true);
+			        	text_inq_pd.setVisible(true);
+			            
+			        	btn_inq_last20.setVisible(true);
+			        	btn_inq_inquire.setVisible(true);
+			        	
+			        }
+			    });
+				bg.add(rb_inq_RFQ);
+				
+				
+				JRadioButton rb_inq_quotation = new JRadioButton("Quotation Sheets");
+				rb_inq_quotation.setBounds(137, 79, 180, 23);
+				inq_panel.add(rb_inq_quotation);
+				
+				rb_inq_quotation.addActionListener(new ActionListener() {
+			        @Override
+			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	lbl_inq_sheetID.setText("QUO_Sheet_ID :");
+			        	lbl_inq_sheetID.setVisible(true);
+			        	text_inq_sheetID.setVisible(true);
+			        	
+			        	lbl_inq_projectID.setVisible(true);
+			        	text_inq_projectID.setVisible(true);
+			        	
+			        	lbl_inq_pd.setText("Inquiring Product :");
+			        	lbl_inq_pd.setVisible(true);
+			        	text_inq_pd.setVisible(true);
+			        	
+			        	btn_inq_last20.setVisible(true);
+			        	btn_inq_inquire.setVisible(true);
+			        }
+			    });
+				bg.add(rb_inq_quotation);
+				
+				
+				
+				JRadioButton rb_inq_req = new JRadioButton("Requisition Sheets");
+				rb_inq_req.setBounds(137, 102, 180, 23);
+				inq_panel.add(rb_inq_req);
+				rb_inq_req.addActionListener(new ActionListener() {
+			        @Override
+			        public void actionPerformed(ActionEvent e) {
+			        	
+			        }
+			    });
+				bg.add(rb_inq_req);
+				
+				
+				
+				JRadioButton rb_inq_purchase = new JRadioButton("Purchase Sheets");
+				rb_inq_purchase.setBounds(137, 122, 180, 23);
+				inq_panel.add(rb_inq_purchase);
+				rb_inq_purchase.addActionListener(new ActionListener() {
+			        @Override
+			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	lbl_inq_sheetID.setText("PUR_Sheet_ID :");
+			        	lbl_inq_sheetID.setVisible(true);
+			        	text_inq_sheetID.setVisible(true);
+			        	
+			        	lbl_inq_projectID.setVisible(true);
+			        	text_inq_projectID.setVisible(true);
+			        	
+			        	lbl_inq_pd.setText("Module Type :");
+			        	lbl_inq_pd.setVisible(true);
+			        	text_inq_pd.setVisible(true);
+			        	
+			        	btn_inq_last20.setVisible(true);
+			        	btn_inq_inquire.setVisible(true);
+			        }
+			    });
+				bg.add(rb_inq_purchase);
+				
+				
+				JRadioButton rb_inq_exam = new JRadioButton("Examination Sheets");
+				rb_inq_exam.setBounds(137, 142, 180, 23);
+				inq_panel.add(rb_inq_exam);
+				rb_inq_exam.addActionListener(new ActionListener() {
+			        @Override
+			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	lbl_inq_sheetID.setText("EXA_Sheet_ID :");
+			        	lbl_inq_sheetID.setVisible(true);
+			        	text_inq_sheetID.setVisible(true);
+			        	
+			        	lbl_inq_projectID.setVisible(true);
+			        	text_inq_projectID.setVisible(true);
+			        	
+			        	lbl_inq_pd.setText("Module Type :");
+			        	lbl_inq_pd.setVisible(true);
+			        	text_inq_pd.setVisible(true);
+			        	
+			        	btn_inq_last20.setVisible(true);
+			        	btn_inq_inquire.setVisible(true);
+			        	
+			        }
+			    });
+				bg.add(rb_inq_exam);
+				
+				
+				JRadioButton rb_inq_receipt = new JRadioButton("Receipt Sheets");
+				rb_inq_receipt.setBounds(137, 164, 180, 23);
+				inq_panel.add(rb_inq_receipt);
+				rb_inq_receipt.addActionListener(new ActionListener() {
+			        @Override
+			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	lbl_inq_sheetID.setText("REC_Sheet_ID :");
+			        	lbl_inq_sheetID.setVisible(true);
+			        	text_inq_sheetID.setVisible(true);
+			        	
+			        	lbl_inq_projectID.setVisible(true);
+			        	text_inq_projectID.setVisible(true);
+			        	
+			        	lbl_inq_pd.setText("Module Type :");
+			        	lbl_inq_pd.setVisible(true);
+			        	text_inq_pd.setVisible(true);
+			        	
+			        	btn_inq_last20.setVisible(true);
+			        	btn_inq_inquire.setVisible(true);
+			        }
+			    });
+				
+				bg.add(rb_inq_receipt);
+				
+				JLabel lbl_sheet_type = new JLabel("Sheets type :");
+				lbl_sheet_type.setBounds(42, 32, 87, 16);
+				inq_panel.add(lbl_sheet_type);
+				
+
+				
+				
 			}
 			
 			//Second panel - Modify sheet
 			private void add_modify_panel() {
-				
+
 				mod_panel = new JPanel();
-				mod_panel.setBounds(0, 0, 666, 348);
-				sheet_container_panel.add(mod_panel, "Modify");
+				sheet_container_panel.add(mod_panel,"Modify");
+				mod_panel.setBounds(0, 0, 662, 367);
 				mod_panel.setLayout(null);
 				
 				JLabel lbl_mod_sheetID = new JLabel("*sheet ID :");
-				lbl_mod_sheetID.setBounds(72, 41, 67, 16);
+				lbl_mod_sheetID.setBounds(48, 41, 67, 16);
 				mod_panel.add(lbl_mod_sheetID);
 				
 				JTextField text_mod_sheetID = new JTextField();
 				text_mod_sheetID.setBounds(143, 36, 115, 26);
 				mod_panel.add(text_mod_sheetID);
 				text_mod_sheetID.setColumns(10);
-				
-				JLabel lbl_mod_next = new JLabel("Next sheet ID :");
-				lbl_mod_next.setBounds(292, 41, 95, 16);
-				lbl_mod_next.setHorizontalAlignment(SwingConstants.RIGHT);
-				mod_panel.add(lbl_mod_next);
-				
-				JTextField text_mod_next = new JTextField();
-				text_mod_next.setBounds(391, 36, 115, 26);
-				mod_panel.add(text_mod_next);
-				text_mod_next.setColumns(10);
 				
 				JButton btn_mod_modify = new JButton("Modify");
 				btn_mod_modify.setBounds(539, 35, 87, 29);
@@ -273,16 +467,6 @@ public class Sheets_panel  {
 				text_mod_empID.setBounds(143, 99, 115, 26);
 				mod_panel.add(text_mod_empID);
 				text_mod_empID.setColumns(10);
-				
-				JLabel lbl_mod_last = new JLabel("Last sheet ID :");
-				lbl_mod_last.setBounds(296, 104, 91, 16);
-				lbl_mod_last.setHorizontalAlignment(SwingConstants.RIGHT);
-				mod_panel.add(lbl_mod_last);
-				
-				JTextField text_mod_last = new JTextField();
-				text_mod_last.setBounds(391, 99, 115, 26);
-				mod_panel.add(text_mod_last);
-				text_mod_last.setColumns(10);
 				
 				JLabel lbl_mod_pdID = new JLabel("Product Module :");
 				lbl_mod_pdID.setBounds(33, 165, 106, 16);
@@ -312,9 +496,6 @@ public class Sheets_panel  {
 				mod_panel.add(text_mod_vol);
 				text_mod_vol.setColumns(10);
 				
-				mod_table = new JTable();
-				mod_table.setBounds(33, 252, 593, 66);
-				mod_panel.add(mod_table);
 			}
 			
 			//third panel - Append sheet
