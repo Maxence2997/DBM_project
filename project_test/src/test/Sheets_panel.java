@@ -120,14 +120,14 @@ public class Sheets_panel  {
 				add_remove_panel();
 				add_sign_panel();
 				
-				comboBox_sheets = new JComboBox();
+				comboBox_sheets = new JComboBox(new String[] {"--------","Inquire", "Modify","Remove","Signature"});
 				comboBox_sheets.setBounds(262, 6, 120, 27);
-				comboBox_sheets.addItem("--------");
-				comboBox_sheets.addItem("Inquire");
-				comboBox_sheets.addItem("Modify");
-				comboBox_sheets.addItem("Append");
-				comboBox_sheets.addItem("Remove");
-				comboBox_sheets.addItem("Signature");
+//				comboBox_sheets.addItem("--------");
+//				comboBox_sheets.addItem("Inquire");
+//				comboBox_sheets.addItem("Modify");
+//				comboBox_sheets.addItem("Append");
+//				comboBox_sheets.addItem("Remove");
+//				comboBox_sheets.addItem("Signature");
 				
 				
 				comboBox_sheets.addActionListener(new ActionListener() {
@@ -180,7 +180,7 @@ public class Sheets_panel  {
 				inq_panel.setLayout(null);
 				
 						
-				lbl_inq_sheetID = new JLabel("");
+				lbl_inq_sheetID = new JLabel("Sheet ID :");
 				lbl_inq_sheetID.setHorizontalAlignment(SwingConstants.RIGHT);
 				lbl_inq_sheetID.setBounds(310, 44, 103, 16);
 				lbl_inq_sheetID.setVisible(false);
@@ -218,7 +218,7 @@ public class Sheets_panel  {
 				lbl_inq_pd = new JLabel("Product :");
 				lbl_inq_pd.setHorizontalAlignment(SwingConstants.RIGHT);
 				lbl_inq_pd.setVisible(false);
-				lbl_inq_pd.setBounds(310, 126, 106, 16);
+				lbl_inq_pd.setBounds(270, 126, 146, 16);
 				inq_panel.add(lbl_inq_pd);
 						
 				text_inq_pd = new JTextField();
@@ -269,8 +269,9 @@ public class Sheets_panel  {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			        
-			        	lbl_inq_sheetID.setVisible(false);
-			        	text_inq_sheetID.setVisible(false);
+			        	lbl_inq_sheetID.setVisible(true);
+			        	text_inq_sheetID.setVisible(true);
+			        	
 			        	lbl_inq_projectID.setVisible(true);
 			        	text_inq_projectID.setVisible(true);
 			        	
@@ -287,14 +288,14 @@ public class Sheets_panel  {
 			    });
 				bg.add(rb_inq_all);
 				
-				JRadioButton rb_inq_RFQ = new JRadioButton("R.F.Q  Sheets");
+				JRadioButton rb_inq_RFQ = new JRadioButton("R.F.Q");
 				rb_inq_RFQ.setBounds(137, 56, 180, 23);
 				inq_panel.add(rb_inq_RFQ);
 				rb_inq_RFQ.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			        	
-			        	lbl_inq_sheetID.setText("RFQ_Sheet_ID :");
+			        	
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -313,7 +314,7 @@ public class Sheets_panel  {
 				bg.add(rb_inq_RFQ);
 				
 				
-				JRadioButton rb_inq_quotation = new JRadioButton("Quotation Sheets");
+				JRadioButton rb_inq_quotation = new JRadioButton("Quotation");
 				rb_inq_quotation.setBounds(137, 79, 180, 23);
 				inq_panel.add(rb_inq_quotation);
 				
@@ -321,7 +322,7 @@ public class Sheets_panel  {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			        	
-			        	lbl_inq_sheetID.setText("QUO_Sheet_ID :");
+			        	
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -340,12 +341,25 @@ public class Sheets_panel  {
 				
 				
 				
-				JRadioButton rb_inq_req = new JRadioButton("Requisition Sheets");
+				JRadioButton rb_inq_req = new JRadioButton("Requisition");
 				rb_inq_req.setBounds(137, 102, 180, 23);
 				inq_panel.add(rb_inq_req);
 				rb_inq_req.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	lbl_inq_sheetID.setVisible(true);
+			        	text_inq_sheetID.setVisible(true);
+			        	
+			        	lbl_inq_projectID.setVisible(true);
+			        	text_inq_projectID.setVisible(true);
+			        	
+			        	lbl_inq_pd.setText("Inquiring Product :");
+			        	lbl_inq_pd.setVisible(true);
+			        	text_inq_pd.setVisible(true);
+			        	
+			        	btn_inq_last20.setVisible(true);
+			        	btn_inq_inquire.setVisible(true);
 			        	
 			        }
 			    });
@@ -353,14 +367,14 @@ public class Sheets_panel  {
 				
 				
 				
-				JRadioButton rb_inq_purchase = new JRadioButton("Purchase Sheets");
+				JRadioButton rb_inq_purchase = new JRadioButton("Purchase");
 				rb_inq_purchase.setBounds(137, 122, 180, 23);
 				inq_panel.add(rb_inq_purchase);
 				rb_inq_purchase.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			        	
-			        	lbl_inq_sheetID.setText("PUR_Sheet_ID :");
+			        	
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -378,14 +392,14 @@ public class Sheets_panel  {
 				bg.add(rb_inq_purchase);
 				
 				
-				JRadioButton rb_inq_exam = new JRadioButton("Examination Sheets");
+				JRadioButton rb_inq_exam = new JRadioButton("Examination");
 				rb_inq_exam.setBounds(137, 142, 180, 23);
 				inq_panel.add(rb_inq_exam);
 				rb_inq_exam.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			        	
-			        	lbl_inq_sheetID.setText("EXA_Sheet_ID :");
+			        	
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -404,14 +418,14 @@ public class Sheets_panel  {
 				bg.add(rb_inq_exam);
 				
 				
-				JRadioButton rb_inq_receipt = new JRadioButton("Receipt Sheets");
+				JRadioButton rb_inq_receipt = new JRadioButton("Receipt");
 				rb_inq_receipt.setBounds(137, 164, 180, 23);
 				inq_panel.add(rb_inq_receipt);
 				rb_inq_receipt.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			        	
-			        	lbl_inq_sheetID.setText("REC_Sheet_ID :");
+			        	
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
