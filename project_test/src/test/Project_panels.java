@@ -1,8 +1,10 @@
 package test;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -79,6 +81,19 @@ public class Project_panels {
 		JLabel lbl_pj = new JLabel("Project");
 		lbl_pj.setBounds(6, 6, 61, 16);
 		project_panel.add(lbl_pj);
+		
+		JButton btn_update = new JButton("");
+		btn_update.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Term_project_main.lib.adjust_PROJECT();
+			}
+		});
+		Image update = new ImageIcon(this.getClass().getResource("/update.jpg")).getImage();
+		update = update.getScaledInstance( 21, 21,  java.awt.Image.SCALE_AREA_AVERAGING) ;
+		btn_update.setIcon(new ImageIcon(update));
+		btn_update.setBounds(251, 98, 29, 29);
+		project_panel.add(btn_update);
 		
 		pj_subpanels = new Maintenance_panel();
 		sheets_panel = new Sheets_panel();

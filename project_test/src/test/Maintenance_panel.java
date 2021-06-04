@@ -272,8 +272,23 @@ public class Maintenance_panel  {
 			btn_inq_last20.setBounds(364, 92, 87, 29);
 			btn_inq_last20.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					//library.btn_inquire();
-					inq_panel.setVisible(true);
+					
+					String [] columns_name = {"Project ID", "Employee ID", "Est. Date", "Status", "Delivery Progress"};
+					
+					String[][] temp = last_20();
+					
+					inq_table_model = new DefaultTableModel(temp, columns_name);
+					inq_table.setModel(inq_table_model);
+					
+					TableColumnModel column_model = inq_table.getColumnModel();
+					column_model.getColumn(0).setPreferredWidth(50);
+					column_model.getColumn(1).setPreferredWidth(50);
+					column_model.getColumn(2).setPreferredWidth(50);
+					column_model.getColumn(3).setPreferredWidth(40);
+					column_model.getColumn(4).setPreferredWidth(80);
+					inq_table.setVisible(true);
+					scrollpane.setVisible(true);
+					lbl_result.setText("Data load succeed");
 				}
 			});
 			inq_panel.add(btn_inq_last20);
@@ -688,6 +703,38 @@ public class Maintenance_panel  {
 				result_array[i++] = array_in_temp;
 			        }
 			return result_array;
+		}
+		
+		
+		private String[][] last_20(){
+			
+			ArrayList<String[]> temp = new ArrayList();
+			
+			try {
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("Select * fROM PROJECT "
+																	+ "ORDER BY Established_date DESC LIMIT 20");
+				
+				int k=0;
+				while(resultSet.next()) {
+					String [] temp_array = new String[5];
+					for(int i = 1; i<6; i++) {
+						temp_array[i-1]= resultSet.getString(i);
+					}
+					temp.add(temp_array);
+					k++;
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String[][] result_array = new String[temp.size()][5];
+			int i=0;
+			for (String[] array_in_temp : temp) {
+				result_array[i++] = array_in_temp;
+			        }
+			return result_array;
+			
 		}
 		
 		
