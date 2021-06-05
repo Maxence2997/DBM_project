@@ -44,6 +44,9 @@ public class connection {
 			  System.out.println("mysql Connection Success");
 			  
 			  st= conn.createStatement();
+			  
+			  st.executeUpdate("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+			  st.executeUpdate("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
 			   
 			  } catch (SQLException e) {
 			   e.printStackTrace();

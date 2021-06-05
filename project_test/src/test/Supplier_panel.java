@@ -327,7 +327,7 @@ public class Supplier_panel {
 					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE (Supplier_ID=\'" + 
 							sup_ID.getText()+"\' AND Supplier_name=\'" +sup_name.getText()+"\')");
 					
-					if(resultSet.next()) {
+					while(resultSet.next()) {
 						String [] temp_array = new String[6];
 						for(int i = 1; i<7; i++) {
 							temp_array[i-1]= resultSet.getString(i);
@@ -348,7 +348,7 @@ public class Supplier_panel {
 					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_ID=\'" 
 													+ text_sup_supID.getText() +"\'");
 					
-					if(resultSet.next()) {
+					while(resultSet.next()) {
 						String [] temp_array = new String[6];
 						for(int i = 1; i<7; i++) {
 							temp_array[i-1]= resultSet.getString(i);
@@ -369,7 +369,7 @@ public class Supplier_panel {
 					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_name=\'" + 
 													text_sup_name.getText()+"\'");
 					
-					if(resultSet.next()) {
+					while(resultSet.next()) {
 						String [] temp_array = new String[6];
 						for(int i = 1; i<7; i++) {
 							temp_array[i-1]= resultSet.getString(i);

@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -17,6 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -52,9 +57,18 @@ public class Sheets_panel  {
 	private JTextField text_inq_projectID;
 	private JButton btn_inq_inquire;
 	private JLabel lbl_inq_pd;
+	private JLabel lbl_inq_result;
 	private JTextField text_inq_pd;
 	private JButton btn_inq_last20;
 	private JScrollPane scrollpane;
+	private JRadioButton rb_inq_all;
+	private JRadioButton rb_inq_RFQ;
+	private JRadioButton rb_inq_quo;
+	private JRadioButton rb_inq_req;
+	private JRadioButton rb_inq_pur;
+	private JRadioButton rb_inq_exam;
+	private JRadioButton rb_inq_rec;
+	private DefaultTableModel inq_table_model;
 	
 	private JPanel mod_panel;
 	private JPanel remove_panel;
@@ -85,6 +99,7 @@ public class Sheets_panel  {
 	
 	
 	private CardLayout cl_sheet;
+	private JButton btn_mod_check;
 	
 	
 	public Sheets_panel() {
@@ -121,15 +136,7 @@ public class Sheets_panel  {
 				add_sign_panel();
 				
 				comboBox_sheets = new JComboBox(new String[] {"--------","Inquire", "Modify","Remove","Signature"});
-				comboBox_sheets.setBounds(262, 6, 120, 27);
-//				comboBox_sheets.addItem("--------");
-//				comboBox_sheets.addItem("Inquire");
-//				comboBox_sheets.addItem("Modify");
-//				comboBox_sheets.addItem("Append");
-//				comboBox_sheets.addItem("Remove");
-//				comboBox_sheets.addItem("Signature");
-				
-				
+				comboBox_sheets.setBounds(262, 6, 120, 27);			
 				comboBox_sheets.addActionListener(new ActionListener() {
 			            @Override
 			            public void actionPerformed(ActionEvent e) {
@@ -209,7 +216,29 @@ public class Sheets_panel  {
 				btn_inq_inquire.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						//library.btn_inquire();
-						inq_table.setVisible(true);
+						
+						if (rb_inq_all.isSelected()) {
+							String [][] temp = inquire_all(text_inq_sheetID,text_inq_projectID,text_inq_pd);
+							
+//							for(int i=0; i<temp.length;i++) {
+//								for(int j=0; j<temp[i].length;j++) {
+//									System.out.print(temp[i][j]+"\t");
+//								}
+//								System.out.println();
+//							}
+
+							String[] columns_name = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"};
+							
+							if(temp.length!=0) {
+								inq_table_model = new DefaultTableModel(temp,columns_name);
+								inq_table.setModel(inq_table_model);
+								inq_table.setVisible(true);
+								scrollpane.setVisible(true);
+								lbl_inq_result.setText("Data loaded");
+								lbl_inq_result.setVisible(true);
+							}
+						}
+						
 					}
 				});
 				btn_inq_inquire.setVisible(false);
@@ -239,7 +268,7 @@ public class Sheets_panel  {
 				btn_inq_last20.setVisible(false);
 				inq_panel.add(btn_inq_last20);
 						
-				JLabel lbl_inq_result = new JLabel("");
+				lbl_inq_result = new JLabel("");
 				lbl_inq_result.setBounds(349, 164, 262, 16);
 				inq_panel.add(lbl_inq_result);
 						
@@ -251,10 +280,10 @@ public class Sheets_panel  {
 		                                  return false;}//uneditable
 		            
 					}; 
-				inq_table.setBounds(29, 194, 612, 130);
+				inq_table.setBounds(29, 194, 1000, 130);
 				inq_table.setVisible(false);
 
-				scrollpane = new JScrollPane(inq_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				scrollpane = new JScrollPane(inq_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 				scrollpane.setBounds(52,219,559,100);
 				
 				inq_panel.add(scrollpane);
@@ -262,7 +291,8 @@ public class Sheets_panel  {
 				ButtonGroup bg = new ButtonGroup();
 				
 				
-				JRadioButton rb_inq_all = new JRadioButton("All  Sheets");
+				
+				rb_inq_all = new JRadioButton("All  Sheets");
 				rb_inq_all.setBounds(137, 28, 180, 23);
 				inq_panel.add(rb_inq_all);
 				rb_inq_all.addActionListener(new ActionListener() {
@@ -288,7 +318,7 @@ public class Sheets_panel  {
 			    });
 				bg.add(rb_inq_all);
 				
-				JRadioButton rb_inq_RFQ = new JRadioButton("R.F.Q");
+				rb_inq_RFQ = new JRadioButton("R.F.Q");
 				rb_inq_RFQ.setBounds(137, 56, 180, 23);
 				inq_panel.add(rb_inq_RFQ);
 				rb_inq_RFQ.addActionListener(new ActionListener() {
@@ -314,11 +344,11 @@ public class Sheets_panel  {
 				bg.add(rb_inq_RFQ);
 				
 				
-				JRadioButton rb_inq_quotation = new JRadioButton("Quotation");
-				rb_inq_quotation.setBounds(137, 79, 180, 23);
-				inq_panel.add(rb_inq_quotation);
+				rb_inq_quo = new JRadioButton("Quotation");
+				rb_inq_quo.setBounds(137, 79, 180, 23);
+				inq_panel.add(rb_inq_quo);
 				
-				rb_inq_quotation.addActionListener(new ActionListener() {
+				rb_inq_quo.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			        	
@@ -337,11 +367,11 @@ public class Sheets_panel  {
 			        	btn_inq_inquire.setVisible(true);
 			        }
 			    });
-				bg.add(rb_inq_quotation);
+				bg.add(rb_inq_quo);
 				
 				
 				
-				JRadioButton rb_inq_req = new JRadioButton("Requisition");
+				rb_inq_req = new JRadioButton("Requisition");
 				rb_inq_req.setBounds(137, 102, 180, 23);
 				inq_panel.add(rb_inq_req);
 				rb_inq_req.addActionListener(new ActionListener() {
@@ -367,10 +397,10 @@ public class Sheets_panel  {
 				
 				
 				
-				JRadioButton rb_inq_purchase = new JRadioButton("Purchase");
-				rb_inq_purchase.setBounds(137, 122, 180, 23);
-				inq_panel.add(rb_inq_purchase);
-				rb_inq_purchase.addActionListener(new ActionListener() {
+				rb_inq_pur = new JRadioButton("Purchase");
+				rb_inq_pur.setBounds(137, 122, 180, 23);
+				inq_panel.add(rb_inq_pur);
+				rb_inq_pur.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			        	
@@ -389,10 +419,10 @@ public class Sheets_panel  {
 			        	btn_inq_inquire.setVisible(true);
 			        }
 			    });
-				bg.add(rb_inq_purchase);
+				bg.add(rb_inq_pur);
 				
 				
-				JRadioButton rb_inq_exam = new JRadioButton("Examination");
+				rb_inq_exam = new JRadioButton("Examination");
 				rb_inq_exam.setBounds(137, 142, 180, 23);
 				inq_panel.add(rb_inq_exam);
 				rb_inq_exam.addActionListener(new ActionListener() {
@@ -418,10 +448,10 @@ public class Sheets_panel  {
 				bg.add(rb_inq_exam);
 				
 				
-				JRadioButton rb_inq_receipt = new JRadioButton("Receipt");
-				rb_inq_receipt.setBounds(137, 164, 180, 23);
-				inq_panel.add(rb_inq_receipt);
-				rb_inq_receipt.addActionListener(new ActionListener() {
+				rb_inq_rec = new JRadioButton("Receipt");
+				rb_inq_rec.setBounds(137, 164, 180, 23);
+				inq_panel.add(rb_inq_rec);
+				rb_inq_rec.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			        	
@@ -441,11 +471,15 @@ public class Sheets_panel  {
 			        }
 			    });
 				
-				bg.add(rb_inq_receipt);
+				bg.add(rb_inq_rec);
 				
 				JLabel lbl_sheet_type = new JLabel("Sheets type :");
 				lbl_sheet_type.setBounds(42, 32, 87, 16);
 				inq_panel.add(lbl_sheet_type);
+				
+				JButton btn_clear = new JButton("Clear");
+				btn_clear.setBounds(554, 121, 87, 29);
+				inq_panel.add(btn_clear);
 				
 
 				
@@ -461,11 +495,11 @@ public class Sheets_panel  {
 				mod_panel.setLayout(null);
 				
 				JLabel lbl_mod_sheetID = new JLabel("*sheet ID :");
-				lbl_mod_sheetID.setBounds(48, 41, 67, 16);
+				lbl_mod_sheetID.setBounds(193, 41, 67, 16);
 				mod_panel.add(lbl_mod_sheetID);
 				
 				JTextField text_mod_sheetID = new JTextField();
-				text_mod_sheetID.setBounds(143, 36, 115, 26);
+				text_mod_sheetID.setBounds(272, 36, 115, 26);
 				mod_panel.add(text_mod_sheetID);
 				text_mod_sheetID.setColumns(10);
 				
@@ -509,6 +543,10 @@ public class Sheets_panel  {
 				text_mod_vol.setBounds(143, 221, 115, 26);
 				mod_panel.add(text_mod_vol);
 				text_mod_vol.setColumns(10);
+				
+				btn_mod_check = new JButton("Check");
+				btn_mod_check.setBounds(389, 36, 83, 29);
+				mod_panel.add(btn_mod_check);
 				
 			}
 			
@@ -865,8 +903,1161 @@ public class Sheets_panel  {
 					
 			}
 			
-			public JComboBox get_comboBox_sheets() {
+			
+			
+			
+	private String[][] inquire_all(JTextField first, JTextField second, JTextField third){
 				
-				return comboBox_sheets;
+		/**@author jyunanyang
+		 * @since 05/06/2021
+		 * 
+		 */
+		
+		ArrayList<String[]> temp = new ArrayList();
+				
+			switch(Term_project_main.lib.check_text_fields(first, second,third)) {
+			
+				
+				case "011":
+					try {
+						ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
+								+ "LEFT JOIN QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
+								+ "AND RFQ.Inquiring_product = QUOT.Inquiring_product)\n"
+								+ "LEFT JOIN REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
+								+ "AND REQ.Inquiring_product = QUOT.Inquiring_product)\n"
+								+ "LEFT JOIN PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
+								+ "AND PUR.Module_type = REQ.Inquiring_product)\n"
+								+ "LEFT JOIN EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
+								+ "AND EXAM.Module_type = PUR.Module_type)\n"
+								+ "LEFT JOIN RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
+								+ "AND RCPT.Module_type = EXAM.MOdule_type) WHERE (pj.Project_ID="
+								+ text_inq_projectID.getText()+"AND RFQ.Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+						
+						while(r.next()) {
+							
+							if(r.getString(6)!= null) {
+								
+								String [] rfq = new String[7];
+								for(int i =6; i<13;i++) {
+									
+									rfq[0]=r.getString(1);
+									
+									if(i==8) 
+										continue;
+									
+									else if(i>8)
+										rfq[i-6]=r.getString(i);
+									
+									else
+										rfq[i-5]=r.getString(i);		
+								}
+								temp.add(rfq);
+								
+								if(r.getString(13)!= null) {
+									
+									String [] quo = new String[10];
+									for(int i =13; i<23;i++) {
+										
+										quo[0]=r.getString(1);
+										
+										if(i==15) 
+											continue;
+										
+										else if(i>15)
+											quo[i-13]=r.getString(i);
+										
+										else
+											quo[i-12]=r.getString(i);		
+									}
+									temp.add(quo);
+									
+									if(r.getString(23)!= null) {
+										String [] req = new String[11];
+										for(int i =23; i<34;i++) {
+											
+											req[0]=r.getString(1);
+											
+											if(i==25) 
+												continue;
+											
+											else if(i>25)
+												req[i-23]=r.getString(i);
+											
+											else
+												req[i-22]=r.getString(i);		
+										}
+										temp.add(req);
+										
+										if (r.getString(34)!= null) {
+											
+											String [] pur = new String[9];
+											for(int i =34; i<43;i++) {
+												
+												pur[0]=r.getString(1);
+												
+												if(i==37) 
+													continue;
+												
+												else if(i>37)
+													pur[i-34]=r.getString(i);
+												
+												else
+													pur[i-33]=r.getString(i);		
+											}
+											temp.add(pur);
+											
+											if(r.getString(43)!= null) {
+												
+												String [] exam = new String[7];
+												for(int i =43; i<50;i++) {
+													
+													exam[0]=r.getString(1);
+													
+													if(i==45) 
+														continue;
+													
+													else if(i>45)
+														exam[i-43]=r.getString(i);
+													
+													else
+														exam[i-42]=r.getString(i);		
+												}
+												temp.add(exam);
+												
+												if(r.getString(50)!= null) {
+													
+													String [] rcpt = new String[6];
+													for(int i =50; i<56;i++) {
+														
+														rcpt[0]=r.getString(1);
+														
+														if(i==52) 
+															continue;
+														
+														else if(i>52)
+															rcpt[i-50]=r.getString(i);
+														
+														else
+															rcpt[i-49]=r.getString(i);		
+													}
+													temp.add(rcpt);	
+												}
+											}
+										}
+									}
+								}
+							}	
+							
+						}
+						break;
+						
+						}catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							break;
+						}
+			
+				case "010":
+					
+					try {
+						
+						ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
+								+ "LEFT JOIN QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
+								+ "AND RFQ.Inquiring_product = QUOT.Inquiring_product)\n"
+								+ "LEFT JOIN REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
+								+ "AND REQ.Inquiring_product = QUOT.Inquiring_product)\n"
+								+ "LEFT JOIN PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
+								+ "AND PUR.Module_type = REQ.Inquiring_product)\n"
+								+ "LEFT JOIN EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
+								+ "AND EXAM.Module_type = PUR.Module_type)\n"
+								+ "LEFT JOIN RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
+								+ "AND RCPT.Module_type = EXAM.MOdule_type) WHERE pj.Project_ID ="+text_inq_projectID.getText());
+						
+						while(r.next()) {
+							
+							if(r.getString(6)!= null) {
+								
+								String [] rfq = new String[7];
+								for(int i =6; i<13;i++) {
+									
+									rfq[0]=r.getString(1);
+									
+									if(i==8) 
+										continue;
+									
+									else if(i>8)
+										rfq[i-6]=r.getString(i);
+									
+									else
+										rfq[i-5]=r.getString(i);		
+								}
+								temp.add(rfq);
+								
+								if(r.getString(13)!= null) {
+									
+									String [] quo = new String[10];
+									for(int i =13; i<23;i++) {
+										
+										quo[0]=r.getString(1);
+										
+										if(i==15) 
+											continue;
+										
+										else if(i>15)
+											quo[i-13]=r.getString(i);
+										
+										else
+											quo[i-12]=r.getString(i);		
+									}
+									temp.add(quo);
+									
+									if(r.getString(23)!= null) {
+										String [] req = new String[11];
+										for(int i =23; i<34;i++) {
+											
+											req[0]=r.getString(1);
+											
+											if(i==25) 
+												continue;
+											
+											else if(i>25)
+												req[i-23]=r.getString(i);
+											
+											else
+												req[i-22]=r.getString(i);		
+										}
+										temp.add(req);
+										
+										if (r.getString(34)!= null) {
+											
+											String [] pur = new String[9];
+											for(int i =34; i<43;i++) {
+												
+												pur[0]=r.getString(1);
+												
+												if(i==37) 
+													continue;
+												
+												else if(i>37)
+													pur[i-34]=r.getString(i);
+												
+												else
+													pur[i-33]=r.getString(i);		
+											}
+											temp.add(pur);
+											
+											if(r.getString(43)!= null) {
+												
+												String [] exam = new String[7];
+												for(int i =43; i<50;i++) {
+													
+													exam[0]=r.getString(1);
+													
+													if(i==45) 
+														continue;
+													
+													else if(i>45)
+														exam[i-43]=r.getString(i);
+													
+													else
+														exam[i-42]=r.getString(i);		
+												}
+												temp.add(exam);
+												
+												if(r.getString(50)!= null) {
+													
+													String [] rcpt = new String[6];
+													for(int i =50; i<56;i++) {
+														
+														rcpt[0]=r.getString(1);
+														
+														if(i==52) 
+															continue;
+														
+														else if(i>52)
+															rcpt[i-50]=r.getString(i);
+														
+														else
+															rcpt[i-49]=r.getString(i);		
+													}
+													temp.add(rcpt);	
+												}
+											}
+										}
+									}
+								}
+							}	
+							
+						}
+					
+						}catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							
+						}
+						break;
+					
+					
+				case "001":	
+					
+					try {
+						ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM  RFQ \n"
+								+ "LEFT JOIN QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
+								+ "AND RFQ.Inquiring_product = QUOT.Inquiring_product)\n"
+								+ "LEFT JOIN REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
+								+ "AND REQ.Inquiring_product = QUOT.Inquiring_product)\n"
+								+ "LEFT JOIN PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
+								+ "AND PUR.Module_type = REQ.Inquiring_product)\n"
+								+ "LEFT JOIN EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
+								+ "AND EXAM.Module_type = PUR.Module_type)\n"
+								+ "LEFT JOIN RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
+								+ "AND RCPT.Module_type = EXAM.MOdule_type) WHERE RFQ.Inquiring_product ="+text_inq_pd.getText());
+						
+						while(r.next()) {
+							
+							if(r.getString(1)!= null) {
+								
+								String [] rfq = new String[7];
+								for(int i =1; i<8;i++) {
+
+									rfq[i-1]=r.getString(i);		
+								}
+								temp.add(rfq);
+								
+								if(r.getString(8)!= null) {
+									
+									String [] quo = new String[10];
+									for(int i =8; i<18;i++) {
+										
+										quo[i-8]=r.getString(i);		
+									}
+									temp.add(quo);
+									
+									if(r.getString(18)!= null) {
+										String [] req = new String[11];
+										for(int i =18; i<29;i++) {
+
+											req[i-18]=r.getString(i);		
+										}
+										temp.add(req);
+										
+										if (r.getString(29)!= null) {
+											
+											String [] pur = new String[9];
+											for(int i =29; i<38;i++) {
+												
+												pur[i-29]=r.getString(i);		
+											}
+											temp.add(pur);
+											
+											if(r.getString(38)!= null) {
+												
+												String [] exam = new String[7];
+												for(int i =38; i<45;i++) {
+													
+													exam[i-38]=r.getString(i);		
+												}
+												temp.add(exam);
+												
+												if(r.getString(45)!= null) {
+													
+													String [] rcpt = new String[6];
+													for(int i =45; i<51;i++) {
+														
+														rcpt[i-45]=r.getString(i);		
+													}
+													temp.add(rcpt);	
+												}
+											}
+										}
+									}
+								}
+							}	
+							
+						}
+						
+						
+						break;
+						
+						}catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							break;
+						}
+				
+				default:
+					//sheet_ID be filled cases all are default
+						
+					int id = Integer.parseInt(text_inq_sheetID.getText());
+						
+					if (id>=21000000 & id< 22000000) {
+							
+						return inquire("RFQ",first,second,third);
+							
+					}else if(id>=22000000 & id< 23000000){
+							
+						return inquire("QUO",first,second,third);
+							
+					}else if(id>=23000000 & id< 24000000) {
+							
+						return inquire("REQ",first,second,third);
+							
+					}else if(id>=24000000 & id< 25000000) {
+							
+						return inquire("PUR",first,second,third);
+							
+					}else if(id>=25000000 & id< 26000000) {
+							
+						return inquire("EXAM",first,second,third);
+							
+					}else if(id>=26000000 & id< 27000000) {
+							
+						return inquire("RCPT",first,second,third);
+							
+					}
+
+				}
+//				for(int i=0; i<temp.size();i++) {
+//					for(int j=0; j<temp.get(i).length;j++) {
+//					System.out.print(temp.get(i)[j]+"\t");
+//					}
+//					System.out.println();
+//				}
+//				System.out.println();
+//				System.out.println();
+//				System.out.println();
+				
+				String[][] result_array = new String[temp.size()][11];
+				int i=0;
+				for (String[] array_in_temp : temp) {
+					result_array[i++] = array_in_temp;
+				        }
+				
+//				for(int i2=0; i2<result_array.length;i2++) {
+//					for(int j2=0; j2<result_array[i2].length;j2++) {
+//					System.out.print(result_array[i2][j2]+"\t");
+//					}
+//					System.out.println();
+//				}
+				
+				return result_array;
+				
 			}
+	
+	
+	
+	
+	
+		private String[][] inquire(String sheet_type, JTextField first, JTextField second, JTextField third){
+			
+			/**@author jyunanyang
+			 * @since 05/06/2021
+			 * 
+			 */
+			
+			ArrayList<String[]> temp = new ArrayList();
+			ResultSet r;
+			switch(sheet_type) {
+				
+				case "RFQ":
+					
+					
+					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					
+						case "111":
+							
+						try {
+							r = Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ WHERE (RFQ_Sheet_ID="
+											+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
+											+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+	
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							r=null;
+							
+						}
+						break;
+					
+						case "110":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ WHERE (RFQ_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
+	
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "101":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ WHERE (RFQ_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+								
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+						
+						case "100":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ WHERE RFQ_Sheet_ID="
+																						+text_inq_sheetID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "011":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ WHERE (Project_ID ="
+														+text_inq_projectID.getText()+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "010":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ WHERE Project_ID ="
+																			+text_inq_projectID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						default:
+							//001
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ WHERE Inquiring_product=\'"
+																					+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+					}
+					try {
+						while(r.next()) {
+							
+							String[] temp_array = new String[7];
+							
+							for(int i=1;i<7;i++) 
+								temp_array[i-1]=r.getString(i);
+							
+							temp.add(temp_array);								
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+					
+					
+				case "QUO":
+					
+					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					
+						case "111":
+							
+						try {
+							r = Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION WHERE (QUO_Sheet_ID="
+											+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
+											+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							r=null;
+							
+						}
+						break;
+					
+						case "110":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION WHERE (QUO_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "101":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION WHERE (QUO_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+								
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+						
+						case "100":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION WHERE QUO_Sheet_ID="
+																						+text_inq_sheetID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "011":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION WHERE (Project_ID ="
+												+text_inq_projectID.getText()
+												+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "010":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION WHERE Project_ID ="
+															+text_inq_projectID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						default:
+							//001
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION WHERE Inquiring_product=\'"
+															+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+					}
+					try {
+						while(r.next()) {
+							
+							String[] temp_array = new String[10];
+							
+							for(int i=1;i<10;i++) 
+								temp_array[i-1]=r.getString(i);
+							
+							temp.add(temp_array);								
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+				
+				case "REQ":
+					
+					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					
+						case "111":
+							
+						try {
+							r = Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION WHERE (REQ_Sheet_ID="
+											+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
+											+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							r=null;
+							
+						}
+						break;
+					
+						case "110":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION WHERE (REQ_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "101":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION WHERE (REQ_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+								
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+						
+						case "100":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION WHERE REQ_Sheet_ID="
+																						+text_inq_sheetID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "011":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION WHERE (Project_ID ="
+												+text_inq_projectID.getText()
+												+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "010":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION WHERE Project_ID ="
+															+text_inq_projectID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						default:
+							//001
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION WHERE Inquiring_product=\'"
+															+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+					}
+					try {
+						while(r.next()) {
+							
+							String[] temp_array = new String[11];
+							
+							for(int i=1;i<11;i++) 
+								temp_array[i-1]=r.getString(i);
+							
+							temp.add(temp_array);								
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+					
+				case "PUR":
+					
+					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					
+						case "111":
+							
+						try {
+							r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (PUR_Sheet_ID="
+											+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
+											+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							r=null;
+							
+						}
+						break;
+					
+						case "110":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (PUR_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "101":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (PUR_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+								
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+						
+						case "100":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE PUR_Sheet_ID="
+																						+text_inq_sheetID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "011":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (Project_ID ="
+												+text_inq_projectID.getText()
+												+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "010":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE Project_ID ="
+															+text_inq_projectID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						default:
+							//001
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE Module_type =\'"
+															+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+					}
+					try {
+						while(r.next()) {
+							
+							String[] temp_array = new String[9];
+							
+							for(int i=1;i<9;i++) 
+								temp_array[i-1]=r.getString(i);
+							
+							temp.add(temp_array);								
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+					
+				case "EXAM":
+					
+					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					
+						case "111":
+							
+						try {
+							r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (EX_Sheet_ID="
+											+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
+											+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							r=null;
+							
+						}
+						break;
+					
+						case "110":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (EX_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "101":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (EX_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+								
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+						
+						case "100":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE EX_Sheet_ID="
+																						+text_inq_sheetID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "011":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (Project_ID ="
+												+text_inq_projectID.getText()
+												+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "010":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE Project_ID ="
+															+text_inq_projectID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						default:
+							//001
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE Module_type =\'"
+															+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+					}
+					try {
+						while(r.next()) {
+							
+							String[] temp_array = new String[7];
+							
+							for(int i=1;i<7;i++) 
+								temp_array[i-1]=r.getString(i);
+							
+							temp.add(temp_array);								
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+				
+				default:
+				//case "RCPT":
+					
+					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					
+						case "111":
+							
+						try {
+							r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (REC_Sheet_ID="
+											+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
+											+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							r=null;
+							
+						}
+						break;
+					
+						case "110":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (REC_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "101":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (REC_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+								
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+						
+						case "100":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE REC_Sheet_ID="
+																						+text_inq_sheetID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "011":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (Project_ID ="
+												+text_inq_projectID.getText()
+												+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						case "010":
+							
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE Project_ID ="
+															+text_inq_projectID.getText());
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+							
+						default:
+							//001
+							try {
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE Module_type =\'"
+															+text_inq_pd.getText()+"\')");
+
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								r=null;
+							}
+							break;
+					}
+					try {
+						while(r.next()) {
+							
+							String[] temp_array = new String[6];
+							
+							for(int i=1;i<6;i++) 
+								temp_array[i-1]=r.getString(i);
+							
+							temp.add(temp_array);								
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+			}
+			
+			
+			
+			String[][] result_array = new String[temp.size()][11];
+			int i=0;
+			for (String[] array_in_temp : temp) {
+				result_array[i++] = array_in_temp;
+			        }
+			return result_array;
+		}
+				
+		public JComboBox get_comboBox_sheets() {
+					
+			return comboBox_sheets;
+		}
 }

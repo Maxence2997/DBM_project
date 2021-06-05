@@ -27,7 +27,7 @@ public class Inventory_panel {
 	
 	private DefaultTableModel inv_table_model;
 	private JScrollPane scrollpane;
-	private Maintenance_panel mtn_function;
+	
 	
 	public Inventory_panel() {
 		
@@ -154,7 +154,7 @@ public class Inventory_panel {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
 													InvID.getText()+" AND Item_name=\'"+ item_name.getText()+"\' AND Module_type=\'"
 												+module_type.getText()+"\')");
-						if(resultSet.next()) {
+						while(resultSet.next()) {
 							String [] temp_array = new String[4];
 							for(int i = 1; i<5; i++) {
 								temp_array[i-1]= resultSet.getString(i);
@@ -178,7 +178,7 @@ public class Inventory_panel {
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
 														InvID.getText()+" AND Item_name=\'"+ item_name.getText()+"\')");
-						if(resultSet.next()) {
+						while(resultSet.next()) {
 							String [] temp_array = new String[4];
 							for(int i = 1; i<5; i++) {
 								temp_array[i-1]= resultSet.getString(i);
@@ -200,7 +200,7 @@ public class Inventory_panel {
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
 													InvID.getText()+" AND Module_type=\'"+module_type.getText()+"\')");
-						if(resultSet.next()) {
+						while(resultSet.next()) {
 							String [] temp_array = new String[4];
 							for(int i = 1; i<5; i++) {
 								temp_array[i-1]= resultSet.getString(i);
@@ -222,7 +222,7 @@ public class Inventory_panel {
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Inv_ID=" + 
 																						InvID.getText());
-						if(resultSet.next()) {
+						while(resultSet.next()) {
 							String [] temp_array = new String[4];
 							for(int i = 1; i<5; i++) {
 								temp_array[i-1]= resultSet.getString(i);
@@ -246,14 +246,14 @@ public class Inventory_panel {
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Item_name=\'"+
 															item_name.getText()+"\' AND Module_type=\'"+module_type.getText()+"\')");
-						int k=0;
+						
 						while(resultSet.next()) {
 							String [] temp_array = new String[4];
 							for(int i = 1; i<5; i++) {
 								temp_array[i-1]= resultSet.getString(i);
 							}
 							temp.add(temp_array);
-							k++;
+							
 						}
 						break;
 					}catch (SQLException e) {
@@ -270,14 +270,14 @@ public class Inventory_panel {
 					try {
 						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Item_name=\'"+
 																					item_name.getText()+"\'");
-						int k=0;
+						
 						while(resultSet.next()) {
 							String [] temp_array = new String[4];
 							for(int i = 1; i<5; i++) {
 								temp_array[i-1]= resultSet.getString(i);
 							}
 							temp.add(temp_array);
-							k++;
+							
 						}
 						break;
 					}catch (SQLException e) {
@@ -294,14 +294,14 @@ public class Inventory_panel {
 				try {
 					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Module_type=\'"+
 																module_type.getText()+"\'");
-					int k=0;
+					
 					while(resultSet.next()) {
 						String [] temp_array = new String[4];
 						for(int i = 1; i<5; i++) {
 							temp_array[i-1]= resultSet.getString(i);
 						}
 						temp.add(temp_array);
-						k++;
+						
 					}
 					break;
 					}catch (SQLException e) {

@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 
 public class Library {
 
-	public String join_pj_with_six_table = "SELECT pj.Project_ID,RFQ.Sheet_type,QUOT.Sheet_type, REQ.Sheet_type, \n"
+	private final String join_pj_with_six_table = "SELECT pj.Project_ID,RFQ.Sheet_type,QUOT.Sheet_type, REQ.Sheet_type, \n"
 											+ "PUR.Sheet_type, EXAM.Sheet_type, RCPT.Sheet_type\n"
 											+ "FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
 											+ "LEFT JOIN QUOTATION AS QUOT ON QUOT.Project_ID = pj.Project_ID \n"
