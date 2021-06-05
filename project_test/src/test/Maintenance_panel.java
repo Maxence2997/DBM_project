@@ -711,7 +711,7 @@ public class Maintenance_panel  {
 			ArrayList<String[]> temp = new ArrayList();
 			
 			try {
-				ResultSet resultSet = Term_project_main.conn.st.executeQuery("Select * fROM PROJECT "
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("Select * FROM PROJECT "
 																	+ "ORDER BY Established_date DESC LIMIT 20");
 				
 				int k=0;
