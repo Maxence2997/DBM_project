@@ -516,11 +516,26 @@ public class Sheets_panel  {
 				text_mod_sheetID.setColumns(10);
 				
 				btn_mod_modify = new JButton("Modify");
+				btn_mod_modify.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						
+						
+						//verify formate
+						
+						if (modify()==1) 
+							
+							lbl_mod_message.setText("modification succeed");
+						else 
+							lbl_mod_message.setText("modification failed");
+						
+					}
+				});
 				btn_mod_modify.setBounds(539, 35, 87, 29);
 				mod_panel.add(btn_mod_modify);
 				
 				lbl_mod_projectID = new JLabel("*Project ID :");
-				lbl_mod_projectID.setBounds(174, 79, 86, 16);
+				lbl_mod_projectID.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_mod_projectID.setBounds(164, 79, 96, 16);
 				mod_panel.add(lbl_mod_projectID);
 				
 				text_mod_projectID = new JTextField();
@@ -529,6 +544,7 @@ public class Sheets_panel  {
 				text_mod_projectID.setColumns(10);
 				
 				lbl_mod_pd = new JLabel("*Product :");
+				lbl_mod_pd.setHorizontalAlignment(SwingConstants.RIGHT);
 				lbl_mod_pd.setBounds(154, 117, 106, 16);
 				mod_panel.add(lbl_mod_pd);
 				
@@ -611,6 +627,10 @@ public class Sheets_panel  {
 								lbl_mod_8.setVisible(false);
 								text_mod_8.setVisible(false);
 								
+								btn_mod_modify.setVisible(true);
+								lbl_mod_message.setText("Data loaded");
+								lbl_mod_message.setVisible(true);
+								
 							}else if (temp.get(1).equalsIgnoreCase("QUOT")) {
 								
 								lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
@@ -641,14 +661,18 @@ public class Sheets_panel  {
 								text_mod_6.setVisible(true);
 								
 								lbl_mod_7.setText("ESD :");
-								text_mod_7.setText(temp.get(7));
+								text_mod_7.setText(temp.get(8));
 								lbl_mod_7.setVisible(true);
 								text_mod_7.setVisible(true);
 								
 								lbl_mod_8.setText("Date :");
-								text_mod_8.setText(temp.get(8));
+								text_mod_8.setText(temp.get(9));
 								lbl_mod_8.setVisible(true);
 								text_mod_8.setVisible(true);
+								
+								btn_mod_modify.setVisible(true);
+								lbl_mod_message.setText("Data loaded");
+								lbl_mod_message.setVisible(true);
 							
 							}else if (temp.get(1).equalsIgnoreCase("REQ")) {
 								
@@ -680,14 +704,18 @@ public class Sheets_panel  {
 								text_mod_6.setVisible(true);
 								
 								lbl_mod_7.setText("Supervisor ID :");
-								text_mod_7.setText(temp.get(7));
+								text_mod_7.setText(temp.get(9));
 								lbl_mod_7.setVisible(true);
 								text_mod_7.setVisible(true);
 								
 								lbl_mod_8.setText("Date :");
-								text_mod_8.setText(temp.get(8));
+								text_mod_8.setText(temp.get(10));
 								lbl_mod_8.setVisible(true);
 								text_mod_8.setVisible(true);
+								
+								btn_mod_modify.setVisible(true);
+								lbl_mod_message.setText("Data loaded");
+								lbl_mod_message.setVisible(true);
 							
 							}else if (temp.get(1).equalsIgnoreCase("PUR")) {
 								
@@ -714,12 +742,12 @@ public class Sheets_panel  {
 								text_mod_5.setVisible(true);
 								
 								lbl_mod_6.setText("ESD :");
-								text_mod_6.setText(temp.get(6));
+								text_mod_6.setText(temp.get(7));
 								lbl_mod_6.setVisible(true);
 								text_mod_6.setVisible(true);
 								
 								lbl_mod_7.setText("Date :");
-								text_mod_7.setText(temp.get(7));
+								text_mod_7.setText(temp.get(8));
 								lbl_mod_7.setVisible(true);
 								text_mod_7.setVisible(true);
 								
@@ -727,6 +755,10 @@ public class Sheets_panel  {
 								text_mod_8.setText("");
 								lbl_mod_8.setVisible(false);
 								text_mod_8.setVisible(false);
+								
+								btn_mod_modify.setVisible(true);
+								lbl_mod_message.setText("Data loaded");
+								lbl_mod_message.setVisible(true);
 							
 							}else if (temp.get(1).equalsIgnoreCase("EXAM")) {
 								
@@ -748,7 +780,7 @@ public class Sheets_panel  {
 								text_mod_4.setVisible(true);
 								
 								lbl_mod_5.setText("Date :");
-								text_mod_5.setText(temp.get(5));
+								text_mod_5.setText(temp.get(6));
 								lbl_mod_5.setVisible(true);
 								text_mod_5.setVisible(true);
 								
@@ -766,6 +798,10 @@ public class Sheets_panel  {
 								text_mod_8.setText("");
 								lbl_mod_8.setVisible(false);
 								text_mod_8.setVisible(false);
+								
+								btn_mod_modify.setVisible(true);
+								lbl_mod_message.setText("Data loaded");
+								lbl_mod_message.setVisible(true);
 							
 							}else {
 								//if (temp.get(1).equalsIgnoreCase("RCPT"))
@@ -806,10 +842,34 @@ public class Sheets_panel  {
 								lbl_mod_8.setVisible(false);
 								text_mod_8.setVisible(false);
 								
+								btn_mod_modify.setVisible(true);
+								lbl_mod_message.setText("Data loaded");
+								lbl_mod_message.setVisible(true);
+								
 							}
 						}else {
 							
-							lbl_mod_message.setText("please check data again");
+								lbl_mod_4.setVisible(false);
+								text_mod_4.setVisible(false);
+								
+								lbl_mod_5.setVisible(true);
+								text_mod_5.setVisible(true);		
+							
+								lbl_mod_6.setVisible(false);
+								text_mod_6.setVisible(false);
+								
+								
+								lbl_mod_7.setVisible(false);
+								text_mod_7.setVisible(false);
+								
+								lbl_mod_8.setVisible(false);
+								text_mod_8.setVisible(false);
+								
+								btn_mod_modify.setVisible(false);
+								lbl_mod_message.setText("please check data again");
+								lbl_mod_message.setVisible(true);
+							
+							
 						}
 						
 					}
@@ -865,6 +925,7 @@ public class Sheets_panel  {
 					}
 				});
 				btn_clear.setBounds(389, 74, 83, 29);
+				btn_clear.setVisible(true);
 				mod_panel.add(btn_clear);
 				
 				lbl_mod_sheetID_show = new JLabel("");
@@ -2389,6 +2450,117 @@ public class Sheets_panel  {
 		}
 	
 	
+	
+	private int modify() {
+		
+		
+		int id = Integer.parseInt(lbl_mod_sheetID_show.getText());
+		
+		int r=0;
+		if (id>=21000000 & id< 22000000) {
+			
+			try {	
+				
+				 r = Term_project_main.conn.st.executeUpdate("UPDATE RFQ SET Supplier_ID=\'"+text_mod_4.getText()+"\', Vol="+text_mod_5.getText()
+				 										+", Date=\'"+text_mod_6.getText()+"\' WHERE (RFQ_Sheet_ID="+lbl_mod_sheetID_show.getText()+
+				 										" AND Project_ID="+lbl_mod_projectID_show.getText()+" AND Inquiring_product=\'"
+				 										+lbl_mod_pd_show.getText()+"\')");
+				 return r;
+				}catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return r;
+				}
+			
+		}else if(id>=22000000 & id< 23000000){
+				
+			try {	
+				
+				 r = Term_project_main.conn.st.executeUpdate("UPDATE QUOTATION SET Supplier_ID=\'"+text_mod_4.getText()+"\', Vol="+text_mod_5.getText()
+				 											+", Unit_price="+text_mod_6.getText()+", ESD=\'"+text_mod_7.getText()+"\', Date=\'"
+				 											+text_mod_8.getText()+ "\' WHERE (QUO_Sheet_ID="+lbl_mod_sheetID_show.getText()
+				 											+" AND Project_ID="+lbl_mod_projectID_show.getText()+" AND Inquiring_product=\'"
+				 											+lbl_mod_pd_show.getText()+"\')");
+				 return r;
+				}catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return r;
+				}
+			
+				
+		}else if(id>=23000000 & id< 24000000) {
+			
+			try {	
+				
+				 r = Term_project_main.conn.st.executeUpdate("UPDATE REQUISITION SET Item_name=\'"+ text_mod_4.getText()+"\', Vol="
+						 								+text_mod_5.getText()+", Unit_price="+text_mod_6.getText()+", Supervisor_ID=\'"
+						 								+text_mod_7.getText()+"\', Date=\'"+text_mod_8.getText()+"\' WHERE (REQ_Sheet_ID="
+						 								+lbl_mod_sheetID_show.getText()+" AND Project_ID="+lbl_mod_projectID_show.getText()
+						 								+" AND Inquiring_product=\'"+lbl_mod_pd_show.getText()+"\')");
+				 return r;
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return r;
+			}
+			
+				
+			
+				
+		}else if(id>=24000000 & id< 25000000) {
+				
+			try {	
+				
+				 r = Term_project_main.conn.st.executeUpdate("UPDATE PURCHASE SET Vol="+text_mod_4.getText()+", Unit_price="+text_mod_5.getText()+", ESD=\'"
+															+text_mod_6.getText()+"\', Date=\'"+text_mod_7.getText()+"\' WHERE (PUR_Sheet_ID="
+															+lbl_mod_sheetID_show.getText()+" AND Project_ID="+lbl_mod_projectID_show.getText()
+															+" AND Module_type=\'"+lbl_mod_pd_show.getText()+"\')");			 
+				 return r;
+
+				}catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return r;
+				}
+				
+		}else if(id>=25000000 & id< 26000000) {
+				
+			try {	
+				
+				r = Term_project_main.conn.st.executeUpdate("UPDATE EXAMINATION SET Vol="+text_mod_4.getText()+", Date=\'"+text_mod_5.getText()
+															+"\' WHERE (EXA_Sheet_ID="+lbl_mod_sheetID_show.getText()+" AND Project_ID="
+															+lbl_mod_projectID_show.getText()+" AND Module_type=\'"+lbl_mod_pd_show.getText()+"\')");
+
+				return r;
+			
+				}catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return r;
+				}
+				
+		}else  {
+				
+			try {	
+				
+				r = Term_project_main.conn.st.executeUpdate("UPDATE RECEIPT SET Vol="+text_mod_4.getText()+", Date=\'"+text_mod_5.getText()
+														+"\' WHERE (REC_Sheet_ID="+lbl_mod_sheetID_show.getText()+" AND Project_ID="
+														+lbl_mod_projectID_show.getText()+" AND Module_type=\'"+lbl_mod_pd_show.getText()+"\')");
+				
+				
+				return r;
+			
+				}catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return r;
+			}
+				
+		}
+	}
+	
+	
 	private ArrayList<String> check() {
 		
 		ArrayList<String> temp = new ArrayList();
@@ -2436,18 +2608,8 @@ public class Sheets_panel  {
 				while(r.next()) {
 					
 					for(int i=1; i<11;i++)
-						
-						if(i==8)
-
-							continue;
 					
-						else if(i>8)
-							
-							temp.add(i-2,r.getString(i));
-					
-						else
-							
-							temp.add(r.getString(i));	
+						temp.add(r.getString(i));	
 				}
 				return temp;
 			
@@ -2470,14 +2632,7 @@ public class Sheets_panel  {
 					
 					for(int i=1; i<12;i++) {
 						
-						if(i==8|i==9) 
-							continue;
-							
-						else if(i>9)
-							temp.add(i-3, r.getString(i));
-						
-						else
-							temp.add(r.getString(i));	
+						temp.add(r.getString(i));	
 					}
 				}
 				return temp;
@@ -2503,14 +2658,7 @@ public class Sheets_panel  {
 					
 					for(int i=1; i<10;i++) {
 						
-						if(i==7) 
-							continue;
-							
-						else if(i>7)
-							temp.add(i-2, r.getString(i));
-						
-						else
-							temp.add(r.getString(i));	
+						temp.add(r.getString(i));	
 					}
 				}
 				return temp;
@@ -2525,7 +2673,7 @@ public class Sheets_panel  {
 				
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (EX_Sheet_ID="+text_mod_sheetID.getText()+
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (EX_Sheet_ID="+text_mod_sheetID.getText()+
 												" AND Project_ID="+text_mod_projectID.getText()+" AND Module_type=\'"+text_mod_pd.getText()
 												+"\')");
 				
@@ -2533,14 +2681,7 @@ public class Sheets_panel  {
 					
 					for(int i=1; i<8;i++) {
 						
-						if(i==6) 
-							continue;
-							
-						else if(i>6)
-							temp.add(i-2, r.getString(i));
-						
-						else
-							temp.add(r.getString(i));	
+						temp.add(r.getString(i));	
 					}
 				}
 				return temp;
@@ -2553,7 +2694,7 @@ public class Sheets_panel  {
 				
 		}else if(id>=26000000 & id< 27000000) {
 				
-try 		{	
+			try {	
 				
 				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (REC_Sheet_ID="+text_mod_sheetID.getText()+
 												" AND Project_ID="+text_mod_projectID.getText()+" AND Module_type=\'"+text_mod_pd.getText()
@@ -2584,9 +2725,6 @@ try 		{
 	
 	
 	
-	
-	
-
 	
 	public JComboBox get_comboBox_sheets() {
 					
