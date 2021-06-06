@@ -102,15 +102,6 @@ public class Inventory_panel {
 		btn_inv_inquire.setBounds(554, 160, 88, 29);
 		inventory_panel.add(btn_inv_inquire);
 		
-		
-//		String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
-//		
-//		inv_table_model = new DefaultTableModel();
-//		for(int i=0; i<4; i++) {
-//			inv_table_model.addColumn(column_names[i]);
-//		}
-		
-		
 		inv_table = new JTable(){ 
 			@Override
 			public boolean isCellEditable(int row, int column)
