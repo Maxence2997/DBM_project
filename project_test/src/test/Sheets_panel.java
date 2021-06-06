@@ -1799,7 +1799,7 @@ public class Sheets_panel  {
 					sign_panel.setLayout(null);
 					
 					
-					lbl_sign_sorry = new JLabel("Sorry, no right to access this page, work harder for the promotion.");
+					lbl_sign_sorry = new JLabel("Sorry, no right to access this page, work harder for promotion.");
 					lbl_sign_sorry.setBounds(62, 34, 517, 16);
 					sign_panel.add(lbl_sign_sorry);
 					//lbl_sorry.setVisible(true);
@@ -2981,6 +2981,43 @@ public class Sheets_panel  {
 	
 	
 	
+	private String[][] show_unsign_req() {
+		
+		ArrayList <String[]> temp = new ArrayList();
+	
+		try {
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID,req.Inquiring_product, "
+															+ "req.Item_name, req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID,"
+															+ " emp.Last_name, req.Date FROM REQUISITION AS req LEFT JOIN EMPLOYEE AS emp "
+															+ "ON req.Supervisor_ID = emp.Emp_ID WHERE (Signature='False' AND Supervisor_ID="
+															+Term_project_main.field_empID.getText()+")");
+			
+			while(r.next()) {
+				
+				String[] temp_array = new String[12];
+				
+				for(int i=0;i<13;i++) {
+					
+					temp_array[i-1]=r.getString(i);
+				}
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String[][] result_array = new String[temp.size()][5];
+		int i=0;
+		for (String[] array_in_temp : temp) {
+			result_array[i++] = array_in_temp;
+		        }
+		return result_array;
+	}
+	
+	
+	
+	
 	
 	private int modify() {
 		
@@ -3096,6 +3133,9 @@ public class Sheets_panel  {
 	}
 	
 	
+	
+	
+
 	
 	private int delete() {
 		
@@ -3218,6 +3258,9 @@ public class Sheets_panel  {
 			return r;
 	}
 	
+	
+	
+
 	
 	private boolean append_check(String st) {
 		

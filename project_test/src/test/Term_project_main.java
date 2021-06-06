@@ -44,7 +44,7 @@ public class Term_project_main {
 	
 	private JPanel login_panel;
 	private JPanel home_panel;
-	private JTextField field_empID;
+	public static JTextField field_empID;
 	private JLabel lbl_emp;
 	
 	private JPanel core_home_panel;
@@ -418,9 +418,9 @@ public class Term_project_main {
 		}
 		
 
-		public JTextField get_field_empID() {
-		
-			return this.field_empID;
-		}
+//		public JTextField get_field_empID() {
+//		
+//			return this.field_empID;
+//		}
 				
 }
