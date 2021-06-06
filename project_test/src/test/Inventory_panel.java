@@ -93,9 +93,11 @@ public class Inventory_panel {
 	//					}	
 	//				}
 				if (temp.length != 0){ // found data match
-				inv_table_model = new DefaultTableModel(temp,column_names);  
-				inv_table.setModel(inv_table_model);
-				inv_table.setVisible(true);
+					inv_table_model = new DefaultTableModel(temp,column_names);  
+					inv_table.setModel(inv_table_model);
+					inv_table.setVisible(true);
+					scrollpane.setVisible(true);
+				
 				}
 			}
 		});
@@ -111,10 +113,11 @@ public class Inventory_panel {
 			}; 
 		inv_table.setBounds(33, 194, 604, 172);
 		//inventory_panel.add(inv_table);
-		inv_table.setVisible(true);
+		inv_table.setVisible(false);
 
 		scrollpane = new JScrollPane(inv_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollpane.setBounds(49,241,563,87);
+		scrollpane.setVisible(false);
 		
 		inventory_panel.add(scrollpane);
 

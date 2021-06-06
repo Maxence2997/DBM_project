@@ -264,23 +264,18 @@ public class Supplier_panel {
 		btn_sup_delete.setVisible(false);
 		supplier_panel.add(btn_sup_delete);
 		
-		
-		
-//		System.out.print(sup_table_model.getColumnName(0));
-		
-		
 		sup_table = new JTable(){ 
 			@Override
 			public boolean isCellEditable(int row, int column)
             {
                                   return false;}//uneditable    
 		};
-		//sup_table.getColumn("Contact_email").setWidth(100);
+		
 		
 		sup_table.setFillsViewportHeight(true);
 		//sup_table.setBounds(48,288,563,30);
 		sup_table.setVisible(true);
-		//supplier_panel.add(sup_table);
+		
 		
 		scrollpane = new JScrollPane(sup_table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollpane.setBounds(48,288,563,40);

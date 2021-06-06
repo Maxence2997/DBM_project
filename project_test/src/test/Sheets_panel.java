@@ -68,7 +68,7 @@ public class Sheets_panel  {
 	private JRadioButton rb_inq_exam;
 	private JRadioButton rb_inq_rec;
 	private JTable inq_table;
-	private DefaultTableModel inq_table_model;
+	
 	
 	private JPanel mod_panel;
 	private JLabel lbl_mod_sheetID;
@@ -115,7 +115,6 @@ public class Sheets_panel  {
 	private JButton btn_appd_append;
 	private JScrollPane scrollpane_append;
 	private JTable append_table;
-	private DefaultTableModel append_table_model;
 	private JRadioButton rb_appd_RFQ;
 	private JRadioButton rb_appd_QUO;
 	private JRadioButton rb_appd_REQ;
@@ -125,20 +124,30 @@ public class Sheets_panel  {
 	private JLabel lbl_append_message;
 
 
-	private JTable remv_table;
+	
 	private JTable sign_table;
 	
 	private JPanel remove_panel;
-	private JLabel lbl_remv_confirm;
-	private JTextField text_remv_confirm;
-	private JButton btn_remv_confirm;
-	
+	private JLabel lbl_remove_confirm;
+	private JTextField text_remove_confirm;
+	private JButton btn_remove_confirm;
+	private JTable remove_table;
+	private JLabel lbl_remove_sheetID_show;
+	private JLabel lbl_remove_projectID_show;
+	private JLabel lbl_remove_pd_show;
+	private JTextField text_remove_projectID;
+	private JTextField text_remove_pd;
+	private JTextField text_remove_sheetID;
+	private JScrollPane scrollpane_remove;
+	private JLabel lbl_remove_message;
 	
 	private JPanel sign_panel;
 	private JLabel lbl_sign_sorry;
 	private JLabel lbl_sign_instr;
 	private JButton btn_sign_sign;
 	private JButton btn_sign_refresh;
+	
+	
 	
 	
 	
@@ -270,7 +279,7 @@ public class Sheets_panel  {
 							String[] columns_name = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"};
 							
 							if(temp.length!=0) {
-								inq_table_model = new DefaultTableModel(temp,columns_name);
+								DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
 								inq_table.setModel(inq_table_model);
 								inq_table.setVisible(true);
 								scrollpane_inq.setVisible(true);
@@ -596,7 +605,7 @@ public class Sheets_panel  {
 				btn_mod_check.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
-						ArrayList<String> temp = check();
+						ArrayList<String> temp = check(text_mod_sheetID, text_mod_projectID, text_mod_pd);
 //						ArrayList<String> temp = new ArrayList(); //test data
 //						String[] temp2 = {"23000002", "REQ", "90000002", "C0z035", "CPU", "204", "653", "11047603", "2021-03-27"}; //test data
 //						for(int i=0;i<temp2.length;i++)   //test data
@@ -1069,7 +1078,7 @@ public class Sheets_panel  {
 								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Date"};
 								
 								if(temp[0].length!=0) {
-									append_table_model = new DefaultTableModel(temp,columns);
+									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
 									append_table.setModel(append_table_model);
 									append_table.setVisible(true);
 									scrollpane_append.setVisible(true);
@@ -1095,7 +1104,7 @@ public class Sheets_panel  {
 														"Total_price", "ESD", "Date"};
 								
 								if(temp[0].length!=0) {
-									append_table_model = new DefaultTableModel(temp,columns);
+									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
 									append_table.setModel(append_table_model);
 									append_table.setVisible(true);
 									scrollpane_append.setVisible(true);
@@ -1122,7 +1131,7 @@ public class Sheets_panel  {
 										"Total_price", "Signature", "Supervisor", "Date"};
 								
 								if(temp[0].length!=0) {
-									append_table_model = new DefaultTableModel(temp,columns);
+									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
 									append_table.setModel(append_table_model);
 									append_table.setVisible(true);
 									scrollpane_append.setVisible(true);
@@ -1149,7 +1158,7 @@ public class Sheets_panel  {
 										"Total_price", "ESD", "Date"};
 								
 								if(temp[0].length!=0) {
-									append_table_model = new DefaultTableModel(temp,columns);
+									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
 									append_table.setModel(append_table_model);
 									append_table.setVisible(true);
 									scrollpane_append.setVisible(true);
@@ -1175,7 +1184,7 @@ public class Sheets_panel  {
 								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Result", "Date"};
 								
 								if(temp[0].length!=0) {
-									append_table_model = new DefaultTableModel(temp,columns);
+									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
 									append_table.setModel(append_table_model);
 									append_table.setVisible(true);
 									scrollpane_append.setVisible(true);
@@ -1199,8 +1208,9 @@ public class Sheets_panel  {
 								
 								String[][] temp = append("RCPT");
 								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Date"};
+								
 								if(temp[0].length!=0) {
-									append_table_model = new DefaultTableModel(temp,columns);
+									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
 									append_table.setModel(append_table_model);
 									append_table.setVisible(true);
 									scrollpane_append.setVisible(true);
@@ -1499,49 +1509,284 @@ public class Sheets_panel  {
 				sheet_container_panel.add(remove_panel, "Remove");
 				remove_panel.setLayout(null);
 				
-				JLabel lbl_remv_sheetID = new JLabel("*sheet ID :");
-				lbl_remv_sheetID.setBounds(81, 41, 67, 16);
-				remove_panel.add(lbl_remv_sheetID);
+				JLabel lbl_remove_sheetID = new JLabel("*sheet ID :");
+				lbl_remove_sheetID.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_remove_sheetID.setBounds(45, 41, 103, 16);
+				remove_panel.add(lbl_remove_sheetID);
 				
-				JTextField text_remv_sheetID = new JTextField();
-				text_remv_sheetID.setBounds(167, 36, 146, 26);
-				remove_panel.add(text_remv_sheetID);
-				text_remv_sheetID.setColumns(10);
+				text_remove_sheetID = new JTextField();
+				text_remove_sheetID.setBounds(167, 36, 146, 26);
+				remove_panel.add(text_remove_sheetID);
+				text_remove_sheetID.setColumns(10);
 				
-				JButton btn_remv_remove = new JButton("Remove");
-				btn_remv_remove.setBounds(494, 35, 93, 29);
-				btn_remv_remove.addActionListener(new ActionListener() {
+				JButton btn_remove_check = new JButton("Check");
+				btn_remove_check.setBounds(325, 36, 76, 29);
+				btn_remove_check.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
-						//library.btn_remove();
-						remv_table.setVisible(true);
-						lbl_remv_confirm.setVisible(true);
-						text_remv_confirm.setVisible(true);
-						btn_remv_confirm.setVisible(true);
+						ArrayList<String> temp_list = check(text_remove_sheetID, text_remove_projectID, text_remove_pd);
+						
+						if (temp_list.size()!=0) {
+							//data found
+							
+							String[][] temp_array = new String[1][temp_list.size()];
+							for(int i=0; i< temp_list.size();i++) {
+								temp_array[0][i]=temp_list.get(i);
+							}
+							
+							if(temp_array[0][1].equalsIgnoreCase("RFQ")) {
+								
+								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Date"};
+								
+								DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
+								remove_table.setModel(remove_table_model);
+								
+								remove_table.setVisible(true);
+								scrollpane_remove.setVisible(true);
+								lbl_remove_confirm.setVisible(true);
+								text_remove_confirm.setVisible(true);
+								btn_remove_confirm.setVisible(true);
+								
+								lbl_remove_sheetID_show.setText(text_remove_sheetID.getText());
+								lbl_remove_projectID_show.setText(text_remove_projectID.getText());
+								lbl_remove_pd_show.setText(text_remove_pd.getText());
+								text_remove_sheetID.setVisible(false);
+								text_remove_projectID.setVisible(false);
+								text_remove_pd.setVisible(false);
+								lbl_remove_sheetID_show.setVisible(true);
+								lbl_remove_projectID_show.setVisible(true);
+								lbl_remove_pd_show.setVisible(true);
+								
+								
+							}else if (temp_array[0][1].equalsIgnoreCase("QUOT")) {
+								
+								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Unit Price",
+										"Total_price", "ESD", "Date"};
+								
+								DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
+								remove_table.setModel(remove_table_model);
+								
+								remove_table.setVisible(true);
+								scrollpane_remove.setVisible(true);
+								lbl_remove_confirm.setVisible(true);
+								text_remove_confirm.setVisible(true);
+								btn_remove_confirm.setVisible(true);
+								
+								lbl_remove_sheetID_show.setText(text_remove_sheetID.getText());
+								lbl_remove_projectID_show.setText(text_remove_projectID.getText());
+								lbl_remove_pd_show.setText(text_remove_pd.getText());
+								
+								text_remove_sheetID.setVisible(false);
+								text_remove_projectID.setVisible(false);
+								text_remove_pd.setVisible(false);
+								lbl_remove_sheetID_show.setVisible(true);
+								lbl_remove_projectID_show.setVisible(true);
+								lbl_remove_pd_show.setVisible(true);
+								
+							}else if (temp_array[0][1].equalsIgnoreCase("REQ")) {
+								
+								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Item Name", "Vol.", "Unit Price",
+										"Total_price", "Signature", "Supervisor", "Date"};
+								
+								DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
+								remove_table.setModel(remove_table_model);
+								
+								remove_table.setVisible(true);
+								scrollpane_remove.setVisible(true);
+								lbl_remove_confirm.setVisible(true);
+								text_remove_confirm.setVisible(true);
+								btn_remove_confirm.setVisible(true);
+								
+								lbl_remove_sheetID_show.setText(text_remove_sheetID.getText());
+								lbl_remove_projectID_show.setText(text_remove_projectID.getText());
+								lbl_remove_pd_show.setText(text_remove_pd.getText());
+								text_remove_sheetID.setVisible(false);
+								text_remove_projectID.setVisible(false);
+								text_remove_pd.setVisible(false);
+								lbl_remove_sheetID_show.setVisible(true);
+								lbl_remove_projectID_show.setVisible(true);
+								lbl_remove_pd_show.setVisible(true);
+								
+							}else if (temp_array[0][1].equalsIgnoreCase("PUR")) {
+								
+								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Unit Price",
+										"Total_price", "ESD", "Date"};
+								
+								DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
+								remove_table.setModel(remove_table_model);
+								
+								remove_table.setVisible(true);
+								scrollpane_remove.setVisible(true);
+								lbl_remove_confirm.setVisible(true);
+								text_remove_confirm.setVisible(true);
+								btn_remove_confirm.setVisible(true);
+								
+								lbl_remove_sheetID_show.setText(text_remove_sheetID.getText());
+								lbl_remove_projectID_show.setText(text_remove_projectID.getText());
+								lbl_remove_pd_show.setText(text_remove_pd.getText());
+								text_remove_sheetID.setVisible(false);
+								text_remove_projectID.setVisible(false);
+								text_remove_pd.setVisible(false);
+								lbl_remove_sheetID_show.setVisible(true);
+								lbl_remove_projectID_show.setVisible(true);
+								lbl_remove_pd_show.setVisible(true);
+								
+							}else if (temp_array[0][1].equalsIgnoreCase("EXAM")) {
+								
+								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Result", "Date"};
+								
+								DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
+								remove_table.setModel(remove_table_model);
+								
+								remove_table.setVisible(true);
+								scrollpane_remove.setVisible(true);
+								lbl_remove_confirm.setVisible(true);
+								text_remove_confirm.setVisible(true);
+								btn_remove_confirm.setVisible(true);
+								
+								lbl_remove_sheetID_show.setText(text_remove_sheetID.getText());
+								lbl_remove_projectID_show.setText(text_remove_projectID.getText());
+								lbl_remove_pd_show.setText(text_remove_pd.getText());
+								text_remove_sheetID.setVisible(false);
+								text_remove_projectID.setVisible(false);
+								text_remove_pd.setVisible(false);
+								lbl_remove_sheetID_show.setVisible(true);
+								lbl_remove_projectID_show.setVisible(true);
+								lbl_remove_pd_show.setVisible(true);
+								
+							}else {
+								//temp_array[0][1].equalsIgnoreCase("RCPT")
+								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Date"};
+								
+								DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
+								remove_table.setModel(remove_table_model);
+								
+								remove_table.setVisible(true);
+								scrollpane_remove.setVisible(true);
+								lbl_remove_confirm.setVisible(true);
+								text_remove_confirm.setVisible(true);
+								btn_remove_confirm.setVisible(true);
+								
+								lbl_remove_sheetID_show.setText(text_remove_sheetID.getText());
+								lbl_remove_projectID_show.setText(text_remove_projectID.getText());
+								lbl_remove_pd_show.setText(text_remove_pd.getText());
+								text_remove_sheetID.setVisible(false);
+								text_remove_projectID.setVisible(false);
+								text_remove_pd.setVisible(false);
+								lbl_remove_sheetID_show.setVisible(true);
+								lbl_remove_projectID_show.setVisible(true);
+								lbl_remove_pd_show.setVisible(true);
+							}
+						}else {
+							//data no found
+							
+							remove_table.setVisible(false);
+							scrollpane_remove.setVisible(false);
+							lbl_remove_confirm.setVisible(false);
+							text_remove_confirm.setVisible(false);
+							btn_remove_confirm.setVisible(false);
+							lbl_remove_message.setText("Please check data inputted again");
+							lbl_remove_message.setVisible(true);
+							
+							
+							
+						}
 					}
 				});
-				remove_panel.add(btn_remv_remove);
+				remove_panel.add(btn_remove_check);
 				
-				remv_table = new JTable();
-				remv_table.setBounds(81, 159, 506, 25);
-				remove_panel.add(remv_table);
-				remv_table.setVisible(false);
+				remove_table = new JTable(){ 
+					@Override
+					public boolean isCellEditable(int row, int column)
+		            {
+		                                  return false;}//uneditable    
+				};
+				remove_table.setBounds(78, 177, 506, 47);
 				
-				lbl_remv_confirm = new JLabel("Please write down \"I'm PRETTY SURE that I would like to remove this sheet.\"");
-				lbl_remv_confirm.setBounds(81, 189, 506, 16);
-				remove_panel.add(lbl_remv_confirm);
-				lbl_remv_confirm.setVisible(false);
+				remove_table.setVisible(false);
 				
-				text_remv_confirm = new JTextField();
-				text_remv_confirm.setBounds(81, 210, 506, 26);
-				remove_panel.add(text_remv_confirm);
-				text_remv_confirm.setColumns(10);
-				text_remv_confirm.setVisible(false);
+				scrollpane_remove = new JScrollPane(remove_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				scrollpane_remove.setBounds(45,195,563,43);
+				scrollpane_remove.setVisible(false);
+				remove_panel.add(scrollpane_remove);
 				
-				btn_remv_confirm = new JButton("Confirm");
-				btn_remv_confirm.setBounds(494, 301, 93, 29);
-				remove_panel.add(btn_remv_confirm);
-				btn_remv_confirm.setVisible(false);
+				lbl_remove_confirm = new JLabel("Please write down \" I would like to remove this sheet permenantly.\"");
+				lbl_remove_confirm.setBounds(55, 250, 555, 16);
+				lbl_remove_confirm.setVisible(false);
+				remove_panel.add(lbl_remove_confirm);
+				
+				text_remove_confirm = new JTextField();
+				text_remove_confirm.setBounds(55, 263, 443, 26);
+				text_remove_confirm.setColumns(10);
+				text_remove_confirm.setVisible(false);
+				remove_panel.add(text_remove_confirm);
+				
+				btn_remove_confirm = new JButton("Confirm");
+				btn_remove_confirm.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						
+						if(text_remove_confirm.getText().equals("I would like to remove this sheet permenantly.")) {
+							if(delete()==1) { 
+								
+							
+								lbl_remove_message.setText("Delete succeed");
+								lbl_remove_message.setVisible(true);
+								
+							}else {
+								lbl_remove_message.setText("Delete failed, errors occurred.");
+								lbl_remove_message.setVisible(true);
+							}
+						}
+					}
+				});
+				btn_remove_confirm.setBounds(494, 301, 93, 29);
+				btn_remove_confirm.setVisible(false);
+				remove_panel.add(btn_remove_confirm);
+				
+				text_remove_projectID = new JTextField();
+				text_remove_projectID.setBounds(167, 73, 146, 26);
+				remove_panel.add(text_remove_projectID);
+				text_remove_projectID.setColumns(10);
+				
+				text_remove_pd = new JTextField();
+				text_remove_pd.setBounds(167, 111, 146, 26);
+				remove_panel.add(text_remove_pd);
+				text_remove_pd.setColumns(10);
+				
+				JLabel lbl_remove_projectID = new JLabel("*Project ID :");
+				lbl_remove_projectID.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_remove_projectID.setBounds(45, 78, 103, 16);
+				remove_panel.add(lbl_remove_projectID);
+				
+				JLabel lbl_remove_pd = new JLabel("*Product :");
+				lbl_remove_pd.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_remove_pd.setBounds(45, 116, 103, 16);
+				remove_panel.add(lbl_remove_pd);
+				
+				JButton btn_remove_clear = new JButton("Clear");
+				btn_remove_clear.setBounds(325, 77, 76, 29);
+				remove_panel.add(btn_remove_clear);
+				
+				lbl_remove_sheetID_show = new JLabel("");
+				lbl_remove_sheetID_show.setBounds(167, 41, 146, 16);
+				lbl_remove_sheetID_show.setVisible(false);
+				remove_panel.add(lbl_remove_sheetID_show);
+				
+				lbl_remove_projectID_show = new JLabel("");
+				lbl_remove_projectID_show.setBounds(167, 78, 146, 16);
+				lbl_remove_projectID_show.setVisible(false);
+				remove_panel.add(lbl_remove_projectID_show);
+				
+				lbl_remove_pd_show = new JLabel("");
+				lbl_remove_pd_show.setBounds(167, 116, 146, 16);
+				lbl_remove_pd_show.setVisible(false);
+				remove_panel.add(lbl_remove_pd_show);
+				
+				lbl_remove_message = new JLabel("");
+				lbl_remove_message.setHorizontalAlignment(SwingConstants.CENTER);
+				lbl_remove_message.setBounds(67, 167, 506, 16);
+				remove_panel.add(lbl_remove_message);
+				
 		
 				}
 			
@@ -2852,6 +3097,127 @@ public class Sheets_panel  {
 	
 	
 	
+	private int delete() {
+		
+		/*
+		 * *@author jyunanyang
+		 * @since 06/06/2021
+		 * 
+		 */
+	
+		int id = Integer.parseInt(lbl_remove_sheetID_show.getText());
+		int r=0;
+		
+		if (id>=21000000 & id< 22000000) {
+			//RFQ
+			try {	
+				
+				 r = Term_project_main.conn.st.executeUpdate("DELETE FROM RFQ WHERE (RFQ_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+																" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Inquiring_product=\'"
+																+lbl_remove_pd_show.getText()+"\')");
+				
+				
+				return r;
+			
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return r;
+			}
+			
+			
+			
+		}else if(id>=22000000 & id< 23000000){
+				//QUOT
+			try {	
+				
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM QUOTATION WHERE (QUO_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+																" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Inquiring_product=\'"
+																+lbl_remove_pd_show.getText()+"\')");
+				
+				return r;
+			
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return r;
+			}
+			
+				
+		}else if(id>=23000000 & id< 24000000) {
+			//REQ
+			try {	
+				
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM REQUISITION WHERE (REQ_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+																		" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Inquiring_product=\'"
+																		+lbl_remove_pd_show.getText()+"\')");
+				
+				
+				return r;
+			
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return r;
+			}
+			
+				
+			
+				
+		}else if(id>=24000000 & id< 25000000) {
+				//PUR
+			try {	
+				
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM PURCHASE WHERE (PUR_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+																		" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Module_type=\'"
+																			+lbl_remove_pd_show.getText()+"\')");
+										
+				
+				return r;
+			
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return r;
+			}
+				
+		}else if(id>=25000000 & id< 26000000) {
+				//EXAM
+			try {	
+				
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM EXAMINATION WHERE (EX_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+																		" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Module_type=\'"
+																		+lbl_remove_pd_show.getText()+"\')");
+				
+				
+				return r;
+			
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return r;
+			}
+				
+		}else if(id>=26000000 & id< 27000000) {
+				//RCPT
+			try {	
+				
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM RECEIPT WHERE (REC_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+																		" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Module_type=\'"
+																		+lbl_remove_pd_show.getText()+"\')");
+				
+				return r;
+			
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return r;
+			}
+		
+		}else
+			return r;
+	}
+	
 	
 	private boolean append_check(String st) {
 		
@@ -3141,7 +3507,7 @@ public class Sheets_panel  {
 	
 	
 	
-	private ArrayList<String> check() {
+	private ArrayList<String> check(JTextField text1, JTextField text2, JTextField text3) {
 		
 		
 		/**@author jyunanyang
@@ -3150,19 +3516,19 @@ public class Sheets_panel  {
 		
 		ArrayList<String> temp = new ArrayList();
 		
-		if(text_mod_sheetID.getText().isBlank() | text_mod_projectID.getText().isBlank() | text_mod_pd.getText().isBlank()) {
+		if(text1.getText().isBlank() | text2.getText().isBlank() | text3.getText().isBlank()) {
 
 			return temp;
 		}
 		
-		int id = Integer.parseInt(text_mod_sheetID.getText());
+		int id = Integer.parseInt(text1.getText());
 		
 		if (id>=21000000 & id< 22000000) {
-			
+			//RFQ
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ WHERE (RFQ_Sheet_ID="+text_mod_sheetID.getText()+
-												" AND Project_ID="+text_mod_projectID.getText()+" AND Inquiring_product=\'"+text_mod_pd.getText()
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ WHERE (RFQ_Sheet_ID="+text1.getText()+
+												" AND Project_ID="+text2.getText()+" AND Inquiring_product=\'"+text3.getText()
 												+"\')");
 				
 				while(r.next()) {
@@ -3183,11 +3549,11 @@ public class Sheets_panel  {
 			
 			
 		}else if(id>=22000000 & id< 23000000){
-				
+				//QUOT
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION WHERE (QUO_Sheet_ID="+text_mod_sheetID.getText()+
-												" AND Project_ID="+text_mod_projectID.getText()+" AND Inquiring_product=\'"+text_mod_pd.getText()
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION WHERE (QUO_Sheet_ID="+text1.getText()+
+												" AND Project_ID="+text2.getText()+" AND Inquiring_product=\'"+text3.getText()
 												+"\')");
 				
 				while(r.next()) {
@@ -3206,11 +3572,11 @@ public class Sheets_panel  {
 			
 				
 		}else if(id>=23000000 & id< 24000000) {
-			
+			//REQ
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION WHERE (REQ_Sheet_ID="+text_mod_sheetID.getText()+
-												" AND Project_ID="+text_mod_projectID.getText()+" AND Inquiring_product=\'"+text_mod_pd.getText()
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION WHERE (REQ_Sheet_ID="+text1.getText()+
+												" AND Project_ID="+text2.getText()+" AND Inquiring_product=\'"+text3.getText()
 												+"\')");
 				
 				while(r.next()) {
@@ -3232,11 +3598,11 @@ public class Sheets_panel  {
 			
 				
 		}else if(id>=24000000 & id< 25000000) {
-				
+				//PUR
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (PUR_Sheet_ID="+text_mod_sheetID.getText()+
-												" AND Project_ID="+text_mod_projectID.getText()+" AND Module_type=\'"+text_mod_pd.getText()
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (PUR_Sheet_ID="+text1.getText()+
+												" AND Project_ID="+text2.getText()+" AND Module_type=\'"+text3.getText()
 												+"\')");
 				
 				while(r.next()) {
@@ -3255,11 +3621,11 @@ public class Sheets_panel  {
 			}
 				
 		}else if(id>=25000000 & id< 26000000) {
-				
+				//EXAM
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (EX_Sheet_ID="+text_mod_sheetID.getText()+
-												" AND Project_ID="+text_mod_projectID.getText()+" AND Module_type=\'"+text_mod_pd.getText()
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (EX_Sheet_ID="+text1.getText()+
+												" AND Project_ID="+text2.getText()+" AND Module_type=\'"+text3.getText()
 												+"\')");
 				
 				while(r.next()) {
@@ -3278,11 +3644,11 @@ public class Sheets_panel  {
 			}
 				
 		}else if(id>=26000000 & id< 27000000) {
-				
+				//RCPT
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (REC_Sheet_ID="+text_mod_sheetID.getText()+
-												" AND Project_ID="+text_mod_projectID.getText()+" AND Module_type=\'"+text_mod_pd.getText()
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (REC_Sheet_ID="+text1.getText()+
+												" AND Project_ID="+text2.getText()+" AND Module_type=\'"+text3.getText()
 												+"\')");
 				
 				while(r.next()) {
@@ -3304,7 +3670,6 @@ public class Sheets_panel  {
 			
 			return temp;
 		}
-		
 		
 	}
 	
