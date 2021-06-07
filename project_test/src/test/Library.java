@@ -240,7 +240,23 @@ public class Library {
 		
 	}
 	
+	public  String[] insert(String[] input, String string, int index) {
 	
+		/**
+		 * Reference: https://www.techiedelight.com/insert-element-array-specific-index-java/
+		 * 
+		 * to insert a key in specified index into an array.
+		 * 
+		 */
+    
+        String [] result = new String[input.length + 1];
+ 
+        System.arraycopy(input, 0, result, 0, index);
+        result[index] = string;
+        System.arraycopy(input, index, result, index + 1, input.length - index);
+ 
+        return result;
+    }
 	
 	
 	public String check_text_fields(JTextField ID, JTextField else1, JTextField else2) {
