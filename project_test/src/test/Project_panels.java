@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class Project_panels {
 		
-
+	private Library lib;
 	private JPanel project_panel;
 	
 	private Maintenance_panel pj_subpanels; //project subpanels 
@@ -21,7 +21,7 @@ public class Project_panels {
 	private Progress_panel prog_panel;
 	
 	public Project_panels() {
-		
+		lib = new Library();
 		panels();
 	}
 	
@@ -86,7 +86,7 @@ public class Project_panels {
 		btn_update.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Term_project_main.lib.adjust_PROJECT();
+				lib.adjust_PROJECT();
 			}
 		});
 		Image update = new ImageIcon(this.getClass().getResource("/update.jpg")).getImage();

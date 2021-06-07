@@ -8,16 +8,6 @@ import javax.swing.JTextField;
 
 public class Library {
 
-	private final String join_pj_with_six_table = "SELECT pj.Project_ID,RFQ.Sheet_type,QUOT.Sheet_type, REQ.Sheet_type, \n"
-											+ "PUR.Sheet_type, EXAM.Sheet_type, RCPT.Sheet_type\n"
-											+ "FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
-											+ "LEFT JOIN QUOTATION AS QUOT ON QUOT.Project_ID = pj.Project_ID \n"
-											+ "LEFT JOIN REQUISITION AS REQ ON REQ.Project_ID = pj.Project_ID\n"
-											+ "LEFT JOIN PURCHASE AS PUR ON PUR.Project_ID = pj.Project_ID\n"
-											+ "LEFT JOIN EXAMINATION AS EXAM ON EXAM.Project_ID = pj.Project_ID\n"
-											+ "LEFT JOIN RECEIPT AS RCPT ON RCPT.Project_ID = pj.Project_ID GROUP BY pj.Project_ID";
-	
-	
 	
 	public Library() {
 		
@@ -36,7 +26,14 @@ public class Library {
 		ArrayList<String[]> temp= new ArrayList();
 		
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery(join_pj_with_six_table);
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID,RFQ.Sheet_type,QUOT.Sheet_type, REQ.Sheet_type, \n"
+																+ "PUR.Sheet_type, EXAM.Sheet_type, RCPT.Sheet_type\n"
+																+ "FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
+																+ "LEFT JOIN QUOTATION AS QUOT ON QUOT.Project_ID = pj.Project_ID \n"
+																+ "LEFT JOIN REQUISITION AS REQ ON REQ.Project_ID = pj.Project_ID\n"
+																+ "LEFT JOIN PURCHASE AS PUR ON PUR.Project_ID = pj.Project_ID\n"
+																+ "LEFT JOIN EXAMINATION AS EXAM ON EXAM.Project_ID = pj.Project_ID\n"
+																+ "LEFT JOIN RECEIPT AS RCPT ON RCPT.Project_ID = pj.Project_ID GROUP BY pj.Project_ID");
 			
 			while(r.next()) {
 				String[] temp_array = new String[3];
@@ -122,6 +119,70 @@ public class Library {
 				e.printStackTrace();		
 			}
 		}	
+	}
+	
+	
+	
+	public boolean emp_check(JTextField empID) {
+		
+		/**
+		 * @author jyunanyang
+		 * @since 06/07/2021
+		 */
+		
+		boolean res = false;
+		
+		
+		
+		try {
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Emp_ID FROM EMPLOYEE WHERE Emp_ID="+empID.getText());
+			
+			if(r.next()) {
+				
+				res=true;
+			}
+			
+			return res;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			
+			return res;
+		}
+	}
+	
+	
+	
+	public boolean supervisor_check(JTextField empID) {
+		
+		/**
+		 * @author jyunanyang
+		 * @since 06/07/2021
+		 */
+		
+		boolean res = false;
+		
+		
+		
+		try {
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Supervisor_ID FROM EMPLOYEE WHERE Supervisor_ID="+empID.getText());
+			
+			if(r.next()) {
+				
+				System.out.println(r.getString(1));
+				res=true;
+			}
+			
+			return res;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			
+			return res;
+		}
+		
 	}
 	
 	
@@ -213,6 +274,7 @@ public class Library {
 		}
 
 	}
+	
 	
 	
 	public String check_text_fields(JTextField ID, JTextField else1) {

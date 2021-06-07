@@ -31,7 +31,7 @@ public class Maintenance_panel  {
 	     * Seperated from Project_test
 	     **/
 		
-		
+		private Library lib;
 		public JPanel core_maint_panel;
 		private JPanel maint_container_panel;
 		private JComboBox comboBox_pj;
@@ -40,7 +40,6 @@ public class Maintenance_panel  {
 		
 		private JPanel inq_panel;	
 		private JTable inq_table;
-		private DefaultTableModel inq_table_model;
 		private JScrollPane scrollpane;
 		private JLabel lbl_result;
 		
@@ -82,8 +81,10 @@ public class Maintenance_panel  {
 		 * @wbp.parser.entryPoint
 		 */
 		public Maintenance_panel() {
-
-					proj_maintc_panels();
+			
+			lib = new Library();
+			proj_maintc_panels();
+					
 					
 		}
 	
@@ -244,7 +245,7 @@ public class Maintenance_panel  {
 				String[][] temp = inquire(text_inq_pjID,text_inq_empID,text_inq_date);
 					
 					if (temp.length != 0 ) {
-						inq_table_model = new DefaultTableModel(temp, columns_name);
+						DefaultTableModel inq_table_model = new DefaultTableModel(temp, columns_name);
 						inq_table.setModel(inq_table_model);
 						
 						TableColumnModel column_model = inq_table.getColumnModel();
@@ -277,7 +278,7 @@ public class Maintenance_panel  {
 					
 					String[][] temp = last_20();
 					
-					inq_table_model = new DefaultTableModel(temp, columns_name);
+					DefaultTableModel inq_table_model = new DefaultTableModel(temp, columns_name);
 					inq_table.setModel(inq_table_model);
 					
 					TableColumnModel column_model = inq_table.getColumnModel();
@@ -521,7 +522,7 @@ public class Maintenance_panel  {
 			
 			ArrayList<String[]> temp = new ArrayList();
 			
-			switch (Term_project_main.lib.check_text_fields(projectID, empID, est_date)) {
+			switch (lib.check_text_fields(projectID, empID, est_date)) {
 			
 			
 					case "111":
@@ -749,7 +750,7 @@ public class Maintenance_panel  {
 			String[] temp = new String[0];
 			try {
 				resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO PROJECT (Emp_ID, Established_date, "
-						+ ") VALUE ("+ text_maint_empID.getText()+", \'"+Term_project_main.lib.date(text_maint_date_year, text_maint_date_month, text_maint_date_day)+"\')");
+						+ ") VALUE ("+ text_maint_empID.getText()+", \'"+lib.date(text_maint_date_year, text_maint_date_month, text_maint_date_day)+"\')");
 				
 				if (resultSet==1){
 					

@@ -65,7 +65,7 @@ public class Term_project_main {
 	
 	public static CardLayout card_layout;
 	public static CardLayout cl_home;
-	public static Library lib;
+	private Library lib;
 	
 	
 	
@@ -107,15 +107,12 @@ public class Term_project_main {
 		
 		frame.getContentPane().setLayout(card_layout);
 		
+		conn = new connection();
 		
 		login_panel();
-		frame.setVisible(true);
-		
-		conn = new connection();
-		lib = new Library();
-		
 		home_panel();
 		
+		frame.setVisible(true);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//initialize();
@@ -158,7 +155,7 @@ public class Term_project_main {
 			label_empID.setBounds(100, 191, 104, 16);
 			login_panel.add(label_empID);
 			
-			field_empID = new JTextField("11047601");
+			field_empID = new JTextField("");
 			field_empID.setBounds(229, 186, 163, 26);
 			login_panel.add(field_empID);
 			field_empID.setColumns(10);
@@ -173,6 +170,9 @@ public class Term_project_main {
 				public void actionPerformed(ActionEvent arg0) {
 					
 					card_layout.show(frame.getContentPane(), "home");
+					
+					
+					lib = new Library();
 					
 					lib.adjust_PROJECT();
 //					if (library.is_existed(field_empID) == true) {

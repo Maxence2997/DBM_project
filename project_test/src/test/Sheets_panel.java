@@ -38,7 +38,7 @@ public class Sheets_panel  {
 	
 	
 	
-	
+	private Library lib;
 	
 
 	
@@ -146,6 +146,7 @@ public class Sheets_panel  {
 	private JLabel lbl_sign_instr;
 	private JButton btn_sign_sign;
 	private JButton btn_sign_refresh;
+	private JScrollPane scrollpane_sign;
 	
 	
 	
@@ -153,8 +154,9 @@ public class Sheets_panel  {
 	
 	public Sheets_panel() {
 		
+		lib = new Library();
 		panels();
-
+		
 	}
 	
 	
@@ -192,8 +194,52 @@ public class Sheets_panel  {
 			            	String function = (String) comboBox_sheets.getSelectedItem(); //get the selected item
 	
 			                
-			            	cl_sheet.show(sheet_container_panel, function);		                   
-			            }
+			            	cl_sheet.show(sheet_container_panel, function);	
+			            	
+			            	if (function.equalsIgnoreCase("signature")){
+				            	if(lib.supervisor_check(Term_project_main.field_empID)) {
+									
+									String[][] temp = show_unsign_req();
+									
+									if(temp.length!=0) {
+										
+										String[] columns_name = {"Sheet ID", "Sheet Type", "Project ID", "Product", "Item", "Vol.", "Unit Price", 
+												"Total Price", "Signature", "Supervisor ID", "Supervisor","Date"};
+									
+										lbl_sign_sorry.setVisible(false);
+										btn_sign_sign.setVisible(true);
+										btn_sign_refresh.setVisible(true);
+										lbl_sign_instr.setText("Please sign sheets below after reading.");
+										lbl_sign_instr.setVisible(true);
+										
+										DefaultTableModel sign_table_model = new DefaultTableModel(temp,columns_name);
+										sign_table.setModel(sign_table_model);		
+										sign_table.setVisible(true);
+										scrollpane_sign.setVisible(true);
+										
+									}else {
+										
+										lbl_sign_instr.setText("All sheets are signed");
+										lbl_sign_instr.setVisible(true);
+										
+										lbl_sign_sorry.setVisible(false);
+										btn_sign_sign.setVisible(false);
+										btn_sign_refresh.setVisible(false);
+										sign_table.setVisible(false);
+										scrollpane_sign.setVisible(false);
+									}	
+								}else {
+									//not supervisor
+									
+									lbl_sign_sorry.setVisible(true);
+									btn_sign_sign.setVisible(false);
+									btn_sign_refresh.setVisible(false);
+									sign_table.setVisible(false);
+									scrollpane_sign.setVisible(false);
+									
+									}
+			            		}
+			            	}
 			        });
 	
 				core_sheet_panel.add(comboBox_sheets);
@@ -1802,27 +1848,87 @@ public class Sheets_panel  {
 					lbl_sign_sorry = new JLabel("Sorry, no right to access this page, work harder for promotion.");
 					lbl_sign_sorry.setBounds(62, 34, 517, 16);
 					sign_panel.add(lbl_sign_sorry);
-					//lbl_sorry.setVisible(true);
 					
-					lbl_sign_instr = new JLabel("Please sign the sheets below after reading.");
+					
+					lbl_sign_instr = new JLabel("");
 					lbl_sign_instr.setBounds(62, 68, 411, 16);
 					sign_panel.add(lbl_sign_instr);
-					//lbl_instruction.setVisible(true);
 					
-					sign_table = new JTable();
+					
+					sign_table = new JTable(){
+						@Override
+						public boolean isCellEditable(int row, int column)
+			            {
+			                                  return false;}//uneditable
+			            
+					};
 					sign_table.setBounds(62, 97, 546, 192);
-					sign_panel.add(sign_table);
-					//sign_table.setVisible(true);
+					
+					sign_table.setVisible(false);
+					
+					scrollpane_sign = new JScrollPane(sign_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+					scrollpane_sign.setBounds(46,189,563,87);
+					scrollpane_sign.setVisible(false);
+					sign_panel.add(scrollpane_sign);
 					
 					btn_sign_sign = new JButton("Sign all");
-					btn_sign_sign.setBounds(497, 301, 112, 29);
+					btn_sign_sign.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							
+							if (sign_all()==1) {
+								lbl_sign_instr.setText("Sign succeed");
+								lbl_sign_instr.setVisible(true);
+								
+							}else {
+								lbl_sign_instr.setText("Oops errors occurred");
+								lbl_sign_instr.setVisible(true);
+							}
+						}
+					});
+					btn_sign_sign.setBounds(528, 281, 81, 29);
 					sign_panel.add(btn_sign_sign);
 					//btn_sign.setVisible(true);
 					
 					btn_sign_refresh = new JButton("Refresh");
+					btn_sign_refresh.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							
+							String[][] temp = show_unsign_req();
+							
+							if(temp.length!=0) {
+								
+								String[] columns_name = {"Sheet ID", "Sheet Type", "Project ID", "Product", "Item", "Vol.", "Unit Price", 
+										"Total Price", "Signature", "Supervisor ID", "Supervisor","Date"};
+							
+								lbl_sign_sorry.setVisible(false);
+								btn_sign_sign.setVisible(true);
+								btn_sign_refresh.setVisible(true);
+								lbl_sign_instr.setText("Please sign sheets below after reading.");
+								lbl_sign_instr.setVisible(true);
+								
+								DefaultTableModel sign_table_model = new DefaultTableModel(temp,columns_name);
+								sign_table.setModel(sign_table_model);		
+								sign_table.setVisible(true);
+								scrollpane_sign.setVisible(true);
+								
+							}else {
+								
+								lbl_sign_instr.setText("All sheets are signed");
+								lbl_sign_instr.setVisible(true);
+								
+								lbl_sign_sorry.setVisible(false);
+								btn_sign_sign.setVisible(false);
+								btn_sign_refresh.setVisible(false);
+								sign_table.setVisible(false);
+								scrollpane_sign.setVisible(false);
+							}	
+						}
+					});
 					btn_sign_refresh.setBounds(497, 63, 112, 29);
 					sign_panel.add(btn_sign_refresh);
 					//btn_refresh.setVisible(true);
+					
+					
 					
 					
 			}
@@ -1839,7 +1945,7 @@ public class Sheets_panel  {
 		
 		ArrayList<String[]> temp = new ArrayList();
 				
-			switch(Term_project_main.lib.check_text_fields(first, second,third)) {
+			switch(lib.check_text_fields(first, second,third)) {
 			
 				
 				case "011":
@@ -2271,6 +2377,8 @@ public class Sheets_panel  {
 	
 	
 	
+	
+	
 	private String[][] inquire(String sheet_type, JTextField first, JTextField second, JTextField third){
 			
 			/**@author jyunanyang
@@ -2285,7 +2393,7 @@ public class Sheets_panel  {
 				case "RFQ":
 					
 					
-					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					switch(lib.check_text_fields(first, second, third)) {
 					
 						case "111":
 							
@@ -2399,7 +2507,7 @@ public class Sheets_panel  {
 					
 				case "QUO":
 					
-					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					switch(lib.check_text_fields(first, second, third)) {
 					
 						case "111":
 							
@@ -2513,7 +2621,7 @@ public class Sheets_panel  {
 				
 				case "REQ":
 					
-					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					switch(lib.check_text_fields(first, second, third)) {
 					
 						case "111":
 							
@@ -2627,7 +2735,7 @@ public class Sheets_panel  {
 					
 				case "PUR":
 					
-					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					switch(lib.check_text_fields(first, second, third)) {
 					
 						case "111":
 							
@@ -2741,7 +2849,7 @@ public class Sheets_panel  {
 					
 				case "EXAM":
 					
-					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					switch(lib.check_text_fields(first, second, third)) {
 					
 						case "111":
 							
@@ -2856,7 +2964,7 @@ public class Sheets_panel  {
 				default:
 				//case "RCPT":
 					
-					switch(Term_project_main.lib.check_text_fields(first, second, third)) {
+					switch(lib.check_text_fields(first, second, third)) {
 					
 						case "111":
 							
@@ -2981,6 +3089,8 @@ public class Sheets_panel  {
 	
 	
 	
+	
+	
 	private String[][] show_unsign_req() {
 		
 		ArrayList <String[]> temp = new ArrayList();
@@ -2989,17 +3099,17 @@ public class Sheets_panel  {
 			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID,req.Inquiring_product, "
 															+ "req.Item_name, req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID,"
 															+ " emp.Last_name, req.Date FROM REQUISITION AS req LEFT JOIN EMPLOYEE AS emp "
-															+ "ON req.Supervisor_ID = emp.Emp_ID WHERE (Signature='False' AND Supervisor_ID="
+															+ "ON req.Supervisor_ID = emp.Emp_ID WHERE (Signature='False' AND req.Supervisor_ID="
 															+Term_project_main.field_empID.getText()+")");
 			
 			while(r.next()) {
 				
 				String[] temp_array = new String[12];
 				
-				for(int i=0;i<13;i++) {
+				for(int i=1;i<13;i++) {
 					
 					temp_array[i-1]=r.getString(i);
-				}
+				}temp.add(temp_array);
 			}
 
 		} catch (SQLException e) {
@@ -3015,6 +3125,24 @@ public class Sheets_panel  {
 		return result_array;
 	}
 	
+	
+	
+	
+	
+	private int sign_all() {
+		
+		int r=0;
+		try {
+			r = Term_project_main.conn.st.executeUpdate("UPDATE REQUISITION SET Signature=\'True\' WHERE Supervisor_ID="
+																			+Term_project_main.field_empID.getText());
+			return r;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return r;
+		}
+		
+	}
 	
 	
 	
@@ -3131,7 +3259,6 @@ public class Sheets_panel  {
 				
 		}
 	}
-	
 	
 	
 	

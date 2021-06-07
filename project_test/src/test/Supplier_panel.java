@@ -29,7 +29,7 @@ public class Supplier_panel {
      * Seperated from Project_test
      **/
 		
-		
+		private Library lib;
 		
 		private JPanel supplier_panel;
 		private JTextField text_sup_supID;
@@ -58,6 +58,7 @@ public class Supplier_panel {
 	
 	public Supplier_panel() {
 		
+		lib = new Library();
 		panel();
 		
 	}
@@ -314,7 +315,7 @@ public class Supplier_panel {
 		 **/
 		
 		ArrayList<String[]> temp = new ArrayList();
-		switch(Term_project_main.lib.check_text_fields(sup_ID, sup_name)) {
+		switch(lib.check_text_fields(sup_ID, sup_name)) {
 		
 			case "11":
 
