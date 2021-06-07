@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.awt.Font;
 public class Maintenance_panel  {
 	
@@ -48,13 +51,12 @@ public class Maintenance_panel  {
 		private JLabel lbl_maint_pjID_show;
 		private JLabel lbl_maint_empID;
 		private JTextField text_maint_empID;
-		private JTextField text_maint_date_year;
+		private JTextField text_maint_date;
 		private JLabel lbl_maint_status;
 		
 		private JLabel lbl_maint_status_show;
 		private JLabel lbl_maint_del_progress;
 		private JLabel lbl_maint_del_progress_show;
-		private JLabel lbl_for_date_textfield;
 		private JLabel lbl_date_default;
 		
 		private JButton btn_maint;
@@ -70,8 +72,9 @@ public class Maintenance_panel  {
 		//private JTextField text_inq_empID;
 		private JButton btn_refresh;
 		private JLabel lbl_maint_result;
-		private JTextField text_maint_date_month;
-		private JTextField text_maint_date_day;
+		private JLabel lbl_inq_date_format;
+//		private JTextField text_inq_month;
+//		private JTextField text_inq_day;
 		
 		
 		
@@ -239,28 +242,81 @@ public class Maintenance_panel  {
 			btn_inq_inquire.setBounds(364, 52, 87, 29);
 			btn_inq_inquire.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					String [] columns_name = {"Project ID", "Employee ID", "Est. Date", "Status", "Delivery Progress"};
+					
 //					String [][] temp = {{"90000000","11047630","2021/3/3","EXAM",""}, {"90000008","11047638","2021/3/11","RCPT",""},
 //												{"90000010","11047640","2021/3/13","EXAM",""}, {"90000013","11047643","2021/3/16","RCPT",""}};
-				String[][] temp = inquire(text_inq_pjID,text_inq_empID,text_inq_date);
-					
-					if (temp.length != 0 ) {
-						DefaultTableModel inq_table_model = new DefaultTableModel(temp, columns_name);
-						inq_table.setModel(inq_table_model);
+					try{							
+						if (!(text_inq_pjID.getText().isBlank())) 
+							Integer.parseInt(text_inq_pjID.getText());
 						
-						TableColumnModel column_model = inq_table.getColumnModel();
-						column_model.getColumn(0).setPreferredWidth(50);
-						column_model.getColumn(1).setPreferredWidth(50);
-						column_model.getColumn(2).setPreferredWidth(50);
-						column_model.getColumn(3).setPreferredWidth(40);
-						column_model.getColumn(4).setPreferredWidth(80);
-						inq_table.setVisible(true);
-						scrollpane.setVisible(true);
-						lbl_result.setText("Data load succeed");
-					}
-					else {
-						lbl_result.setText("no found");
-					}
+						if (!(text_inq_empID.getText().isBlank())) 
+							Integer.parseInt(text_inq_empID.getText());
+						
+						if(!(text_inq_date.getText().isBlank())) {
+							if(lib.date(text_inq_date.getText())) {
+								
+								String[][] temp = inquire(text_inq_pjID,text_inq_empID,text_inq_date);
+								
+								if (temp.length != 0 ) {
+									
+									String [] columns_name = {"Project ID", "Employee ID", "Name", "Est. Date", "Status", "Delivery Progress"};
+									DefaultTableModel inq_table_model = new DefaultTableModel(temp, columns_name);
+									inq_table.setModel(inq_table_model);
+									
+									TableColumnModel column_model = inq_table.getColumnModel();
+									column_model.getColumn(0).setPreferredWidth(50);
+									column_model.getColumn(1).setPreferredWidth(50);
+									column_model.getColumn(2).setPreferredWidth(50);
+									column_model.getColumn(3).setPreferredWidth(40);
+									column_model.getColumn(4).setPreferredWidth(50);
+									column_model.getColumn(5).setPreferredWidth(60);
+									inq_table.setVisible(true);
+									scrollpane.setVisible(true);
+									lbl_result.setText("Data load succeed");
+									lbl_result.setVisible(true);
+									
+								}else {
+									lbl_result.setText("no found");
+									lbl_result.setVisible(true);
+									}
+							}else {
+								lbl_result.setText("date format Invalid");
+								lbl_result.setVisible(true);
+							}
+							
+						}else { 
+							//text_inq_date.getText().isBlank()
+							String[][] temp = inquire(text_inq_pjID,text_inq_empID,text_inq_date);
+							
+							if (temp.length != 0 ) {
+								
+								String [] columns_name = {"Project ID", "Employee ID", "Name", "Est. Date", "Status", "Delivery Progress"};
+								DefaultTableModel inq_table_model = new DefaultTableModel(temp, columns_name);
+								inq_table.setModel(inq_table_model);
+								
+								TableColumnModel column_model = inq_table.getColumnModel();
+								column_model.getColumn(0).setPreferredWidth(50);
+								column_model.getColumn(1).setPreferredWidth(50);
+								column_model.getColumn(2).setPreferredWidth(50);
+								column_model.getColumn(3).setPreferredWidth(40);
+								column_model.getColumn(4).setPreferredWidth(50);
+								column_model.getColumn(5).setPreferredWidth(60);
+								inq_table.setVisible(true);
+								scrollpane.setVisible(true);
+								lbl_result.setText("Data load succeed");
+								lbl_result.setVisible(true);
+								
+							}else {
+								lbl_result.setText("no found");
+								lbl_result.setVisible(true);
+								}
+						}
+					}catch (NumberFormatException ex) {
+						//handle exception here
+							
+						lbl_result.setText("Format Invalid");
+						lbl_result.setVisible(true);
+						}
 				}
 			});
 			inq_panel.add(btn_inq_inquire);
@@ -274,7 +330,8 @@ public class Maintenance_panel  {
 			btn_inq_last20.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					String [] columns_name = {"Project ID", "Employee ID", "Est. Date", "Status", "Delivery Progress"};
+					String [] columns_name = {"Project ID", "Employee ID", "Name", "Est. Date", "Status", "Delivery Progress"};
+					
 					
 					String[][] temp = last_20();
 					
@@ -286,7 +343,8 @@ public class Maintenance_panel  {
 					column_model.getColumn(1).setPreferredWidth(50);
 					column_model.getColumn(2).setPreferredWidth(50);
 					column_model.getColumn(3).setPreferredWidth(40);
-					column_model.getColumn(4).setPreferredWidth(80);
+					column_model.getColumn(4).setPreferredWidth(50);
+					column_model.getColumn(5).setPreferredWidth(60);
 					inq_table.setVisible(true);
 					scrollpane.setVisible(true);
 					lbl_result.setText("Data load succeed");
@@ -313,6 +371,12 @@ public class Maintenance_panel  {
 			scrollpane.setBounds(49,241,563,87);
 			scrollpane.setVisible(false);
 			inq_panel.add(scrollpane);
+			
+			lbl_inq_date_format = new JLabel("YYYY-MM-DD");
+			lbl_inq_date_format.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+			lbl_inq_date_format.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_inq_date_format.setBounds(136, 117, 141, 16);
+			inq_panel.add(lbl_inq_date_format);
 		}
 		
 		//Second panel - Maintenance
@@ -343,36 +407,95 @@ public class Maintenance_panel  {
 			btn_maint.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if(btn_maint.getText().equalsIgnoreCase("Modify")) {
-						if(modify()==1) {
-							//send message to user modify succeed
-							lbl_maint_result.setText("Modification succeed");
+						
+						if(lib.date(text_maint_date.getText())) {
+							
+							if(modify()==1) {
+								//send message to user modify succeed
+								lbl_maint_result.setText("Modification succeed");
+								lbl_maint_result.setVisible(true);
+							}else {
+								//send message to user modify failed
+								lbl_maint_result.setText("Modification failed");
+								lbl_maint_result.setVisible(true);
+								}
+							
 						}else {
-							//send message to user modify failed
-							lbl_maint_result.setText("Modification failed");
-						}
+						    //handle exception here
+							
+							lbl_maint_result.setText("Date format Invalid");
+							lbl_maint_result.setVisible(true);
+							}
+						
 					}else if (btn_maint.getText().equalsIgnoreCase("Append")) {
 						
-						String [] temp = append();
-						
-						if(temp.length==5) {
-							//send message to user modify succeed
-							lbl_maint_result.setText("Append succeed");
-							lbl_maint_pjID_show.setText(temp[0]);
-							lbl_maint_status_show.setText(temp[3]);
+						if(lib.emp_check(text_maint_empID)) {
 							
-							lbl_maint_del_progress_show.setText(temp[4]);
-							
+							if(!(text_maint_date.getText().isBlank())) {
+								
+								if(lib.date(text_maint_date.getText())) {
+									
+									String [] temp = append();
+									
+									if(temp.length==5) {
+										//send message to user modify succeed
+										lbl_maint_result.setText("Append succeed");
+										lbl_maint_result.setVisible(true);
+										lbl_maint_pjID_show.setText(temp[0]);
+										lbl_maint_pjID_show.setVisible(true);
+										lbl_maint_status_show.setText(temp[3]);
+										lbl_maint_status_show.setVisible(true);
+										lbl_maint_del_progress_show.setText(temp[4]);
+										lbl_maint_del_progress_show.setVisible(true);
+										
+									}else {
+										//send message to user modify failed
+										lbl_maint_result.setText("Append failed.\n Check data again please");
+										lbl_maint_result.setVisible(true);
+									}
+								}else {
+									lbl_maint_result.setText("Date format Invalid");
+									lbl_maint_result.setVisible(true);
+								}
+							}else {
+								//(text_maint_date.getText().isBlank())
+								String [] temp = append();
+								
+								if(temp.length==5) {
+									//send message to user modify succeed
+									lbl_maint_result.setText("Append succeed");
+									lbl_maint_result.setVisible(true);
+									lbl_maint_pjID_show.setText(temp[0]);
+									lbl_maint_pjID_show.setVisible(true);
+									lbl_maint_status_show.setText(temp[3]);
+									lbl_maint_status_show.setVisible(true);
+									lbl_maint_del_progress_show.setText(temp[4]);
+									lbl_maint_del_progress_show.setVisible(true);
+									
+								}else {
+									//send message to user modify failed
+									lbl_maint_result.setText("Append failed.\n Check data again please");
+									lbl_maint_result.setVisible(true);
+								}
+							}
 						}else {
-							//send message to user modify failed
-							lbl_maint_result.setText("Append failed");
-						}
+						    //handle exception here
+							
+							lbl_maint_result.setText("Employee ID Invalid");
+							lbl_maint_result.setVisible(true);
+							}
+							
 					}else if (btn_maint.getText().equalsIgnoreCase("Delete")) {
+						
 						if(delete()==2) {
 							//send message to user modify succeed
 							lbl_maint_result.setText("Delete succeed");
+							lbl_maint_result.setVisible(true);
+							
 						}else {
 							//send message to user modify failed
 							lbl_maint_result.setText("Delete failed");
+							lbl_maint_result.setVisible(true);
 						}
 					}
 				}
@@ -380,9 +503,10 @@ public class Maintenance_panel  {
 			btn_maint.setBounds(490, 200, 87, 29);
 			maint_panel.add(btn_maint);
 			
-			lbl_maint_empID = new JLabel("Employee ID :");
+			lbl_maint_empID = new JLabel("*Employee ID :");
+			lbl_maint_empID.setHorizontalAlignment(SwingConstants.RIGHT);
 			
-			lbl_maint_empID.setBounds(162, 85, 86, 16);
+			lbl_maint_empID.setBounds(142, 85, 106, 16);
 			maint_panel.add(lbl_maint_empID);
 			
 			text_maint_empID = new JTextField();
@@ -395,30 +519,13 @@ public class Maintenance_panel  {
 			lbl_maint_date.setHorizontalAlignment(SwingConstants.RIGHT);
 			maint_panel.add(lbl_maint_date);
 			
-			text_maint_date_year = new JTextField();
-			text_maint_date_year.setHorizontalAlignment(SwingConstants.CENTER);
-			text_maint_date_year.setBounds(260, 113, 37, 30);
-			maint_panel.add(text_maint_date_year);
-			text_maint_date_year.setColumns(10);
+			text_maint_date = new JTextField();
+			text_maint_date.setHorizontalAlignment(SwingConstants.CENTER);
+			text_maint_date.setBounds(260, 113, 130, 30);
+			maint_panel.add(text_maint_date);
+			text_maint_date.setColumns(10);
 			
-			text_maint_date_month = new JTextField();
-			text_maint_date_month.setHorizontalAlignment(SwingConstants.CENTER);
-			text_maint_date_month.setBounds(309, 113, 31, 30);
-			maint_panel.add(text_maint_date_month);
-			text_maint_date_month.setColumns(10);
-			
-			text_maint_date_day = new JTextField();
-			text_maint_date_day.setHorizontalAlignment(SwingConstants.CENTER);
-			text_maint_date_day.setBounds(352, 113, 37, 30);
-			maint_panel.add(text_maint_date_day);
-			text_maint_date_day.setColumns(10);
-			
-			lbl_for_date_textfield = new JLabel("          /         /");
-			lbl_for_date_textfield.setHorizontalAlignment(SwingConstants.LEFT);
-			lbl_for_date_textfield.setBounds(260, 118, 130, 25);
-			maint_panel.add(lbl_for_date_textfield);
-			
-			lbl_date_default = new JLabel("(YYYY/MM/DD)");
+			lbl_date_default = new JLabel("YYYY-MM-DD ");
 			lbl_date_default.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_date_default.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 			lbl_date_default.setBounds(270, 139, 108, 25);
@@ -447,31 +554,49 @@ public class Maintenance_panel  {
 			btn_maint_check.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-//					ArrayList<String> temp = check_ID(text_maint_pjID);
+
+					try{
+						Integer.parseInt(text_maint_pjID.getText());
+						
+//						ArrayList<String> temp = check_ID(text_maint_pjID);
+						
+						ArrayList<String> temp = new ArrayList();  // test data
+						temp.addAll(Arrays.asList(new String[] {"90000007","11047637","2021-03-10","RCPT",""})); // test data
+						
+						
+						if(temp.size() == 0) {
+							
+							lbl_maint_result.setText("no found");
+							lbl_maint_result.setVisible(true);
+							
+						}else {
+							//temp.length != 0
+							
+							set_visible(true);
+							text_maint_empID.setText(temp.get(1));
+							text_maint_date.setText(temp.get(2));
+							lbl_maint_status_show.setText(temp.get(3));
+							lbl_maint_del_progress_show.setText(temp.get(4));
+							
+							
+							text_maint_pjID.setVisible(false);     						//let projectID be uneditable
+							lbl_maint_pjID_show.setText(temp.get(0));
+							lbl_maint_pjID_show.setVisible(true);
+							lbl_maint_result.setText("Data loading succeed");	
+							lbl_maint_result.setVisible(true);
+						}
+						   
+						}catch (NumberFormatException ex) {
+						    //handle exception here
+							
+							lbl_maint_result.setText(" Project ID format Invalid");
+							lbl_maint_result.setVisible(true);
+						}
 					
-					ArrayList<String> temp = new ArrayList();  // test data
-					temp.addAll(Arrays.asList(new String[] {"90000007","11047637","2021-03-10","RCPT",""})); // test data
 					
 					
-					if(temp.size() == 0) {
-						lbl_maint_result.setText("no found");
-						
-					}else {
-						//temp.length != 0
-						
-						set_visible(true);
-						text_maint_empID.setText(temp.get(1));
-						text_maint_date_year.setText(temp.get(2));
-						lbl_maint_status_show.setText(temp.get(3));
-						lbl_maint_del_progress_show.setText(temp.get(4));
-						
-						
-						text_maint_pjID.setVisible(false);     						//let projectID be uneditable
-						lbl_maint_pjID_show.setText(temp.get(0));
-						lbl_maint_pjID_show.setVisible(true);
-						lbl_maint_result.setText("Data loading succeed");	
-						
-					}
+					
+					
 				}
 			});
 			btn_maint_check.setBounds(402, 36, 78, 29);
@@ -484,11 +609,13 @@ public class Maintenance_panel  {
 			
 			
 			lbl_maint_result = new JLabel("");
-			lbl_maint_result.setBounds(412, 85, 165, 16);
+			lbl_maint_result.setBounds(412, 85, 222, 58);
 			maint_panel.add(lbl_maint_result);
 			
 			
 		}
+		
+		
 		
 		private int modify() {
 			/** 
@@ -497,9 +624,15 @@ public class Maintenance_panel  {
 			 *  to MODIFY data in PROJECT table
 			 **/
 			int resultSet=0;
+			
+			if(text_maint_empID.getText().isBlank()|(!(lib.emp_check(text_maint_empID)))|text_maint_date.getText().isBlank()) {
+				
+				return resultSet;
+			}
+			
 			try {
-				resultSet = Term_project_main.conn.st.executeUpdate("UPDATE PROJECT SET Emp_ID="+ text_maint_empID.getText()+
-						", Established_date=\'"+text_maint_date_year.getText()+"\' WHERE Project_ID="+text_maint_pjID.getText());
+				resultSet = Term_project_main.conn.st.executeUpdate("UPDATE PROJECT SET Emp_ID="+ text_maint_empID.getText()
+											+", Established_date=\'"+text_maint_date.getText()+"\' WHERE Project_ID="+text_maint_pjID.getText());
 
 				return 	resultSet;	
 			} catch (SQLException e) {
@@ -529,49 +662,48 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Project_ID=" + 
-									projectID.getText()+" AND Emp_ID="+ empID.getText()+" AND Established_date=\'"
-													+est_date.getText()+"\')");
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name, pj.Project_status, \n"
+																		+ "pj.Delivery_progress, pj.Established_date FROM PROJECT AS pj \n"
+																		+ "LEFT JOIN EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID WHERE (Project_ID=" + 
+																		projectID.getText()+" AND Emp_ID="+ empID.getText()+" AND Established_date=\'"
+																						+est_date.getText()+"\')");
 							
 							if(resultSet.next()) {
-								String [] temp_array = new String[5];
-								for(int i = 1; i<6; i++) {
+								String [] temp_array = new String[6];
+								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);	
 							}
-							break;
-							
-					
+
 						}catch (SQLException e) {
 						// TODO Auto-generated catch block
 							//e.printStackTrace();
-							break;
 							}
-						
+							break;
+													
 					case "110":
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Project_ID=" + 
-									projectID.getText()+" AND Emp_ID="+ empID.getText()+")");
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name, pj.Project_status, \n"
+																				+"pj.Delivery_progress, pj.Established_date FROM PROJECT AS pj \n"
+																				+"LEFT JOIN EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID WHERE (Project_ID=" 
+																				+projectID.getText()+" AND Emp_ID="+ empID.getText()+")");
 							
-							if(resultSet.next()) {
-								String [] temp_array = new String[5];
-								for(int i = 1; i<6; i++) {
+							while(resultSet.next()) {
+								String [] temp_array = new String[6];
+								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);
 							}
-							break;
-					
-					
-						}catch (SQLException e) {
-							
+
+						}catch (SQLException e) {	
 						// TODO Auto-generated catch block
 							//e.printStackTrace();
-							break;
 							}
+						break;
 						
 					case "101":
 						
@@ -580,88 +712,82 @@ public class Maintenance_panel  {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Project_ID=" + 
 									projectID.getText()+" AND Established_date=\'"+est_date.getText()+"\')");
 							
-							if(resultSet.next()) {
-								String [] temp_array = new String[5];
-								for(int i = 1; i<6; i++) {
+							while(resultSet.next()) {
+								String [] temp_array = new String[6];
+								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);
 							}
-							break;
-					
-					
+							
 						}catch (SQLException e) {
 							
 						// TODO Auto-generated catch block
 							//e.printStackTrace();
-							break;
+							
 							}
-						
+							break;
+							
 					case "100":
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE Project_ID=" + 
-									projectID.getText());
-							
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name, pj.Project_status, \n"
+																					+"pj.Delivery_progress, pj.Established_date FROM PROJECT AS pj \n"
+																					+"LEFT JOIN EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID WHERE Project_ID=" 
+																					+projectID.getText());
+																			
 							if(resultSet.next()) {
-								String [] temp_array = new String[5];
-								for(int i = 1; i<6; i++) {
+								String [] temp_array = new String[6];
+								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);
 							}
-							break;
-					
-					
-						}catch (SQLException e) {
 							
+						}catch (SQLException e) {	
 						// TODO Auto-generated catch block
-							//e.printStackTrace();
-							break;
+							//e.printStackTrace();							
 							}
-					
+						break;
+						
 					case "011":
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE (Emp_ID="+
-													empID.getText()+" AND Established_date=\'"+est_date.getText()+"\')");
-							int k=0;
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name, pj.Project_status, \n"
+																						+"pj.Delivery_progress, pj.Established_date FROM PROJECT AS pj \n"
+																						+"LEFT JOIN EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID WHERE (Emp_ID="
+																						+empID.getText()+" AND Established_date=\'"+est_date.getText()+"\')");
+							
 							while(resultSet.next()) {
-								String [] temp_array = new String[5];
-								for(int i = 1; i<6; i++) {
+								String [] temp_array = new String[6];
+								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
-								temp.add(temp_array);
-								k++;
+								temp.add(temp_array);	
 							}
-							break;
-					
-					
-						}catch (SQLException e) {
 							
-						// TODO Auto-generated catch block
+						}catch (SQLException e) {	
+							// TODO Auto-generated catch block
 							//e.printStackTrace();
-							
-							break;
 							}
-						
+							break;
+							
 					case "010":
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE Emp_ID="+
-													empID.getText());
-							
-							int k=0;
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name, pj.Project_status, \n"
+																					+"pj.Delivery_progress, pj.Established_date FROM PROJECT AS pj \n"
+																					+"LEFT JOIN EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID PROJECT WHERE Emp_ID="
+																					+empID.getText());
 							while(resultSet.next()) {
-								String [] temp_array = new String[5];
-								for(int i = 1; i<6; i++) {
+								String [] temp_array = new String[6];
+								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
-								temp.add(temp_array);
-								k++;
+								temp.add(temp_array);	
 							}
 							break;
 
@@ -676,17 +802,17 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT WHERE Established_date=\'"+
-													est_date.getText()+"\'");
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name, pj.Project_status, \n"
+																				+"pj.Delivery_progress, pj.Established_date FROM PROJECT AS pj \n"
+																				+"LEFT JOIN EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID WHERE Established_date=\'"
+																				+est_date.getText()+"\'");
 							
-							int k=0;
 							while(resultSet.next()) {
-								String [] temp_array = new String[5];
-								for(int i = 1; i<6; i++) {
+								String [] temp_array = new String[6];
+								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
-								temp.add(temp_array);
-								k++;
+								temp.add(temp_array);	
 							}
 							break;
 
@@ -698,7 +824,7 @@ public class Maintenance_panel  {
 							break;
 							}		
 			}
-			String[][] result_array = new String[temp.size()][5];
+			String[][] result_array = new String[temp.size()][6];
 			int i=0;
 			for (String[] array_in_temp : temp) {
 				result_array[i++] = array_in_temp;
@@ -748,31 +874,63 @@ public class Maintenance_panel  {
 			 **/
 			int resultSet=0;
 			String[] temp = new String[0];
-			try {
-				resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO PROJECT (Emp_ID, Established_date, "
-						+ ") VALUE ("+ text_maint_empID.getText()+", \'"+lib.date(text_maint_date_year, text_maint_date_month, text_maint_date_day)+"\')");
-				
-				if (resultSet==1){
+			
+			if(text_maint_date.getText().isBlank()) {
+				try {
+					resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO PROJECT (Emp_ID, Project_status) VALUE ("
+											+ text_maint_empID.getText()+", 'just started')");
 					
-					ResultSet add_result = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT ORDER BY Project_ID LIMIT 1");
-					temp = new String[5];
-					if(add_result.next()) {
-						for(int i =1; i<6;i++) {
-							temp[i-1]=add_result.getString(i);
-							}
+					if (resultSet==1){
+						
+						ResultSet add_result = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT ORDER BY Project_ID DESC LIMIT 1");
+						temp = new String[5];
+						if(add_result.next()) {
+							for(int i =1; i<6;i++) {
+								temp[i-1]=add_result.getString(i);
+								}
+						}
+						
+						return temp;
+						
+						
 					}
 					
+						
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 					return temp;
-					
-					
 				}
 				
+			}else {
+				//!(text_maint_date.getText().isBlank())
+				try {
+					resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO PROJECT (Emp_ID, Established_date, Project_status) VALUE ("
+																	+ text_maint_empID.getText()+", \'"+text_maint_date.getText()+"\', \'just started\')");
 					
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return temp;
+					if (resultSet==1){
+						
+						ResultSet add_result = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT ORDER BY Project_ID DESC LIMIT 1");
+						temp = new String[5];
+						if(add_result.next()) {
+							for(int i =1; i<6;i++) {
+								temp[i-1]=add_result.getString(i);
+								}
+						}
+						
+						return temp;
+						
+						
+					}
+					
+						
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return temp;
+				}
 			}
+			
 			return temp;
 		}
 		
@@ -813,7 +971,7 @@ public class Maintenance_panel  {
 		
 		private ArrayList<String> check_ID(JTextField ID) {
 			
-
+			
 			ArrayList<String>  temp = new ArrayList();
 			
 			try {
@@ -835,19 +993,19 @@ public class Maintenance_panel  {
 		}
 		
 		
+		
+		
+		
+		
 		private void set_visible(boolean bl) {
 			
 			lbl_maint_empID.setVisible(bl);
 			text_maint_empID.setVisible(bl);
 			
 			lbl_maint_date.setVisible(bl);
-			text_maint_date_year.setVisible(bl);
-			text_maint_date_month.setVisible(bl);
-			text_maint_date_day.setVisible(bl);
-			
-			lbl_for_date_textfield.setVisible(bl);
+			text_maint_date.setVisible(bl);
+
 			lbl_date_default.setVisible(bl);
-			
 			
 			lbl_maint_status.setVisible(bl);
 			lbl_maint_status_show.setVisible(bl);

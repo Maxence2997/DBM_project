@@ -2,7 +2,10 @@ package test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JTextField;
 
@@ -129,10 +132,22 @@ public class Library {
 		/**
 		 * @author jyunanyang
 		 * @since 06/07/2021
+		 * 
+		 * to test empID.getText() is blank or alphabet
+		 * and verify it's in our Employee list or not
 		 */
 		
 		boolean res = false;
 		
+		try{
+			   Integer.parseInt(empID.getText());
+			   // test empID.getText() is blank or alphabet
+			   
+			}catch (NumberFormatException ex) {
+			    //handle exception here
+				
+				return res;
+			}
 		
 		
 		try {
@@ -188,50 +203,43 @@ public class Library {
 	
 	
 	
+	public boolean date(String strDate){
 	
-	public String date(JTextField year, JTextField month, JTextField day) {
-		
-		if(year.getText().isBlank()|month.getText().isBlank()|day.getText().isBlank() ) {
+	/**
+	 * Reference: https://beginnersbook.com/2013/05/java-date-format-validation/
+	 */
+	   
+		/* Check if date is 'null' */
+		if (strDate.trim().equals("")){
 			
-			return "DEFAULT";
-			
+		    return true;
+		    
 		}else {
-			int y;
-			int m;
-			int d;
-			
-			try{
-			    y = Integer.parseInt(year.getText());
-			   
-				}catch (NumberFormatException ex) {
-					//handle exception here
-					return "DEFAULT";
-			}
-			
-			
-			try{
-				   m = Integer.parseInt(month.getText());
-				   
-				}catch (NumberFormatException ex) {
-				    //handle exception here
-					return "DEFAULT";
-				}
-			
-			try{
-				   d = Integer.parseInt(day.getText());
-				   
-				}catch (NumberFormatException ex) {
-				    //handle exception here
-					return "DEFAULT";
-				}
-			String DATE = Integer.toString(y) + "-"+ Integer.toString(m) + "-" +Integer.toString(d);
-			
-			return DATE;
-			
+		/* Date is not 'null' */
+		
+		    /*
+		     * Set preferred date format,
+		     * For example yyyy-mm-dd, MM.dd.yyyy,dd.MM.yyyy etc.*/
+		    SimpleDateFormat sdfrmt = new SimpleDateFormat("yyyy/mm/dd");
+		    sdfrmt.setLenient(false);
+		    /* Create Date object
+		     * parse the string into date 
+	             */
+		    try{
+		        Date javaDate = sdfrmt.parse(strDate); 
+		       
+		    
+		    
+		    }catch (ParseException e){
+		    	/* Date format is invalid */
+		        return false;
+		    	}
+		    /* Return true if date format is valid */
+		    return true;
 		}
 		
-		
 	}
+	
 	
 	
 	

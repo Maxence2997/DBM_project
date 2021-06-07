@@ -169,44 +169,27 @@ public class Term_project_main {
 			button_login.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					card_layout.show(frame.getContentPane(), "home");
+					//card_layout.show(frame.getContentPane(), "home");
 					
 					
 					lib = new Library();
-					
 					lib.adjust_PROJECT();
-//					if (library.is_existed(field_empID) == true) {
+					
+					if (lib.emp_check(field_empID)) 
 						
-						//library = new Library();
-//						card_layout.show(frame.getContentPane(), "home");
-//						
-//						//System.out.print("Supervisor:"+ library.is_supervisor(field_empID));
-//						
-//						if (library.is_supervisor(field_empID)==true) lbl_sorry.setVisible(false);
-//						
-//						
-//						else {
-//							lbl_instruction.setVisible(false);
-//							sign_table.setVisible(false);
-//							btn_sign.setVisible(false);
-//							btn_refresh.setVisible(false);
-//						}
-//					}
-//										
-//						
-//					else {
-//						
-//						login_result.setText("Employee ID is invalid, please refill it.");
-//
-//						}
-//					}
+						card_layout.show(frame.getContentPane(), "home");
+
+					else 
+						
+						login_result.setText("Employee ID is invalid, please refill it.");
+						
+					}
 				
 				
-			}});
+			});
 			button_login.setBounds(421, 186, 117, 29);
 			login_panel.add(button_login);
-			
-			
+	
 		}
 		
 		
@@ -355,72 +338,4 @@ public class Term_project_main {
 			
 			
 		}
-		
-		
-		public boolean is_existed(JTextField field_empID) {  
-			/** To verify if the ID inputed by user is registered in EMPLOYEE or not
-			 * 
-			 * If the ID registered, return true; else return false
-			 **/
-			
-			boolean existed;
-			
-			try {
-				ResultSet resultSet = conn.st.executeQuery("SELECT Emp_ID FROM EMPLOYEE WHERE Emp_ID="+ field_empID.getText());
-				if (resultSet.next()) {
-					//System.out.println(resultSet.getString("Emp_ID"));
-			
-					existed = true;
-				}
-				
-				else 
-					existed = false;
-				
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					existed = false;
-				}
-				 
-			return existed;
-		}
-		
-		
-		public boolean is_supervisor(JTextField field_empID) {
-			/**
-			 * To verify the ID logged in is supervisor or not
-			 * 
-			 * if it's supervisor ID, return true; else return false
-			 */
-			
-			boolean supervisor;
-			
-			try {
-				ResultSet resultSet = conn.st.executeQuery("SELECT Supervisor FROM EMPLOYEE WHERE Supervisor=" + field_empID.getText());
-				if (resultSet.next()) {
-					System.out.println(resultSet.getString("Supervisor"));
-			
-					supervisor = true;
-				}
-				
-				else 
-					supervisor = false;
-				
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					supervisor = false;
-				}
-				 
-			return supervisor;
-			
-			
-		}
-		
-
-//		public JTextField get_field_empID() {
-//		
-//			return this.field_empID;
-//		}
-				
 }
