@@ -80,7 +80,7 @@ public class Library {
 //						System.out.println("----bgn---");
 //						System.out.print(total_num);
 //						System.out.println();
-						int total_den=0;
+						float total_den=0;
 						for(int q=0; q < denominator.size();q++) {
 							total_den += denominator.get(q);
 							
@@ -88,7 +88,8 @@ public class Library {
 //						System.out.print(total_den);
 //						System.out.println();
 						
-						temp.get(i)[2]=String.format("%.0f%%",total_num*100 / (total_den));
+						//temp.get(i)[2]=String.format("%.0f%%",total_num*100 / (total_den));
+						temp.get(i)[2]=String.format("%.1f",total_num*100 / (total_den));
 						
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block

@@ -3117,7 +3117,7 @@ public class Sheets_panel  {
 			e.printStackTrace();
 		}
 		
-		String[][] result_array = new String[temp.size()][5];
+		String[][] result_array = new String[temp.size()][12];
 		int i=0;
 		for (String[] array_in_temp : temp) {
 			result_array[i++] = array_in_temp;
