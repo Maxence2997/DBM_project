@@ -246,13 +246,13 @@ public class Maintenance_panel  {
 //					String [][] temp = {{"90000000","11047630","2021/3/3","EXAM",""}, {"90000008","11047638","2021/3/11","RCPT",""},
 //												{"90000010","11047640","2021/3/13","EXAM",""}, {"90000013","11047643","2021/3/16","RCPT",""}};
 					try{							
-						if (!(text_inq_pjID.getText().isBlank())) 
+						if (!text_inq_pjID.getText().isBlank()) 
 							Integer.parseInt(text_inq_pjID.getText());
 						
-						if (!(text_inq_empID.getText().isBlank())) 
+						if (!text_inq_empID.getText().isBlank())
 							Integer.parseInt(text_inq_empID.getText());
 						
-						if(!(text_inq_date.getText().isBlank())) {
+						if(!text_inq_date.getText().isBlank()) {
 							if(lib.date(text_inq_date.getText())) {
 								
 								String[][] temp = inquire(text_inq_pjID,text_inq_empID,text_inq_date);

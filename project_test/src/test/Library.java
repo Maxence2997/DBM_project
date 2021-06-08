@@ -17,7 +17,6 @@ public class Library {
 	}
 	
 	
-	
 	public void adjust_PROJECT() {
 		
 		/**@author jyunanyang
@@ -126,15 +125,154 @@ public class Library {
 	}
 	
 	
+	public boolean num_not_null_check(JTextField num) {
+		
+		/**
+		 * @author jyunanyang
+		 * @since 06/08/2021
+		 */
+		boolean res = false;
+		
+		try{
+			   Integer.parseInt(num.getText());
+			   // test empID.getText() is blank or alphabet
+			   
+			   return res;
+			}catch (NumberFormatException ex) {
+			    //handle exception here
+				return res;
+			}
+	}
 	
-	public boolean emp_check(JTextField empID) {
+	
+	public boolean supplier_check(JTextField supID) {
+		
+		/**
+		 * @author jyunanyang
+		 * @since 06/08/2021
+		 * 
+		 * to test supID.getText() is blank or alphabet
+		 * and verify it's in our Supplier table or not
+		 */
+		
+		boolean res = false;
+		
+		try{
+			   Integer.parseInt(supID.getText());
+			   // test empID.getText() is blank or alphabet
+			   
+			}catch (NumberFormatException ex) {
+			    //handle exception here
+				return res;
+			}
+		
+		try {
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Supplier_ID FROM SUPPLIER WHERE Supplier_ID="+supID.getText());
+			
+			if(r.next()) {
+				
+				res=true;
+			}
+			return res;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			return res;
+		}
+	}
+	
+	
+	
+	public boolean projectID_check(JTextField pjID) {
+		
+		/**
+		 * @author jyunanyang
+		 * @since 06/08/2021
+		 * 
+		 * to test projectID.getText() is blank or alphabet
+		 * and verify it's in our PORJECT table or not
+		 */
+		boolean res=false;
+		try{
+			   Integer.parseInt(pjID.getText());
+			   // test empID.getText() is blank or alphabet
+			   
+			}catch (NumberFormatException ex) {
+			    //handle exception here
+				return res;
+			}
+		
+		try {
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Project_ID FROM PROJECT WHERE Project_ID="+pjID.getText());
+			
+			if(r.next()) {
+				
+				res=true;
+			}
+			return res;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			return res;
+		}
+	}
+	
+	
+	
+	public boolean module_check(JTextField module) {
+		
+		/**
+		 * @author jyunanyang
+		 * @since 06/08/2021
+		 * 
+		 * to test module.getText() is blank or alphabet
+		 * and verify it's in our PORJECT table or not
+		 */
+		
+		boolean res=false;
+
+		try {
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Module_type FROM PRODUCT WHERE Module_type="+module.getText());
+			
+			if(r.next()) {
+				
+				res=true;
+			}
+			return res;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			return res;
+		}
+	}
+	
+	public boolean tf_check(JTextField tf) {
+		
+		boolean res = false;
+		
+		if(tf.getText().equalsIgnoreCase("true")) {
+			
+			res = true;
+		}else if(tf.getText().equalsIgnoreCase("false")) {
+			
+			res = true;
+		}
+		
+		return res;
+	}
+	
+	
+ 	public boolean emp_check(JTextField empID) {
 		
 		/**
 		 * @author jyunanyang
 		 * @since 06/07/2021
 		 * 
 		 * to test empID.getText() is blank or alphabet
-		 * and verify it's in our Employee list or not
+		 * and verify it's in our Employee table or not
 		 */
 		
 		boolean res = false;
@@ -240,6 +378,8 @@ public class Library {
 		
 	}
 	
+	
+	
 	public  String[] insert(String[] input, String string, int index) {
 	
 		/**
@@ -257,6 +397,7 @@ public class Library {
  
         return result;
     }
+	
 	
 	
 	public String check_text_fields(JTextField ID, JTextField else1, JTextField else2) {

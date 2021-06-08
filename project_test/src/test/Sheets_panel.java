@@ -299,42 +299,73 @@ public class Sheets_panel  {
 				btn_inq_inquire.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						//library.btn_inquire();
-						
-						if (rb_inq_all.isSelected()) {
+						try {
+							if(!text_inq_sheetID.getText().isBlank()) 
+								Integer.parseInt(text_inq_sheetID.getText());
 							
-							String [][] temp = inquire_all(text_inq_sheetID,text_inq_projectID,text_inq_pd);
+							if(!text_inq_projectID.getText().isBlank()) 
+								Integer.parseInt(text_inq_projectID.getText());
 							
-//							for(int i=0; i<temp.length;i++) {
-//								for(int j=0; j<temp[i].length;j++) {
-//									System.out.print(temp[i][j]+"\t");
-//								}
-//								System.out.println();
-//							}
-							if(temp.length!=0) {
+							if (rb_inq_all.isSelected()) {
 								
-								String[] columns_name = {"Column 1", "Column 2", "Column 3", "Column 4", "Column 5", "Column 6", "Column 7", "Column 8",
-										"Column 9", "Column 10", "Column 11"};
-								
-								DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
-								inq_table.setModel(inq_table_model);
-								inq_table.setVisible(true);
-								scrollpane_inq.setVisible(true);
-								lbl_inq_result.setText("Data loaded");
-								lbl_inq_result.setVisible(true);
-								
-							}else {
-								//temp.length==0
-								inq_table.setVisible(false);
-								scrollpane_inq.setVisible(false);
-								lbl_inq_result.setText("Data no found");
-								lbl_inq_result.setVisible(true);	
-							}
-						}else if(rb_inq_RFQ.isSelected()) {
+									String [][] temp = inquire_all(text_inq_sheetID,text_inq_projectID,text_inq_pd);
+									
+		//							for(int i=0; i<temp.length;i++) {
+		//								for(int j=0; j<temp[i].length;j++) {
+		//									System.out.print(temp[i][j]+"\t");
+		//								}
+		//								System.out.println();
+		//							}
+									if(temp.length!=0) {
+										
+										String[] columns_name = {"Column 1", "Column 2", "Column 3", "Column 4", "Column 5", "Column 6", "Column 7", "Column 8",
+												"Column 9", "Column 10", "Column 11", "Column 12"};
+										
+										DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
+										inq_table.setModel(inq_table_model);
+										inq_table.setVisible(true);
+										scrollpane_inq.setVisible(true);
+										lbl_inq_result.setText("Data loaded");
+										lbl_inq_result.setVisible(true);
+										
+									}else {
+										//temp.length==0
+										inq_table.setVisible(false);
+										scrollpane_inq.setVisible(false);
+										lbl_inq_result.setText("Data no found");
+										lbl_inq_result.setVisible(true);	
+									}
 							
-								String[][] temp = inquire("RFQ", text_inq_sheetID,text_inq_projectID,text_inq_pd);
+								
+							}else if(rb_inq_RFQ.isSelected()) {
+								
+									String[][] temp = inquire("RFQ", text_inq_sheetID,text_inq_projectID,text_inq_pd);
+									if(temp.length!=0) {
+										
+										String[] columns_name = {"Sheet ID", "Type", "Project ID", "Inquiring Product", "Supplier ID", "Name", "Vol.", "Date"};
+										DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
+										inq_table.setModel(inq_table_model);
+										inq_table.setVisible(true);
+										scrollpane_inq.setVisible(true);
+										lbl_inq_result.setText("Data loaded");
+										lbl_inq_result.setVisible(true);
+										
+									}else {
+										//temp.length==0
+										inq_table.setVisible(false);
+										scrollpane_inq.setVisible(false);
+										lbl_inq_result.setText("Data no found");
+										lbl_inq_result.setVisible(true);	
+									}
+									
+							}else if(rb_inq_quo.isSelected()) {
+								
+								String[][] temp = inquire("QUO", text_inq_sheetID,text_inq_projectID,text_inq_pd);
 								if(temp.length!=0) {
 									
-									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Inquiring Product", "Supplier ID", "Name", "Vol.", "Date"};
+									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Inquiring Product", "Supplier ID", "Name", "Vol.",
+											"Unit Price","Total Price","ESD", "Date"};
+									
 									DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
 									inq_table.setModel(inq_table_model);
 									inq_table.setVisible(true);
@@ -350,121 +381,103 @@ public class Sheets_panel  {
 									lbl_inq_result.setVisible(true);	
 								}
 								
-						}else if(rb_inq_quo.isSelected()) {
-							
-							String[][] temp = inquire("QUO", text_inq_sheetID,text_inq_projectID,text_inq_pd);
-							if(temp.length!=0) {
+							}else if(rb_inq_req.isSelected()) {
 								
-								String[] columns_name = {"Sheet ID", "Type", "Project ID", "Inquiring Product", "Supplier ID", "Name", "Vol.",
-										"Unit Price","Total Price","ESD", "Date"};
+								String[][] temp = inquire("REQ", text_inq_sheetID,text_inq_projectID,text_inq_pd);
+								if(temp.length!=0) {
+									
+									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Inquiring Product", "Item Name", "Vol.",
+											"Unit Price", "Total Price", "Signature", "Supervisor ID","Name", "Date"};
+									
+									DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
+									inq_table.setModel(inq_table_model);
+									inq_table.setVisible(true);
+									scrollpane_inq.setVisible(true);
+									lbl_inq_result.setText("Data loaded");
+									lbl_inq_result.setVisible(true);
+									
+								}else {
+									//temp.length==0
+									inq_table.setVisible(false);
+									scrollpane_inq.setVisible(false);
+									lbl_inq_result.setText("Data no found");
+									lbl_inq_result.setVisible(true);	
+								}
 								
-								DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
-								inq_table.setModel(inq_table_model);
-								inq_table.setVisible(true);
-								scrollpane_inq.setVisible(true);
-								lbl_inq_result.setText("Data loaded");
-								lbl_inq_result.setVisible(true);
+							}else if(rb_inq_pur.isSelected()) {
 								
-							}else {
-								//temp.length==0
-								inq_table.setVisible(false);
-								scrollpane_inq.setVisible(false);
-								lbl_inq_result.setText("Data no found");
-								lbl_inq_result.setVisible(true);	
-							}
-							
-						}else if(rb_inq_req.isSelected()) {
-							
-							String[][] temp = inquire("REQ", text_inq_sheetID,text_inq_projectID,text_inq_pd);
-							if(temp.length!=0) {
+								String[][] temp = inquire("PUR", text_inq_sheetID,text_inq_projectID,text_inq_pd);
+								if(temp.length!=0) {
+									
+									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Module", "Vol.",
+											"Unit Price", "Total Price", "ESD", "Date"};
+									
+									DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
+									inq_table.setModel(inq_table_model);
+									inq_table.setVisible(true);
+									scrollpane_inq.setVisible(true);
+									lbl_inq_result.setText("Data loaded");
+									lbl_inq_result.setVisible(true);
+									
+								}else {
+									//temp.length==0
+									inq_table.setVisible(false);
+									scrollpane_inq.setVisible(false);
+									lbl_inq_result.setText("Data no found");
+									lbl_inq_result.setVisible(true);	
+								}
 								
-								String[] columns_name = {"Sheet ID", "Type", "Project ID", "Inquiring Product", "Item Name", "Vol.",
-										"Unit Price", "Total Price", "Signature", "Supervisor ID","Name", "Date"};
+							}else if(rb_inq_exam.isSelected()) {
 								
-								DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
-								inq_table.setModel(inq_table_model);
-								inq_table.setVisible(true);
-								scrollpane_inq.setVisible(true);
-								lbl_inq_result.setText("Data loaded");
-								lbl_inq_result.setVisible(true);
-								
-							}else {
-								//temp.length==0
-								inq_table.setVisible(false);
-								scrollpane_inq.setVisible(false);
-								lbl_inq_result.setText("Data no found");
-								lbl_inq_result.setVisible(true);	
-							}
-							
-						}else if(rb_inq_pur.isSelected()) {
-							
-							String[][] temp = inquire("PUR", text_inq_sheetID,text_inq_projectID,text_inq_pd);
-							if(temp.length!=0) {
-								
-								String[] columns_name = {"Sheet ID", "Type", "Project ID", "Module", "Vol.",
-										"Unit Price", "Total Price", "ESD", "Date"};
-								
-								DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
-								inq_table.setModel(inq_table_model);
-								inq_table.setVisible(true);
-								scrollpane_inq.setVisible(true);
-								lbl_inq_result.setText("Data loaded");
-								lbl_inq_result.setVisible(true);
-								
-							}else {
-								//temp.length==0
-								inq_table.setVisible(false);
-								scrollpane_inq.setVisible(false);
-								lbl_inq_result.setText("Data no found");
-								lbl_inq_result.setVisible(true);	
-							}
-							
-						}else if(rb_inq_exam.isSelected()) {
-							
-							String[][] temp = inquire("EXAM", text_inq_sheetID,text_inq_projectID,text_inq_pd);
-							if(temp.length!=0) {
-								
-								String[] columns_name = {"Sheet ID", "Type", "Project ID", "Module", "Vol.", "Result", "Date"};
-								
-								DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
-								inq_table.setModel(inq_table_model);
-								inq_table.setVisible(true);
-								scrollpane_inq.setVisible(true);
-								lbl_inq_result.setText("Data loaded");
-								lbl_inq_result.setVisible(true);
+								String[][] temp = inquire("EXAM", text_inq_sheetID,text_inq_projectID,text_inq_pd);
+								if(temp.length!=0) {
+									
+									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Module", "Vol.", "Result", "Date"};
+									
+									DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
+									inq_table.setModel(inq_table_model);
+									inq_table.setVisible(true);
+									scrollpane_inq.setVisible(true);
+									lbl_inq_result.setText("Data loaded");
+									lbl_inq_result.setVisible(true);
+									
+								}else {
+									//temp.length==0
+									inq_table.setVisible(false);
+									scrollpane_inq.setVisible(false);
+									lbl_inq_result.setText("Data no found");
+									lbl_inq_result.setVisible(true);	
+								}
 								
 							}else {
-								//temp.length==0
-								inq_table.setVisible(false);
-								scrollpane_inq.setVisible(false);
-								lbl_inq_result.setText("Data no found");
-								lbl_inq_result.setVisible(true);	
+								//else if(rb_inq_rec.isSelected()) 
+								String[][] temp = inquire("RCPT", text_inq_sheetID,text_inq_projectID,text_inq_pd);
+								if(temp.length!=0) {
+									
+									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Module", "Vol.", "Date"};
+									
+									DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
+									inq_table.setModel(inq_table_model);
+									inq_table.setVisible(true);
+									scrollpane_inq.setVisible(true);
+									lbl_inq_result.setText("Data loaded");
+									lbl_inq_result.setVisible(true);
+									
+								}else {
+									//temp.length==0
+									inq_table.setVisible(false);
+									scrollpane_inq.setVisible(false);
+									lbl_inq_result.setText("Data no found");
+									lbl_inq_result.setVisible(true);	
+								}
 							}
 							
-						}else {
-							//else if(rb_inq_rec.isSelected()) 
-							String[][] temp = inquire("RCPT", text_inq_sheetID,text_inq_projectID,text_inq_pd);
-							if(temp.length!=0) {
-								
-								String[] columns_name = {"Sheet ID", "Type", "Project ID", "Module", "Vol.", "Date"};
-								
-								DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
-								inq_table.setModel(inq_table_model);
-								inq_table.setVisible(true);
-								scrollpane_inq.setVisible(true);
-								lbl_inq_result.setText("Data loaded");
-								lbl_inq_result.setVisible(true);
-								
-							}else {
-								//temp.length==0
-								inq_table.setVisible(false);
-								scrollpane_inq.setVisible(false);
-								lbl_inq_result.setText("Data no found");
-								lbl_inq_result.setVisible(true);	
+						}catch (NumberFormatException ex) {
+							//handle exception here
+							
+							lbl_inq_result.setText("Format Invalid");
+							lbl_inq_result.setVisible(true);
 							}
-						}
-						
-						
 					}
 				});
 				btn_inq_inquire.setVisible(false);
@@ -523,11 +536,7 @@ public class Sheets_panel  {
 			        	lbl_inq_pd.setVisible(true);
 			        	text_inq_pd.setVisible(true);
 			        	
-			        	
-			        	btn_inq_inquire.setVisible(true);
-			        	
-			        	
-			            
+			        	btn_inq_inquire.setVisible(true);   
 			        }
 			    });
 				bg.add(rb_inq_all);
@@ -538,8 +547,7 @@ public class Sheets_panel  {
 				rb_inq_RFQ.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
-			        	
-			        	
+			        			        	
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -549,10 +557,8 @@ public class Sheets_panel  {
 			        	lbl_inq_pd.setText("Inquiring Product :");
 			        	lbl_inq_pd.setVisible(true);
 			        	text_inq_pd.setVisible(true);
-			            
-			        	
-			        	btn_inq_inquire.setVisible(true);
-			        	
+			            	        	
+			        	btn_inq_inquire.setVisible(true);			
 			        }
 			    });
 				bg.add(rb_inq_RFQ);
@@ -565,8 +571,7 @@ public class Sheets_panel  {
 				rb_inq_quo.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
-			        	
-			        	
+			             	
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -575,16 +580,14 @@ public class Sheets_panel  {
 			        	
 			        	lbl_inq_pd.setText("Inquiring Product :");
 			        	lbl_inq_pd.setVisible(true);
-			        	text_inq_pd.setVisible(true);
-			        	
+			        	text_inq_pd.setVisible(true);		        	
 			        	
 			        	btn_inq_inquire.setVisible(true);
 			        }
 			    });
 				bg.add(rb_inq_quo);
 				
-				
-				
+							
 				rb_inq_req = new JRadioButton("Requisition");
 				rb_inq_req.setBounds(137, 102, 180, 23);
 				inq_panel.add(rb_inq_req);
@@ -600,16 +603,13 @@ public class Sheets_panel  {
 			        	
 			        	lbl_inq_pd.setText("Inquiring Product :");
 			        	lbl_inq_pd.setVisible(true);
-			        	text_inq_pd.setVisible(true);
+			        	text_inq_pd.setVisible(true);		        	
 			        	
-			        	
-			        	btn_inq_inquire.setVisible(true);
-			        	
+			        	btn_inq_inquire.setVisible(true);			        	
 			        }
 			    });
 				bg.add(rb_inq_req);
-				
-				
+								
 				
 				rb_inq_pur = new JRadioButton("Purchase");
 				rb_inq_pur.setBounds(137, 122, 180, 23);
@@ -617,8 +617,7 @@ public class Sheets_panel  {
 				rb_inq_pur.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
-			        	
-			        	
+			        			        	
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -628,8 +627,7 @@ public class Sheets_panel  {
 			        	lbl_inq_pd.setText("Module Type :");
 			        	lbl_inq_pd.setVisible(true);
 			        	text_inq_pd.setVisible(true);
-			        	
-			        	
+			        				        	
 			        	btn_inq_inquire.setVisible(true);
 			        }
 			    });
@@ -641,8 +639,7 @@ public class Sheets_panel  {
 				inq_panel.add(rb_inq_exam);
 				rb_inq_exam.addActionListener(new ActionListener() {
 			        @Override
-			        public void actionPerformed(ActionEvent e) {
-			        	
+			        public void actionPerformed(ActionEvent e) {		        	
 			        	
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
@@ -655,8 +652,7 @@ public class Sheets_panel  {
 			        	text_inq_pd.setVisible(true);
 			        	
 			        	
-			        	btn_inq_inquire.setVisible(true);
-			        	
+			        	btn_inq_inquire.setVisible(true);		        	
 			        }
 			    });
 				bg.add(rb_inq_exam);
@@ -668,8 +664,7 @@ public class Sheets_panel  {
 				rb_inq_rec.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
-			        	
-			        	
+			        			        	
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -679,8 +674,7 @@ public class Sheets_panel  {
 			        	lbl_inq_pd.setText("Module Type :");
 			        	lbl_inq_pd.setVisible(true);
 			        	text_inq_pd.setVisible(true);
-			        	
-			        	
+			        			        	
 			        	btn_inq_inquire.setVisible(true);
 			        }
 			    });
@@ -694,10 +688,7 @@ public class Sheets_panel  {
 				JButton btn_clear = new JButton("Clear");
 				btn_clear.setBounds(554, 73, 87, 29);
 				inq_panel.add(btn_clear);
-				
-
-				
-				
+											
 			}
 			
 			//Second panel - Modify sheet
@@ -721,16 +712,87 @@ public class Sheets_panel  {
 				btn_mod_modify.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
-						
-						//verify formate
-						
-						if (modify()==1) 
-							
-							lbl_mod_message.setText("modification succeed");
-						else 
-							lbl_mod_message.setText("modification failed");
-						
-					}
+						//verify format
+						int id = Integer.parseInt(lbl_mod_sheetID_show.getText());
+
+						if (id>=21000000 & id< 22000000) {
+							//RFQ
+								if (lib.supplier_check(text_mod_4)&lib.num_not_null_check(text_mod_5)&lib.date(text_mod_6.getText())) {
+									
+									if (modify()==1) 
+										lbl_mod_message.setText("modification succeed");
+									else 
+										lbl_mod_message.setText("modification failed");
+								}else{
+									lbl_mod_message.setText("format Invalid");
+									lbl_mod_message.setVisible(true);
+								}
+						}else if (id>=22000000 & id< 23000000) {
+							//QUOT
+							if (lib.supplier_check(text_mod_4)&lib.num_not_null_check(text_mod_5)&lib.num_not_null_check(text_mod_6)
+									&lib.date(text_mod_7.getText())&lib.date(text_mod_8.getText())) {
+									
+									if (modify()==1) 
+										lbl_mod_message.setText("modification succeed");
+									else 
+										lbl_mod_message.setText("modification failed");
+								}else{
+									lbl_mod_message.setText("format Invalid");
+									lbl_mod_message.setVisible(true);
+									}
+						}else if (id>=23000000 & id< 24000000) {
+							//REQ
+							if (lib.num_not_null_check(text_mod_5)&lib.num_not_null_check(text_mod_6)
+										&lib.supervisor_check(text_mod_7)&lib.date(text_mod_8.getText())) {
+										
+								if (modify()==1)
+									lbl_mod_message.setText("modification succeed");
+								else 
+									lbl_mod_message.setText("modification failed");
+							}else{
+								lbl_mod_message.setText("format Invalid");
+								lbl_mod_message.setVisible(true);
+								}
+						}else if (id>=24000000 & id< 25000000) {
+							//PUR
+							if (lib.num_not_null_check(text_mod_5)&lib.num_not_null_check(text_mod_6)
+									&lib.date(text_mod_7.getText())&lib.date(text_mod_8.getText())) {
+										
+								if (modify()==1) 
+									lbl_mod_message.setText("modification succeed");
+								else 
+									lbl_mod_message.setText("modification failed");
+							}else{
+								lbl_mod_message.setText("format Invalid");
+								lbl_mod_message.setVisible(true);
+								}
+								
+						}else if (id>=25000000 & id< 26000000) {
+							//EXAM
+							if (lib.num_not_null_check(text_mod_4)&lib.date(text_mod_6.getText())){
+											
+								if (modify()==1) 
+									lbl_mod_message.setText("modification succeed");
+								else 
+									lbl_mod_message.setText("modification failed");
+							}else{
+								lbl_mod_message.setText("format Invalid");
+								lbl_mod_message.setVisible(true);
+								}
+						}else {
+							//RCPT
+							if (lib.num_not_null_check(text_mod_4)&lib.date(text_mod_6.getText())){
+										
+								if (modify()==1) 
+									lbl_mod_message.setText("modification succeed");
+								else 
+									lbl_mod_message.setText("modification failed");
+							}else{
+								lbl_mod_message.setText("format Invalid");
+								lbl_mod_message.setVisible(true);
+							}
+						}
+					}					
 				});
 				btn_mod_modify.setBounds(539, 35, 87, 29);
 				mod_panel.add(btn_mod_modify);
@@ -782,298 +844,321 @@ public class Sheets_panel  {
 				btn_mod_check.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
-						ArrayList<String> temp = check(text_mod_sheetID, text_mod_projectID, text_mod_pd);
-//						ArrayList<String> temp = new ArrayList(); //test data
-//						String[] temp2 = {"23000002", "REQ", "90000002", "C0z035", "CPU", "204", "653", "11047603", "2021-03-27"}; //test data
-//						for(int i=0;i<temp2.length;i++)   //test data
-//							temp.add(temp2[i]); //test data
-						
-						
-						if (temp.size()!=0) {
-							if (temp.get(1).equalsIgnoreCase("RFQ")) {
-								
-								lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
-								text_mod_sheetID.setVisible(false);
-								lbl_mod_sheetID_show.setVisible(true);
-								
-								lbl_mod_projectID_show.setText(text_mod_projectID.getText());
-								text_mod_projectID.setVisible(false);
-								lbl_mod_projectID_show.setVisible(true);
-								
-								lbl_mod_pd_show.setText(text_mod_pd.getText());
-								text_mod_pd.setVisible(false);
-								lbl_mod_pd_show.setVisible(true);
-								
-								lbl_mod_4.setText("Supplier ID :");
-								text_mod_4.setText(temp.get(4));
-								lbl_mod_4.setVisible(true);
-								text_mod_4.setVisible(true);
-								
-								lbl_mod_5.setText("Vol. :");
-								text_mod_5.setText(temp.get(5));
-								lbl_mod_5.setVisible(true);
-								text_mod_5.setVisible(true);
-								
-								lbl_mod_6.setText("Date :");
-								text_mod_6.setText(temp.get(6));
-								lbl_mod_6.setVisible(true);
-								text_mod_6.setVisible(true);
-								
-								lbl_mod_7.setText("");
-								text_mod_7.setText("");
-								lbl_mod_7.setVisible(false);
-								text_mod_7.setVisible(false);
-								
-								lbl_mod_8.setText("");
-								text_mod_8.setText("");
-								lbl_mod_8.setVisible(false);
-								text_mod_8.setVisible(false);
-								
-								btn_mod_modify.setVisible(true);
-								lbl_mod_message.setText("Data loaded");
-								lbl_mod_message.setVisible(true);
-								
-							}else if (temp.get(1).equalsIgnoreCase("QUOT")) {
-								
-								lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
-								text_mod_sheetID.setVisible(false);
-								lbl_mod_sheetID_show.setVisible(true);
-								
-								lbl_mod_projectID_show.setText(text_mod_projectID.getText());
-								text_mod_projectID.setVisible(false);
-								lbl_mod_projectID_show.setVisible(true);
-								
-								lbl_mod_pd_show.setText(text_mod_pd.getText());
-								text_mod_pd.setVisible(false);
-								lbl_mod_pd_show.setVisible(true);
-								
-								lbl_mod_4.setText("Supplier ID :");
-								text_mod_4.setText(temp.get(4));
-								lbl_mod_4.setVisible(true);
-								text_mod_4.setVisible(true);
-								
-								lbl_mod_5.setText("Vol. :");
-								text_mod_5.setText(temp.get(5));
-								lbl_mod_5.setVisible(true);
-								text_mod_5.setVisible(true);
-								
-								lbl_mod_6.setText("Unit Price :");
-								text_mod_6.setText(temp.get(6));
-								lbl_mod_6.setVisible(true);
-								text_mod_6.setVisible(true);
-								
-								lbl_mod_7.setText("ESD :");
-								text_mod_7.setText(temp.get(8));
-								lbl_mod_7.setVisible(true);
-								text_mod_7.setVisible(true);
-								
-								lbl_mod_8.setText("Date :");
-								text_mod_8.setText(temp.get(9));
-								lbl_mod_8.setVisible(true);
-								text_mod_8.setVisible(true);
-								
-								btn_mod_modify.setVisible(true);
-								lbl_mod_message.setText("Data loaded");
-								lbl_mod_message.setVisible(true);
+						if(!lib.num_not_null_check(text_mod_sheetID)|!lib.num_not_null_check(text_mod_projectID)|text_mod_pd.getText().isBlank()) {
+							//None of them can't be blank 
 							
-							}else if (temp.get(1).equalsIgnoreCase("REQ")) {
-								
-								lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
-								text_mod_sheetID.setVisible(false);
-								lbl_mod_sheetID_show.setVisible(true);
-								
-								lbl_mod_projectID_show.setText(text_mod_projectID.getText());
-								text_mod_projectID.setVisible(false);
-								lbl_mod_projectID_show.setVisible(true);
-								
-								lbl_mod_pd_show.setText(text_mod_pd.getText());
-								text_mod_pd.setVisible(false);
-								lbl_mod_pd_show.setVisible(true);
-								
-								lbl_mod_4.setText("Item Name :");
-								text_mod_4.setText(temp.get(4));
-								lbl_mod_4.setVisible(true);
-								text_mod_4.setVisible(true);
-								
-								lbl_mod_5.setText("Vol. :");
-								text_mod_5.setText(temp.get(5));
-								lbl_mod_5.setVisible(true);
-								text_mod_5.setVisible(true);
-								
-								lbl_mod_6.setText("Unit Price :");
-								text_mod_6.setText(temp.get(6));
-								lbl_mod_6.setVisible(true);
-								text_mod_6.setVisible(true);
-								
-								lbl_mod_7.setText("Supervisor ID :");
-								text_mod_7.setText(temp.get(9));
-								lbl_mod_7.setVisible(true);
-								text_mod_7.setVisible(true);
-								
-								lbl_mod_8.setText("Date :");
-								text_mod_8.setText(temp.get(10));
-								lbl_mod_8.setVisible(true);
-								text_mod_8.setVisible(true);
-								
-								btn_mod_modify.setVisible(true);
-								lbl_mod_message.setText("Data loaded");
-								lbl_mod_message.setVisible(true);
+							lbl_mod_message.setText("Format Invalid");
+							lbl_mod_message.setVisible(true);
 							
-							}else if (temp.get(1).equalsIgnoreCase("PUR")) {
-								
-								lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
-								text_mod_sheetID.setVisible(false);
-								lbl_mod_sheetID_show.setVisible(true);
-								
-								lbl_mod_projectID_show.setText(text_mod_projectID.getText());
-								text_mod_projectID.setVisible(false);
-								lbl_mod_projectID_show.setVisible(true);
-								
-								lbl_mod_pd_show.setText(text_mod_pd.getText());
-								text_mod_pd.setVisible(false);
-								lbl_mod_pd_show.setVisible(true);
-								
-								lbl_mod_4.setText("Vol. :");
-								text_mod_4.setText(temp.get(4));
-								lbl_mod_4.setVisible(true);
-								text_mod_4.setVisible(true);
-								
-								lbl_mod_5.setText("Unit price :");
-								text_mod_5.setText(temp.get(5));
-								lbl_mod_5.setVisible(true);
-								text_mod_5.setVisible(true);
-								
-								lbl_mod_6.setText("ESD :");
-								text_mod_6.setText(temp.get(7));
-								lbl_mod_6.setVisible(true);
-								text_mod_6.setVisible(true);
-								
-								lbl_mod_7.setText("Date :");
-								text_mod_7.setText(temp.get(8));
-								lbl_mod_7.setVisible(true);
-								text_mod_7.setVisible(true);
-								
-								lbl_mod_8.setText("");
-								text_mod_8.setText("");
-								lbl_mod_8.setVisible(false);
-								text_mod_8.setVisible(false);
-								
-								btn_mod_modify.setVisible(true);
-								lbl_mod_message.setText("Data loaded");
-								lbl_mod_message.setVisible(true);
-							
-							}else if (temp.get(1).equalsIgnoreCase("EXAM")) {
-								
-								lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
-								text_mod_sheetID.setVisible(false);
-								lbl_mod_sheetID_show.setVisible(true);
-								
-								lbl_mod_projectID_show.setText(text_mod_projectID.getText());
-								text_mod_projectID.setVisible(false);
-								lbl_mod_projectID_show.setVisible(true);
-								
-								lbl_mod_pd_show.setText(text_mod_pd.getText());
-								text_mod_pd.setVisible(false);
-								lbl_mod_pd_show.setVisible(true);
-								
-								lbl_mod_4.setText("Vol. :");
-								text_mod_4.setText(temp.get(4));
-								lbl_mod_4.setVisible(true);
-								text_mod_4.setVisible(true);
-								
-								lbl_mod_5.setText("Date :");
-								text_mod_5.setText(temp.get(6));
-								lbl_mod_5.setVisible(true);
-								text_mod_5.setVisible(true);
-								
-								lbl_mod_6.setText("");
-								text_mod_6.setText("");
-								lbl_mod_6.setVisible(false);
-								text_mod_6.setVisible(false);
-								
-								lbl_mod_7.setText("");
-								text_mod_7.setText("");
-								lbl_mod_7.setVisible(false);
-								text_mod_7.setVisible(false);
-								
-								lbl_mod_8.setText("");
-								text_mod_8.setText("");
-								lbl_mod_8.setVisible(false);
-								text_mod_8.setVisible(false);
-								
-								btn_mod_modify.setVisible(true);
-								lbl_mod_message.setText("Data loaded");
-								lbl_mod_message.setVisible(true);
-							
-							}else {
-								//if (temp.get(1).equalsIgnoreCase("RCPT"))
-								lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
-								text_mod_sheetID.setVisible(false);
-								lbl_mod_sheetID_show.setVisible(true);
-								
-								lbl_mod_projectID_show.setText(text_mod_projectID.getText());
-								text_mod_projectID.setVisible(false);
-								lbl_mod_projectID_show.setVisible(true);
-								
-								lbl_mod_pd_show.setText(text_mod_pd.getText());
-								text_mod_pd.setVisible(false);
-								lbl_mod_pd_show.setVisible(true);
-								
-								lbl_mod_4.setText("Vol. :");
-								text_mod_4.setText(temp.get(4));
-								lbl_mod_4.setVisible(true);
-								text_mod_4.setVisible(true);
-								
-								lbl_mod_5.setText("Date :");
-								text_mod_5.setText(temp.get(5));
-								lbl_mod_5.setVisible(true);
-								text_mod_5.setVisible(true);
-								
-								lbl_mod_6.setText("");
-								text_mod_6.setText("");
-								lbl_mod_6.setVisible(false);
-								text_mod_6.setVisible(false);
-								
-								lbl_mod_7.setText("");
-								text_mod_7.setText("");
-								lbl_mod_7.setVisible(false);
-								text_mod_7.setVisible(false);
-								
-								lbl_mod_8.setText("");
-								text_mod_8.setText("");
-								lbl_mod_8.setVisible(false);
-								text_mod_8.setVisible(false);
-								
-								btn_mod_modify.setVisible(true);
-								lbl_mod_message.setText("Data loaded");
-								lbl_mod_message.setVisible(true);
-								
-							}
 						}else {
+							//each of them is filled
 							
-								lbl_mod_4.setVisible(false);
-								text_mod_4.setVisible(false);
 								
-								lbl_mod_5.setVisible(true);
-								text_mod_5.setVisible(true);		
-							
-								lbl_mod_6.setVisible(false);
-								text_mod_6.setVisible(false);
+								ArrayList<String> temp = check(text_mod_sheetID, text_mod_projectID, text_mod_pd);
 								
 								
-								lbl_mod_7.setVisible(false);
-								text_mod_7.setVisible(false);
+								//ArrayList<String> temp = new ArrayList(); //test data
+//								String[] temp2 = {"21000002", "RFQ", "90000002", "C0z035", "SP0000004", "204", "2021-03-07"};
+//								String[] temp2 = {"23000002", "QUOT", "90000002", "C0z087", "SP0000005", "206", "716", "147496",
+//										"2021-04-16", "2021-03-17"};
+//								String[] temp2 = {"23000002", "REQ", "90000002", "C0z087", "CPU", "206", "716", "147496",
+//								"11047603", "True", "2021-03-27"}; //test data
+//								String[] temp2 = {"23000002", "PURC", "90000002", "C0z087", "CPU", "206", "716", "147496",
+//										"2021-04-16", "2021-04-06", "2021-04-16"};
+//								String[] temp2 = {"23000002", "EXAM", "90000002", "C0z087", "204", "2021-04-16"};
+//								String[] temp2 = {"23000002", "RCPT", "90000002", "C0z087", "137", "2021-04-18"};
 								
-								lbl_mod_8.setVisible(false);
-								text_mod_8.setVisible(false);
+		//						for(int i=0;i<temp2.length;i++)   //test data
+		//							temp.add(temp2[i]); //test data
+												
 								
-								btn_mod_modify.setVisible(false);
-								lbl_mod_message.setText("please check data again");
-								lbl_mod_message.setVisible(true);
-							
-							
+								
+								if (temp.size()!=0) {
+									if (temp.get(1).equalsIgnoreCase("RFQ")) {
+										
+										lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
+										text_mod_sheetID.setVisible(false);
+										lbl_mod_sheetID_show.setVisible(true);
+										
+										lbl_mod_projectID_show.setText(text_mod_projectID.getText());
+										text_mod_projectID.setVisible(false);
+										lbl_mod_projectID_show.setVisible(true);
+										
+										lbl_mod_pd_show.setText(text_mod_pd.getText());
+										text_mod_pd.setVisible(false);
+										lbl_mod_pd_show.setVisible(true);
+										
+										lbl_mod_4.setText("Supplier ID :");
+										text_mod_4.setText(temp.get(4));
+										lbl_mod_4.setVisible(true);
+										text_mod_4.setVisible(true);
+										
+										lbl_mod_5.setText("Vol. :");
+										text_mod_5.setText(temp.get(5));
+										lbl_mod_5.setVisible(true);
+										text_mod_5.setVisible(true);
+										
+										lbl_mod_6.setText("Date :");
+										text_mod_6.setText(temp.get(6));
+										lbl_mod_6.setVisible(true);
+										text_mod_6.setVisible(true);
+										
+										lbl_mod_7.setText("");
+										text_mod_7.setText("");
+										lbl_mod_7.setVisible(false);
+										text_mod_7.setVisible(false);
+										
+										lbl_mod_8.setText("");
+										text_mod_8.setText("");
+										lbl_mod_8.setVisible(false);
+										text_mod_8.setVisible(false);
+										
+										btn_mod_modify.setVisible(true);
+										lbl_mod_message.setText("Data loaded");
+										lbl_mod_message.setVisible(true);
+										
+									}else if (temp.get(1).equalsIgnoreCase("QUOT")) {
+										
+										lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
+										text_mod_sheetID.setVisible(false);
+										lbl_mod_sheetID_show.setVisible(true);
+										
+										lbl_mod_projectID_show.setText(text_mod_projectID.getText());
+										text_mod_projectID.setVisible(false);
+										lbl_mod_projectID_show.setVisible(true);
+										
+										lbl_mod_pd_show.setText(text_mod_pd.getText());
+										text_mod_pd.setVisible(false);
+										lbl_mod_pd_show.setVisible(true);
+										
+										lbl_mod_4.setText("Supplier ID :");
+										text_mod_4.setText(temp.get(4));
+										lbl_mod_4.setVisible(true);
+										text_mod_4.setVisible(true);
+										
+										lbl_mod_5.setText("Vol. :");
+										text_mod_5.setText(temp.get(5));
+										lbl_mod_5.setVisible(true);
+										text_mod_5.setVisible(true);
+										
+										lbl_mod_6.setText("Unit Price :");
+										text_mod_6.setText(temp.get(6));
+										lbl_mod_6.setVisible(true);
+										text_mod_6.setVisible(true);
+										
+										lbl_mod_7.setText("ESD :");
+										text_mod_7.setText(temp.get(8));
+										lbl_mod_7.setVisible(true);
+										text_mod_7.setVisible(true);
+										
+										lbl_mod_8.setText("Date :");
+										text_mod_8.setText(temp.get(9));
+										lbl_mod_8.setVisible(true);
+										text_mod_8.setVisible(true);
+										
+										btn_mod_modify.setVisible(true);
+										lbl_mod_message.setText("Data loaded");
+										lbl_mod_message.setVisible(true);
+									
+									}else if (temp.get(1).equalsIgnoreCase("REQ")) {
+										
+										lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
+										text_mod_sheetID.setVisible(false);
+										lbl_mod_sheetID_show.setVisible(true);
+										
+										lbl_mod_projectID_show.setText(text_mod_projectID.getText());
+										text_mod_projectID.setVisible(false);
+										lbl_mod_projectID_show.setVisible(true);
+										
+										lbl_mod_pd_show.setText(text_mod_pd.getText());
+										text_mod_pd.setVisible(false);
+										lbl_mod_pd_show.setVisible(true);
+										
+										lbl_mod_4.setText("Item Name :");
+										text_mod_4.setText(temp.get(4));
+										lbl_mod_4.setVisible(true);
+										text_mod_4.setVisible(true);
+										
+										lbl_mod_5.setText("Vol. :");
+										text_mod_5.setText(temp.get(5));
+										lbl_mod_5.setVisible(true);
+										text_mod_5.setVisible(true);
+										
+										lbl_mod_6.setText("Unit Price :");
+										text_mod_6.setText(temp.get(6));
+										lbl_mod_6.setVisible(true);
+										text_mod_6.setVisible(true);
+										
+										lbl_mod_7.setText("Supervisor ID :");
+										text_mod_7.setText(temp.get(9));
+										lbl_mod_7.setVisible(true);
+										text_mod_7.setVisible(true);
+										
+										lbl_mod_8.setText("Date :");
+										text_mod_8.setText(temp.get(10));
+										lbl_mod_8.setVisible(true);
+										text_mod_8.setVisible(true);
+										
+										btn_mod_modify.setVisible(true);
+										lbl_mod_message.setText("Data loaded");
+										lbl_mod_message.setVisible(true);
+									
+									}else if (temp.get(1).equalsIgnoreCase("PUR")) {
+										
+										lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
+										text_mod_sheetID.setVisible(false);
+										lbl_mod_sheetID_show.setVisible(true);
+										
+										lbl_mod_projectID_show.setText(text_mod_projectID.getText());
+										text_mod_projectID.setVisible(false);
+										lbl_mod_projectID_show.setVisible(true);
+										
+										lbl_mod_pd_show.setText(text_mod_pd.getText());
+										text_mod_pd.setVisible(false);
+										lbl_mod_pd_show.setVisible(true);
+										
+										lbl_mod_4.setText("Vol. :");
+										text_mod_4.setText(temp.get(4));
+										lbl_mod_4.setVisible(true);
+										text_mod_4.setVisible(true);
+										
+										lbl_mod_5.setText("Unit price :");
+										text_mod_5.setText(temp.get(5));
+										lbl_mod_5.setVisible(true);
+										text_mod_5.setVisible(true);
+										
+										lbl_mod_6.setText("ESD :");
+										text_mod_6.setText(temp.get(7));
+										lbl_mod_6.setVisible(true);
+										text_mod_6.setVisible(true);
+										
+										lbl_mod_7.setText("Date :");
+										text_mod_7.setText(temp.get(8));
+										lbl_mod_7.setVisible(true);
+										text_mod_7.setVisible(true);
+										
+										lbl_mod_8.setText("");
+										text_mod_8.setText("");
+										lbl_mod_8.setVisible(false);
+										text_mod_8.setVisible(false);
+										
+										btn_mod_modify.setVisible(true);
+										lbl_mod_message.setText("Data loaded");
+										lbl_mod_message.setVisible(true);
+									
+									}else if (temp.get(1).equalsIgnoreCase("EXAM")) {
+										
+										lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
+										text_mod_sheetID.setVisible(false);
+										lbl_mod_sheetID_show.setVisible(true);
+										
+										lbl_mod_projectID_show.setText(text_mod_projectID.getText());
+										text_mod_projectID.setVisible(false);
+										lbl_mod_projectID_show.setVisible(true);
+										
+										lbl_mod_pd_show.setText(text_mod_pd.getText());
+										text_mod_pd.setVisible(false);
+										lbl_mod_pd_show.setVisible(true);
+										
+										lbl_mod_4.setText("Vol. :");
+										text_mod_4.setText(temp.get(4));
+										lbl_mod_4.setVisible(true);
+										text_mod_4.setVisible(true);
+										
+										lbl_mod_5.setText("Date :");
+										text_mod_5.setText(temp.get(6));
+										lbl_mod_5.setVisible(true);
+										text_mod_5.setVisible(true);
+										
+										lbl_mod_6.setText("");
+										text_mod_6.setText("");
+										lbl_mod_6.setVisible(false);
+										text_mod_6.setVisible(false);
+										
+										lbl_mod_7.setText("");
+										text_mod_7.setText("");
+										lbl_mod_7.setVisible(false);
+										text_mod_7.setVisible(false);
+										
+										lbl_mod_8.setText("");
+										text_mod_8.setText("");
+										lbl_mod_8.setVisible(false);
+										text_mod_8.setVisible(false);
+										
+										btn_mod_modify.setVisible(true);
+										lbl_mod_message.setText("Data loaded");
+										lbl_mod_message.setVisible(true);
+									
+									}else {
+										//if (temp.get(1).equalsIgnoreCase("RCPT"))
+										lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
+										text_mod_sheetID.setVisible(false);
+										lbl_mod_sheetID_show.setVisible(true);
+										
+										lbl_mod_projectID_show.setText(text_mod_projectID.getText());
+										text_mod_projectID.setVisible(false);
+										lbl_mod_projectID_show.setVisible(true);
+										
+										lbl_mod_pd_show.setText(text_mod_pd.getText());
+										text_mod_pd.setVisible(false);
+										lbl_mod_pd_show.setVisible(true);
+										
+										lbl_mod_4.setText("Vol. :");
+										text_mod_4.setText(temp.get(4));
+										lbl_mod_4.setVisible(true);
+										text_mod_4.setVisible(true);
+										
+										lbl_mod_5.setText("Date :");
+										text_mod_5.setText(temp.get(5));
+										lbl_mod_5.setVisible(true);
+										text_mod_5.setVisible(true);
+										
+										lbl_mod_6.setText("");
+										text_mod_6.setText("");
+										lbl_mod_6.setVisible(false);
+										text_mod_6.setVisible(false);
+										
+										lbl_mod_7.setText("");
+										text_mod_7.setText("");
+										lbl_mod_7.setVisible(false);
+										text_mod_7.setVisible(false);
+										
+										lbl_mod_8.setText("");
+										text_mod_8.setText("");
+										lbl_mod_8.setVisible(false);
+										text_mod_8.setVisible(false);
+										
+										btn_mod_modify.setVisible(true);
+										lbl_mod_message.setText("Data loaded");
+										lbl_mod_message.setVisible(true);
+										
+									}
+								}else {
+										lbl_mod_4.setText("");
+										lbl_mod_4.setVisible(false);
+										text_mod_4.setVisible(false);
+										
+										lbl_mod_5.setText("");
+										lbl_mod_5.setVisible(false);
+										text_mod_5.setVisible(false);	
+										
+										lbl_mod_6.setText("");
+										lbl_mod_6.setVisible(false);
+										text_mod_6.setVisible(false);							
+										
+										lbl_mod_7.setText("");
+										lbl_mod_7.setVisible(false);
+										text_mod_7.setVisible(false);
+										
+										lbl_mod_8.setText("");
+										lbl_mod_8.setVisible(false);
+										text_mod_8.setVisible(false);
+										
+										btn_mod_modify.setVisible(false);
+										lbl_mod_message.setText("please check data again");
+										lbl_mod_message.setVisible(true);	
+								}
 						}
-						
 					}
 				});
 				btn_mod_check.setBounds(389, 36, 83, 29);
@@ -1250,129 +1335,271 @@ public class Sheets_panel  {
 						
 						if (rb_appd_RFQ.isSelected()) {
 							if (append_check("RFQ")) {
-								
-								String[][] temp = append("RFQ");
-								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Date"};
-								
-								if(temp[0].length!=0) {
-									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
-									append_table.setModel(append_table_model);
-									append_table.setVisible(true);
-									scrollpane_append.setVisible(true);
-									lbl_append_message.setVisible(false);
+								if(lib.projectID_check(text_appd_1)&lib.supplier_check(text_appd_3)&lib.num_not_null_check(text_appd_4)) {
+									if((!text_appd_5.getText().isBlank())&lib.date(text_appd_5.getText())) {
+										
+										String[][] temp = append("RFQ");
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Date"};
+										
+										if(temp[0].length!=0) {
+											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+											append_table.setModel(append_table_model);
+											append_table.setVisible(true);
+											scrollpane_append.setVisible(true);
+											lbl_append_message.setVisible(false);
+										}else {
+											lbl_append_message.setText("Please verify your inputted data again");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
+										}
+										
+									}else if(text_appd_5.getText().isBlank()){
+										
+											String[][] temp = append("RFQ");
+											String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Date"};
+											
+											if(temp[0].length!=0) {
+												DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+												append_table.setModel(append_table_model);
+												append_table.setVisible(true);
+												scrollpane_append.setVisible(true);
+												lbl_append_message.setVisible(false);
+											}else {
+												lbl_append_message.setText("Please verify your inputted data again");
+												lbl_append_message.setVisible(true);
+												append_table.setVisible(false);
+												scrollpane_append.setVisible(false);
+											}
+										}
+											
 								}else {
-									lbl_append_message.setText("Please verify your inputted data again");
+									lbl_append_message.setText("Format Invalid");
 									lbl_append_message.setVisible(true);
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
 								}
-								
 							}else {
 								lbl_append_message.setText("you couldn't append a new sheet without previous procedure.");
 								lbl_append_message.setVisible(true);
 								append_table.setVisible(false);
 								scrollpane_append.setVisible(false);
 							}
+	
 						}else if (rb_appd_QUO.isSelected()) {
 							if (append_check("QUOT")) {
-								
-								String[][] temp = append("QUOT");
-								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Unit Price",
-														"Total_price", "ESD", "Date"};
-								
-								if(temp[0].length!=0) {
-									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
-									append_table.setModel(append_table_model);
-									append_table.setVisible(true);
-									scrollpane_append.setVisible(true);
-									lbl_append_message.setVisible(false);
+								if(lib.projectID_check(text_appd_1)&lib.supplier_check(text_appd_3)&lib.num_not_null_check(text_appd_4)
+										&lib.num_not_null_check(text_appd_5)&lib.date(text_appd_6.getText())) {
+									if((!text_appd_7.getText().isBlank())&lib.date(text_appd_7.getText())) {
 									
+										String[][] temp = append("QUOT");
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Unit Price",
+																"Total_price", "ESD", "Date"};
+										
+										if(temp[0].length!=0) {
+											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+											append_table.setModel(append_table_model);
+											append_table.setVisible(true);
+											scrollpane_append.setVisible(true);
+											lbl_append_message.setVisible(false);
+											
+										}else {
+											lbl_append_message.setText("Please verify your inputted data again");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
+										}
+									}else if(text_appd_7.getText().isBlank()){
+										
+										String[][] temp = append("QUOT");
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Unit Price",
+																"Total_price", "ESD", "Date"};
+										
+										if(temp[0].length!=0) {
+											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+											append_table.setModel(append_table_model);
+											append_table.setVisible(true);
+											scrollpane_append.setVisible(true);
+											lbl_append_message.setVisible(false);
+											
+										}else {
+											lbl_append_message.setText("Please verify your inputted data again");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
+										}
+									}		
 								}else {
-									lbl_append_message.setText("Please verify your inputted data again");
+									lbl_append_message.setText("Format Invalid");
 									lbl_append_message.setVisible(true);
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
 								}
-								
 							}else {
 								lbl_append_message.setText("you couldn't append a new sheet without previous procedure.");
 								lbl_append_message.setVisible(true);
 								append_table.setVisible(false);
 								scrollpane_append.setVisible(false);
 							}
+							
 						}else if (rb_appd_REQ.isSelected()) {
 							if (append_check("REQ")) {
-								
-								String[][] temp = append("REQ");
-								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Item Name", "Vol.", "Unit Price",
-										"Total_price", "Signature", "Supervisor", "Date"};
-								
-								if(temp[0].length!=0) {
-									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
-									append_table.setModel(append_table_model);
-									append_table.setVisible(true);
-									scrollpane_append.setVisible(true);
-									lbl_append_message.setVisible(false);
-									
-									
+								if(lib.projectID_check(text_appd_1)&lib.num_not_null_check(text_appd_3)&lib.num_not_null_check(text_appd_4)
+										&lib.supervisor_check(text_appd_6)) {
+									if((!text_appd_7.getText().isBlank())&lib.date(text_appd_7.getText())) {
+										String[][] temp = append("REQ");
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Item Name", "Vol.", "Unit Price",
+												"Total_price", "Signature", "Supervisor", "Date"};
+										
+										if(temp[0].length!=0) {
+											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+											append_table.setModel(append_table_model);
+											append_table.setVisible(true);
+											scrollpane_append.setVisible(true);
+											lbl_append_message.setVisible(false);
+											
+											
+										}else {
+											lbl_append_message.setText("Please verify your inputted data again");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
+										}
+									}else if(text_appd_7.getText().isBlank()) {
+										
+										String[][] temp = append("REQ");
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Item Name", "Vol.", "Unit Price",
+												"Total_price", "Signature", "Supervisor", "Date"};
+										
+										if(temp[0].length!=0) {
+											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+											append_table.setModel(append_table_model);
+											append_table.setVisible(true);
+											scrollpane_append.setVisible(true);
+											lbl_append_message.setVisible(false);
+											
+											
+										}else {
+											lbl_append_message.setText("Please verify your inputted data again");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
+										}
+									}
 								}else {
-									lbl_append_message.setText("Please verify your inputted data again");
+									lbl_append_message.setText("Format Invalid");
 									lbl_append_message.setVisible(true);
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
 								}
-								
 							}else {
 								lbl_append_message.setText("you couldn't append a new sheet without previous procedure.");
 								lbl_append_message.setVisible(true);
 								append_table.setVisible(false);
 								scrollpane_append.setVisible(false);
 							}
+							
 						}else if (rb_appd_PUR.isSelected()) {
 							if (append_check("PUR")) {
-								String[][] temp = append("PUR");
-								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Unit Price",
-										"Total_price", "ESD", "Date"};
-								
-								if(temp[0].length!=0) {
-									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
-									append_table.setModel(append_table_model);
-									append_table.setVisible(true);
-									scrollpane_append.setVisible(true);
-									lbl_append_message.setVisible(false);
-									
+								if(lib.projectID_check(text_appd_1)&lib.module_check(text_appd_2)&lib.num_not_null_check(text_appd_3)
+										&lib.num_not_null_check(text_appd_4)&lib.date(text_appd_5.getText())) {
+									if((!text_appd_6.getText().isBlank())&lib.date(text_appd_6.getText())) {
+										
+										String[][] temp = append("PUR");
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Unit Price",
+												"Total_price", "ESD", "Date"};
+										
+										if(temp[0].length!=0) {
+											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+											append_table.setModel(append_table_model);
+											append_table.setVisible(true);
+											scrollpane_append.setVisible(true);
+											lbl_append_message.setVisible(false);
+											
+										}else {
+											lbl_append_message.setText("Please verify your inputted data again");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
+										}
+									}else if(text_appd_6.getText().isBlank()) {
+										
+										String[][] temp = append("PUR");
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Unit Price",
+												"Total_price", "ESD", "Date"};
+										
+										if(temp[0].length!=0) {
+											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+											append_table.setModel(append_table_model);
+											append_table.setVisible(true);
+											scrollpane_append.setVisible(true);
+											lbl_append_message.setVisible(false);
+											
+										}else {
+											lbl_append_message.setText("Please verify your inputted data again");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
+										}
+									}
 								}else {
-									lbl_append_message.setText("Please verify your inputted data again");
+									lbl_append_message.setText("Format Invalid");
 									lbl_append_message.setVisible(true);
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
 								}
-								
 							}else {
 								lbl_append_message.setText("you couldn't append a new sheet without previous procedure.");
 								lbl_append_message.setVisible(true);
 								append_table.setVisible(false);
 								scrollpane_append.setVisible(false);
-							}
+							}		
 						}else if (rb_appd_EXAM.isSelected()) {
-							if (append_check("EXAM")) {
-								
-								String[][] temp = append("EXAM");
-								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Result", "Date"};
-								
-								if(temp[0].length!=0) {
-									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
-									append_table.setModel(append_table_model);
-									append_table.setVisible(true);
-									scrollpane_append.setVisible(true);
-									lbl_append_message.setVisible(false);
-									
+							if (append_check("EXAM")){
+								if(lib.projectID_check(text_appd_1)&lib.module_check(text_appd_2)
+										&lib.num_not_null_check(text_appd_3)&lib.tf_check(text_appd_4)){
+									if((!text_appd_5.getText().isBlank())&lib.date(text_appd_5.getText())) {
+										
+										String[][] temp = append("EXAM");
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Result", "Date"};
+										
+										if(temp[0].length!=0) {
+											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+											append_table.setModel(append_table_model);
+											append_table.setVisible(true);
+											scrollpane_append.setVisible(true);
+											lbl_append_message.setVisible(false);
+											
+										}else {
+											lbl_append_message.setText("Please verify your inputted data again");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
+										}
+									}else if(text_appd_5.getText().isBlank()) {
+										String[][] temp = append("EXAM");
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Result", "Date"};
+										
+										if(temp[0].length!=0) {
+											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+											append_table.setModel(append_table_model);
+											append_table.setVisible(true);
+											scrollpane_append.setVisible(true);
+											lbl_append_message.setVisible(false);
+											
+										}else {
+											lbl_append_message.setText("Please verify your inputted data again");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
+										}									
+									}
 								}else {
-									lbl_append_message.setText("Please verify your inputted data again");
+									lbl_append_message.setText("Format Invalid");
 									lbl_append_message.setVisible(true);
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
-								}
+								}	
 							}else {
 								lbl_append_message.setText("you couldn't append a new sheet without previous procedure.");
 								lbl_append_message.setVisible(true);
@@ -1382,31 +1609,57 @@ public class Sheets_panel  {
 						}else {
 							//if (rb_appd_RCPT.isSelected()) {
 							if (append_check("RCPT")) {
-								
-								String[][] temp = append("RCPT");
-								String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Date"};
-								
-								if(temp[0].length!=0) {
-									DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
-									append_table.setModel(append_table_model);
-									append_table.setVisible(true);
-									scrollpane_append.setVisible(true);
-									lbl_append_message.setVisible(false);
-									
+								if(lib.projectID_check(text_appd_1)&lib.module_check(text_appd_2)
+										&lib.num_not_null_check(text_appd_3)){
+									if((!text_appd_4.getText().isBlank())&lib.date(text_appd_4.getText())) {
+										String[][] temp = append("RCPT");
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Date"};
+										
+										if(temp[0].length!=0) {
+											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+											append_table.setModel(append_table_model);
+											append_table.setVisible(true);
+											scrollpane_append.setVisible(true);
+											lbl_append_message.setVisible(false);
+											
+										}else {
+											lbl_append_message.setText("Please verify your inputted data again");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
+										}
+									}else if(text_appd_4.getText().isBlank()) {
+										
+										String[][] temp = append("RCPT");
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Date"};
+										
+										if(temp[0].length!=0) {
+											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
+											append_table.setModel(append_table_model);
+											append_table.setVisible(true);
+											scrollpane_append.setVisible(true);
+											lbl_append_message.setVisible(false);
+											
+										}else {
+											lbl_append_message.setText("Please verify your inputted data again");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
+										}
+									}
 								}else {
-									lbl_append_message.setText("Please verify your inputted data again");
+									lbl_append_message.setText("Format Invalid");
 									lbl_append_message.setVisible(true);
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
-								}
+								}	
 							}else {
 								lbl_append_message.setText("you couldn't append a new sheet without previous procedure.");
 								lbl_append_message.setVisible(true);
 								append_table.setVisible(false);
 								scrollpane_append.setVisible(false);
 							}
-						}
-						
+						}	
 					}
 				});
 				btn_appd_append.setBounds(563, 5, 92, 29);
@@ -2006,12 +2259,13 @@ public class Sheets_panel  {
 					btn_sign_sign.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							
-							if (sign_all()==1) {
-								lbl_sign_instr.setText("Sign succeed");
+							if (sign_all()==0) {
+								lbl_sign_instr.setText("Oops errors occurred");
 								lbl_sign_instr.setVisible(true);
 								
+								
 							}else {
-								lbl_sign_instr.setText("Oops errors occurred");
+								lbl_sign_instr.setText("Sign succeed");
 								lbl_sign_instr.setVisible(true);
 							}
 						}
@@ -2029,7 +2283,7 @@ public class Sheets_panel  {
 							if(temp.length!=0) {
 								
 								String[] columns_name = {"Sheet ID", "Sheet Type", "Project ID", "Product", "Item", "Vol.", "Unit Price", 
-										"Total Price", "Signature", "Supervisor ID", "Supervisor","Date"};
+										"Total Price", "Signature", "Supervisor ID", "Name","Date"};
 							
 								lbl_sign_sorry.setVisible(false);
 								btn_sign_sign.setVisible(true);
@@ -3032,7 +3286,7 @@ public class Sheets_panel  {
 							
 							String[] temp_array = new String[9];
 							
-							for(int i=1;i<9;i++) 
+							for(int i=1;i<10;i++) 
 								temp_array[i-1]=r.getString(i);
 							
 							temp.add(temp_array);								
@@ -3146,7 +3400,7 @@ public class Sheets_panel  {
 							
 							String[] temp_array = new String[7];
 							
-							for(int i=1;i<7;i++) 
+							for(int i=1;i<8;i++) 
 								temp_array[i-1]=r.getString(i);
 							
 							temp.add(temp_array);								
@@ -3261,7 +3515,7 @@ public class Sheets_panel  {
 							
 							String[] temp_array = new String[6];
 							
-							for(int i=1;i<6;i++) 
+							for(int i=1;i<7;i++) 
 								temp_array[i-1]=r.getString(i);
 							
 							temp.add(temp_array);								
@@ -3362,6 +3616,7 @@ public class Sheets_panel  {
 				 										" AND Project_ID="+lbl_mod_projectID_show.getText()+" AND Inquiring_product=\'"
 				 										+lbl_mod_pd_show.getText()+"\')");
 				 return r;
+				 
 				}catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -3694,167 +3949,325 @@ public class Sheets_panel  {
 		switch(st) {
 		
 			case "RFQ":
-				
-				try {
-					resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RFQ (Project_ID, Inquiring_product, Supplier_ID, "
-																+ "Vol, Date) VALUE ("+ text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', \'"+
-																text_appd_3.getText()+"\', "+ text_appd_4.getText()+", \'"+text_appd_5.getText()+"\')");
-	
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						
-					}
-				if (resultSet!=0) {
+				if(!text_appd_5.getText().isBlank()) {
 					try {
-						ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ ORDER BY RFQ_Sheet_ID DESC LIMIT 1");
-						
-						if(r.next()) {
-							for(int i=1;i<8;i++) {
-								temp.add(r.getString(i));
-							}
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RFQ (Project_ID, Inquiring_product, Supplier_ID, "
+																	+ "Vol, Date) VALUE ("+ text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', \'"+
+																	text_appd_3.getText()+"\', "+ text_appd_4.getText()+", \'"+text_appd_5.getText()+"\')");
+		
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							
 						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ ORDER BY RFQ_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<8;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
+				}else {
+					//text_appd_5.getText().isBlank()
+					try {
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RFQ (Project_ID, Inquiring_product, Supplier_ID, "
+																	+ "Vol) VALUE ("+ text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', \'"+
+																	text_appd_3.getText()+"\', "+ text_appd_4.getText()+")");
+		
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							
+						}
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ ORDER BY RFQ_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<8;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
 				}
 				break;
 				
 			case "QUOT":
-				
-				try {
-					resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO QUOTATION (Project_ID, Inquiring_product, Supplier_ID, "
-																+ "Vol, Unit_price, ESD, Date) VALUE ("+ text_appd_1.getText()+", \'"+text_appd_2.getText()
-																+"\', \'"+text_appd_3.getText()+"\', "+ text_appd_4.getText()+", "+text_appd_5.getText()
-																+", \'"+text_appd_6.getText()+"\', \'"+text_appd_7.getText()+"\')");
-					
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				if (resultSet!=0) {
+				if(!text_appd_7.getText().isBlank()) {
 					try {
-						ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION ORDER BY QUO_Sheet_ID DESC LIMIT 1");
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO QUOTATION (Project_ID, Inquiring_product, Supplier_ID, "
+																	+ "Vol, Unit_price, ESD, Date) VALUE ("+ text_appd_1.getText()+", \'"+text_appd_2.getText()
+																	+"\', \'"+text_appd_3.getText()+"\', "+ text_appd_4.getText()+", "+text_appd_5.getText()
+																	+", \'"+text_appd_6.getText()+"\', \'"+text_appd_7.getText()+"\')");
 						
-						if(r.next()) {
-							for(int i=1;i<11;i++) {
-								temp.add(r.getString(i));
-							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION ORDER BY QUO_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<11;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else {
+					//text_appd_7.getText().isBlank()
+					try {
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO QUOTATION (Project_ID, Inquiring_product, Supplier_ID, "
+																	+ "Vol, Unit_price, ESD) VALUE ("+ text_appd_1.getText()+", \'"+text_appd_2.getText()
+																	+"\', \'"+text_appd_3.getText()+"\', "+ text_appd_4.getText()+", "+text_appd_5.getText()
+																	+", \'"+text_appd_6.getText()+"\')");
+						
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION ORDER BY QUO_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<11;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				break;
 				
 			case "REQ":
-				
-				try {
-					resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO REQUISITION (Project_ID, Inquiring_product, Item_name, "
-																+ "Vol, Unit_price, Supervisor_ID, Date) VALUE ("+ text_appd_1.getText()+", \'"															
-																+text_appd_2.getText()+"\', \'"+text_appd_3.getText()+"\', "+ text_appd_4.getText()+", "
-																+text_appd_5.getText()+", \'"+text_appd_6.getText()+"\', \'"+text_appd_7.getText()+"\')");
-					
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				if (resultSet!=0) {
+				if(!text_appd_7.getText().isBlank()) {
 					try {
-						ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION ORDER BY REQ_Sheet_ID DESC LIMIT 1");
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO REQUISITION (Project_ID, Inquiring_product, Item_name, "
+																	+ "Vol, Unit_price, Supervisor_ID, Date) VALUE ("+ text_appd_1.getText()+", \'"															
+																	+text_appd_2.getText()+"\', \'"+text_appd_3.getText()+"\', "+ text_appd_4.getText()+", "
+																	+text_appd_5.getText()+", "+text_appd_6.getText()+", \'"+text_appd_7.getText()+"\')");
 						
-						if(r.next()) {
-							for(int i=1;i<12;i++) {
-								temp.add(r.getString(i));
-							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION ORDER BY REQ_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<12;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else {
+					//text_appd_7.getText().isBlank()
+					try {
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO REQUISITION (Project_ID, Inquiring_product, Item_name, "
+																	+ "Vol, Unit_price, Supervisor_ID) VALUE ("+ text_appd_1.getText()+", \'"															
+																	+text_appd_2.getText()+"\', \'"+text_appd_3.getText()+"\', "+ text_appd_4.getText()+", "
+																	+text_appd_5.getText()+", "+text_appd_6.getText()+")");
+						
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION ORDER BY REQ_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<12;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				break;
 				
 				
 			case "PUR":
-				
-				try {
-					resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO PURCHASE (Project_ID, Module_type, Vol, Unit_price, ESD, Date) VALUE ("
-																+ text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+", "
-																+text_appd_4.getText()+", \'"+text_appd_5.getText()+"\', \'"+text_appd_6.getText()+"\')");
-					
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				if (resultSet!=0) {
+				if(!text_appd_6.getText().isBlank()) {
 					try {
-						ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE ORDER BY PUR_Sheet_ID DESC LIMIT 1");
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO PURCHASE (Project_ID, Module_type, Vol, Unit_price, ESD, Date) VALUE ("
+																	+ text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+", "
+																	+text_appd_4.getText()+", \'"+text_appd_5.getText()+"\', \'"+text_appd_6.getText()+"\')");
 						
-						if(r.next()) {
-							for(int i=1;i<10;i++) {
-								temp.add(r.getString(i));
-							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE ORDER BY PUR_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<10;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else {
+					//text_appd_6.getText().isBlank()
+					try {
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO PURCHASE (Project_ID, Module_type, Vol, Unit_price, ESD) VALUE ("
+																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+", "
+																	+text_appd_4.getText()+", \'"+text_appd_5.getText()+"\')");
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE ORDER BY PUR_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<10;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				break;	
 				
 			case "EXAM":
-				
-				try {
-					resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO EXAMINATION (Project_ID, Module_type, Vol, Result, Date) VALUE ("
-																+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+
-																", \'"+ text_appd_4.getText()+"\', \'"+text_appd_5.getText()+"\')");
-					
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				if (resultSet!=0) {
+				if(!text_appd_5.getText().isBlank()) {
 					try {
-						ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION ORDER BY EX_Sheet_ID DESC LIMIT 1");
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO EXAMINATION (Project_ID, Module_type, Vol, Result, Date) VALUE ("
+																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+
+																	", \'"+ text_appd_4.getText()+"\', \'"+text_appd_5.getText()+"\')");
 						
-						if(r.next()) {
-							for(int i=1;i<8;i++) {
-								temp.add(r.getString(i));
-							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION ORDER BY EX_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<8;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else {
+					//text_appd_5.getText().isBlank()
+					try {
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO EXAMINATION (Project_ID, Module_type, Vol, Result) VALUE ("
+																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+
+																	", \'"+ text_appd_4.getText()+"\')");
+						
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION ORDER BY EX_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<8;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				break;	
 				
 			default:
-				
-				try {
-					resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RECIPT (Project_ID, Module_type, Vol, Date) VALUE ("
-																+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()
-																+", \'"+ text_appd_4.getText()+"\')");
-					
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				if (resultSet!=0) {
+				if(!text_appd_4.getText().isBlank()) {
 					try {
-						ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT ORDER BY REC_Sheet_ID DESC LIMIT 1");
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RECIPT (Project_ID, Module_type, Vol, Date) VALUE ("
+																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()
+																	+", \'"+ text_appd_4.getText()+"\')");
 						
-						if(r.next()) {
-							for(int i=1;i<7;i++) {
-								temp.add(r.getString(i));
-							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT ORDER BY REC_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<7;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else {
+					//text_appd_4.getText().isBlank()
+					try {
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RECIPT (Project_ID, Module_type, Vol) VALUE ("
+																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+")");
+						
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					if (resultSet!=0) {
+						try {
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT ORDER BY REC_Sheet_ID DESC LIMIT 1");
+							
+							if(r.next()) {
+								for(int i=1;i<7;i++) {
+									temp.add(r.getString(i));
+								}
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				break;	
@@ -3881,11 +4294,6 @@ public class Sheets_panel  {
 		 */
 		
 		ArrayList<String> temp = new ArrayList();
-		
-		if(text1.getText().isBlank() | text2.getText().isBlank() | text3.getText().isBlank()) {
-
-			return temp;
-		}
 		
 		int id = Integer.parseInt(text1.getText());
 		
