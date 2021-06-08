@@ -73,6 +73,7 @@ public class Maintenance_panel  {
 		private JButton btn_refresh;
 		private JLabel lbl_maint_result;
 		private JLabel lbl_inq_date_format;
+		private JLabel lbl_maint_ins;
 //		private JTextField text_inq_month;
 //		private JTextField text_inq_day;
 		
@@ -435,17 +436,17 @@ public class Maintenance_panel  {
 								
 								if(lib.date(text_maint_date.getText())) {
 									
-									String [] temp = append();
+									ArrayList<String> temp = append();
 									
-									if(temp.length==5) {
+									if(temp.size()!=0) {
 										//send message to user modify succeed
 										lbl_maint_result.setText("Append succeed");
 										lbl_maint_result.setVisible(true);
-										lbl_maint_pjID_show.setText(temp[0]);
+										lbl_maint_pjID_show.setText(temp.get(0));
 										lbl_maint_pjID_show.setVisible(true);
-										lbl_maint_status_show.setText(temp[3]);
+										lbl_maint_status_show.setText(temp.get(3));
 										lbl_maint_status_show.setVisible(true);
-										lbl_maint_del_progress_show.setText(temp[4]);
+										lbl_maint_del_progress_show.setText(temp.get(4));
 										lbl_maint_del_progress_show.setVisible(true);
 										
 									}else {
@@ -459,17 +460,17 @@ public class Maintenance_panel  {
 								}
 							}else {
 								//(text_maint_date.getText().isBlank())
-								String [] temp = append();
+								ArrayList<String> temp = append();
 								
-								if(temp.length==5) {
+								if(temp.size()!=0) {
 									//send message to user modify succeed
 									lbl_maint_result.setText("Append succeed");
 									lbl_maint_result.setVisible(true);
-									lbl_maint_pjID_show.setText(temp[0]);
+									lbl_maint_pjID_show.setText(temp.get(0));
 									lbl_maint_pjID_show.setVisible(true);
-									lbl_maint_status_show.setText(temp[3]);
+									lbl_maint_status_show.setText(temp.get(3));
 									lbl_maint_status_show.setVisible(true);
-									lbl_maint_del_progress_show.setText(temp[4]);
+									lbl_maint_del_progress_show.setText(temp.get(4));
 									lbl_maint_del_progress_show.setVisible(true);
 									
 								}else {
@@ -566,11 +567,15 @@ public class Maintenance_panel  {
 						
 						if(temp.size() == 0) {
 							
+							text_maint_pjID.setVisible(true);     						//let projectID be uneditable
+							lbl_maint_pjID_show.setText("");
+							lbl_maint_pjID_show.setVisible(false);
 							lbl_maint_result.setText("no found");
 							lbl_maint_result.setVisible(true);
+							set_visible(false);
 							
 						}else {
-							//temp.length != 0
+							//temp.size() != 0
 							
 							set_visible(true);
 							text_maint_empID.setText(temp.get(1));
@@ -578,9 +583,8 @@ public class Maintenance_panel  {
 							lbl_maint_status_show.setText(temp.get(3));
 							lbl_maint_del_progress_show.setText(temp.get(4));
 							
-							
-							text_maint_pjID.setVisible(false);     						//let projectID be uneditable
 							lbl_maint_pjID_show.setText(temp.get(0));
+							text_maint_pjID.setVisible(false);     						//let projectID be uneditable
 							lbl_maint_pjID_show.setVisible(true);
 							lbl_maint_result.setText("Data loading succeed");	
 							lbl_maint_result.setVisible(true);
@@ -611,6 +615,11 @@ public class Maintenance_panel  {
 			lbl_maint_result = new JLabel("");
 			lbl_maint_result.setBounds(412, 85, 222, 58);
 			maint_panel.add(lbl_maint_result);
+			
+			lbl_maint_ins = new JLabel("*obligatory");
+			lbl_maint_ins.setBounds(33, 41, 93, 16);
+			lbl_maint_ins.setVisible(true);
+			maint_panel.add(lbl_maint_ins);
 			
 			
 		}
@@ -866,14 +875,14 @@ public class Maintenance_panel  {
 		
 		
 		
-		private String[] append() {
+		private ArrayList<String> append() {
 			/** 
 			 * @Author jyun-an
 			 *  @since 06/03/2021
 			 *  to ADD data in PROJECT table
 			 **/
 			int resultSet=0;
-			String[] temp = new String[0];
+			ArrayList<String> temp = new ArrayList();
 			
 			if(text_maint_date.getText().isBlank()) {
 				try {
@@ -883,10 +892,9 @@ public class Maintenance_panel  {
 					if (resultSet==1){
 						
 						ResultSet add_result = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT ORDER BY Project_ID DESC LIMIT 1");
-						temp = new String[5];
 						if(add_result.next()) {
 							for(int i =1; i<6;i++) {
-								temp[i-1]=add_result.getString(i);
+								temp.add(add_result.getString(i));
 								}
 						}
 						
@@ -911,11 +919,11 @@ public class Maintenance_panel  {
 					if (resultSet==1){
 						
 						ResultSet add_result = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT ORDER BY Project_ID DESC LIMIT 1");
-						temp = new String[5];
+						
 						if(add_result.next()) {
 							for(int i =1; i<6;i++) {
-								temp[i-1]=add_result.getString(i);
-								}
+								temp.add(add_result.getString(i));
+								}	
 						}
 						
 						return temp;

@@ -28,7 +28,9 @@ public class Try {
 		conn2= new connection();
 		
 //		
+		String[] temp2=new String[6];
 		
+		System.out.print(temp2.length);
 		
 	}
 

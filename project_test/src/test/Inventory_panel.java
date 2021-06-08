@@ -27,13 +27,14 @@ public class Inventory_panel {
 	
 	private DefaultTableModel inv_table_model;
 	private JScrollPane scrollpane;
+	private JLabel lbl_inv_message;
 	
 	
 	public Inventory_panel() {
 		
-		
-		panel();
 		lib = new Library();
+		panel();
+		
 		
 	}
 	
@@ -78,26 +79,67 @@ public class Inventory_panel {
 		btn_inv_inquire.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				
-				String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
-				
-				String[][] temp =inquire(text_invID, text_inv_item, text_inv_pd);
-//				String [][] temp = {{"27000002","90000001","CPU","C0x055"},{"27000003","90000001","CPU","C0z004"},			
+				if(!text_invID.getText().isBlank()&lib.num_not_null_check(text_invID)) {
+					
+					String[][] temp =inquire(text_invID, text_inv_item, text_inv_pd);
+	//				String [][] temp = {{"27000002","90000001","CPU","C0x055"},{"27000003","90000001","CPU","C0z004"},			
+	//														{"27000004","90000002","CPU","C0z035"},{"27000004","90000002",
+	//															"CPU","C0z035"},{"27000004","90000002","CPU","C0z035"}};  //for testing without connection
+	//  	
+		//			for(int j=0; j<temp.length;j++) {
+		//				System.out.print("\n");
+		//				for(int i=0;i<4;i++) {
+		//					System.out.print(temp[j][i]+"\t");	
+		//					}	
+		//				}
+					if (temp.length != 0){ // found data match
+						String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
+						inv_table_model = new DefaultTableModel(temp,column_names);  
+						inv_table.setModel(inv_table_model);
+						inv_table.setVisible(true);
+						scrollpane.setVisible(true);
+						lbl_inv_message.setText("Data loaded");;
+						lbl_inv_message.setVisible(true);
+					
+					}else {
+						inv_table.setVisible(false);
+						scrollpane.setVisible(false);
+						lbl_inv_message.setText("Data no found");;
+						lbl_inv_message.setVisible(true);
+					}
+				}else if(text_invID.getText().isBlank()){
+					
+					String[][] temp =inquire(text_invID, text_inv_item, text_inv_pd);
+//					String [][] temp = {{"27000002","90000001","CPU","C0x055"},{"27000003","90000001","CPU","C0z004"},			
 //														{"27000004","90000002","CPU","C0z035"},{"27000004","90000002",
-//															"CPU","C0z035"},{"27000004","90000002","CPU","C0z035"}};  //for testing without connection
-//  	
-	//			for(int j=0; j<temp.length;j++) {
-	//				System.out.print("\n");
-	//				for(int i=0;i<4;i++) {
-	//					System.out.print(temp[j][i]+"\t");	
-	//					}	
-	//				}
-				if (temp.length != 0){ // found data match
-					inv_table_model = new DefaultTableModel(temp,column_names);  
-					inv_table.setModel(inv_table_model);
-					inv_table.setVisible(true);
-					scrollpane.setVisible(true);
-				
+//													"CPU","C0z035"},{"27000004","90000002","CPU","C0z035"}};  //for testing without connection
+//					  	
+//					for(int j=0; j<temp.length;j++) {
+	//					System.out.print("\n");
+	//					for(int i=0;i<4;i++) {
+	//						System.out.print(temp[j][i]+"\t");	
+//						}	
+//					}
+					if (temp.length != 0){ // found data match
+						String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
+						inv_table_model = new DefaultTableModel(temp,column_names);  
+						inv_table.setModel(inv_table_model);
+						inv_table.setVisible(true);
+						scrollpane.setVisible(true);
+						lbl_inv_message.setText("Data loaded");
+						lbl_inv_message.setVisible(true);
+									
+					}else {
+						inv_table.setVisible(false);
+						scrollpane.setVisible(false);
+						lbl_inv_message.setText("Data no found");;
+						lbl_inv_message.setVisible(true);
+						}
+				}else {
+					inv_table.setVisible(false);
+					scrollpane.setVisible(false);
+					lbl_inv_message.setText("Format Invalid");;
+					lbl_inv_message.setVisible(true);
 				}
 			}
 		});
@@ -120,6 +162,11 @@ public class Inventory_panel {
 		scrollpane.setVisible(false);
 		
 		inventory_panel.add(scrollpane);
+		
+		lbl_inv_message = new JLabel("");
+		lbl_inv_message.setBounds(62, 199, 492, 16);
+		lbl_inv_message.setVisible(false);
+		inventory_panel.add(lbl_inv_message);
 
 	
 	}

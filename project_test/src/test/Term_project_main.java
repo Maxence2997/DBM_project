@@ -46,6 +46,7 @@ public class Term_project_main {
 	private JPanel home_panel;
 	public static JTextField field_empID;
 	private JLabel lbl_emp;
+	private JLabel lbl_empID;
 	
 	private JPanel core_home_panel;
 	
@@ -153,11 +154,11 @@ public class Term_project_main {
 					lib = new Library();
 					lib.adjust_PROJECT();
 					
-					if (lib.emp_check(field_empID)) 
+					if (lib.emp_check(field_empID)) {
 						
 						card_layout.show(frame.getContentPane(), "home");
-
-					else 
+						lbl_empID.setText(" Employee ID: " + field_empID.getText());
+					}else 
 						
 						login_result.setText("Employee ID is invalid, please refill it.");
 						
@@ -188,10 +189,10 @@ public class Term_project_main {
 			});
 			home_panel.add(btn_logout);
 			
-			JLabel lbl_empID = new JLabel();
+			lbl_empID = new JLabel();
 			lbl_empID.setBounds(0, 5, 179, 16);
 			home_panel.add(lbl_empID);
-			lbl_empID.setText(" Employee ID: " + field_empID.getText());
+			
 			
 			JButton btn_reminder = new JButton("R");
 			btn_reminder.setBounds(626, 0, 40, 26);

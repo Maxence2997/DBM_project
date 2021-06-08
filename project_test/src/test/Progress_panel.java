@@ -107,7 +107,7 @@ public class Progress_panel {
 				}
 			}
 		});
-		btn_prog_inquire_all.setBounds(287, 122, 77, 29);
+		btn_prog_inquire_all.setBounds(500, 108, 77, 29);
 		progress_panel.add(btn_prog_inquire_all);
 		
 		JButton btn_prog_attention = new JButton("Attention !");
@@ -175,31 +175,35 @@ public class Progress_panel {
 		JButton btnNewButton = new JButton("Inquire");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				String[][] temp = show_project_status("inquire");
-				
-				if (temp.length!=0) {
+				if(lib.num_not_null_check(text_prog_pjID)) {
 					
-					String[] columns_name = {"Project ID", "status", "Employee ID", "Responsable", "Module", "Delivery Progress",
-																										"ESD", "Receipt Date", "Contract Status"};
-					DefaultTableModel prog_table_model = new DefaultTableModel(temp, columns_name);					
-					prog_table.setModel(prog_table_model);
-					lbl_prog_message.setText("Data loaded");
-					lbl_prog_message.setVisible(true);
-					prog_table.setVisible(true);
-					scrollpane_prog.setVisible(true);
+					String[][] temp = show_project_status("inquire");
 					
+					if (temp.length!=0) {
+						
+						String[] columns_name = {"Project ID", "status", "Employee ID", "Responsable", "Module", "Delivery Progress",
+																											"ESD", "Receipt Date", "Contract Status"};
+						DefaultTableModel prog_table_model = new DefaultTableModel(temp, columns_name);					
+						prog_table.setModel(prog_table_model);
+						lbl_prog_message.setText("Data loaded");
+						lbl_prog_message.setVisible(true);
+						prog_table.setVisible(true);
+						scrollpane_prog.setVisible(true);
+						
+					}else {
+						//temp.length==0 
+						//project no found
+						lbl_prog_message.setText("No project is working");
+						lbl_prog_message.setVisible(true);
+						prog_table.setVisible(false);
+						scrollpane_prog.setVisible(false);	
+					}
 				}else {
-					//temp.length==0 
-					//project no found
-					
-					lbl_prog_message.setText("No project is working");
+					lbl_prog_message.setText("ID format invalid");
 					lbl_prog_message.setVisible(true);
 					prog_table.setVisible(false);
-					scrollpane_prog.setVisible(false);
-					
+					scrollpane_prog.setVisible(false);	
 				}
-				
 				
 			}
 		});

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -202,11 +203,11 @@ public class Employee_panel {
 	            		Integer.parseInt(text_emp_empID.getText());
 					   // test empID.getText() is blank or alphabet
 				     			   
-	            		String []temp = new String[] {"11047602","Abner","Williams",
-	            							"Taoyuan","(09)11091002","11047600","C"}; //for testing without connection
+//	            		String []temp = new String[] {"11047602","Abner","Williams",
+//	            										"Taoyuan","(09)11091002","11047600","C"}; //for testing without connection
 		            	
-		            	//String []temp = check(text_emp_empID);
-		            	if(temp.length!=0) {
+		            	ArrayList<String> temp = check(text_emp_empID);
+		            	if(temp.size()!=0) {
 		            		
 		            		lbl_empID_show.setText(text_emp_empID.getText());;
 		            		lbl_empID_show.setVisible(true);
@@ -214,28 +215,28 @@ public class Employee_panel {
 		            		
 		            		lbl_emp_first.setVisible(true);
 		            		text_emp_first.setVisible(true);
-		            		text_emp_first.setText(temp[1]);
+		            		text_emp_first.setText(temp.get(1));
 		            		
 		            		lbl_emp_last.setVisible(true);
 		            		text_emp_last.setVisible(true);
-		            		text_emp_last.setText(temp[2]);
+		            		text_emp_last.setText(temp.get(2));
 		            		
 		            		lbl_emp_addr.setVisible(true);
 		            		text_emp_addr.setVisible(true);
-		            		text_emp_addr.setText(temp[3]);
+		            		text_emp_addr.setText(temp.get(3));
 		            		
 		            		lbl_emp_phone.setVisible(true);
 		            		text_emp_phone.setVisible(true);
-		            		text_emp_phone.setText(temp[4]);
+		            		text_emp_phone.setText(temp.get(4));
 		            		
 		            		lbl_emp_supervID.setVisible(true);
 		            		text_emp_supervID.setVisible(true);
-		            		text_emp_supervID.setText(temp[5]);
+		            		text_emp_supervID.setText(temp.get(5));
 		            		
 		            		lbl_emp_perf.setVisible(true);
 		            		
 		            		comboBox_emp_perf.setVisible(true);
-		            		comboBox_emp_perf.setSelectedItem(temp[6]);
+		            		comboBox_emp_perf.setSelectedItem(temp.get(6));
 		            		
 		            		btn_emp_execute.setVisible(true);
 		            		
@@ -243,7 +244,7 @@ public class Employee_panel {
 					     	lbl_emp_info.setVisible(true);
 					     	
 		            	}else {
-		            		//temp.length==0
+		            		//temp.size()==0
 		            		lbl_emp_info.setText("Data no found");
 					     	lbl_emp_info.setVisible(true);
 					     	
@@ -332,9 +333,16 @@ public class Employee_panel {
 						}
 					}else if(btn_emp_execute.getText().equalsIgnoreCase("Delete Employee")) {
 						
-							//delete_emp(text_emp_empID);
+							if(delete_emp(text_emp_empID)==1) {
+								lbl_emp_info.setText("Delete succeed");
+								lbl_emp_info.setVisible(true);
+							}else {
+								//delete_emp(text_emp_empID)==0
+								lbl_emp_info.setText("Delete failed");
+								lbl_emp_info.setVisible(true);
+							}
 						}
-					lbl_emp_info.setVisible(true);
+					
 					}
 				});
 			btn_emp_execute.setBounds(266, 281, 130, 29);
@@ -354,7 +362,7 @@ public class Employee_panel {
 		
 		
 		
-		private String[] check(JTextField empID) {
+		private ArrayList<String> check(JTextField empID) {
 			/**
 			 * @author jyunanyang
 			 * @since 05/30/2021
@@ -362,7 +370,7 @@ public class Employee_panel {
 			 * the action after click button confirm in employee panel- show and adjust
 			 * set instruction of SQL 
 			 */
-			String [] temp = new String[7];
+			ArrayList<String> temp = new ArrayList();
 			try {
 				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM EMPLOYEE WHERE Emp_ID=" + empID.getText());
 				if(resultSet.next()) {
@@ -373,7 +381,7 @@ public class Employee_panel {
 //							+ resultSet.getString("Performance"));
 					
 					for(int i = 1; i<8; i++) {
-						temp[i-1]= resultSet.getString(i);
+						temp.add(resultSet.getString(i));
 					}
 				}
 				return temp;
@@ -410,14 +418,17 @@ public class Employee_panel {
 		
 		
 		
-		private void delete_emp(JTextField empID) {
+		private int delete_emp(JTextField empID) {
 			
+			int r=0;
 			try {
-				int resultSet = Term_project_main.conn.st.executeUpdate("DELETE FROM EMPLOYEE WHERE Emp_ID="+empID.getText());
-			
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM EMPLOYEE WHERE Emp_ID="+empID.getText());
+				
+				return r;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return r;
 			}
 			
 		}
