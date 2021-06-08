@@ -118,30 +118,8 @@ public class Term_project_main {
 		//initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-//	private void initialize() {
-//		
-//		
-//		
-//		frame = new JFrame("System");
-//		frame.setBounds(100, 100, 666, 466);
-//		
-//		card_layout = new CardLayout();
-//		
-//		frame.getContentPane().setLayout(card_layout);
-//		
-//		
-//		login_panel();
-//		conn = new connection(); 
-//		
-//		home_panel();
-//		
-//		
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		
-//	}
+	
+	
 		
 		private void login_panel() {
 			

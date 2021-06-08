@@ -28,33 +28,7 @@ public class Try {
 		conn2= new connection();
 		
 //		
-		try {
-			ResultSet r = conn2.st.executeQuery("SELECT Supervisor_ID FROM EMPLOYEE WHERE Supervisor_ID=11047600");
-			
-			if(r.next()) {
-				System.out.println();
-			}
-			
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
 		
-//		for(int i=0; i<temp.size();i++) {
-//			for(int j=0; j<temp.get(i).length;j++) {
-//			System.out.print(temp.get(i)[j]+"\t");
-//			}
-//			System.out.println();
-//		}
-		
-		String[] temp2 = {"qdq", "qdqfq", "dqfqf","qdqwf"};
-		temp2 = lib.insert(temp2,"44444",3);
-		
-		for(String i : temp2) {
-			System.out.print(i);
-		}
-			
 		
 	}
 
