@@ -25,9 +25,10 @@ public class Supplier_panel {
 		
 	/**
      * @autohr Jyun-An
-     * @ver. 1.2.2 05/28   
+     * @since 05/28   
      * Seperated from Project_test
      **/
+	
 		
 		private Library lib;
 		
@@ -50,18 +51,19 @@ public class Supplier_panel {
 		private JTextField text_sup_ctc;
 		private JTextField text_sup_mobile;
 		private JTextField text_sup_mail;
-		
+		private JLabel lbl_sup_supID;
+		private JLabel lbl_sup_name;
 		
 		private DefaultTableModel sup_table_model;
 		private JLabel lbl_result;
-		private JLabel lbl_sup_ins;
+		
 		private JLabel lbl_sup_supID_show;
+		private JButton btn_clear;
 	
 	public Supplier_panel() {
 		
 		lib = new Library();
-		panel();
-		
+		panel();	
 	}
 	
 	
@@ -77,7 +79,7 @@ public class Supplier_panel {
 		supplier_panel = new JPanel();
 		Term_project_main.container_panel.add(supplier_panel,"supplier");
 		
-		JLabel lbl_sup_supID = new JLabel("Supplier ID :");
+		lbl_sup_supID = new JLabel("Supplier ID :");
 		lbl_sup_supID.setBounds(160, 55, 77, 16);
 		lbl_sup_supID.setHorizontalAlignment(SwingConstants.RIGHT);
 		supplier_panel.add(lbl_sup_supID);
@@ -87,7 +89,12 @@ public class Supplier_panel {
 		supplier_panel.add(text_sup_supID);
 		text_sup_supID.setColumns(14);
 		
-		JLabel lbl_sup_name = new JLabel("Supplier Name :");
+		lbl_sup_supID_show = new JLabel("");
+		lbl_sup_supID_show.setBounds(249, 55, 174, 16);
+		lbl_sup_supID_show.setVisible(false);
+		supplier_panel.add(lbl_sup_supID_show);
+		
+		lbl_sup_name = new JLabel("Supplier Name :");
 		lbl_sup_name.setBounds(138, 81, 99, 16);
 		supplier_panel.add(lbl_sup_name);
 		
@@ -132,6 +139,7 @@ public class Supplier_panel {
 		lbl_sup_mail = new JLabel("Mail :");
 		lbl_sup_mail.setBounds(203, 186, 34, 16);
 		lbl_sup_mail.setVisible(false);
+		supplier_panel.add(lbl_sup_mail);
 		
 		text_sup_mail = new JTextField();
 		text_sup_mail.setBounds(245, 181, 178, 26);
@@ -145,16 +153,22 @@ public class Supplier_panel {
 		lbl_result.setVisible(false);
 		supplier_panel.add(lbl_result);
 		
-		lbl_sup_ins = new JLabel("*Obligatory");
-		lbl_sup_ins.setBounds(29, 55, 107, 46);
-		lbl_sup_ins.setVisible(false);
-		supplier_panel.add(lbl_sup_ins);
+		sup_table = new JTable(){ 
+			@Override
+			public boolean isCellEditable(int row, int column)
+            {
+                                  return false;}//uneditable    
+		};
+		sup_table.setFillsViewportHeight(true);
+		//sup_table.setBounds(48,288,563,30);
+		sup_table.setVisible(false);
 		
-		lbl_sup_supID_show = new JLabel("");
-		lbl_sup_supID_show.setBounds(249, 55, 174, 16);
-		lbl_sup_supID_show.setVisible(false);
-		supplier_panel.add(lbl_sup_supID_show);
 		
+		scrollpane = new JScrollPane(sup_table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollpane.setBounds(48,288,563,40);
+		scrollpane.setVisible(false);
+		//scrollpane.setPreferredSize(new Dimension(563, 50));   //whole scrollpane and table will disapear
+		supplier_panel.add(scrollpane);
 		
 		comboBox_sup = new JComboBox();
 		comboBox_sup.setBounds(266, 4, 135, 27);
@@ -167,10 +181,13 @@ public class Supplier_panel {
             	
             	if (supplierFunction.equals("Inquire")) {
             		//visibility
-            		btn_sup_1.setText("Inquire");
-            		btn_sup_1.setVisible(true);
             		
-            		btn_sup_2.setVisible(false);
+            		lbl_sup_supID.setVisible(true);
+            		text_sup_supID.setVisible(true);
+            		lbl_sup_supID_show.setVisible(false);
+            		
+            		lbl_sup_name.setVisible(true);
+            		text_sup_name.setVisible(true);
             		
             		lbl_sup_addr.setVisible(false);
             		text_sup_addr.setVisible(false);
@@ -184,24 +201,30 @@ public class Supplier_panel {
             		lbl_sup_mail.setVisible(false);
             		text_sup_mail.setVisible(false);
             		
-            		lbl_sup_ins.setVisible(false);
-            		lbl_sup_supID_show.setVisible(false);
-            		
-            		lbl_sup_name.setVisible(true);
-            		text_sup_name.setVisible(true);
-            		
-            		text_sup_supID.setVisible(true);
+            		sup_table.setVisible(false);
 
+            		scrollpane.setVisible(false);	
+            		
+            		btn_sup_1.setText("Inquire");
+            		btn_sup_1.setVisible(true);
+            		
+            		btn_sup_2.setVisible(false);
+            		
+            		btn_clear.setVisible(false);
+            		
+            		lbl_result.setVisible(false);
+ 
             		//textField
             		clear_text();
             	}
             	else if (supplierFunction.equals("Add")) {
             		//visibility
-            		btn_sup_1.setText("");
-            		btn_sup_1.setVisible(false);
+            		lbl_sup_supID.setVisible(true);
+            		text_sup_supID.setVisible(false);
+            		lbl_sup_supID_show.setVisible(true);
             		
-            		btn_sup_2.setText("Add");
-            		btn_sup_2.setVisible(true);
+            		lbl_sup_name.setVisible(true);
+            		text_sup_name.setVisible(true);
             		
             		lbl_sup_addr.setVisible(true);
             		text_sup_addr.setVisible(true);
@@ -215,20 +238,27 @@ public class Supplier_panel {
             		lbl_sup_mail.setVisible(true);
             		text_sup_mail.setVisible(true);
             		
-            		lbl_sup_ins.setVisible(true);
-            		lbl_sup_name.setVisible(true);
-            		text_sup_name.setVisible(true);
-            		text_sup_supID.setVisible(false);
-            		lbl_sup_supID_show.setVisible(true);
+            		sup_table.setVisible(false);
+            		scrollpane.setVisible(false);
+            		
+            		btn_sup_1.setText("");
+            		btn_sup_1.setVisible(false);
+            		
+            		btn_sup_2.setText("Add");
+            		btn_sup_2.setVisible(true);
+            		
+            		btn_clear.setVisible(true);
             		//textField
             		clear_text();
-            	}else {
+            	}else if(supplierFunction.equals("Delete")){
             		//supplierFunction.equals("Delete")
             		btn_sup_1.setText("Check");
             		btn_sup_1.setVisible(true);
             		
             		btn_sup_2.setText("Delete");
             		btn_sup_2.setVisible(false);
+            		
+            		btn_clear.setVisible(false);
             		
             		text_sup_supID.setVisible(true);
             		lbl_sup_addr.setVisible(false);
@@ -248,12 +278,13 @@ public class Supplier_panel {
             		
             		
             		text_sup_supID.setVisible(true);
-            		lbl_sup_ins.setVisible(false);
+            		
             		lbl_sup_supID_show.setVisible(false);
             	}
             }
         });
 		supplier_panel.setLayout(null);
+		comboBox_sup.setVisible(true);
 		supplier_panel.add(comboBox_sup);
 		
 		btn_sup_1 = new JButton("");
@@ -263,40 +294,93 @@ public class Supplier_panel {
 			public void actionPerformed(ActionEvent arg0) {
 				if(btn_sup_1.getText().equalsIgnoreCase("Inquire")) {
 					
-	//						 String [][] temp = {{"SP0000002", "Q-TIP", "Taoyuan", "Smith", "(02)25450002", 
+	//				String [][] temp = {{"SP0000002", "Q-TIP", "Taoyuan", "Smith", "(02)25450002", 
 	//											"supplier002@gmail.com"}};  // for testing without connection
 							 
-							 String [][] temp = inquire(text_sup_supID,text_sup_name);					//if want to test table without DB, mark from this line until whole if-else
+					String [][] temp = inquire(text_sup_supID,text_sup_name);					//if want to test table without DB, mark from this line until whole if-else
 			
-							 if (temp.length == 0){ // found data match
-								 scrollpane.setVisible(false);
-								 sup_table.setVisible(false);
-								 lbl_result.setVisible(true);
-								 lbl_result.setText("No found");
+					if (temp.length == 0){ // found data match
+								 
+								 
+						lbl_sup_supID.setVisible(true);
+						text_sup_supID.setVisible(true);
+						lbl_sup_supID_show.setVisible(false);
+					            		
+						lbl_sup_name.setVisible(true);
+						text_sup_name.setVisible(true);
+					           	 
+						lbl_sup_addr.setVisible(false);
+						text_sup_addr.setVisible(false);
+					            		
+						lbl_sup_ctc.setVisible(false);
+						text_sup_ctc.setVisible(false);
+					            		
+						lbl_sup_mobile.setVisible(false);
+						text_sup_mobile.setVisible(false);
+					            		
+						lbl_sup_mail.setVisible(false);
+						text_sup_mail.setVisible(false);
+					            		 					            		
+						btn_sup_1.setVisible(true);
+					           	 
+						btn_sup_2.setVisible(false);
+					            		
+						btn_clear.setVisible(false);
+					       	           	 
+						sup_table.setVisible(false);
+						scrollpane.setVisible(false);
+						           	 
+						lbl_result.setText("No found");
+						lbl_result.setVisible(true);
+									
+					}else {
+						String[] column_names = { "SupplierID", "Name", "Address", "Contact", "Mobile","Email"};
+						sup_table_model = new DefaultTableModel(temp,column_names);
+						
+						sup_table.setModel(sup_table_model);
+						
+						TableColumnModel column_model = sup_table.getColumnModel();
+						column_model.getColumn(0).setPreferredWidth(50);
+						column_model.getColumn(1).setPreferredWidth(50);
+						column_model.getColumn(2).setPreferredWidth(50);
+						column_model.getColumn(3).setPreferredWidth(40);
+						column_model.getColumn(4).setPreferredWidth(60);
+						column_model.getColumn(5).setPreferredWidth(120);
 								
-							 }else {
-								 String[] column_names = { "SupplierID", "Name", "Address", "Contact", "Mobile","Email"};
-								 sup_table_model = new DefaultTableModel(temp,column_names);
-			
-								 sup_table.setModel(sup_table_model);
-								
-								 TableColumnModel column_model = sup_table.getColumnModel();
-								 column_model.getColumn(0).setPreferredWidth(50);
-								 column_model.getColumn(1).setPreferredWidth(50);
-								 column_model.getColumn(2).setPreferredWidth(50);
-								 column_model.getColumn(3).setPreferredWidth(40);
-								 column_model.getColumn(4).setPreferredWidth(60);
-								 column_model.getColumn(5).setPreferredWidth(120);
-								
-								 sup_table.setVisible(true); 
-								 scrollpane.setVisible(true);
-								 lbl_result.setVisible(true);
-								 lbl_result.setText("Data Loaded");	
-							}
+						sup_table.setVisible(true); 
+						scrollpane.setVisible(true);
+								 
+						lbl_result.setVisible(true);
+						lbl_result.setText("Data Loaded");	
+								 
+						lbl_sup_supID.setVisible(true);
+						text_sup_supID.setVisible(true);
+						lbl_sup_supID_show.setVisible(false);
+					            		
+						lbl_sup_name.setVisible(true);
+						text_sup_name.setVisible(true);
+					           	 
+						lbl_sup_addr.setVisible(false);
+					    text_sup_addr.setVisible(false);
+					            		
+					    lbl_sup_ctc.setVisible(false);
+					    text_sup_ctc.setVisible(false);
+					            		
+					    lbl_sup_mobile.setVisible(false);
+					    text_sup_mobile.setVisible(false);
+					            		
+					    lbl_sup_mail.setVisible(false);
+					    text_sup_mail.setVisible(false);
+					            		 					            		
+					    btn_sup_1.setVisible(true);
+					    
+					    btn_sup_2.setVisible(false);
+					            		
+					    btn_clear.setVisible(false);
+					}
 
-				}else {
-					//btn_sup_inquire.getText().equalsIgnoreCase("Check")
-
+				}else if(btn_sup_1.getText().equalsIgnoreCase("Check")){
+					
 						 ArrayList<String> temp=check(text_sup_supID);
 						 
 						 if(temp.size()==0) {
@@ -322,18 +406,19 @@ public class Supplier_panel {
 							 text_sup_name.setVisible(false);
 							 			            		
 							 text_sup_supID.setVisible(true);
-							 lbl_sup_ins.setVisible(false);
+							
 							 lbl_sup_supID_show.setVisible(false);
-								
+							
+							 lbl_result.setText("Data no found");
 							 lbl_result.setVisible(true);
-							 lbl_result.setText("Data no found");	
+							 	
 							 
 						 }else {
 							 //temp.length!=0
-							 lbl_sup_supID_show.setText(text_sup_supID.getText());
+							 lbl_sup_supID_show.setText(text_sup_supID.getText()); //temp.get(0)
 							 lbl_sup_supID_show.setVisible(true);
 							 text_sup_supID.setVisible(false);
-							 lbl_sup_ins.setVisible(false);
+							
 							 
 							 lbl_sup_name.setVisible(true);
 							 text_sup_name.setText(temp.get(1));
@@ -352,25 +437,21 @@ public class Supplier_panel {
 							 text_sup_mobile.setVisible(true);
 			            		
 							 lbl_sup_mail.setVisible(true);
-							 text_sup_mobile.setText(temp.get(5));
+							 text_sup_mail.setText(temp.get(5));
 							 text_sup_mail.setVisible(true);
 							 
 							 btn_sup_1.setVisible(true);
 							 btn_sup_2.setVisible(true);
+							 btn_clear.setVisible(true);
 							 
-							// btn_sup_delete.set
-							 
-			            		
-							 
+							// btn_sup_delete.set					 
 						 }
-						
-					
-					
+
 				}
 			}
 		});
 		supplier_panel.add(btn_sup_1);
-		supplier_panel.add(lbl_sup_mail);
+		
 		
 		btn_sup_2 = new JButton("");
 		btn_sup_2.addActionListener(new ActionListener() {
@@ -386,19 +467,32 @@ public class Supplier_panel {
 						lbl_result.setText("delete failed"); 
 						lbl_result.setVisible(true);	 
 					}
-				}else {
-					//btn_sup_2.getText().equalsIgnoreCase("Add")
-					ArrayList<String> temp = add_();
-					if(temp.size()==0) {
-						lbl_result.setText("Data Added"); 
-						lbl_result.setVisible(true);	
-					}else {
-						//emp.size()==1
-						lbl_result.setText("delete failed"); 
+				}else if(btn_sup_2.getText().equalsIgnoreCase("Add")){
+					
+					if(text_sup_name.getText().isBlank()|text_sup_addr.getText().isBlank()|text_sup_ctc.getText().isBlank()
+							|text_sup_mobile.getText().isBlank()|text_sup_mail.getText().isBlank()) {
+						
+						lbl_result.setText("Supplier's infos cannot be blank."); 
 						lbl_result.setVisible(true);
-					}
-					
-					
+						
+					}else {
+						
+						ArrayList<String> temp = add_();
+						if(temp.size()!=0) {
+		
+							lbl_sup_supID_show.setText(temp.get(0));
+							lbl_sup_supID_show.setVisible(true);
+							lbl_result.setText("Data Added"); 
+							lbl_result.setVisible(true);	
+						
+						}else {
+							//temp.size()==0
+							
+							lbl_result.setText("Request failed"); 
+							lbl_result.setVisible(true);
+							
+						}
+					}	
 				}
 			}
 		});
@@ -406,32 +500,49 @@ public class Supplier_panel {
 		btn_sup_2.setVisible(false);
 		supplier_panel.add(btn_sup_2);
 		
-		sup_table = new JTable(){ 
-			@Override
-			public boolean isCellEditable(int row, int column)
-            {
-                                  return false;}//uneditable    
-		};
-		
-		
-		sup_table.setFillsViewportHeight(true);
-		//sup_table.setBounds(48,288,563,30);
-		sup_table.setVisible(false);
-		
-		
-		scrollpane = new JScrollPane(sup_table,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollpane.setBounds(48,288,563,40);
-		scrollpane.setVisible(false);
-		//scrollpane.setPreferredSize(new Dimension(563, 50));   //whole scrollpane and table will disapear
-		supplier_panel.add(scrollpane);
-		
-		
-		
+		btn_clear = new JButton("Clear");
+		btn_clear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				clear_text();
+				
+				if(supplierFunction.equalsIgnoreCase("Delete")) {
+					
+					btn_sup_1.setVisible(true);
+					btn_sup_2.setVisible(false);
+            		btn_clear.setVisible(false);
+            		
+            		lbl_sup_supID_show.setText("");
+            		lbl_sup_supID_show.setVisible(false);
+            		text_sup_supID.setVisible(true);
+            		
+            		lbl_sup_addr.setVisible(false);
+            		text_sup_addr.setVisible(false);
+            		
+            		lbl_sup_ctc.setVisible(false);
+            		text_sup_ctc.setVisible(false);
+            		
+            		lbl_sup_mobile.setVisible(false);
+            		text_sup_mobile.setVisible(false);
+            		
+            		lbl_sup_mail.setVisible(false);
+            		text_sup_mail.setVisible(false);
+            		
+            		lbl_sup_name.setVisible(false);
+            		text_sup_name.setVisible(false);
+	
+            		text_sup_supID.setVisible(true);     		
+				}
+			}
+		});
+		btn_clear.setBounds(435, 94, 88, 29);
+		btn_clear.setVisible(false);
+		supplier_panel.add(btn_clear);
 
 	}
 	
 	
-	private void clear_text() {
+	public void clear_text() {
 		/** @Author Ray
 		 *  @since 05/31
 		 *  clear all input in JTextField
@@ -442,6 +553,55 @@ public class Supplier_panel {
 		text_sup_ctc.setText("");
 		text_sup_mobile.setText("");
 		text_sup_mail.setText("");
+		/*
+		 * editor: jyun an
+		 * 
+		 * @since: 06/09/2021
+		 */
+		lbl_sup_supID_show.setText("");
+		lbl_result.setText("");
+	}
+	
+	public void default_set() {
+		
+		/**
+		 * @author jyun an
+		 * 
+		 * @since: 06/09/2021
+		 */
+		
+		comboBox_sup.setVisible(true);
+		comboBox_sup.setSelectedIndex(0);
+		
+		lbl_sup_supID.setVisible(true);
+		text_sup_supID.setVisible(true);
+		lbl_sup_supID_show.setVisible(false);
+
+		lbl_sup_name.setVisible(true);
+		text_sup_name.setVisible(true);
+
+		lbl_sup_addr.setVisible(false);
+		text_sup_addr.setVisible(false);
+
+		lbl_sup_ctc.setVisible(false);
+		text_sup_ctc.setVisible(false);
+
+		lbl_sup_mobile.setVisible(false);
+		text_sup_mobile.setVisible(false);
+
+		lbl_sup_mail.setVisible(false);
+		text_sup_mail.setVisible(false);
+
+		lbl_result.setVisible(false);
+		
+		sup_table.setVisible(false);
+
+		scrollpane.setVisible(false);
+		
+		btn_sup_1.setVisible(true);
+		btn_sup_2.setVisible(false);
+		btn_clear.setVisible(false);
+		
 	}
 	
 	
@@ -550,7 +710,7 @@ public class Supplier_panel {
 			
 				while(r.next()) {
 					
-					for(int i=0;i<7;i++) {
+					for(int i=1;i<7;i++) {
 						temp.add(r.getString(i));
 					}
 				}
@@ -626,7 +786,7 @@ public class Supplier_panel {
 		ArrayList<String> temp = new ArrayList();
 		
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_ID="+supID.getText());
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_ID=\'"+supID.getText()+"\'");
 			
 			if(r.next()) {
 				for(int i=1;i<7;i++) {
@@ -636,7 +796,7 @@ public class Supplier_panel {
 			return temp;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
 			return temp;
 		}
 	}

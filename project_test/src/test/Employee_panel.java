@@ -720,8 +720,8 @@ public class Employee_panel {
     		text_emp_supervID.setText("");
     		comboBox_emp_perf.setSelectedIndex(0);
     			
-    		/*
-    		 * editor: jyun an
+    		/**
+    		 * @editor: jyun an
     		 * 
     		 * @since: 06/09/2021
     		 */
