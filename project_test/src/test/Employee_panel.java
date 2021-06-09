@@ -718,9 +718,15 @@ public class Employee_panel {
     		text_emp_addr.setText("");
     		text_emp_phone.setText("");
     		text_emp_supervID.setText("");
-    		comboBox_emp_perf.setSelectedItem("A");
-    		lbl_emp_info.setText("");
+    		comboBox_emp_perf.setSelectedIndex(0);
+    			
+    		/*
+    		 * editor: jyun an
+    		 * 
+    		 * @since: 06/09/2021
+    		 */
     		lbl_empID_show.setText("");
+    		lbl_emp_info.setText("");
 		}
 		
 		public void set_visible(boolean bl) {

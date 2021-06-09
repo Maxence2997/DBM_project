@@ -282,13 +282,6 @@ public class Term_project_main {
 			btn_emp.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					emp_panel.get_comboBox_employeeAction().setSelectedIndex(0);
-					emp_panel.get_text_emp_empID().setText("");
-					emp_panel.get_text_emp_first().setText("");
-					emp_panel.get_text_emp_last().setText("");
-					emp_panel.get_text_emp_addr().setText("");
-					emp_panel.get_text_emp_phone().setText("");
-					emp_panel.get_text_emp_supervID().setText("");
-					emp_panel.get_comboBox_emp_perf().setSelectedIndex(0);
 					
 					/*
 					 * editor: Jyun-An
@@ -296,6 +289,14 @@ public class Term_project_main {
 					 * add emp_panel.set_visible(false);
 					 */
 					emp_panel.set_visible(false);
+					emp_panel.clear_text();
+//					emp_panel.get_text_emp_empID().setText("");
+//					emp_panel.get_text_emp_first().setText("");
+//					emp_panel.get_text_emp_last().setText("");
+//					emp_panel.get_text_emp_addr().setText("");
+//					emp_panel.get_text_emp_phone().setText("");
+//					emp_panel.get_text_emp_supervID().setText("");
+//					emp_panel.get_comboBox_emp_perf().setSelectedIndex(0);
 					
 					cl_home.show(container_panel, "employee");
 				}
