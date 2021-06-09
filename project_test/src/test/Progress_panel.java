@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import com.jgoodies.forms.layout.FormLayout;
@@ -19,6 +20,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class Progress_panel {
 	
@@ -88,8 +90,10 @@ public class Progress_panel {
 					
 					String[] columns_name = {"Project ID", "status", "Employee ID", "Responsable", "Module", "Delivery Progress",
 																										"ESD", "Receipt Date", "Contract Status"};
-					DefaultTableModel prog_table_model = new DefaultTableModel(temp, columns_name);					
+					DefaultTableModel prog_table_model = new DefaultTableModel(temp, columns_name);	
+					
 					prog_table.setModel(prog_table_model);
+					
 					lbl_prog_message.setText("Data loaded");
 					lbl_prog_message.setVisible(true);
 					prog_table.setVisible(true);
@@ -122,6 +126,15 @@ public class Progress_panel {
 																										"ESD", "Receipt Date", "Contract Status"};
 					DefaultTableModel prog_table_model = new DefaultTableModel(temp, columns_name);					
 					prog_table.setModel(prog_table_model);
+//					TableColumnModel column_model = prog_table.getColumnModel();
+					//prog_table.setPreferredScrollableViewportSize(prog_table.getPreferredSize());//????
+					
+//					column_model.getColumn(0).setPreferredWidth(50);
+//					column_model.getColumn(2).setPreferredWidth(40);
+//					column_model.getColumn(3).setPreferredWidth(30);
+//					column_model.getColumn(5).setPreferredWidth(30);
+//					column_model.getColumn(7).setPreferredWidth(30);
+//					column_model.getColumn(8).setPreferredWidth(30);
 					lbl_prog_message.setText("Data loaded");
 					lbl_prog_message.setVisible(true);
 					prog_table.setVisible(true);
@@ -149,12 +162,13 @@ public class Progress_panel {
                                   return false;}//uneditable
             
 			};
-		prog_table.setBounds(40, 229, 1000, 150);
-		
+		//prog_table.setBounds(40, 229, 10000, 150);
+		prog_table.setPreferredScrollableViewportSize(new Dimension(5000, 300));//?????
+		prog_table.setFillsViewportHeight(true);
 		prog_table.setVisible(false);
 
 		scrollpane_prog = new JScrollPane(prog_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollpane_prog.setBounds(40, 229, 580, 156);
+		scrollpane_prog.setBounds(18, 198, 619, 158);
 		scrollpane_prog.setVisible(false);
 		
 		progress_panel.add(scrollpane_prog);
@@ -211,13 +225,22 @@ public class Progress_panel {
 		progress_panel.add(btnNewButton);
 		
 		lbl_prog_message = new JLabel("");
-		lbl_prog_message.setBounds(73, 197, 518, 16);
+		lbl_prog_message.setBounds(73, 154, 384, 16);
 		lbl_prog_message.setVisible(false);
 		progress_panel.add(lbl_prog_message);
 		
 		
 	}
 	
+	public void clear() {
+		
+		prog_table.setVisible(false);
+		scrollpane_prog.setVisible(false);
+		
+		lbl_prog_message.setText("");
+		text_prog_pjID.setText("");
+		
+	}
 	
 	
 	private String[][] show_project_status(String st) {
@@ -247,6 +270,8 @@ public class Progress_panel {
 								temp_array[i-1]=r.getString(i);
 								//System.out.print(temp_array[i-1]);
 							}
+							if(!(temp_array[5].equals("null")))
+								temp_array[5]=temp_array[5]+"%";
 							temp.add(temp_array);
 						}
 					}
@@ -271,6 +296,8 @@ public class Progress_panel {
 								temp_array[i-1]=r.getString(i);
 								//System.out.print(temp_array[i-1]);
 							}
+							if(!(temp_array[5].equals("null")))
+								temp_array[5]=temp_array[5]+"%";
 							temp.add(temp_array);
 						}
 					}
@@ -297,6 +324,8 @@ public class Progress_panel {
 								temp_array[i-1]=r.getString(i);
 								//System.out.print(temp_array[i-1]);
 							}
+							if(!(temp_array[5].equals("null")))
+								temp_array[5]=temp_array[5]+"%";
 							temp.add(temp_array);
 						}
 					} catch (SQLException e) {
@@ -317,6 +346,8 @@ public class Progress_panel {
 							for(int i =1;i<10;i++) {
 								temp_array[i-1]=r.getString(i);
 							}
+							if(!(temp_array[5].equals("null")))
+								temp_array[5]=temp_array[5]+"%";
 							temp.add(temp_array);
 						}
 					} catch (SQLException e) {
@@ -341,6 +372,8 @@ public class Progress_panel {
 								temp_array[i-1]=r.getString(i);
 								//System.out.print(temp_array[i-1]);
 							}
+							if(!(temp_array[5].equals("null")))
+								temp_array[5]=temp_array[5]+"%";
 							temp.add(temp_array);
 						}
 					} catch (SQLException e) {
@@ -360,6 +393,8 @@ public class Progress_panel {
 							for(int i =1;i<10;i++) {
 								temp_array[i-1]=r.getString(i);
 							}
+							if(!(temp_array[5].equals("null")))
+								temp_array[5]=temp_array[5]+"%";
 							temp.add(temp_array);
 						}
 					} catch (SQLException e) {

@@ -52,6 +52,8 @@ public class Project_panels {
 		JButton btn_pj_prog= new JButton("Progress ");
 		btn_pj_prog.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				prog_panel.clear();
 				Term_project_main.cl_home.show(Term_project_main.container_panel,"progress");
 				// btn_back2Project.setVisible(true);
 			}
