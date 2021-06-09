@@ -233,10 +233,16 @@ public class Term_project_main {
 			btn_invent.setBounds(91, 131, 103, 29);
 			btn_invent.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					inv_panel.get_text_invID().setText("");
-					inv_panel.get_text_inv_item().setText("");
-					inv_panel.get_text_inv_pd().setText("");
+//					inv_panel.get_text_invID().setText("");
+//					inv_panel.get_text_inv_item().setText("");
+//					inv_panel.get_text_inv_pd().setText("");
 					
+					/**
+		    		 * @editor: jyun an
+		    		 * 
+		    		 * @since: 06/09/2021
+		    		 */
+					inv_panel.clear();
 					cl_home.show(container_panel, "inventory");
 					
 				}
@@ -267,8 +273,8 @@ public class Term_project_main {
 		    		 * 
 		    		 * @since: 06/09/2021
 		    		 */
-					//sup_panel.default_set();
 					sup_panel.clear_text();
+					
 					//clear table
 					//sup_panel.get_sup_table().
 					

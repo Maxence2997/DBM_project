@@ -136,12 +136,13 @@ public class Library {
 		try{
 			   Integer.parseInt(num.getText());
 			   // test empID.getText() is blank or alphabet
-			   
-			   return res;
+			   res=true;
+			  
 			}catch (NumberFormatException ex) {
 			    //handle exception here
 				return res;
 			}
+		 return res;
 	}
 	
 	

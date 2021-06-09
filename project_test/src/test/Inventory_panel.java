@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class Inventory_panel {
 	
@@ -28,6 +29,7 @@ public class Inventory_panel {
 	private DefaultTableModel inv_table_model;
 	private JScrollPane scrollpane;
 	private JLabel lbl_inv_message;
+	private JButton btn_clear;
 	
 	
 	public Inventory_panel() {
@@ -79,7 +81,7 @@ public class Inventory_panel {
 		btn_inv_inquire.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(!text_invID.getText().isBlank()&lib.num_not_null_check(text_invID)) {
+				if((!text_invID.getText().isBlank())&lib.num_not_null_check(text_invID)){
 					
 					String[][] temp =inquire(text_invID, text_inv_item, text_inv_pd);
 	//				String [][] temp = {{"27000002","90000001","CPU","C0x055"},{"27000003","90000001","CPU","C0z004"},			
@@ -93,9 +95,11 @@ public class Inventory_panel {
 		//					}	
 		//				}
 					if (temp.length != 0){ // found data match
-						String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
+						String[] column_names = { "Inventory ID", "Item", "Module", "Project ID", "Responsable ID", "R.Name"};
 						inv_table_model = new DefaultTableModel(temp,column_names);  
 						inv_table.setModel(inv_table_model);
+						TableColumnModel column_model = inv_table.getColumnModel();
+						column_model.getColumn(1).setPreferredWidth(30);
 						inv_table.setVisible(true);
 						scrollpane.setVisible(true);
 						lbl_inv_message.setText("Data loaded");;
@@ -121,7 +125,7 @@ public class Inventory_panel {
 //						}	
 //					}
 					if (temp.length != 0){ // found data match
-						String[] column_names = { "Inventory_ID", "Project_ID", "Item Type", "Module Type"};
+						String[] column_names = { "Inventory ID", "Item", "Module", "Project ID", "Responsable ID", "R.Name"};
 						inv_table_model = new DefaultTableModel(temp,column_names);  
 						inv_table.setModel(inv_table_model);
 						inv_table.setVisible(true);
@@ -135,15 +139,15 @@ public class Inventory_panel {
 						lbl_inv_message.setText("Data no found");;
 						lbl_inv_message.setVisible(true);
 						}
-				}else {
+				}else{
 					inv_table.setVisible(false);
 					scrollpane.setVisible(false);
-					lbl_inv_message.setText("Format Invalid");;
+					lbl_inv_message.setText("ID format Invalid");;
 					lbl_inv_message.setVisible(true);
 				}
 			}
 		});
-		btn_inv_inquire.setBounds(554, 160, 88, 29);
+		btn_inv_inquire.setBounds(462, 158, 88, 29);
 		inventory_panel.add(btn_inv_inquire);
 		
 		inv_table = new JTable(){ 
@@ -167,11 +171,31 @@ public class Inventory_panel {
 		lbl_inv_message.setBounds(62, 199, 492, 16);
 		lbl_inv_message.setVisible(false);
 		inventory_panel.add(lbl_inv_message);
+		
+		btn_clear = new JButton("Clear");
+		btn_clear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				clear();
+			}
+		});
+		btn_clear.setBounds(474, 97, 76, 29);
+		inventory_panel.add(btn_clear);
 
 	
 	}
 	
 	
+	public void clear() {
+		
+		text_invID.setText("");
+		text_inv_item.setText("");
+		text_inv_pd.setText("");
+		lbl_inv_message.setText("");
+		
+		inv_table.setVisible(false);
+		scrollpane.setVisible(false);
+	}
 	
 	
 	
@@ -192,12 +216,14 @@ public class Inventory_panel {
 					
 					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-													InvID.getText()+" AND Item_name=\'"+ item_name.getText()+"\' AND Module_type=\'"
-												+module_type.getText()+"\')");
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT inv.Inv_ID, inv.Item_name, inv.Module_type, "
+													+ "inv.Project_ID, pj.Emp_ID, emp.Last_name FROM test.INVENTORY AS inv LEFT JOIN PROJECT AS pj "
+													+ "ON pj.Project_ID=inv.Project_ID LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID WHERE (Inv_ID="  
+													+InvID.getText()+" AND Item_name=\'"+ item_name.getText()+"\' AND Module_type=\'"
+													+module_type.getText()+"\')");
 						while(resultSet.next()) {
-							String [] temp_array = new String[4];
-							for(int i = 1; i<5; i++) {
+							String [] temp_array = new String[6];
+							for(int i = 1; i<7; i++) {
 								temp_array[i-1]= resultSet.getString(i);
 							}
 							temp.add(temp_array);
@@ -217,11 +243,13 @@ public class Inventory_panel {
 					
 					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-														InvID.getText()+" AND Item_name=\'"+ item_name.getText()+"\')");
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT inv.Inv_ID, inv.Item_name, inv.Module_type, "
+													+ "inv.Project_ID, pj.Emp_ID, emp.Last_name FROM test.INVENTORY AS inv LEFT JOIN PROJECT AS pj "
+													+ "ON pj.Project_ID=inv.Project_ID LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID WHERE (Inv_ID=" 
+													+ InvID.getText()+" AND Item_name=\'"+ item_name.getText()+"\')");
 						while(resultSet.next()) {
-							String [] temp_array = new String[4];
-							for(int i = 1; i<5; i++) {
+							String [] temp_array = new String[6];
+							for(int i = 1; i<7; i++) {
 								temp_array[i-1]= resultSet.getString(i);
 							}
 							temp.add(temp_array);
@@ -239,11 +267,13 @@ public class Inventory_panel {
 					
 					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Inv_ID=" + 
-													InvID.getText()+" AND Module_type=\'"+module_type.getText()+"\')");
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT inv.Inv_ID, inv.Item_name, inv.Module_type, "
+													+ "inv.Project_ID, pj.Emp_ID, emp.Last_name FROM test.INVENTORY AS inv LEFT JOIN PROJECT AS pj "
+													+ "ON pj.Project_ID=inv.Project_ID LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID WHERE (Inv_ID=" 
+													+ InvID.getText()+" AND Module_type=\'"+module_type.getText()+"\')");
 						while(resultSet.next()) {
-							String [] temp_array = new String[4];
-							for(int i = 1; i<5; i++) {
+							String [] temp_array = new String[6];
+							for(int i = 1; i<7; i++) {
 								temp_array[i-1]= resultSet.getString(i);
 							}
 							temp.add(temp_array);
@@ -261,11 +291,12 @@ public class Inventory_panel {
 					
 					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Inv_ID=" + 
-																						InvID.getText());
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT inv.Inv_ID, inv.Item_name, inv.Module_type, "
+								+ "inv.Project_ID, pj.Emp_ID, emp.Last_name FROM test.INVENTORY AS inv LEFT JOIN PROJECT AS pj "
+								+ "ON pj.Project_ID=inv.Project_ID LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID WHERE Inv_ID=" +InvID.getText());
 						while(resultSet.next()) {
-							String [] temp_array = new String[4];
-							for(int i = 1; i<5; i++) {
+							String [] temp_array = new String[6];
+							for(int i = 1; i<7; i++) {
 								temp_array[i-1]= resultSet.getString(i);
 							}
 							temp.add(temp_array);
@@ -285,12 +316,14 @@ public class Inventory_panel {
 					
 					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE (Item_name=\'"+
-															item_name.getText()+"\' AND Module_type=\'"+module_type.getText()+"\')");
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT inv.Inv_ID, inv.Item_name, inv.Module_type, "
+								+ "inv.Project_ID, pj.Emp_ID, emp.Last_name FROM test.INVENTORY AS inv LEFT JOIN PROJECT AS pj "
+								+ "ON pj.Project_ID=inv.Project_ID LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID WHERE (Item_name=\'"
+															+item_name.getText()+"\' AND Module_type=\'"+module_type.getText()+"\')");
 						
 						while(resultSet.next()) {
-							String [] temp_array = new String[4];
-							for(int i = 1; i<5; i++) {
+							String [] temp_array = new String[6];
+							for(int i = 1; i<7; i++) {
 								temp_array[i-1]= resultSet.getString(i);
 							}
 							temp.add(temp_array);
@@ -309,12 +342,14 @@ public class Inventory_panel {
 					
 //					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Item_name=\'"+
-																					item_name.getText()+"\'");
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT inv.Inv_ID, inv.Item_name, inv.Module_type,"
+												+ " inv.Project_ID, pj.Emp_ID, emp.Last_name FROM test.INVENTORY AS inv LEFT JOIN PROJECT AS pj"
+												+ " ON pj.Project_ID=inv.Project_ID LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID WHERE Item_name=\'"
+																									+item_name.getText()+"\'");
 						
 						while(resultSet.next()) {
-							String [] temp_array = new String[4];
-							for(int i = 1; i<5; i++) {
+							String [] temp_array = new String[6];
+							for(int i = 1; i<7; i++) {
 								temp_array[i-1]= resultSet.getString(i);
 							}
 							temp.add(temp_array);
@@ -333,12 +368,13 @@ public class Inventory_panel {
 					
 					
 				try {
-					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM INVENTORY WHERE Module_type=\'"+
-																module_type.getText()+"\'");
+					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT inv.Inv_ID, inv.Item_name, inv.Module_type, inv.Project_ID, "
+							+ "pj.Emp_ID, emp.Last_name FROM test.INVENTORY AS inv LEFT JOIN PROJECT AS pj ON pj.Project_ID=inv.Project_ID "
+							+ "LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID WHERE Module_type=\'"+module_type.getText()+"\'");
 					
 					while(resultSet.next()) {
-						String [] temp_array = new String[4];
-						for(int i = 1; i<5; i++) {
+						String [] temp_array = new String[6];
+						for(int i = 1; i<7; i++) {
 							temp_array[i-1]= resultSet.getString(i);
 						}
 						temp.add(temp_array);
@@ -352,7 +388,7 @@ public class Inventory_panel {
 						}
 				}
 				
-		String[][] result_array = new String[temp.size()][4];
+		String[][] result_array = new String[temp.size()][6];
 		int i=0;
 		for (String[] array_in_temp : temp) {
 			result_array[i++] = array_in_temp;

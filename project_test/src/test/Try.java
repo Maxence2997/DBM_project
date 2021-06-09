@@ -28,9 +28,10 @@ public class Try {
 		conn2= new connection();
 		
 //		
-		String[] temp2=new String[6];
+		boolean x = true;
+		boolean y = true;
 		
-		System.out.print(temp2[2]);
+		System.out.print(x&y);
 		
 	}
 
