@@ -562,47 +562,6 @@ public class Supplier_panel {
 		lbl_result.setText("");
 	}
 	
-	public void default_set() {
-		
-		/**
-		 * @author jyun an
-		 * 
-		 * @since: 06/09/2021
-		 */
-		
-		comboBox_sup.setVisible(true);
-		comboBox_sup.setSelectedIndex(0);
-		
-		lbl_sup_supID.setVisible(true);
-		text_sup_supID.setVisible(true);
-		lbl_sup_supID_show.setVisible(false);
-
-		lbl_sup_name.setVisible(true);
-		text_sup_name.setVisible(true);
-
-		lbl_sup_addr.setVisible(false);
-		text_sup_addr.setVisible(false);
-
-		lbl_sup_ctc.setVisible(false);
-		text_sup_ctc.setVisible(false);
-
-		lbl_sup_mobile.setVisible(false);
-		text_sup_mobile.setVisible(false);
-
-		lbl_sup_mail.setVisible(false);
-		text_sup_mail.setVisible(false);
-
-		lbl_result.setVisible(false);
-		
-		sup_table.setVisible(false);
-
-		scrollpane.setVisible(false);
-		
-		btn_sup_1.setVisible(true);
-		btn_sup_2.setVisible(false);
-		btn_clear.setVisible(false);
-		
-	}
 	
 	
 	private String[][] inquire(JTextField sup_ID, JTextField sup_name) {
