@@ -109,6 +109,7 @@ public class Term_project_main {
 		frame.getContentPane().setLayout(card_layout);
 		
 		conn = new connection();
+		//conn = new connection(4);
 		
 		login_panel();
 		home_panel();

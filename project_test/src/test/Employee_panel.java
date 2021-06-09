@@ -63,54 +63,7 @@ public class Employee_panel {
 			employee_panel = new JPanel();
 			Term_project_main.container_panel.add(employee_panel, "employee");
 			employee_panel.setLayout(null);
-						
-			comboBox_emp_action = new JComboBox();
-			comboBox_emp_action.setBounds(251, 35, 160, 27);
-			comboBox_emp_action.setModel(new DefaultComboBoxModel(new String[] {"Show & Adjust", "Add Employee", "Delete Employee"}));
-			function = (String) comboBox_emp_action.getSelectedItem(); //get the selected item
-			comboBox_emp_action.addActionListener(new ActionListener() {
-				@Override
-	            public void actionPerformed(ActionEvent e) {
-					function = (String) comboBox_emp_action.getSelectedItem();
-				         	
-					if (function.equals("Show & Adjust")) {
-		        		//visibility
-						
-						btn_emp_execute.setText("Save Change");
-						set_visible(false);
-						lbl_emp_info.setVisible(false);
-						lbl_empID_show.setVisible(false);
-			    		btn_emp_confirmID.setVisible(true);
-				            		
-			    		//textField
-			    		clear_text();
-			    		
-		            }else if (function.equals("Add Employee")) {
-				   		//visibility
-		            	btn_emp_execute.setText("Save Change");
-				   		set_visible(true);
-		         		lbl_emp_info.setVisible(false);
-		         		lbl_empID_show.setVisible(false);
-			       		btn_emp_confirmID.setVisible(false);
-					          		
-			      		//textField
-	            		clear_text();
-	            		
-	            	}else{
-	           			//visibility
-	            		btn_emp_execute.setText("Delete");
-		            	set_visible(false);
-		            	lbl_emp_info.setVisible(false);
-		            	lbl_empID_show.setVisible(false);
-		            	btn_emp_confirmID.setVisible(true);
-			           	//textField
-			      		clear_text();
-			       	}
-				}
-			});
-			employee_panel.add(comboBox_emp_action);
-						
-
+			
 			lbl_empID_show = new JLabel("");
 			lbl_empID_show.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_empID_show.setBounds(230, 74, 202, 16);
@@ -185,6 +138,36 @@ public class Employee_panel {
 			lbl_emp_perf.setBounds(115, 234, 86, 16);
 			lbl_emp_perf.setVisible(false);
 			employee_panel.add(lbl_emp_perf);
+			
+			lbl_emp_info = new JLabel("Message of execute result");
+			lbl_emp_info.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_emp_info.setBounds(115, 332, 434, 16);
+			lbl_emp_info.setVisible(false);
+			employee_panel.add(lbl_emp_info);
+			
+			JButton btn_clear = new JButton("Clear");
+			btn_clear.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					clear_text();
+					
+					if(comboBox_emp_action.getSelectedItem().equals("Delete Employee") 
+							| comboBox_emp_action.getSelectedItem().equals("Show & Adjust")) {
+						
+						
+						btn_clear.setVisible(false);
+						
+				     	lbl_emp_info.setVisible(false);
+	            		lbl_empID_show.setVisible(false);
+	            		text_emp_empID.setVisible(true);
+	            		
+	            		set_visible(false);
+	
+			     	}
+				}
+			});
+			btn_clear.setBounds(459, 114, 85, 29);
+			employee_panel.add(btn_clear);
 						
 			comboBox_emp_perf = new JComboBox();
 			comboBox_emp_perf.setBounds(230, 229, 65, 27);
@@ -192,6 +175,59 @@ public class Employee_panel {
 			comboBox_emp_perf.setModel(new DefaultComboBoxModel(new String[] {"A", "B", "C"}));
 			comboBox_emp_perf.setVisible(false);
 			employee_panel.add(comboBox_emp_perf);
+			
+			comboBox_emp_action = new JComboBox();
+			comboBox_emp_action.setBounds(251, 35, 160, 27);
+			comboBox_emp_action.setModel(new DefaultComboBoxModel(new String[] {"Show & Adjust", "Add Employee", "Delete Employee"}));
+			function = (String) comboBox_emp_action.getSelectedItem(); //get the selected item
+			comboBox_emp_action.addActionListener(new ActionListener() {
+				@Override
+	            public void actionPerformed(ActionEvent e) {
+					function = (String) comboBox_emp_action.getSelectedItem();
+				         	
+					if (function.equals("Show & Adjust")) {
+		        		//visibility
+						
+						btn_emp_execute.setText("Save Change");
+						set_visible(false);
+						lbl_emp_info.setVisible(false);
+						lbl_empID_show.setVisible(false);
+						text_emp_empID.setVisible(true);
+			    		btn_emp_confirmID.setVisible(true);
+			    		btn_clear.setVisible(false);
+				            		
+			    		//textField
+			    		clear_text();
+			    		
+		            }else if (function.equals("Add Employee")) {
+				   		//visibility
+		            	btn_emp_execute.setText("Add");
+				   		set_visible(true);
+		         		lbl_emp_info.setVisible(false);
+		         		lbl_empID_show.setText("");
+		         		lbl_empID_show.setVisible(true);
+		         		text_emp_empID.setVisible(false);
+			       		btn_emp_confirmID.setVisible(false);
+			       		btn_clear.setVisible(true);
+					          		
+			      		//textField
+	            		clear_text();
+	            		
+	            	}else{
+	           			//visibility
+	            		btn_emp_execute.setText("Delete");
+		            	set_visible(false);
+		            	lbl_emp_info.setVisible(false);
+		            	lbl_empID_show.setVisible(false);
+		            	btn_emp_confirmID.setVisible(true);
+		            	text_emp_empID.setVisible(true);
+		            	btn_clear.setVisible(false);
+			           	//textField
+			      		clear_text();
+			       	}
+				}
+			});
+			employee_panel.add(comboBox_emp_action);
 						
 			btn_emp_confirmID = new JButton("Confirm");
 			btn_emp_confirmID.setBounds(449, 67, 95, 29);
@@ -209,8 +245,14 @@ public class Employee_panel {
 		            	ArrayList<String> temp = check(text_emp_empID);
 		            	if(temp.size()!=0) {
 		            		
+		            		//if(comboBox_emp_action.getSelectedItem().equals("Delete Employee")) {
+		            			
+					     		btn_clear.setVisible(true);
+		            		//}
+		            		
 		            		lbl_empID_show.setText(text_emp_empID.getText());;
 		            		lbl_empID_show.setVisible(true);
+		            		
 		            		text_emp_empID.setVisible(false);
 		            		
 		            		lbl_emp_first.setVisible(true);
@@ -243,6 +285,8 @@ public class Employee_panel {
 		            		lbl_emp_info.setText("Data loaded");
 					     	lbl_emp_info.setVisible(true);
 					     	
+					     	
+					     	
 		            	}else {
 		            		//temp.size()==0
 		            		lbl_emp_info.setText("Data no found");
@@ -273,6 +317,13 @@ public class Employee_panel {
 		            		text_emp_supervID.setText("");
 		            		
 		            		lbl_emp_perf.setVisible(false);
+		            		comboBox_emp_perf.setVisible(false);
+		            		
+		            		btn_emp_execute.setVisible(false);
+		            		
+		            		
+					     	btn_clear.setVisible(false);
+					     	
 					     	
 		            		
 		            	}
@@ -306,6 +357,12 @@ public class Employee_panel {
 	            		text_emp_supervID.setText("");
 	            		
 	            		lbl_emp_perf.setVisible(false);
+	            		comboBox_emp_perf.setVisible(false);
+	            		
+	            		btn_emp_execute.setVisible(false);
+
+	            		btn_clear.setVisible(false);
+				     		
 						}    	
 	            	}
 	            });
@@ -317,28 +374,126 @@ public class Employee_panel {
 			btn_emp_execute.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (btn_emp_execute.getText().equalsIgnoreCase("Save Change")) {
-						if(lib.supervisor_check(text_emp_supervID)) {
+						if((!text_emp_supervID.getText().isBlank())&lib.supervisor_check(text_emp_supervID)) {
+							if(text_emp_first.getText().isBlank()|text_emp_last.getText().isBlank()|text_emp_addr.getText().isBlank()
+									|text_emp_phone.getText().isBlank()) {
+								
+								lbl_emp_info.setText("Employee infos cannot be blank.");
+								lbl_emp_info.setVisible(true);	
+								
+							}else {
 								if(save_change(text_emp_empID)==1){
 									
 									lbl_emp_info.setText("Modification succeed");
 									lbl_emp_info.setVisible(true);	
+									
 								}else {
 									//save_change(text_emp_empID)==0
 									lbl_emp_info.setText("Modification failed");
 									lbl_emp_info.setVisible(true);
 								}
+							}
+						}else if(text_emp_supervID.getText().isBlank()){
+							if(text_emp_first.getText().isBlank()|text_emp_last.getText().isBlank()|text_emp_addr.getText().isBlank()
+									|text_emp_phone.getText().isBlank()) {
+								
+								lbl_emp_info.setText("Employee infos cannot be blank.");
+								lbl_emp_info.setVisible(true);	
+								
+							}else {
+								if(save_change(text_emp_empID)==1){
+									
+									lbl_emp_info.setText("Modification succeed");
+									lbl_emp_info.setVisible(true);	
+																	
+								}else {
+									//save_change(text_emp_empID)==0
+									lbl_emp_info.setText("Modification failed");
+									lbl_emp_info.setVisible(true);
+								}
+							}
 						}else {
 							lbl_emp_info.setText("Supervisor ID is not in Employee table or format invalid.");
 							lbl_emp_info.setVisible(true);
 						}
-					}else if(btn_emp_execute.getText().equalsIgnoreCase("Delete Employee")) {
+					}else if(btn_emp_execute.getText().equalsIgnoreCase("Delete")) {
 						
 							if(delete_emp(text_emp_empID)==1) {
+								
+								btn_clear.setVisible(false);
+								
+						     	lbl_emp_info.setVisible(false);
+			            		lbl_empID_show.setVisible(false);
+			            		text_emp_empID.setVisible(true);
+			            		clear_text();
+			            		set_visible(false);
 								lbl_emp_info.setText("Delete succeed");
 								lbl_emp_info.setVisible(true);
+								
 							}else {
 								//delete_emp(text_emp_empID)==0
+								btn_clear.setVisible(false);
+								
+						     	lbl_emp_info.setVisible(false);
+			            		lbl_empID_show.setVisible(false);
+			            		text_emp_empID.setVisible(true);
+			            		clear_text();
+			            		set_visible(false);
 								lbl_emp_info.setText("Delete failed");
+								lbl_emp_info.setVisible(true);
+							}
+					}else if(btn_emp_execute.getText().equalsIgnoreCase("Add")) {
+							//
+							if((!text_emp_supervID.getText().isBlank())&lib.supervisor_check(text_emp_supervID)) {
+								if(text_emp_first.getText().isBlank()|text_emp_last.getText().isBlank()|text_emp_addr.getText().isBlank()
+										|text_emp_phone.getText().isBlank()) {
+									
+									lbl_emp_info.setText("Employee infos cannot be blank.");
+									lbl_emp_info.setVisible(true);	
+									
+								}else {
+									String[]temp=add();
+									if(temp[0]!=null){
+										
+										lbl_emp_info.setText("Employee added");
+										lbl_emp_info.setVisible(true);	
+										
+										text_emp_empID.setVisible(false);
+										lbl_empID_show.setText(temp[0]);
+										lbl_empID_show.setVisible(true);
+										
+									}else {
+										//add()==0
+										lbl_emp_info.setText("Request failed");
+										lbl_emp_info.setVisible(true);
+									}
+								}
+							}else if(text_emp_supervID.getText().isBlank()){
+								if(text_emp_first.getText().isBlank()|text_emp_last.getText().isBlank()|text_emp_addr.getText().isBlank()
+										|text_emp_phone.getText().isBlank()) {
+									
+									lbl_emp_info.setText("Employee infos cannot be blank.");
+									lbl_emp_info.setVisible(true);	
+									
+								}else {
+									String[]temp=add();
+									if(temp[0]!=null){
+										
+										lbl_emp_info.setText("Employee added");
+										lbl_emp_info.setVisible(true);	
+										
+										text_emp_empID.setVisible(false);
+										lbl_empID_show.setText(temp[0]);
+										lbl_empID_show.setVisible(true);
+										
+									}else {
+										//save_change(text_emp_empID)==0
+										lbl_emp_info.setText("Request failed");
+										lbl_emp_info.setVisible(true);
+									}
+								}
+							}else {
+								lbl_emp_info.setText("Supervisor ID is not in Employee table or format invalid.");
 								lbl_emp_info.setVisible(true);
 							}
 						}
@@ -348,15 +503,7 @@ public class Employee_panel {
 			btn_emp_execute.setBounds(266, 281, 130, 29);
 			btn_emp_execute.setVisible(false);
 			employee_panel.add(btn_emp_execute);
-					
-			lbl_emp_info = new JLabel("Message of execute result");
-			lbl_emp_info.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_emp_info.setBounds(115, 332, 434, 16);
-			lbl_emp_info.setVisible(false);
-			employee_panel.add(lbl_emp_info);
-			
-			
-						
+				
 		}
 		
 		
@@ -393,7 +540,62 @@ public class Employee_panel {
 			}
 		}
 		
-		
+		private String[] add() {
+			/**
+			 * @author jyunanyang
+			 * @since 06/09/2021
+			 */
+			
+			int r=0;
+			String[] temp = new String[1];
+			if(!text_emp_supervID.getText().isBlank()) {
+				
+				 try {
+					r = Term_project_main.conn.st.executeUpdate("INSERT INTO EMPLOYEE(First_name, Last_name, Address, Phone_number, Supervisor_ID, Performance)"
+					 										+ " VALUE(\'"+text_emp_first.getText()+ "\', \'"+text_emp_last.getText()+"\', \'"+text_emp_addr.getText()
+					 										+"\', \'"+text_emp_phone.getText()+"\', "+text_emp_supervID.getText()+", \'"+comboBox_emp_perf.getSelectedItem()
+					 										+"\')");
+					if (r==1) {
+						//employee added
+						ResultSet r2 = Term_project_main.conn.st.executeQuery("SELECT Emp_ID FROM EMPLOYEE ORDER BY Emp_ID DESC LIMIT 1 ");
+						
+						if(r2.next()) {
+							temp[0]=r2.getString(1);
+						}
+						
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return temp;
+				}
+				return temp;
+			
+			}else {
+				//text_emp_supervID.getText().isBlank()
+				 try {
+						r = Term_project_main.conn.st.executeUpdate("INSERT INTO EMPLOYEE(First_name, Last_name, Address, Phone_number, Performance)"
+						 										+ " VALUE(\'"+text_emp_first.getText()+ "\', \'"+text_emp_last.getText()+"\', \'"+text_emp_addr.getText()
+						 										+"\', \'"+text_emp_phone.getText()+"\', \'"+comboBox_emp_perf.getSelectedItem()+"\')");
+						if (r==1) {
+							//employee added
+							ResultSet r2 = Term_project_main.conn.st.executeQuery("SELECT Emp_ID FROM EMPLOYEE ORDER BY Emp_ID DESC LIMIT 1");
+							
+							if(r2.next()) {
+								temp[0]=r2.getString(1);
+							}
+							
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return temp;
+					}
+					return temp;
+					
+				
+			}
+		}
 		
 		
 		private int save_change(JTextField empID) {
@@ -403,16 +605,31 @@ public class Employee_panel {
 			 * the action after click button save_change in employee panel- show and adjust
 			 */
 			int r = 0;
-			try {
-				 r = Term_project_main.conn.st.executeUpdate("UPDATE EMPLOYEE SET First_name=\'"+text_emp_first.getText()+ "\', Last_name=\'"
-						 		+text_emp_last.getText()+"\', Address=\'"+text_emp_addr.getText()
-								+ "\', Phone_number=\'"+ text_emp_phone.getText()+"\', Supervisor_ID="+text_emp_supervID.getText()
-								+ ", Performance=\'"+comboBox_emp_perf.getSelectedItem()+"\' WHERE Emp_ID="+lbl_empID_show.getText());
-				return r;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
+			if(!text_emp_supervID.getText().isBlank()) {
+				try {
+					 r = Term_project_main.conn.st.executeUpdate("UPDATE EMPLOYEE SET First_name=\'"+text_emp_first.getText()+ "\', Last_name=\'"
+							 		+text_emp_last.getText()+"\', Address=\'"+text_emp_addr.getText()
+									+ "\', Phone_number=\'"+ text_emp_phone.getText()+"\', Supervisor_ID="+text_emp_supervID.getText()
+									+ ", Performance=\'"+comboBox_emp_perf.getSelectedItem()+"\' WHERE Emp_ID="+lbl_empID_show.getText());
+					return r;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return r;
+				}
+			}else {
+				//!text_emp_supervID.getText().isBlank()
+				try {
+					 r = Term_project_main.conn.st.executeUpdate("UPDATE EMPLOYEE SET First_name=\'"+text_emp_first.getText()+ "\', Last_name=\'"
+							 		+text_emp_last.getText()+"\', Address=\'"+text_emp_addr.getText()
+									+ "\', Phone_number=\'"+ text_emp_phone.getText()+"\', Supervisor_ID=null"
+									+ ", Performance=\'"+comboBox_emp_perf.getSelectedItem()+"\' WHERE Emp_ID="+lbl_empID_show.getText());
+					return r;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return r;
+				}
 			}
 		}
 		
@@ -444,22 +661,31 @@ public class Employee_panel {
     		text_emp_addr.setText("");
     		text_emp_phone.setText("");
     		text_emp_supervID.setText("");
+    		comboBox_emp_perf.setSelectedItem("A");
+    		lbl_emp_info.setText("");
+    		lbl_empID_show.setText("");
 		}
 		
 		private void set_visible(boolean bl) {
 			
 			lbl_emp_first.setVisible(bl);
 			text_emp_first.setVisible(bl);
+			
 			lbl_emp_last.setVisible(bl);
 			text_emp_last.setVisible(bl);
+			
 			lbl_emp_addr.setVisible(bl);
 			text_emp_addr.setVisible(bl);
+			
 			lbl_emp_phone.setVisible(bl);
 			text_emp_phone.setVisible(bl);
+			
 			lbl_emp_supervID.setVisible(bl);
 			text_emp_supervID.setVisible(bl);
+			
 			lbl_emp_perf.setVisible(bl);
 			comboBox_emp_perf.setVisible(bl);
+			
 			btn_emp_execute.setVisible(bl);
 			
 				

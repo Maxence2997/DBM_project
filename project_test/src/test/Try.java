@@ -30,7 +30,7 @@ public class Try {
 //		
 		String[] temp2=new String[6];
 		
-		System.out.print(temp2.length);
+		System.out.print(temp2[2]);
 		
 	}
 
