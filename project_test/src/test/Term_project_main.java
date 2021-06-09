@@ -289,6 +289,14 @@ public class Term_project_main {
 					emp_panel.get_text_emp_phone().setText("");
 					emp_panel.get_text_emp_supervID().setText("");
 					emp_panel.get_comboBox_emp_perf().setSelectedIndex(0);
+					
+					/*
+					 * editor: Jyun-An
+					 * 06/08/2021
+					 * add emp_panel.set_visible(false);
+					 */
+					emp_panel.set_visible(false);
+					
 					cl_home.show(container_panel, "employee");
 				}
 			});

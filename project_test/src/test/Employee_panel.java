@@ -184,47 +184,99 @@ public class Employee_panel {
 				@Override
 	            public void actionPerformed(ActionEvent e) {
 					function = (String) comboBox_emp_action.getSelectedItem();
-				         	
-					if (function.equals("Show & Adjust")) {
-		        		//visibility
-						
-						btn_emp_execute.setText("Save Change");
-						set_visible(false);
-						lbl_emp_info.setVisible(false);
-						lbl_empID_show.setVisible(false);
-						text_emp_empID.setVisible(true);
-			    		btn_emp_confirmID.setVisible(true);
-			    		btn_clear.setVisible(false);
-				            		
-			    		//textField
-			    		clear_text();
-			    		
-		            }else if (function.equals("Add Employee")) {
-				   		//visibility
-		            	btn_emp_execute.setText("Add");
-				   		set_visible(true);
-		         		lbl_emp_info.setVisible(false);
-		         		lbl_empID_show.setText("");
-		         		lbl_empID_show.setVisible(true);
-		         		text_emp_empID.setVisible(false);
-			       		btn_emp_confirmID.setVisible(false);
-			       		btn_clear.setVisible(true);
-					          		
-			      		//textField
-	            		clear_text();
-	            		
-	            	}else{
-	           			//visibility
-	            		btn_emp_execute.setText("Delete");
-		            	set_visible(false);
-		            	lbl_emp_info.setVisible(false);
-		            	lbl_empID_show.setVisible(false);
-		            	btn_emp_confirmID.setVisible(true);
-		            	text_emp_empID.setVisible(true);
-		            	btn_clear.setVisible(false);
-			           	//textField
-			      		clear_text();
-			       	}
+				    if(lib.supervisor_check(Term_project_main.field_empID)){     	
+						if (function.equals("Show & Adjust")) {
+			        		//visibility
+							
+							btn_emp_execute.setText("Save Change");
+							set_visible(false);
+							lbl_emp_empID.setVisible(true);
+							lbl_emp_info.setVisible(false);
+							lbl_empID_show.setVisible(false);
+							text_emp_empID.setVisible(true);
+				    		btn_emp_confirmID.setVisible(true);
+				    		btn_clear.setVisible(false);
+					            		
+				    		//textField
+				    		clear_text();
+				    		
+			            }else if (function.equals("Add Employee")) {
+					   		//visibility
+			            	btn_emp_execute.setText("Add");
+					   		set_visible(true);
+					   		lbl_emp_empID.setVisible(true);
+			         		lbl_emp_info.setVisible(false);
+			         		lbl_empID_show.setText("");
+			         		lbl_empID_show.setVisible(true);
+			         		text_emp_empID.setVisible(false);
+				       		btn_emp_confirmID.setVisible(false);
+				       		btn_clear.setVisible(true);
+						          		
+				      		//textField
+		            		clear_text();
+		            		
+		            	}else{
+		           			//visibility
+		            		btn_emp_execute.setText("Delete");
+			            	set_visible(false);
+			            	lbl_emp_empID.setVisible(true);
+			            	lbl_emp_info.setVisible(false);
+			            	lbl_empID_show.setVisible(false);
+			            	btn_emp_confirmID.setVisible(true);
+			            	text_emp_empID.setVisible(true);
+			            	btn_clear.setVisible(false);
+				           	//textField
+				      		clear_text();
+				       	}
+				    }else {
+				    	//not supervisor
+				    	if (function.equals("Show & Adjust")) {
+			        		//visibility
+							
+							btn_emp_execute.setText("Save Change");
+							set_visible(false);
+							lbl_emp_empID.setVisible(true);
+							lbl_emp_info.setVisible(false);
+							lbl_empID_show.setVisible(false);
+							text_emp_empID.setVisible(true);
+				    		btn_emp_confirmID.setVisible(true);
+				    		btn_clear.setVisible(false);
+					            		
+				    		//textField
+				    		clear_text();
+				    		
+			            }else if (function.equals("Add Employee")) {
+					   		//visibility
+			            	btn_emp_execute.setText("Add");
+					   		set_visible(false);
+					   		lbl_emp_empID.setVisible(false);
+			         		lbl_empID_show.setText("");
+			         		lbl_empID_show.setVisible(false);
+			         		text_emp_empID.setVisible(false);
+				       		btn_emp_confirmID.setVisible(false);
+				       		btn_clear.setVisible(false);
+						          		
+				      		//textField
+				       		clear_text();
+		            		lbl_emp_info.setText("Sorry, this function is only for supervisor.");
+		            		lbl_emp_info.setVisible(true);
+		            		
+		            	}else{
+		           			//visibility
+		            		btn_emp_execute.setText("Delete");
+			            	set_visible(false);
+			            	lbl_emp_empID.setVisible(false);
+			            	lbl_empID_show.setVisible(false);
+			            	btn_emp_confirmID.setVisible(false);
+			            	text_emp_empID.setVisible(false);  
+			            	btn_clear.setVisible(false);
+				           	//textField
+			            	clear_text();
+			            	lbl_emp_info.setText("Sorry, this function is only for supervisor.");
+		            		lbl_emp_info.setVisible(true);
+				       	}
+				    	
+				    }
 				}
 			});
 			employee_panel.add(comboBox_emp_action);
@@ -280,7 +332,12 @@ public class Employee_panel {
 		            		comboBox_emp_perf.setVisible(true);
 		            		comboBox_emp_perf.setSelectedItem(temp.get(6));
 		            		
-		            		btn_emp_execute.setVisible(true);
+		            		if(lib.supervisor_check(Term_project_main.field_empID)) 
+		            			
+		            			btn_emp_execute.setVisible(true);
+		            		
+		            		else 
+		            			btn_emp_execute.setVisible(false);
 		            		
 		            		lbl_emp_info.setText("Data loaded");
 					     	lbl_emp_info.setVisible(true);
@@ -666,7 +723,7 @@ public class Employee_panel {
     		lbl_empID_show.setText("");
 		}
 		
-		private void set_visible(boolean bl) {
+		public void set_visible(boolean bl) {
 			
 			lbl_emp_first.setVisible(bl);
 			text_emp_first.setVisible(bl);
