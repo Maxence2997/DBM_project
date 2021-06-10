@@ -151,6 +151,7 @@ public class Library {
 			    //handle exception here
 				return res;
 			}
+		
 		 return res;
 	}
 	
@@ -167,17 +168,8 @@ public class Library {
 		
 		boolean res = false;
 		
-		try{
-			   Integer.parseInt(supID.getText());
-			   // test empID.getText() is blank or alphabet
-			   
-			}catch (NumberFormatException ex) {
-			    //handle exception here
-				return res;
-			}
-		
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Supplier_ID FROM SUPPLIER WHERE Supplier_ID="+supID.getText());
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Supplier_ID FROM SUPPLIER WHERE Supplier_ID=\'"+supID.getText()+"\'");
 			
 			if(r.next()) {
 				
@@ -187,7 +179,7 @@ public class Library {
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
 			return res;
 		}
 	}
@@ -244,7 +236,7 @@ public class Library {
 		boolean res=false;
 
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Module_type FROM PRODUCT WHERE Module_type="+module.getText());
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Module_type FROM PRODUCT WHERE Module_type=\'"+module.getText()+"\'");
 			
 			if(r.next()) {
 				
@@ -362,7 +354,7 @@ public class Library {
 		/* Check if date is 'null' */
 		if (strDate.trim().equals("")){
 			
-		    return true;
+		    return false;
 		    
 		}else {
 		/* Date is not 'null' */

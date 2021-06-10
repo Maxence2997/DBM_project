@@ -55,6 +55,7 @@ public class Project_panels {
 		btn_pj_prog.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				lib.adjust_PROJECT();
 				prog_panel.clear();
 				Term_project_main.cl_home.show(Term_project_main.container_panel,"progress");
 				// btn_back2Project.setVisible(true);
@@ -70,6 +71,8 @@ public class Project_panels {
 		JButton btn_pj_sheet = new JButton("Sheets");
 		btn_pj_sheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+					lib.adjust_PROJECT();
 				 sheets_panel.get_comboBox_sheets().setSelectedIndex(0);
 				 Term_project_main.cl_home.show(Term_project_main.container_panel,"sheets");
 				 //btn_back2Project.setVisible(true);
@@ -85,19 +88,6 @@ public class Project_panels {
 		JLabel lbl_pj = new JLabel("Project");
 		lbl_pj.setBounds(6, 6, 61, 16);
 		project_panel.add(lbl_pj);
-		
-		JButton btn_update = new JButton("");
-		btn_update.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				lib.adjust_PROJECT();
-			}
-		});
-		Image update = new ImageIcon(this.getClass().getResource("/update.jpg")).getImage();
-		update = update.getScaledInstance( 21, 21,  java.awt.Image.SCALE_AREA_AVERAGING) ;
-		btn_update.setIcon(new ImageIcon(update));
-		btn_update.setBounds(251, 98, 29, 29);
-		project_panel.add(btn_update);
 		
 		pj_subpanels = new Maintenance_panel();
 		sheets_panel = new Sheets_panel();

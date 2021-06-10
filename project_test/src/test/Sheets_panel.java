@@ -63,6 +63,7 @@ public class Sheets_panel  {
 	private JRadioButton rb_inq_exam;
 	private JRadioButton rb_inq_rec;
 	private JTable inq_table;
+	private JButton btn_inq_clear;
 	
 	
 	private JPanel mod_panel;
@@ -117,6 +118,7 @@ public class Sheets_panel  {
 	private JRadioButton rb_appd_EXAM;
 	private JRadioButton rb_appd_RCPT;
 	private JLabel lbl_append_message;
+	private JButton btn_append_clear;
 
 
 	
@@ -181,11 +183,9 @@ public class Sheets_panel  {
 				comboBox_sheets.addActionListener(new ActionListener() {
 			            @Override
 			            public void actionPerformed(ActionEvent e) {
-			            	String function = (String) comboBox_sheets.getSelectedItem(); //get the selected item
-	
-			                
-			            	cl_sheet.show(sheet_container_panel, function);	
 			            	
+			            	String function = (String) comboBox_sheets.getSelectedItem(); //get the selected item
+			            		
 			            	if (function.equalsIgnoreCase("signature")){
 				            	if(lib.supervisor_check(Term_project_main.field_empID)) {
 									
@@ -228,8 +228,58 @@ public class Sheets_panel  {
 									scrollpane_sign.setVisible(false);
 									
 									}
-			            		}
+			            	}else if(function.equalsIgnoreCase("Inquire")) {
+			            			
+			            		clear_inq_panel();
+			            		inq_table.setVisible(false);
+			            		scrollpane_inq.setVisible(false);   
+			            		btn_inq_clear.setVisible(false);
+			            		
+			            	}else if(function.equalsIgnoreCase("Modify")) {
+			            			
+			            		clear_mod_panel();
+			            		btn_mod_check.setVisible(true);
+			            		btn_mod_clear.setVisible(false);
+			            		btn_mod_modify.setVisible(false);
+			            		
+			            		text_mod_sheetID.setVisible(true);
+			            		text_mod_projectID.setVisible(true);
+			            		text_mod_pd.setVisible(true);
+			            		lbl_mod_sheetID_show.setVisible(false);
+			            		lbl_mod_projectID_show.setVisible(false);
+			            		lbl_mod_pd_show.setVisible(false);
+			            		
+			            		lbl_mod_4.setVisible(false);
+			            		text_mod_4.setVisible(false);
+			            		
+			            		lbl_mod_5.setVisible(false);
+			            		text_mod_5.setVisible(false);
+			            		
+			            		lbl_mod_6.setVisible(false);
+			            		text_mod_6.setVisible(false);
+			            		
+			            		lbl_mod_7.setVisible(false);
+			            		text_mod_7.setVisible(false);
+			            		
+			            		lbl_mod_8.setVisible(false);
+			            		text_mod_8.setVisible(false);
+			            		
+			            		lbl_mod_message.setVisible(false);
+			            		
+			            	}else if(function.equalsIgnoreCase("Append")) {
+			            		
+			            		clear_app_panel();
+			            		
+			            		
+			            		append_table.setVisible(false);
+			            		scrollpane_append.setVisible(false);
+			            		btn_append_clear.setVisible(false);
+			            		btn_appd_append.setVisible(false);
+			            		lbl_appd_ins.setVisible(true);
 			            	}
+			            	
+			            	cl_sheet.show(sheet_container_panel, function);
+			            }
 			        });
 	
 				core_sheet_panel.add(comboBox_sheets);
@@ -271,7 +321,17 @@ public class Sheets_panel  {
 				sheet_container_panel.add(inq_panel, "Inquire");
 				inq_panel.setLayout(null);
 				
+				btn_inq_clear = new JButton("Clear");
+				btn_inq_clear.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
 						
+						clear_inq_panel();
+						btn_inq_clear.setVisible(false);
+					}
+				});
+				btn_inq_clear.setBounds(554, 73, 87, 29);
+				inq_panel.add(btn_inq_clear);		
+				
 				lbl_inq_sheetID = new JLabel("Sheet ID :");
 				lbl_inq_sheetID.setHorizontalAlignment(SwingConstants.RIGHT);
 				lbl_inq_sheetID.setBounds(310, 44, 103, 16);
@@ -300,7 +360,9 @@ public class Sheets_panel  {
 				btn_inq_inquire.setBounds(554, 39, 87, 29);
 				btn_inq_inquire.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						//library.btn_inquire();
+						
+						btn_inq_clear.setVisible(true);
+						
 						try {
 							if(!text_inq_sheetID.getText().isBlank()) 
 								Integer.parseInt(text_inq_sheetID.getText());
@@ -344,7 +406,8 @@ public class Sheets_panel  {
 									String[][] temp = inquire("RFQ", text_inq_sheetID,text_inq_projectID,text_inq_pd);
 									if(temp.length!=0) {
 										
-										String[] columns_name = {"Sheet ID", "Type", "Project ID", "Inquiring Product", "Supplier ID", "Name", "Vol.", "Date"};
+										String[] columns_name = {"Sheet ID", "Type", "Project ID", "Inquiring Product", "Supplier ID",
+												"Name", "Vol.", "Date"};
 										DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
 										inq_table.setModel(inq_table_model);
 										inq_table.setVisible(true);
@@ -519,8 +582,6 @@ public class Sheets_panel  {
 				
 				ButtonGroup bg = new ButtonGroup();
 				
-				
-				
 				rb_inq_all = new JRadioButton("All  Sheets");
 				rb_inq_all.setBounds(137, 28, 180, 23);
 				inq_panel.add(rb_inq_all);
@@ -528,6 +589,7 @@ public class Sheets_panel  {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			        
+			        	clear_inq_panel();
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -549,7 +611,8 @@ public class Sheets_panel  {
 				rb_inq_RFQ.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
-			        			        	
+			        		
+			        	clear_inq_panel();
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -574,6 +637,7 @@ public class Sheets_panel  {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			             	
+			        	clear_inq_panel();
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -597,6 +661,7 @@ public class Sheets_panel  {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
 			        	
+			        	clear_inq_panel();
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -619,7 +684,8 @@ public class Sheets_panel  {
 				rb_inq_pur.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
-			        			        	
+			        		
+			        	clear_inq_panel();
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -643,6 +709,7 @@ public class Sheets_panel  {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {		        	
 			        	
+			        	clear_inq_panel();
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -666,7 +733,8 @@ public class Sheets_panel  {
 				rb_inq_rec.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
-			        			        	
+			        			     
+			        	clear_inq_panel();
 			        	lbl_inq_sheetID.setVisible(true);
 			        	text_inq_sheetID.setVisible(true);
 			        	
@@ -678,6 +746,7 @@ public class Sheets_panel  {
 			        	text_inq_pd.setVisible(true);
 			        			        	
 			        	btn_inq_inquire.setVisible(true);
+			        	
 			        }
 			    });
 				
@@ -686,11 +755,7 @@ public class Sheets_panel  {
 				JLabel lbl_sheet_type = new JLabel("Sheets type :");
 				lbl_sheet_type.setBounds(42, 32, 87, 16);
 				inq_panel.add(lbl_sheet_type);
-				
-				JButton btn_clear = new JButton("Clear");
-				btn_clear.setBounds(554, 73, 87, 29);
-				inq_panel.add(btn_clear);
-											
+								
 			}
 			
 			//Second panel - Modify sheet
@@ -701,14 +766,118 @@ public class Sheets_panel  {
 				mod_panel.setBounds(0, 0, 662, 367);
 				mod_panel.setLayout(null);
 				
+				lbl_mod_note = new JLabel("* neccessary");
+				lbl_mod_note.setBounds(41, 41, 123, 16);
+				lbl_mod_note.setVisible(true);
+				mod_panel.add(lbl_mod_note);
+				
 				lbl_mod_sheetID = new JLabel("*sheet ID :");
 				lbl_mod_sheetID.setBounds(193, 41, 67, 16);
+				lbl_mod_sheetID.setVisible(true);
 				mod_panel.add(lbl_mod_sheetID);
 				
 				text_mod_sheetID = new JTextField();
 				text_mod_sheetID.setBounds(272, 36, 115, 26);
 				mod_panel.add(text_mod_sheetID);
 				text_mod_sheetID.setColumns(10);
+				
+				lbl_mod_sheetID_show = new JLabel("");
+				lbl_mod_sheetID_show.setBounds(272, 41, 115, 16);
+				lbl_mod_sheetID_show.setVisible(false);
+				mod_panel.add(lbl_mod_sheetID_show);
+				
+				lbl_mod_projectID = new JLabel("*Project ID :");
+				lbl_mod_projectID.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_mod_projectID.setVisible(true);
+				lbl_mod_projectID.setBounds(164, 79, 96, 16);
+				mod_panel.add(lbl_mod_projectID);
+				
+				text_mod_projectID = new JTextField();
+				text_mod_projectID.setBounds(272, 74, 115, 26);
+				mod_panel.add(text_mod_projectID);
+				text_mod_projectID.setColumns(10);
+
+				lbl_mod_projectID_show = new JLabel("");
+				lbl_mod_projectID_show.setBounds(272, 79, 115, 16);
+				lbl_mod_projectID_show.setVisible(false);
+				mod_panel.add(lbl_mod_projectID_show);
+						
+				lbl_mod_pd = new JLabel("*Product :");
+				lbl_mod_pd.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_mod_pd.setVisible(true);
+				lbl_mod_pd.setBounds(154, 117, 106, 16);
+				mod_panel.add(lbl_mod_pd);
+				
+				text_mod_pd = new JTextField();
+				text_mod_pd.setBounds(272, 112, 115, 26);
+				mod_panel.add(text_mod_pd);
+				text_mod_pd.setColumns(10);
+				
+				lbl_mod_pd_show = new JLabel("");
+				lbl_mod_pd_show.setBounds(272, 117, 115, 16);
+				lbl_mod_pd_show.setVisible(false);
+				mod_panel.add(lbl_mod_pd_show);
+				
+				lbl_mod_4 = new JLabel("");
+				lbl_mod_4.setBounds(164, 152, 96, 16);
+				lbl_mod_4.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_mod_4.setVisible(false);
+				mod_panel.add(lbl_mod_4);
+				
+				text_mod_4 = new JTextField();
+				text_mod_4.setBounds(272, 150, 115, 26);
+				text_mod_4.setVisible(false);
+				mod_panel.add(text_mod_4);
+				text_mod_4.setColumns(10);
+				
+				lbl_mod_5 = new JLabel("");
+				lbl_mod_5.setBounds(154, 191, 106, 16);
+				lbl_mod_5.setVisible(false);
+				mod_panel.add(lbl_mod_5);
+				
+				text_mod_5 = new JTextField();
+				text_mod_5.setBounds(272, 186, 115, 26);
+				text_mod_5.setVisible(false);
+				mod_panel.add(text_mod_5);
+				text_mod_5.setColumns(10);
+				
+				lbl_mod_6 = new JLabel("");
+				lbl_mod_6.setBounds(154, 233, 106, 16);
+				lbl_mod_6.setVisible(false);
+				mod_panel.add(lbl_mod_6);
+				
+				text_mod_6 = new JTextField();
+				text_mod_6.setBounds(272, 228, 115, 26);
+				text_mod_6.setVisible(false);
+				mod_panel.add(text_mod_6);
+				text_mod_6.setColumns(10);
+				
+				lbl_mod_7 = new JLabel("");
+				lbl_mod_7.setBounds(154, 276, 106, 16);
+				lbl_mod_7.setVisible(false);
+				mod_panel.add(lbl_mod_7);
+				
+				text_mod_7 = new JTextField();
+				text_mod_7.setBounds(272, 266, 115, 26);
+				text_mod_7.setVisible(false);
+				mod_panel.add(text_mod_7);
+				text_mod_7.setColumns(10);
+				
+				lbl_mod_message = new JLabel("");
+				lbl_mod_message.setBounds(399, 117, 227, 16);
+				lbl_mod_message.setVisible(false);
+				mod_panel.add(lbl_mod_message);
+				
+				text_mod_8 = new JTextField();
+				text_mod_8.setBounds(272, 304, 115, 26);
+				text_mod_8.setVisible(false);
+				mod_panel.add(text_mod_8);
+				text_mod_8.setColumns(10);
+				
+				lbl_mod_8 = new JLabel("");
+				lbl_mod_8.setBounds(154, 309, 100, 16);
+				lbl_mod_8.setVisible(false);
+				mod_panel.add(lbl_mod_8);
 				
 				btn_mod_modify = new JButton("Modify");
 				btn_mod_modify.addActionListener(new ActionListener() {
@@ -726,9 +895,13 @@ public class Sheets_panel  {
 									else 
 										lbl_mod_message.setText("modification failed");
 								}else{
+									System.out.print(lib.supplier_check(text_mod_4));
+									System.out.print(lib.num_not_null_check(text_mod_5));
+									System.out.print(lib.date(text_mod_6.getText()));
 									lbl_mod_message.setText("format Invalid");
 									lbl_mod_message.setVisible(true);
 								}
+								
 						}else if (id>=22000000 & id< 23000000) {
 							//QUOT
 							if (lib.supplier_check(text_mod_4)&lib.num_not_null_check(text_mod_5)&lib.num_not_null_check(text_mod_6)
@@ -799,49 +972,6 @@ public class Sheets_panel  {
 				btn_mod_modify.setBounds(539, 35, 87, 29);
 				mod_panel.add(btn_mod_modify);
 				
-				lbl_mod_projectID = new JLabel("*Project ID :");
-				lbl_mod_projectID.setHorizontalAlignment(SwingConstants.RIGHT);
-				lbl_mod_projectID.setBounds(164, 79, 96, 16);
-				mod_panel.add(lbl_mod_projectID);
-				
-				text_mod_projectID = new JTextField();
-				text_mod_projectID.setBounds(272, 74, 115, 26);
-				mod_panel.add(text_mod_projectID);
-				text_mod_projectID.setColumns(10);
-				
-				lbl_mod_pd = new JLabel("*Product :");
-				lbl_mod_pd.setHorizontalAlignment(SwingConstants.RIGHT);
-				lbl_mod_pd.setBounds(154, 117, 106, 16);
-				mod_panel.add(lbl_mod_pd);
-				
-				text_mod_pd = new JTextField();
-				text_mod_pd.setBounds(272, 112, 115, 26);
-				mod_panel.add(text_mod_pd);
-				text_mod_pd.setColumns(10);
-				
-				lbl_mod_4 = new JLabel("");
-				lbl_mod_4.setBounds(164, 152, 96, 16);
-				lbl_mod_4.setHorizontalAlignment(SwingConstants.RIGHT);
-				lbl_mod_4.setVisible(false);
-				mod_panel.add(lbl_mod_4);
-				
-				text_mod_4 = new JTextField();
-				text_mod_4.setBounds(272, 150, 115, 26);
-				text_mod_4.setVisible(false);
-				mod_panel.add(text_mod_4);
-				text_mod_4.setColumns(10);
-				
-				lbl_mod_5 = new JLabel("");
-				lbl_mod_5.setBounds(154, 191, 106, 16);
-				lbl_mod_5.setVisible(false);
-				mod_panel.add(lbl_mod_5);
-				
-				text_mod_5 = new JTextField();
-				text_mod_5.setBounds(272, 186, 115, 26);
-				text_mod_5.setVisible(false);
-				mod_panel.add(text_mod_5);
-				text_mod_5.setColumns(10);
-				
 				btn_mod_check = new JButton("Check");
 				btn_mod_check.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
@@ -851,6 +981,30 @@ public class Sheets_panel  {
 							
 							lbl_mod_message.setText("Format Invalid");
 							lbl_mod_message.setVisible(true);
+							
+							btn_mod_check.setVisible(true);
+		            		btn_mod_clear.setVisible(true);
+		            		btn_mod_modify.setVisible(false);
+		            		
+		            		lbl_mod_sheetID_show.setVisible(false);
+		            		lbl_mod_projectID_show.setVisible(false);
+		            		lbl_mod_pd_show.setVisible(false);
+		            		
+		            		lbl_mod_4.setVisible(false);
+		            		text_mod_4.setVisible(false);
+		            		
+		            		lbl_mod_5.setVisible(false);
+		            		text_mod_5.setVisible(false);
+		            		
+		            		lbl_mod_6.setVisible(false);
+		            		text_mod_6.setVisible(false);
+		            		
+		            		lbl_mod_7.setVisible(false);
+		            		text_mod_7.setVisible(false);
+		            		
+		            		lbl_mod_8.setVisible(false);
+		            		text_mod_8.setVisible(false);
+		            		
 							
 						}else {
 							//each of them is filled
@@ -876,6 +1030,9 @@ public class Sheets_panel  {
 								
 								
 								if (temp.size()!=0) {
+									
+									btn_mod_clear.setVisible(true);
+									
 									if (temp.get(1).equalsIgnoreCase("RFQ")) {
 										
 										lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
@@ -1136,29 +1293,32 @@ public class Sheets_panel  {
 										
 									}
 								}else {
-										lbl_mod_4.setText("");
-										lbl_mod_4.setVisible(false);
-										text_mod_4.setVisible(false);
+									btn_mod_check.setVisible(true);
+				            		btn_mod_clear.setVisible(true);
+				            		btn_mod_modify.setVisible(false);
+				            		
+				            		lbl_mod_sheetID_show.setVisible(false);
+				            		lbl_mod_projectID_show.setVisible(false);
+				            		lbl_mod_pd_show.setVisible(false);
+				            		
+				            		lbl_mod_4.setVisible(false);
+				            		text_mod_4.setVisible(false);
+				            		
+				            		lbl_mod_5.setVisible(false);
+				            		text_mod_5.setVisible(false);
+				            		
+				            		lbl_mod_6.setVisible(false);
+				            		text_mod_6.setVisible(false);
+				            		
+				            		lbl_mod_7.setVisible(false);
+				            		text_mod_7.setVisible(false);
+				            		
+				            		lbl_mod_8.setVisible(false);
+				            		text_mod_8.setVisible(false);
 										
-										lbl_mod_5.setText("");
-										lbl_mod_5.setVisible(false);
-										text_mod_5.setVisible(false);	
-										
-										lbl_mod_6.setText("");
-										lbl_mod_6.setVisible(false);
-										text_mod_6.setVisible(false);							
-										
-										lbl_mod_7.setText("");
-										lbl_mod_7.setVisible(false);
-										text_mod_7.setVisible(false);
-										
-										lbl_mod_8.setText("");
-										lbl_mod_8.setVisible(false);
-										text_mod_8.setVisible(false);
-										
-										btn_mod_modify.setVisible(false);
-										lbl_mod_message.setText("please check data again");
-										lbl_mod_message.setVisible(true);	
+				            		btn_mod_modify.setVisible(false);
+				            		lbl_mod_message.setText("please check data again");
+				            		lbl_mod_message.setVisible(true);	
 								}
 						}
 					}
@@ -1166,72 +1326,49 @@ public class Sheets_panel  {
 				btn_mod_check.setBounds(389, 36, 83, 29);
 				mod_panel.add(btn_mod_check);
 				
-				lbl_mod_6 = new JLabel("");
-				lbl_mod_6.setBounds(154, 233, 106, 16);
-				lbl_mod_6.setVisible(false);
-				mod_panel.add(lbl_mod_6);
 				
-				text_mod_6 = new JTextField();
-				text_mod_6.setBounds(272, 228, 115, 26);
-				text_mod_6.setVisible(false);
-				mod_panel.add(text_mod_6);
-				text_mod_6.setColumns(10);
-				
-				lbl_mod_7 = new JLabel("");
-				lbl_mod_7.setBounds(154, 276, 106, 16);
-				lbl_mod_7.setVisible(false);
-				mod_panel.add(lbl_mod_7);
-				
-				text_mod_7 = new JTextField();
-				text_mod_7.setBounds(272, 266, 115, 26);
-				text_mod_7.setVisible(false);
-				mod_panel.add(text_mod_7);
-				text_mod_7.setColumns(10);
-				
-				lbl_mod_message = new JLabel("");
-				lbl_mod_message.setBounds(399, 117, 227, 16);
-				lbl_mod_message.setVisible(false);
-				mod_panel.add(lbl_mod_message);
-				
-				lbl_mod_note = new JLabel("* neccessary");
-				lbl_mod_note.setBounds(41, 41, 123, 16);
-				mod_panel.add(lbl_mod_note);
-				
-				text_mod_8 = new JTextField();
-				text_mod_8.setBounds(272, 304, 115, 26);
-				text_mod_8.setVisible(false);
-				mod_panel.add(text_mod_8);
-				text_mod_8.setColumns(10);
-				
-				lbl_mod_8 = new JLabel("");
-				lbl_mod_8.setBounds(154, 309, 100, 16);
-				lbl_mod_8.setVisible(false);
-				mod_panel.add(lbl_mod_8);
 				
 				btn_mod_clear = new JButton("Clear");
 				btn_mod_clear.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
+						
+						clear_mod_panel();
+	            		btn_mod_check.setVisible(true);
+	            		btn_mod_clear.setVisible(false);
+	            		btn_mod_modify.setVisible(false);
+	            		
+	            		text_mod_sheetID.setVisible(true);
+	            		text_mod_projectID.setVisible(true);
+	            		text_mod_pd.setVisible(true);
+	            		lbl_mod_sheetID_show.setVisible(false);
+	            		lbl_mod_projectID_show.setVisible(false);
+	            		lbl_mod_pd_show.setVisible(false);
+	            		
+	            		
+	            		
+	            		
+	            		lbl_mod_4.setVisible(false);
+	            		text_mod_4.setVisible(false);
+	            		
+	            		lbl_mod_5.setVisible(false);
+	            		text_mod_5.setVisible(false);
+	            		
+	            		lbl_mod_6.setVisible(false);
+	            		text_mod_6.setVisible(false);
+	            		
+	            		lbl_mod_7.setVisible(false);
+	            		text_mod_7.setVisible(false);
+	            		
+	            		lbl_mod_8.setVisible(false);
+	            		text_mod_8.setVisible(false);
+	            		
+	            		lbl_mod_message.setVisible(false);
 					}
 				});
 				btn_mod_clear.setBounds(389, 74, 83, 29);
 				btn_mod_clear.setVisible(true);
 				mod_panel.add(btn_mod_clear);
 				
-				lbl_mod_sheetID_show = new JLabel("");
-				lbl_mod_sheetID_show.setBounds(272, 41, 115, 16);
-				lbl_mod_sheetID_show.setVisible(false);
-				mod_panel.add(lbl_mod_sheetID_show);
-				
-				lbl_mod_projectID_show = new JLabel("");
-				lbl_mod_projectID_show.setBounds(272, 79, 115, 16);
-				lbl_mod_projectID_show.setVisible(false);
-				mod_panel.add(lbl_mod_projectID_show);
-				
-				lbl_mod_pd_show = new JLabel("");
-				lbl_mod_pd_show.setBounds(272, 117, 115, 16);
-				lbl_mod_pd_show.setVisible(false);
-				mod_panel.add(lbl_mod_pd_show);
-	
 			}
 			
 			//third panel - Append sheet
@@ -1272,7 +1409,7 @@ public class Sheets_panel  {
 				text_appd_2.setColumns(10);
 				
 				lbl_appd_3 = new JLabel("");
-				lbl_appd_3.setBounds(358, 75, 56, 16);
+				lbl_appd_3.setBounds(280, 75, 134, 16);
 				lbl_appd_3.setHorizontalAlignment(SwingConstants.RIGHT);
 				lbl_appd_3.setVisible(false);
 				append_panel.add(lbl_appd_3);
@@ -1308,7 +1445,7 @@ public class Sheets_panel  {
 				text_appd_5.setColumns(10);
 				
 				lbl_appd_6 = new JLabel("");
-				lbl_appd_6.setBounds(341, 168, 73, 16);
+				lbl_appd_6.setBounds(280, 168, 134, 16);
 				lbl_appd_6.setHorizontalAlignment(SwingConstants.RIGHT);
 				lbl_appd_6.setVisible(false);
 				append_panel.add(lbl_appd_6);
@@ -1320,7 +1457,7 @@ public class Sheets_panel  {
 				text_appd_6.setColumns(10);
 				
 				lbl_appd_7 = new JLabel("");
-				lbl_appd_7.setBounds(329, 200, 85, 16);
+				lbl_appd_7.setBounds(280, 200, 134, 16);
 				lbl_appd_7.setHorizontalAlignment(SwingConstants.RIGHT);
 				lbl_appd_7.setVisible(false);
 				append_panel.add(lbl_appd_7);
@@ -1373,6 +1510,11 @@ public class Sheets_panel  {
 												append_table.setVisible(false);
 												scrollpane_append.setVisible(false);
 											}
+										}else if((!text_appd_5.getText().isBlank())&(!lib.date(text_appd_5.getText()))) {
+											lbl_append_message.setText("Date Format Invalid");
+											lbl_append_message.setVisible(true);
+											append_table.setVisible(false);
+											scrollpane_append.setVisible(false);
 										}
 											
 								}else {
@@ -1430,7 +1572,12 @@ public class Sheets_panel  {
 											append_table.setVisible(false);
 											scrollpane_append.setVisible(false);
 										}
-									}		
+									}else if((!text_appd_7.getText().isBlank())&(!lib.date(text_appd_7.getText()))) {
+										lbl_append_message.setText("Date Format Invalid");
+										lbl_append_message.setVisible(true);
+										append_table.setVisible(false);
+										scrollpane_append.setVisible(false);
+									}
 								}else {
 									lbl_append_message.setText("Format Invalid");
 									lbl_append_message.setVisible(true);
@@ -1446,7 +1593,7 @@ public class Sheets_panel  {
 							
 						}else if (rb_appd_REQ.isSelected()) {
 							if (append_check("REQ")) {
-								if(lib.projectID_check(text_appd_1)&lib.num_not_null_check(text_appd_3)&lib.num_not_null_check(text_appd_4)
+								if(lib.projectID_check(text_appd_1)&lib.num_not_null_check(text_appd_4)&lib.num_not_null_check(text_appd_5)
 										&lib.supervisor_check(text_appd_6)) {
 									if((!text_appd_7.getText().isBlank())&lib.date(text_appd_7.getText())) {
 										String[][] temp = append("REQ");
@@ -1487,6 +1634,11 @@ public class Sheets_panel  {
 											append_table.setVisible(false);
 											scrollpane_append.setVisible(false);
 										}
+									}else if((!text_appd_7.getText().isBlank())&(!lib.date(text_appd_7.getText()))){
+										lbl_append_message.setText("Date Format Invalid");
+										lbl_append_message.setVisible(true);
+										append_table.setVisible(false);
+										scrollpane_append.setVisible(false);
 									}
 								}else {
 									lbl_append_message.setText("Format Invalid");
@@ -1543,6 +1695,11 @@ public class Sheets_panel  {
 											append_table.setVisible(false);
 											scrollpane_append.setVisible(false);
 										}
+									}else if((!text_appd_6.getText().isBlank())&(!lib.date(text_appd_6.getText()))) {
+										lbl_append_message.setText("Date Format Invalid");
+										lbl_append_message.setVisible(true);
+										append_table.setVisible(false);
+										scrollpane_append.setVisible(false);
 									}
 								}else {
 									lbl_append_message.setText("Format Invalid");
@@ -1595,6 +1752,11 @@ public class Sheets_panel  {
 											append_table.setVisible(false);
 											scrollpane_append.setVisible(false);
 										}									
+									}else if((!text_appd_5.getText().isBlank())&(!lib.date(text_appd_5.getText()))){
+										lbl_append_message.setText("Date Format Invalid");
+										lbl_append_message.setVisible(true);
+										append_table.setVisible(false);
+										scrollpane_append.setVisible(false);
 									}
 								}else {
 									lbl_append_message.setText("Format Invalid");
@@ -1648,6 +1810,11 @@ public class Sheets_panel  {
 											append_table.setVisible(false);
 											scrollpane_append.setVisible(false);
 										}
+									}else if((!text_appd_4.getText().isBlank())&(!lib.date(text_appd_4.getText()))) {
+										lbl_append_message.setText("Date Format Invalid");
+										lbl_append_message.setVisible(true);
+										append_table.setVisible(false);
+										scrollpane_append.setVisible(false);
 									}
 								}else {
 									lbl_append_message.setText("Format Invalid");
@@ -1665,6 +1832,7 @@ public class Sheets_panel  {
 					}
 				});
 				btn_appd_append.setBounds(563, 5, 92, 29);
+				btn_appd_append.setVisible(false);
 				append_panel.add(btn_appd_append);
 				
 				ButtonGroup bg = new ButtonGroup();
@@ -1675,6 +1843,8 @@ public class Sheets_panel  {
 				rb_appd_RFQ.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	clear_app_panel();
 			        	
 			        	lbl_appd_1.setText("*Project ID :");
 			            lbl_appd_1.setVisible(true);
@@ -1705,6 +1875,8 @@ public class Sheets_panel  {
 			            text_appd_7.setVisible(false);
 			            
 			            lbl_appd_ins.setVisible(true);
+			            btn_append_clear.setVisible(true);
+			            btn_appd_append.setVisible(true);
 			            
 			            
 			        }
@@ -1718,6 +1890,8 @@ public class Sheets_panel  {
 				rb_appd_QUO.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	clear_app_panel();
 			        	
 			        	lbl_appd_1.setText("*Project ID :");
 			            lbl_appd_1.setVisible(true);
@@ -1748,6 +1922,8 @@ public class Sheets_panel  {
 			            text_appd_7.setVisible(true);
 			            
 			            lbl_appd_ins.setVisible(true);
+			            btn_appd_append.setVisible(true);
+			            btn_append_clear.setVisible(true);
 			            
 			        }
 			    });
@@ -1759,6 +1935,8 @@ public class Sheets_panel  {
 				rb_appd_REQ.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	clear_app_panel();
 			        	
 			        	lbl_appd_1.setText("*Project ID :");
 			            lbl_appd_1.setVisible(true);
@@ -1789,6 +1967,8 @@ public class Sheets_panel  {
 			            text_appd_7.setVisible(true);
 			            
 			            lbl_appd_ins.setVisible(true);
+			            btn_appd_append.setVisible(true);
+			            btn_append_clear.setVisible(true);
 			        }
 			    });
 				bg.add(rb_appd_REQ);
@@ -1799,6 +1979,8 @@ public class Sheets_panel  {
 				rb_appd_PUR.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	clear_app_panel();
 			        	
 			        	lbl_appd_1.setText("*Project ID :");
 			            lbl_appd_1.setVisible(true);
@@ -1829,6 +2011,8 @@ public class Sheets_panel  {
 			            text_appd_7.setVisible(false);
 			            
 			            lbl_appd_ins.setVisible(true);
+			            btn_appd_append.setVisible(true);
+			            btn_append_clear.setVisible(true);
 			        }
 			    });
 				bg.add(rb_appd_PUR);
@@ -1839,6 +2023,8 @@ public class Sheets_panel  {
 				rb_appd_EXAM.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	clear_app_panel();
 			        	
 			        	lbl_appd_1.setText("*Project ID :");
 			            lbl_appd_1.setVisible(true);
@@ -1869,6 +2055,8 @@ public class Sheets_panel  {
 			            text_appd_7.setVisible(false);
 			            
 			            lbl_appd_ins.setVisible(true);
+			            btn_appd_append.setVisible(true);
+			            btn_append_clear.setVisible(true);
 			        }
 			    });
 				bg.add(rb_appd_EXAM);
@@ -1879,6 +2067,8 @@ public class Sheets_panel  {
 				rb_appd_RCPT.addActionListener(new ActionListener() {
 			        @Override
 			        public void actionPerformed(ActionEvent e) {
+			        	
+			        	clear_app_panel();
 			        	
 			        	lbl_appd_1.setText("*Project ID :");
 			            lbl_appd_1.setVisible(true);
@@ -1909,6 +2099,9 @@ public class Sheets_panel  {
 			            text_appd_7.setVisible(false);
 			            
 			            lbl_appd_ins.setVisible(true);
+			            btn_appd_append.setVisible(true);
+			            btn_append_clear.setVisible(true);
+			            
 			        }
 			    });
 				bg.add(rb_appd_RCPT);
@@ -1932,8 +2125,14 @@ public class Sheets_panel  {
 				
 				append_panel.add(scrollpane_append);
 				
-				JButton btn_append_clear = new JButton("Clear");
+				btn_append_clear = new JButton("Clear");
+				btn_append_clear.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						clear_app_panel();
+					}
+				});
 				btn_append_clear.setBounds(545, 200, 73, 29);
+				btn_append_clear.setVisible(false);
 				append_panel.add(btn_append_clear);
 				
 				lbl_append_message = new JLabel("");
@@ -1943,7 +2142,7 @@ public class Sheets_panel  {
 				append_panel.add(lbl_append_message);
 				
 				lbl_appd_ins = new JLabel("*Obligatory");
-				lbl_appd_ins.setBounds(312, 228, 102, 16);
+				lbl_appd_ins.setBounds(53, 200, 102, 16);
 				lbl_appd_ins.setVisible(false);
 				append_panel.add(lbl_appd_ins);
 				
@@ -2356,9 +2555,54 @@ public class Sheets_panel  {
 					
 					
 			}
+	
 			
 			
+	public void clear_inq_panel() {
+		
+		text_inq_sheetID.setText("");
+		text_inq_projectID.setText("");
+		text_inq_pd.setText("");
+	}		
 			
+			
+	
+	public void clear_mod_panel(){
+		
+		text_mod_sheetID.setText("");
+		lbl_mod_sheetID_show.setText("");
+		
+		text_mod_projectID.setText("");
+		lbl_mod_projectID_show.setText("");
+		
+		text_mod_pd.setText("");
+		lbl_mod_pd_show.setText("");
+		
+		text_mod_4.setText("");	
+		text_mod_5.setText("");	
+		text_mod_6.setText("");
+		text_mod_7.setText("");
+		text_mod_8.setText("");
+		
+		lbl_mod_message.setText("");
+	}
+	
+	public void clear_app_panel() {
+		
+		
+        
+        text_appd_1.setText("");       
+        text_appd_2.setText("");
+        text_appd_3.setText("");      
+        text_appd_4.setText("");        
+        text_appd_5.setText("");       
+        text_appd_6.setText("");      
+        text_appd_7.setText("");
+        
+        lbl_append_message.setText("");
+      
+	}
+	
 			
 	private String[][] inquire_all(JTextField first, JTextField second, JTextField third){
 				
@@ -4262,7 +4506,7 @@ public class Sheets_panel  {
 			default:
 				if(!text_appd_4.getText().isBlank()) {
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RECIPT (Project_ID, Module_type, Vol, Date) VALUE ("
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RECEIPT (Project_ID, Module_type, Vol, Date) VALUE ("
 																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()
 																	+", \'"+ text_appd_4.getText()+"\')");
 						
@@ -4287,7 +4531,7 @@ public class Sheets_panel  {
 				}else {
 					//text_appd_4.getText().isBlank()
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RECIPT (Project_ID, Module_type, Vol) VALUE ("
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RECEIPT (Project_ID, Module_type, Vol) VALUE ("
 																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+")");
 						
 						} catch (SQLException e) {
