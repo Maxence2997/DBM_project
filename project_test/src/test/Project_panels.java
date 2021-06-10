@@ -38,7 +38,9 @@ public class Project_panels {
 		btn_pj_maint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				pj_subpanels.get_comboBox_project().setSelectedIndex(0);
-				 Term_project_main.cl_home.show(Term_project_main.container_panel,"maintenance");
+				pj_subpanels.clear_inq_panel();
+				lib.adjust_PROJECT();
+				Term_project_main.cl_home.show(Term_project_main.container_panel,"maintenance");
 				// btn_back2Project.setVisible(true);
 			}
 		});

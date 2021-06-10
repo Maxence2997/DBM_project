@@ -85,6 +85,7 @@ public class Employee_panel {
 			employee_panel.add(lbl_emp_first);
 						
 			text_emp_first = new JTextField();
+			text_emp_first.setHorizontalAlignment(SwingConstants.CENTER);
 			text_emp_first.setBounds(230, 96, 202, 26);
 			text_emp_first.setVisible(false);
 			employee_panel.add(text_emp_first);
@@ -96,12 +97,14 @@ public class Employee_panel {
 			employee_panel.add(lbl_emp_last);
 					
 			text_emp_last = new JTextField();
+			text_emp_last.setHorizontalAlignment(SwingConstants.CENTER);
 			text_emp_last.setBounds(230, 122, 202, 26);
 			text_emp_last.setVisible(false);
 			employee_panel.add(text_emp_last);
 			text_emp_last.setColumns(16);
 						
 			text_emp_addr = new JTextField();
+			text_emp_addr.setHorizontalAlignment(SwingConstants.CENTER);
 			text_emp_addr.setBounds(230, 148, 202, 26);
 			text_emp_addr.setVisible(false);
 						
@@ -118,6 +121,7 @@ public class Employee_panel {
 			employee_panel.add(lbl_emp_phone);
 						
 			text_emp_phone = new JTextField();
+			text_emp_phone.setHorizontalAlignment(SwingConstants.CENTER);
 			text_emp_phone.setBounds(230, 174, 202, 26);
 			text_emp_phone.setVisible(false);
 			employee_panel.add(text_emp_phone);
@@ -129,6 +133,7 @@ public class Employee_panel {
 			employee_panel.add(lbl_emp_supervID);
 						
 			text_emp_supervID = new JTextField();
+			text_emp_supervID.setHorizontalAlignment(SwingConstants.CENTER);
 			text_emp_supervID.setBounds(230, 200, 202, 26);
 			text_emp_supervID.setVisible(false);
 			employee_panel.add(text_emp_supervID);

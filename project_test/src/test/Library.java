@@ -10,7 +10,64 @@ import java.util.Date;
 import javax.swing.JTextField;
 
 public class Library {
-
+	
+	
+	public final String st_progress = "SELECT \n"
+			+ "    pj.Project_ID,\n"
+			+ "    pj.Project_status,\n"
+			+ "    pj.Emp_ID,\n"
+			+ "    emp.Last_name AS Responsable,\n"
+			+ "    PUR.Module_type,\n"
+			+ "    CONCAT(FORMAT(((Pur.Vol*100)/ RCPT.Vol),0),'%') AS Product_Delivery,\n"
+			+ "    PUR.ESD,\n"
+			+ "    RCPT.Date,\n"
+			+ "    (CASE\n"
+			+ "        WHEN\n"
+			+ "            (CASE\n"
+			+ "                WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
+			+ "                ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
+			+ "            END) >= 29\n"
+			+ "        THEN\n"
+			+ "            'Violated'\n"
+			+ "        WHEN\n"
+			+ "            ((CASE\n"
+			+ "                WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
+			+ "                ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
+			+ "            END) < 29\n"
+			+ "                && (CASE\n"
+			+ "                WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
+			+ "                ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
+			+ "            END) >= 15)\n"
+			+ "        THEN\n"
+			+ "            'Delayed'\n"
+			+ "        ELSE 'In Time'\n"
+			+ "    END) AS Contract,\n"
+			+ "    (CASE\n"
+			+ "        WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
+			+ "        ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
+			+ "    END) AS Date_difference\n"
+			+ "FROM\n"
+			+ "    PROJECT AS pj\n"
+			+ "        LEFT JOIN\n"
+			+ "    EMPLOYEE AS emp ON emp.Emp_ID = pj.Emp_ID\n"
+			+ "        LEFT JOIN\n"
+			+ "    PURCHASE AS PUR ON (PUR.Project_ID = pj.Project_ID)\n"
+			+ "        LEFT JOIN\n"
+			+ "    RECEIPT AS RCPT ON (RCPT.Project_ID = PUR.Project_ID\n"
+			+ "        AND RCPT.Module_type = PUR.MOdule_type)";
+	
+	
+	
+	public final String st_project_inquire = "SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name AS E_name, pj.Project_status AS P_status,\n"
+			+ "pj.Established_date AS Est_date, rfq.Inquiring_product AS Product, rfq.RFQ_Sheet_ID, quo.QUO_Sheet_ID,\n"
+			+ " req.REQ_Sheet_ID, pur.PUR_Sheet_ID, exam.EX_Sheet_ID, rcpt.REC_Sheet_ID FROM PROJECT AS pj \n"
+			+ "LEFT JOIN RFQ AS rfq ON rfq.Project_ID = pj.Project_ID LEFT JOIN QUOTATION AS quo \n"
+			+ "ON (quo.Project_ID = rfq.Project_ID AND quo.Inquiring_product = rfq.Inquiring_product)\n"
+			+ "LEFT JOIN REQUISITION AS req ON (req.Project_ID = quo.Project_ID AND req.Inquiring_product = quo.Inquiring_product)\n"
+			+ "LEFT JOIN PURCHASE AS pur ON (pur.Project_ID = req.Project_ID AND req.Inquiring_product = pur.Module_type)\n"
+			+ "LEFT JOIN EXAMINATION AS exam ON (exam.Project_ID = pur.Project_ID AND exam.Module_type = pur.Module_type)\n"
+			+ "LEFT JOIN RECEIPT AS rcpt ON (rcpt.Project_ID = exam.Project_ID AND rcpt.Module_type = exam.Module_type)\n"
+			+ "LEFT JOIN EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID";
 	
 	public Library() {
 		
@@ -38,7 +95,7 @@ public class Library {
 																+ "LEFT JOIN RECEIPT AS RCPT ON RCPT.Project_ID = pj.Project_ID GROUP BY pj.Project_ID");
 			
 			while(r.next()) {
-				String[] temp_array = new String[3];
+				String[] temp_array = new String[2];
 				for(int i =2; i<8;i++) {
 					temp_array[0] = r.getString(1);
 					
@@ -55,55 +112,7 @@ public class Library {
 				}
 				temp.add(temp_array);	
 			}
-			for(int i=0;i<temp.size();i++) {
-				if (temp.get(i)[1].equalsIgnoreCase("RCPT")) {
-					try {
-						ResultSet r2 = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, Pur.Module_type, Pur.Vol,"+
-								 "RCPT.Vol FROM PROJECT AS pj RIGHT JOIN PURCHASE AS Pur "+
-								 "ON pj.Project_ID = Pur.Project_ID  RIGHT JOIN RECEIPT AS RCPT "+
-								 "ON (pj.project_ID= RCPT.Project_ID AND RCPT.Module_type = PUR.Module_type) WHERE pj.Project_ID="+temp.get(i)[0]);
-						
-						ArrayList<Float> numerator = new ArrayList();
-						ArrayList<Float> denominator = new ArrayList();
-						
-						while(r2.next()) {
-							for(int j =3; j<5;j++) {
-								numerator.add(r2.getFloat(3));
-								denominator.add(r2.getFloat(4));
-							}
-						}
-						
-						float total_num=0;
-						
-						for(int p=0; p < numerator.size();p++) {
-							total_num += numerator.get(p);
-							
-						}
-//						System.out.println("----bgn---");
-//						System.out.print(total_num);
-//						System.out.println();
-						float total_den=0;
-						for(int q=0; q < denominator.size();q++) {
-							total_den += denominator.get(q);
-							
-						}
-//						System.out.print(total_den);
-//						System.out.println();
-						
-						//temp.get(i)[2]=String.format("%.0f%%",total_num*100 / (total_den));
-						temp.get(i)[2]=String.format("%.1f",total_num*100 / (total_den));
-						
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		
-				}
-//				System.out.print(temp.get(i)[0]+"\t"+temp.get(i)[1]+"\t"+temp.get(i)[2]+"\n");
-//				System.out.println("---end----");
-//				System.out.println();
-//				System.out.println();
-			}	
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -114,7 +123,7 @@ public class Library {
 			
 			try {
 			    int resultSet = Term_project_main.conn.st.executeUpdate("UPDATE PROJECT SET Project_status=\'"+temp.get(l)[1]
-										+"\', Delivery_progress=\'"+temp.get(l)[2]+"\' WHERE Project_ID="+temp.get(l)[0]);
+										+"\' WHERE Project_ID="+temp.get(l)[0]);
 
 				;	
 			} catch (SQLException e) {
@@ -250,6 +259,8 @@ public class Library {
 		}
 	}
 	
+	
+	
 	public boolean tf_check(JTextField tf) {
 		
 		boolean res = false;
@@ -359,15 +370,14 @@ public class Library {
 		    /*
 		     * Set preferred date format,
 		     * For example yyyy-mm-dd, MM.dd.yyyy,dd.MM.yyyy etc.*/
-		    SimpleDateFormat sdfrmt = new SimpleDateFormat("yyyy/mm/dd");
+		    SimpleDateFormat sdfrmt = new SimpleDateFormat("yyyy-mm-dd");
 		    sdfrmt.setLenient(false);
 		    /* Create Date object
 		     * parse the string into date 
 	             */
 		    try{
 		        Date javaDate = sdfrmt.parse(strDate); 
-		       
-		    
+ 
 		    
 		    }catch (ParseException e){
 		    	/* Date format is invalid */

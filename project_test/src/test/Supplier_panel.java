@@ -85,6 +85,7 @@ public class Supplier_panel {
 		supplier_panel.add(lbl_sup_supID);
 		
 		text_sup_supID = new JTextField();
+		text_sup_supID.setHorizontalAlignment(SwingConstants.CENTER);
 		text_sup_supID.setBounds(245, 50, 178, 26);
 		supplier_panel.add(text_sup_supID);
 		text_sup_supID.setColumns(14);
@@ -99,6 +100,7 @@ public class Supplier_panel {
 		supplier_panel.add(lbl_sup_name);
 		
 		text_sup_name = new JTextField();
+		text_sup_name.setHorizontalAlignment(SwingConstants.CENTER);
 		text_sup_name.setBounds(245, 76, 178, 26);
 		supplier_panel.add(text_sup_name);
 		text_sup_name.setColumns(14);
@@ -109,6 +111,7 @@ public class Supplier_panel {
 		supplier_panel.add(lbl_sup_addr);
 		
 		text_sup_addr = new JTextField();
+		text_sup_addr.setHorizontalAlignment(SwingConstants.CENTER);
 		text_sup_addr.setBounds(245, 102, 178, 26);
 		text_sup_addr.setVisible(false);
 		supplier_panel.add(text_sup_addr);
@@ -120,6 +123,7 @@ public class Supplier_panel {
 		supplier_panel.add(lbl_sup_ctc);
 		
 		text_sup_ctc = new JTextField();
+		text_sup_ctc.setHorizontalAlignment(SwingConstants.CENTER);
 		text_sup_ctc.setBounds(245, 128, 178, 26);
 		text_sup_ctc.setVisible(false);
 		supplier_panel.add(text_sup_ctc);
@@ -131,6 +135,7 @@ public class Supplier_panel {
 		supplier_panel.add(lbl_sup_mobile);
 		
 		text_sup_mobile = new JTextField();
+		text_sup_mobile.setHorizontalAlignment(SwingConstants.CENTER);
 		text_sup_mobile.setBounds(245, 154, 178, 26);
 		text_sup_mobile.setVisible(false);
 		supplier_panel.add(text_sup_mobile);
@@ -142,6 +147,7 @@ public class Supplier_panel {
 		supplier_panel.add(lbl_sup_mail);
 		
 		text_sup_mail = new JTextField();
+		text_sup_mail.setHorizontalAlignment(SwingConstants.CENTER);
 		text_sup_mail.setBounds(245, 181, 178, 26);
 		text_sup_mail.setVisible(false);
 		supplier_panel.add(text_sup_mail);

@@ -53,6 +53,7 @@ public class Inventory_panel {
 		inventory_panel.add(lbl_inv_ID);
 		
 		text_invID = new JTextField();
+		text_invID.setHorizontalAlignment(SwingConstants.CENTER);
 		text_invID.setBounds(176, 35, 108, 26);
 		inventory_panel.add(text_invID);
 		text_invID.setColumns(10);
@@ -63,6 +64,7 @@ public class Inventory_panel {
 		inventory_panel.add(lbl_inv_item_name);
 		
 		text_inv_item = new JTextField();
+		text_inv_item.setHorizontalAlignment(SwingConstants.CENTER);
 		text_inv_item.setBounds(438, 35, 112, 26);
 		inventory_panel.add(text_inv_item);
 		text_inv_item.setColumns(10);
@@ -73,6 +75,7 @@ public class Inventory_panel {
 		inventory_panel.add(lbl_inv_module);
 		
 		text_inv_pd = new JTextField();
+		text_inv_pd.setHorizontalAlignment(SwingConstants.CENTER);
 		text_inv_pd.setBounds(176, 97, 108, 26);
 		inventory_panel.add(text_inv_pd);
 		text_inv_pd.setColumns(10);
