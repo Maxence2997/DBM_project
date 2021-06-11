@@ -406,7 +406,7 @@ public class Sheets_panel  {
 									String[][] temp = inquire("RFQ", text_inq_sheetID,text_inq_projectID,text_inq_pd);
 									if(temp.length!=0) {
 										
-										String[] columns_name = {"Sheet ID", "Type", "Project ID", "Inquiring Product", "Supplier ID",
+										String[] columns_name = {"Sheet ID", "Type", "Project ID", "Supplier ID", "Inquiring Product", 
 												"Name", "Vol.", "Date"};
 										DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
 										inq_table.setModel(inq_table_model);
@@ -1478,7 +1478,7 @@ public class Sheets_panel  {
 									if((!text_appd_5.getText().isBlank())&lib.date(text_appd_5.getText())) {
 										
 										String[][] temp = append("RFQ");
-										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Date"};
+										String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Supplier", "Product", "Vol.", "Date"};
 										
 										if(temp[0].length!=0) {
 											DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
@@ -1496,7 +1496,7 @@ public class Sheets_panel  {
 									}else if(text_appd_5.getText().isBlank()){
 										
 											String[][] temp = append("RFQ");
-											String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Date"};
+											String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Supplier", "Product", "Vol.", "Date"};
 											
 											if(temp[0].length!=0) {
 												DefaultTableModel append_table_model = new DefaultTableModel(temp,columns);
@@ -2613,23 +2613,38 @@ public class Sheets_panel  {
 		
 		ArrayList<String[]> temp = new ArrayList();
 				
+		final String st_inq_all_pj = "SELECT * FROM test.PROJECT AS pj LEFT JOIN test.RFQ ON pj.Project_ID = RFQ.Project_ID\n"
+									+ "LEFT JOIN test.QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
+									+ "AND RFQ.Inquiring_product = QUOT.Inquiring_product)\n"
+									+ "LEFT JOIN test.REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
+									+ "AND REQ.Inquiring_product = QUOT.Inquiring_product)\n"
+									+ "LEFT JOIN test.PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
+									+ "AND PUR.Module_type = REQ.Inquiring_product)\n"
+									+ "LEFT JOIN test.EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
+									+ "AND EXAM.Module_type = PUR.Module_type)\n"
+									+ "LEFT JOIN test.RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
+									+ "AND RCPT.Module_type = EXAM.MOdule_type) LEFT JOIN test.SUPPLIER AS SUP \n"
+									+ "ON (sup.Supplier_ID=RFQ.Supplier_ID AND sup.Supplier_ID=QUOT.Supplier_ID)";
+		
+		final String st_inq_all_sheets = "SELECT * FROM test.RFQ \n"
+									+ "LEFT JOIN test.QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
+									+ "AND RFQ.Inquiring_product = QUOT.Inquiring_product)\n"
+									+ "LEFT JOIN test.REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
+									+ "AND REQ.Inquiring_product = QUOT.Inquiring_product)\n"
+									+ "LEFT JOIN test.PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
+									+ "AND PUR.Module_type = REQ.Inquiring_product)\n"
+									+ "LEFT JOIN test.EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
+									+ "AND EXAM.Module_type = PUR.Module_type)\n"
+									+ "LEFT JOIN test.RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
+									+ "AND RCPT.Module_type = EXAM.MOdule_type) LEFT JOIN tset.SUPPLIER AS SUP \n"
+									+ "ON (sup.Supplier_ID=RFQ.Supplier_ID AND sup.Supplier_ID=QUOT.Supplier_ID)";
+							
 			switch(lib.check_text_fields(first, second,third)) {
-			
+				
 				
 				case "011":
 					try {
-						ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID\n"
-								+ "LEFT JOIN QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
-								+ "AND RFQ.Inquiring_product = QUOT.Inquiring_product)\n"
-								+ "LEFT JOIN REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
-								+ "AND REQ.Inquiring_product = QUOT.Inquiring_product)\n"
-								+ "LEFT JOIN PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
-								+ "AND PUR.Module_type = REQ.Inquiring_product)\n"
-								+ "LEFT JOIN EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
-								+ "AND EXAM.Module_type = PUR.Module_type)\n"
-								+ "LEFT JOIN RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
-								+ "AND RCPT.Module_type = EXAM.MOdule_type) LEFT JOIN SUPPLIER AS SUP \n"
-								+ "ON (sup.Supplier_ID=RFQ.Supplier_ID AND sup.Supplier_ID=QUOT.Supplier_ID) WHERE (pj.Project_ID="
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_pj+" WHERE (pj.Project_ID="
 								+ text_inq_projectID.getText()+"AND RFQ.Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 						
 						while(r.next()) {
@@ -2762,19 +2777,7 @@ public class Sheets_panel  {
 					
 					try {
 						
-						ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID\n"
-								+ "LEFT JOIN QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
-								+ "AND RFQ.Inquiring_product = QUOT.Inquiring_product)\n"
-								+ "LEFT JOIN REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
-								+ "AND REQ.Inquiring_product = QUOT.Inquiring_product)\n"
-								+ "LEFT JOIN PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
-								+ "AND PUR.Module_type = REQ.Inquiring_product)\n"
-								+ "LEFT JOIN EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
-								+ "AND EXAM.Module_type = PUR.Module_type)\n"
-								+ "LEFT JOIN RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
-								+ "AND RCPT.Module_type = EXAM.MOdule_type) LEFT JOIN SUPPLIER AS SUP \n"
-								+ "ON (sup.Supplier_ID=RFQ.Supplier_ID AND sup.Supplier_ID=QUOT.Supplier_ID) WHERE pj.Project_ID ="
-								+text_inq_projectID.getText());
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_pj+" WHERE pj.Project_ID="+text_inq_projectID.getText());
 						
 						while(r.next()) {
 							
@@ -2906,19 +2909,7 @@ public class Sheets_panel  {
 				case "001":	
 					
 					try {
-						ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ \n"
-												+ "LEFT JOIN QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
-												+ "AND RFQ.Inquiring_product = QUOT.Inquiring_product)\n"
-												+ "LEFT JOIN REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
-												+ "AND REQ.Inquiring_product = QUOT.Inquiring_product)\n"
-												+ "LEFT JOIN PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
-												+ "AND PUR.Module_type = REQ.Inquiring_product)\n"
-												+ "LEFT JOIN EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
-												+ "AND EXAM.Module_type = PUR.Module_type)\n"
-												+ "LEFT JOIN RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
-												+ "AND RCPT.Module_type = EXAM.MOdule_type) LEFT JOIN SUPPLIER AS SUP \n"
-												+ "ON (sup.Supplier_ID=RFQ.Supplier_ID AND sup.Supplier_ID=QUOT.Supplier_ID) WHERE RFQ.Inquiring_product ="
-												+text_inq_pd.getText());
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_sheets+" WHERE RFQ.Inquiring_product=\'"+text_inq_pd.getText()+"\'");
 						
 						while(r.next()) {
 							
@@ -3064,23 +3055,29 @@ public class Sheets_panel  {
 			 * @since 05/06/2021
 			 * 
 			 */
-			
+		
+		
+		
+		
+				
 			ArrayList<String[]> temp = new ArrayList();
 			ResultSet r;
 			switch(sheet_type) {
 				
 				case "RFQ":
-
+					
+					final String st_rfq = "SELECT rfq.RFQ_Sheet_ID, rfq.Sheet_type, rfq.Project_ID, rfq.Inquiring_product, \n"
+							+"rfq.Supplier_ID, sup.Supplier_name, rfq.Vol, rfq.Date FROM test.RFQ AS rfq \n"
+							+"LEFT JOIN test.SUPPLIER AS sup ON sup.Supplier_ID=RFQ.Supplier_ID";
+					
 					switch(lib.check_text_fields(first, second, third)) {
 					
 						case "111":
 							
 						try {
-							r = Term_project_main.conn.st.executeQuery("SELECT rfq.RFQ_Sheet_ID, rfq.Sheet_type, rfq.Project_ID, rfq.Inquiring_product, \n"
-																		+"rfq.Supplier_ID, sup.Supplier_name, rfq.Vol, rfq.Date FROM RFQ AS rfq \n"
-																		+"LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=RFQ.Supplier_ID WHERE (RFQ_Sheet_ID="
-																		+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
-																		+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+							r = Term_project_main.conn.st.executeQuery(st_rfq+" WHERE (RFQ_Sheet_ID="
+																		+text_inq_sheetID.getText()+" AND rfq.Project_ID ="+text_inq_projectID.getText()
+																		+" AND rfq.Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 	
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
@@ -3093,9 +3090,7 @@ public class Sheets_panel  {
 						case "110":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT rfq.RFQ_Sheet_ID, rfq.Sheet_type, rfq.Project_ID, rfq.Inquiring_product, \n"
-																		+ "rfq.Supplier_ID, sup.Supplier_name, rfq.Vol, rfq.Date FROM RFQ AS rfq \n"
-																		+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=RFQ.Supplier_ID WHERE (RFQ_Sheet_ID="
+								r = Term_project_main.conn.st.executeQuery(st_rfq+" WHERE (RFQ_Sheet_ID="
 																		+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
 	
 							} catch (SQLException e) {
@@ -3108,9 +3103,7 @@ public class Sheets_panel  {
 						case "101":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT rfq.RFQ_Sheet_ID, rfq.Sheet_type, rfq.Project_ID, rfq.Inquiring_product, \n"
-																	+ "rfq.Supplier_ID, sup.Supplier_name, rfq.Vol, rfq.Date FROM RFQ AS rfq \n"
-																	+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=RFQ.Supplier_ID WHERE (RFQ_Sheet_ID="
+								r = Term_project_main.conn.st.executeQuery(st_rfq+" WHERE (RFQ_Sheet_ID="
 																	+text_inq_sheetID.getText()+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 								
 							} catch (SQLException e) {
@@ -3123,9 +3116,7 @@ public class Sheets_panel  {
 						case "100":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT rfq.RFQ_Sheet_ID, rfq.Sheet_type, rfq.Project_ID, rfq.Inquiring_product, \n"
-																		+ "rfq.Supplier_ID, sup.Supplier_name, rfq.Vol, rfq.Date FROM RFQ AS rfq \n"
-																		+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=RFQ.Supplier_ID WHERE RFQ_Sheet_ID="
+								r = Term_project_main.conn.st.executeQuery(st_rfq+" WHERE RFQ_Sheet_ID="
 																		+text_inq_sheetID.getText());
 
 							} catch (SQLException e) {
@@ -3138,9 +3129,7 @@ public class Sheets_panel  {
 						case "011":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT rfq.RFQ_Sheet_ID, rfq.Sheet_type, rfq.Project_ID, rfq.Inquiring_product, \n"
-																+ "rfq.Supplier_ID, sup.Supplier_name, rfq.Vol, rfq.Date FROM RFQ AS rfq \n"
-																	+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=RFQ.Supplier_ID WHERE (Project_ID ="
+								r = Term_project_main.conn.st.executeQuery(st_rfq+" WHERE (Project_ID ="
 																	+text_inq_projectID.getText()+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
@@ -3153,10 +3142,7 @@ public class Sheets_panel  {
 						case "010":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT rfq.RFQ_Sheet_ID, rfq.Sheet_type, rfq.Project_ID, rfq.Inquiring_product, \n"
-																		+ "rfq.Supplier_ID, sup.Supplier_name, rfq.Vol, rfq.Date FROM RFQ AS rfq \n"
-																		+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=RFQ.Supplier_ID WHERE Project_ID ="
-																		+text_inq_projectID.getText());
+								r = Term_project_main.conn.st.executeQuery(st_rfq+" WHERE Project_ID ="+text_inq_projectID.getText());
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3168,10 +3154,7 @@ public class Sheets_panel  {
 						default:
 							//001
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT rfq.RFQ_Sheet_ID, rfq.Sheet_type, rfq.Project_ID, rfq.Inquiring_product, \n"
-																+ "rfq.Supplier_ID, sup.Supplier_name, rfq.Vol, rfq.Date FROM RFQ AS rfq \n"
-																+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=RFQ.Supplier_ID WHERE Inquiring_product=\'"
-																+text_inq_pd.getText()+"\')");
+								r = Term_project_main.conn.st.executeQuery(st_rfq+" WHERE Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3199,15 +3182,18 @@ public class Sheets_panel  {
 					
 				case "QUO":
 					
+					final String st_quo = "SELECT quo.QUO_Sheet_ID, quo.Sheet_type, quo.Project_ID, quo.Inquiring_product, \n"
+							+ "quo.Supplier_ID, sup.Supplier_name, quo.Vol, quo.Unit_price, quo.Total_price,\n"
+							+ "quo.ESD, quo.Date FROM test.QUOTATION AS quo \n"
+							+ "LEFT JOIN test.SUPPLIER AS sup ON sup.Supplier_ID=quo.Supplier_ID";
+					
 					switch(lib.check_text_fields(first, second, third)) {
+					
 					
 						case "111":
 							
 						try {
-							r = Term_project_main.conn.st.executeQuery("SELECT quo.QUO_Sheet_ID, quo.Sheet_type, quo.Project_ID, quo.Inquiring_product, \n"
-																	+ "quo.Supplier_ID, sup.Supplier_name, quo.Vol, quo.Unit_price, quo.Total_price,\n"
-																	+ "quo.ESD, quo.Date FROM QUOTATION AS quo \n"
-																	+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=quo.Supplier_ID WHERE (QUO_Sheet_ID="
+							r = Term_project_main.conn.st.executeQuery(st_quo+" WHERE (QUO_Sheet_ID="
 																	+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
 																	+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 
@@ -3222,10 +3208,7 @@ public class Sheets_panel  {
 						case "110":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT quo.QUO_Sheet_ID, quo.Sheet_type, quo.Project_ID, quo.Inquiring_product, \n"
-																	+ "quo.Supplier_ID, sup.Supplier_name, quo.Vol, quo.Unit_price, quo.Total_price,\n"
-																	+ "quo.ESD, quo.Date FROM QUOTATION AS quo \n"
-																	+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=quo.Supplier_ID WHERE (QUO_Sheet_ID="
+								r = Term_project_main.conn.st.executeQuery(st_quo+" WHERE (QUO_Sheet_ID="
 																	+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
 
 							} catch (SQLException e) {
@@ -3238,10 +3221,7 @@ public class Sheets_panel  {
 						case "101":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT quo.QUO_Sheet_ID, quo.Sheet_type, quo.Project_ID, quo.Inquiring_product, \n"
-																	+ "quo.Supplier_ID, sup.Supplier_name, quo.Vol, quo.Unit_price, quo.Total_price,\n"
-																	+ "quo.ESD, quo.Date FROM QUOTATION AS quo \n"
-																	+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=quo.Supplier_ID WHERE (QUO_Sheet_ID="
+								r = Term_project_main.conn.st.executeQuery(st_quo+" WHERE (QUO_Sheet_ID="
 																	+text_inq_sheetID.getText()+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 								
 							} catch (SQLException e) {
@@ -3254,11 +3234,7 @@ public class Sheets_panel  {
 						case "100":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SSELECT quo.QUO_Sheet_ID, quo.Sheet_type, quo.Project_ID, quo.Inquiring_product, \n"
-																		+ "quo.Supplier_ID, sup.Supplier_name, quo.Vol, quo.Unit_price, quo.Total_price,\n"
-																		+ "quo.ESD, quo.Date FROM QUOTATION AS quo \n"
-																		+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=quo.Supplier_ID WHERE QUO_Sheet_ID="
-																		+text_inq_sheetID.getText());
+								r = Term_project_main.conn.st.executeQuery(st_quo+" WHERE QUO_Sheet_ID="+text_inq_sheetID.getText());
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3270,10 +3246,7 @@ public class Sheets_panel  {
 						case "011":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT quo.QUO_Sheet_ID, quo.Sheet_type, quo.Project_ID, quo.Inquiring_product, \n"
-																	+ "quo.Supplier_ID, sup.Supplier_name, quo.Vol, quo.Unit_price, quo.Total_price,\n"
-																	+ "quo.ESD, quo.Date FROM QUOTATION AS quo \n"
-																	+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=quo.Supplier_ID WHERE (Project_ID ="
+								r = Term_project_main.conn.st.executeQuery(st_quo+" WHERE (Project_ID ="
 																	+text_inq_projectID.getText()+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
@@ -3286,10 +3259,7 @@ public class Sheets_panel  {
 						case "010":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT quo.QUO_Sheet_ID, quo.Sheet_type, quo.Project_ID, quo.Inquiring_product, \n"
-																		+ "quo.Supplier_ID, sup.Supplier_name, quo.Vol, quo.Unit_price, quo.Total_price,\n"
-																		+ "quo.ESD, quo.Date FROM QUOTATION AS quo \n"
-																		+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=quo.Supplier_ID WHERE Project_ID ="
+								r = Term_project_main.conn.st.executeQuery(st_quo+" WHERE Project_ID ="
 																		+text_inq_projectID.getText());
 
 							} catch (SQLException e) {
@@ -3302,10 +3272,7 @@ public class Sheets_panel  {
 						default:
 							//001
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT quo.QUO_Sheet_ID, quo.Sheet_type, quo.Project_ID, quo.Inquiring_product, \n"
-															+ "quo.Supplier_ID, sup.Supplier_name, quo.Vol, quo.Unit_price, quo.Total_price,\n"
-															+ "quo.ESD, quo.Date FROM QUOTATION AS quo \n"
-															+ "LEFT JOIN SUPPLIER AS sup ON sup.Supplier_ID=quo.Supplier_ID WHERE Inquiring_product=\'"
+								r = Term_project_main.conn.st.executeQuery(st_quo+" WHERE Inquiring_product=\'"
 															+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
@@ -3333,15 +3300,16 @@ public class Sheets_panel  {
 				
 				case "REQ":
 					
+					final String st_req = "SELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID, req.Inquiring_product, req.Item_name,\n"
+							+ " req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID, emp.Last_name,req.Date FROM \n"
+							+ " test.REQUISITION AS req LEFT JOIN test.EMPLOYEE AS emp ON emp.Emp_ID=req.Supervisor_ID";
+					
 					switch(lib.check_text_fields(first, second, third)) {
 					
 						case "111":
 							
 						try {
-							r = Term_project_main.conn.st.executeQuery("SELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID, req.Inquiring_product, \n"
-											+ "req.Item_name, req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID, emp.Last_name,\n"
-											+ "req.Date FROM REQUISITION AS req LEFT JOIN PROJECT AS pj ON pj.Project_ID=req.Project_ID \n"
-											+ "LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=req.Supervisor_ID WHERE (REQ_Sheet_ID="
+							r = Term_project_main.conn.st.executeQuery(st_req+" WHERE (REQ_Sheet_ID="
 											+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
 											+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 
@@ -3356,10 +3324,7 @@ public class Sheets_panel  {
 						case "110":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SSELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID, req.Inquiring_product, \n"
-											+ "req.Item_name, req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID, emp.Last_name,\n"
-											+ "req.Date FROM REQUISITION AS req LEFT JOIN PROJECT AS pj ON pj.Project_ID=req.Project_ID \n"
-											+ "LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=req.Supervisor_ID WHERE (REQ_Sheet_ID="
+								r = Term_project_main.conn.st.executeQuery(st_req+" WHERE (REQ_Sheet_ID="
 												+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
 
 							} catch (SQLException e) {
@@ -3372,10 +3337,7 @@ public class Sheets_panel  {
 						case "101":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID, req.Inquiring_product, \n"
-											+ "req.Item_name, req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID, emp.Last_name,\n"
-											+ "req.Date FROM REQUISITION AS req LEFT JOIN PROJECT AS pj ON pj.Project_ID=req.Project_ID \n"
-											+ "LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=req.Supervisor_ID WHERE (REQ_Sheet_ID="
+								r = Term_project_main.conn.st.executeQuery(st_req+" WHERE (REQ_Sheet_ID="
 												+text_inq_sheetID.getText()+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 								
 							} catch (SQLException e) {
@@ -3388,11 +3350,7 @@ public class Sheets_panel  {
 						case "100":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID, req.Inquiring_product, \n"
-										+ "req.Item_name, req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID, emp.Last_name,\n"
-										+ "req.Date FROM REQUISITION AS req LEFT JOIN PROJECT AS pj ON pj.Project_ID=req.Project_ID \n"
-										+ "LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=req.Supervisor_ID WHERE REQ_Sheet_ID="
-																						+text_inq_sheetID.getText());
+								r = Term_project_main.conn.st.executeQuery(st_req+" WHERE REQ_Sheet_ID="+text_inq_sheetID.getText());
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3404,12 +3362,8 @@ public class Sheets_panel  {
 						case "011":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SSELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID, req.Inquiring_product, \n"
-										+ "req.Item_name, req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID, emp.Last_name,\n"
-										+ "req.Date FROM REQUISITION AS req LEFT JOIN PROJECT AS pj ON pj.Project_ID=req.Project_ID \n"
-										+ "LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=req.Supervisor_ID WHERE (Project_ID ="
-												+text_inq_projectID.getText()
-												+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+								r = Term_project_main.conn.st.executeQuery(st_req+" WHERE (Project_ID ="+text_inq_projectID.getText()
+																			+" AND Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3421,11 +3375,7 @@ public class Sheets_panel  {
 						case "010":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID, req.Inquiring_product, \n"
-										+ "req.Item_name, req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID, emp.Last_name,\n"
-										+ "req.Date FROM REQUISITION AS req LEFT JOIN PROJECT AS pj ON pj.Project_ID=req.Project_ID \n"
-										+ "LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=req.Supervisor_ID WHERE Project_ID ="
-															+text_inq_projectID.getText());
+								r = Term_project_main.conn.st.executeQuery(st_req+" WHERE Project_ID ="+text_inq_projectID.getText());
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3437,11 +3387,7 @@ public class Sheets_panel  {
 						default:
 							//001
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID, req.Inquiring_product, \n"
-										+ "req.Item_name, req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID, emp.Last_name,\n"
-										+ "req.Date FROM REQUISITION AS req LEFT JOIN PROJECT AS pj ON pj.Project_ID=req.Project_ID \n"
-										+ "LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=req.Supervisor_ID WHERE Inquiring_product=\'"
-															+text_inq_pd.getText()+"\')");
+								r = Term_project_main.conn.st.executeQuery(st_req+" WHERE Inquiring_product=\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3514,8 +3460,7 @@ public class Sheets_panel  {
 						case "100":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE PUR_Sheet_ID="
-																						+text_inq_sheetID.getText());
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE PUR_Sheet_ID="+text_inq_sheetID.getText());
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3527,8 +3472,7 @@ public class Sheets_panel  {
 						case "011":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (Project_ID ="
-												+text_inq_projectID.getText()
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (Project_ID ="+text_inq_projectID.getText()
 												+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
@@ -3541,8 +3485,7 @@ public class Sheets_panel  {
 						case "010":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE Project_ID ="
-															+text_inq_projectID.getText());
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE Project_ID ="+text_inq_projectID.getText());
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3554,8 +3497,7 @@ public class Sheets_panel  {
 						default:
 							//001
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE Module_type =\'"
-															+text_inq_pd.getText()+"\')");
+								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE Module_type =\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3826,12 +3768,13 @@ public class Sheets_panel  {
 	
 	private String[][] show_unsign_req() {
 		
+		
 		ArrayList <String[]> temp = new ArrayList();
 	
 		try {
 			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID,req.Inquiring_product, "
 															+ "req.Item_name, req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID,"
-															+ " emp.Last_name, req.Date FROM REQUISITION AS req LEFT JOIN EMPLOYEE AS emp "
+															+ " emp.Last_name, req.Date FROM test.REQUISITION AS req LEFT JOIN test.EMPLOYEE AS emp "
 															+ "ON req.Supervisor_ID = emp.Emp_ID WHERE (Signature='False' AND req.Supervisor_ID="
 															+Term_project_main.field_empID.getText()+")");
 			
@@ -3866,7 +3809,7 @@ public class Sheets_panel  {
 		
 		int r=0;
 		try {
-			r = Term_project_main.conn.st.executeUpdate("UPDATE REQUISITION SET Signature=\'True\' WHERE Supervisor_ID="
+			r = Term_project_main.conn.st.executeUpdate("UPDATE test.REQUISITION SET Signature=\'True\' WHERE Supervisor_ID="
 																			+Term_project_main.field_empID.getText());
 			return r;
 		} catch (SQLException e) {
@@ -3894,7 +3837,7 @@ public class Sheets_panel  {
 			
 			try {	
 				
-				 r = Term_project_main.conn.st.executeUpdate("UPDATE RFQ SET Supplier_ID=\'"+text_mod_4.getText()+"\', Vol="+text_mod_5.getText()
+				 r = Term_project_main.conn.st.executeUpdate("UPDATE test.RFQ SET Supplier_ID=\'"+text_mod_4.getText()+"\', Vol="+text_mod_5.getText()
 				 										+", Date=\'"+text_mod_6.getText()+"\' WHERE (RFQ_Sheet_ID="+lbl_mod_sheetID_show.getText()+
 				 										" AND Project_ID="+lbl_mod_projectID_show.getText()+" AND Inquiring_product=\'"
 				 										+lbl_mod_pd_show.getText()+"\')");
@@ -3910,7 +3853,7 @@ public class Sheets_panel  {
 				
 			try {	
 				
-				 r = Term_project_main.conn.st.executeUpdate("UPDATE QUOTATION SET Supplier_ID=\'"+text_mod_4.getText()+"\', Vol="+text_mod_5.getText()
+				 r = Term_project_main.conn.st.executeUpdate("UPDATE test.QUOTATION SET Supplier_ID=\'"+text_mod_4.getText()+"\', Vol="+text_mod_5.getText()
 				 											+", Unit_price="+text_mod_6.getText()+", ESD=\'"+text_mod_7.getText()+"\', Date=\'"
 				 											+text_mod_8.getText()+ "\' WHERE (QUO_Sheet_ID="+lbl_mod_sheetID_show.getText()
 				 											+" AND Project_ID="+lbl_mod_projectID_show.getText()+" AND Inquiring_product=\'"
@@ -3927,7 +3870,7 @@ public class Sheets_panel  {
 			
 			try {	
 				
-				 r = Term_project_main.conn.st.executeUpdate("UPDATE REQUISITION SET Item_name=\'"+ text_mod_4.getText()+"\', Vol="
+				 r = Term_project_main.conn.st.executeUpdate("UPDATE test.REQUISITION SET Item_name=\'"+ text_mod_4.getText()+"\', Vol="
 						 								+text_mod_5.getText()+", Unit_price="+text_mod_6.getText()+", Supervisor_ID=\'"
 						 								+text_mod_7.getText()+"\', Date=\'"+text_mod_8.getText()+"\' WHERE (REQ_Sheet_ID="
 						 								+lbl_mod_sheetID_show.getText()+" AND Project_ID="+lbl_mod_projectID_show.getText()
@@ -3946,7 +3889,7 @@ public class Sheets_panel  {
 				
 			try {	
 				
-				 r = Term_project_main.conn.st.executeUpdate("UPDATE PURCHASE SET Vol="+text_mod_4.getText()+", Unit_price="+text_mod_5.getText()+", ESD=\'"
+				 r = Term_project_main.conn.st.executeUpdate("UPDATE test.PURCHASE SET Vol="+text_mod_4.getText()+", Unit_price="+text_mod_5.getText()+", ESD=\'"
 															+text_mod_6.getText()+"\', Date=\'"+text_mod_7.getText()+"\' WHERE (PUR_Sheet_ID="
 															+lbl_mod_sheetID_show.getText()+" AND Project_ID="+lbl_mod_projectID_show.getText()
 															+" AND Module_type=\'"+lbl_mod_pd_show.getText()+"\')");			 
@@ -3962,7 +3905,7 @@ public class Sheets_panel  {
 				
 			try {	
 				
-				r = Term_project_main.conn.st.executeUpdate("UPDATE EXAMINATION SET Vol="+text_mod_4.getText()+", Date=\'"+text_mod_5.getText()
+				r = Term_project_main.conn.st.executeUpdate("UPDATE test.EXAMINATION SET Vol="+text_mod_4.getText()+", Date=\'"+text_mod_5.getText()
 															+"\' WHERE (EX_Sheet_ID="+lbl_mod_sheetID_show.getText()+" AND Project_ID="
 															+lbl_mod_projectID_show.getText()+" AND Module_type=\'"+lbl_mod_pd_show.getText()+"\')");
 
@@ -3978,7 +3921,7 @@ public class Sheets_panel  {
 				
 			try {	
 				
-				r = Term_project_main.conn.st.executeUpdate("UPDATE RECEIPT SET Vol="+text_mod_4.getText()+", Date=\'"+text_mod_5.getText()
+				r = Term_project_main.conn.st.executeUpdate("UPDATE test.RECEIPT SET Vol="+text_mod_4.getText()+", Date=\'"+text_mod_5.getText()
 														+"\' WHERE (REC_Sheet_ID="+lbl_mod_sheetID_show.getText()+" AND Project_ID="
 														+lbl_mod_projectID_show.getText()+" AND Module_type=\'"+lbl_mod_pd_show.getText()+"\')");
 				
@@ -4013,7 +3956,7 @@ public class Sheets_panel  {
 			//RFQ
 			try {	
 				
-				 r = Term_project_main.conn.st.executeUpdate("DELETE FROM RFQ WHERE (RFQ_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+				 r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.RFQ WHERE (RFQ_Sheet_ID="+lbl_remove_sheetID_show.getText()+
 																" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Inquiring_product=\'"
 																+lbl_remove_pd_show.getText()+"\')");
 				
@@ -4032,7 +3975,7 @@ public class Sheets_panel  {
 				//QUOT
 			try {	
 				
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM QUOTATION WHERE (QUO_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.QUOTATION WHERE (QUO_Sheet_ID="+lbl_remove_sheetID_show.getText()+
 																" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Inquiring_product=\'"
 																+lbl_remove_pd_show.getText()+"\')");
 				
@@ -4049,7 +3992,7 @@ public class Sheets_panel  {
 			//REQ
 			try {	
 				
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM REQUISITION WHERE (REQ_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.REQUISITION WHERE (REQ_Sheet_ID="+lbl_remove_sheetID_show.getText()+
 																		" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Inquiring_product=\'"
 																		+lbl_remove_pd_show.getText()+"\')");
 				
@@ -4069,7 +4012,7 @@ public class Sheets_panel  {
 				//PUR
 			try {	
 				
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM PURCHASE WHERE (PUR_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.PURCHASE WHERE (PUR_Sheet_ID="+lbl_remove_sheetID_show.getText()+
 																		" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Module_type=\'"
 																			+lbl_remove_pd_show.getText()+"\')");
 										
@@ -4086,7 +4029,7 @@ public class Sheets_panel  {
 				//EXAM
 			try {	
 				
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM EXAMINATION WHERE (EX_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.EXAMINATION WHERE (EX_Sheet_ID="+lbl_remove_sheetID_show.getText()+
 																		" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Module_type=\'"
 																		+lbl_remove_pd_show.getText()+"\')");
 				
@@ -4103,7 +4046,7 @@ public class Sheets_panel  {
 				//RCPT
 			try {	
 				
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM RECEIPT WHERE (REC_Sheet_ID="+lbl_remove_sheetID_show.getText()+
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.RECEIPT WHERE (REC_Sheet_ID="+lbl_remove_sheetID_show.getText()+
 																		" AND Project_ID="+lbl_remove_projectID_show.getText()+" AND Module_type=\'"
 																		+lbl_remove_pd_show.getText()+"\')");
 				
@@ -4139,16 +4082,16 @@ public class Sheets_panel  {
 			
 			ResultSet r =Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID,RFQ.RFQ_Sheet_ID, QUOT.QUO_Sheet_ID, REQ.REQ_Sheet_ID, \n"
 															+ "PUR.PUR_Sheet_ID, EXAM.EX_Sheet_ID,RCPT.REC_Sheet_ID \n"
-															+ "FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
-															+ "LEFT JOIN QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
+															+ "FROM test.PROJECT AS pj LEFT JOIN test.RFQ ON pj.Project_ID = RFQ.Project_ID \n"
+															+ "LEFT JOIN test.QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
 															+ "AND RFQ.Inquiring_product = QUOT.Inquiring_product)\n"
-															+ "LEFT JOIN REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
+															+ "LEFT JOIN test.REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
 															+ "AND REQ.Inquiring_product = QUOT.Inquiring_product)\n"
-															+ "LEFT JOIN PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
+															+ "LEFT JOIN test.PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
 															+ "AND PUR.Module_type = REQ.Inquiring_product)\n"
-															+ "LEFT JOIN EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
+															+ "LEFT JOIN test.EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
 															+ "AND EXAM.Module_type = PUR.Module_type)\n"
-															+ "LEFT JOIN RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
+															+ "LEFT JOIN test.RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
 															+ "AND RCPT.Module_type = EXAM.MOdule_type) WHERE pj.Project_ID ="
 															+text_appd_1.getText()+" LIMIT 1");
 			
@@ -4234,7 +4177,7 @@ public class Sheets_panel  {
 			case "RFQ":
 				if(!text_appd_5.getText().isBlank()) {
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RFQ (Project_ID, Inquiring_product, Supplier_ID, "
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.RFQ (Project_ID, Inquiring_product, Supplier_ID, "
 																	+ "Vol, Date) VALUE ("+ text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', \'"+
 																	text_appd_3.getText()+"\', "+ text_appd_4.getText()+", \'"+text_appd_5.getText()+"\')");
 		
@@ -4245,7 +4188,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ ORDER BY RFQ_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.RFQ ORDER BY RFQ_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<8;i++) {
@@ -4260,7 +4203,7 @@ public class Sheets_panel  {
 				}else {
 					//text_appd_5.getText().isBlank()
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RFQ (Project_ID, Inquiring_product, Supplier_ID, "
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.RFQ (Project_ID, Inquiring_product, Supplier_ID, "
 																	+ "Vol) VALUE ("+ text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', \'"+
 																	text_appd_3.getText()+"\', "+ text_appd_4.getText()+")");
 		
@@ -4271,7 +4214,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ ORDER BY RFQ_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.RFQ ORDER BY RFQ_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<8;i++) {
@@ -4290,7 +4233,7 @@ public class Sheets_panel  {
 			case "QUOT":
 				if(!text_appd_7.getText().isBlank()) {
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO QUOTATION (Project_ID, Inquiring_product, Supplier_ID, "
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.QUOTATION (Project_ID, Inquiring_product, Supplier_ID, "
 																	+ "Vol, Unit_price, ESD, Date) VALUE ("+ text_appd_1.getText()+", \'"+text_appd_2.getText()
 																	+"\', \'"+text_appd_3.getText()+"\', "+ text_appd_4.getText()+", "+text_appd_5.getText()
 																	+", \'"+text_appd_6.getText()+"\', \'"+text_appd_7.getText()+"\')");
@@ -4301,7 +4244,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION ORDER BY QUO_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.QUOTATION ORDER BY QUO_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<11;i++) {
@@ -4316,7 +4259,7 @@ public class Sheets_panel  {
 				}else {
 					//text_appd_7.getText().isBlank()
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO QUOTATION (Project_ID, Inquiring_product, Supplier_ID, "
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.QUOTATION (Project_ID, Inquiring_product, Supplier_ID, "
 																	+ "Vol, Unit_price, ESD) VALUE ("+ text_appd_1.getText()+", \'"+text_appd_2.getText()
 																	+"\', \'"+text_appd_3.getText()+"\', "+ text_appd_4.getText()+", "+text_appd_5.getText()
 																	+", \'"+text_appd_6.getText()+"\')");
@@ -4327,7 +4270,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION ORDER BY QUO_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.QUOTATION ORDER BY QUO_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<11;i++) {
@@ -4345,7 +4288,7 @@ public class Sheets_panel  {
 			case "REQ":
 				if(!text_appd_7.getText().isBlank()) {
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO REQUISITION (Project_ID, Inquiring_product, Item_name, "
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.REQUISITION (Project_ID, Inquiring_product, Item_name, "
 																	+ "Vol, Unit_price, Supervisor_ID, Date) VALUE ("+ text_appd_1.getText()+", \'"															
 																	+text_appd_2.getText()+"\', \'"+text_appd_3.getText()+"\', "+ text_appd_4.getText()+", "
 																	+text_appd_5.getText()+", "+text_appd_6.getText()+", \'"+text_appd_7.getText()+"\')");
@@ -4356,7 +4299,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION ORDER BY REQ_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.REQUISITION ORDER BY REQ_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<12;i++) {
@@ -4371,7 +4314,7 @@ public class Sheets_panel  {
 				}else {
 					//text_appd_7.getText().isBlank()
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO REQUISITION (Project_ID, Inquiring_product, Item_name, "
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.REQUISITION (Project_ID, Inquiring_product, Item_name, "
 																	+ "Vol, Unit_price, Supervisor_ID) VALUE ("+ text_appd_1.getText()+", \'"															
 																	+text_appd_2.getText()+"\', \'"+text_appd_3.getText()+"\', "+ text_appd_4.getText()+", "
 																	+text_appd_5.getText()+", "+text_appd_6.getText()+")");
@@ -4382,7 +4325,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION ORDER BY REQ_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.REQUISITION ORDER BY REQ_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<12;i++) {
@@ -4401,7 +4344,7 @@ public class Sheets_panel  {
 			case "PUR":
 				if(!text_appd_6.getText().isBlank()) {
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO PURCHASE (Project_ID, Module_type, Vol, Unit_price, ESD, Date) VALUE ("
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.PURCHASE (Project_ID, Module_type, Vol, Unit_price, ESD, Date) VALUE ("
 																	+ text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+", "
 																	+text_appd_4.getText()+", \'"+text_appd_5.getText()+"\', \'"+text_appd_6.getText()+"\')");
 						
@@ -4411,7 +4354,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE ORDER BY PUR_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.PURCHASE ORDER BY PUR_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<10;i++) {
@@ -4426,7 +4369,7 @@ public class Sheets_panel  {
 				}else {
 					//text_appd_6.getText().isBlank()
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO PURCHASE (Project_ID, Module_type, Vol, Unit_price, ESD) VALUE ("
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.PURCHASE (Project_ID, Module_type, Vol, Unit_price, ESD) VALUE ("
 																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+", "
 																	+text_appd_4.getText()+", \'"+text_appd_5.getText()+"\')");
 						} catch (SQLException e) {
@@ -4435,7 +4378,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE ORDER BY PUR_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.PURCHASE ORDER BY PUR_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<10;i++) {
@@ -4453,7 +4396,7 @@ public class Sheets_panel  {
 			case "EXAM":
 				if(!text_appd_5.getText().isBlank()) {
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO EXAMINATION (Project_ID, Module_type, Vol, Result, Date) VALUE ("
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.EXAMINATION (Project_ID, Module_type, Vol, Result, Date) VALUE ("
 																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+
 																	", \'"+ text_appd_4.getText()+"\', \'"+text_appd_5.getText()+"\')");
 						
@@ -4463,7 +4406,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION ORDER BY EX_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.EXAMINATION ORDER BY EX_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<8;i++) {
@@ -4478,7 +4421,7 @@ public class Sheets_panel  {
 				}else {
 					//text_appd_5.getText().isBlank()
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO EXAMINATION (Project_ID, Module_type, Vol, Result) VALUE ("
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.EXAMINATION (Project_ID, Module_type, Vol, Result) VALUE ("
 																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+
 																	", \'"+ text_appd_4.getText()+"\')");
 						
@@ -4488,7 +4431,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION ORDER BY EX_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.EXAMINATION ORDER BY EX_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<8;i++) {
@@ -4506,7 +4449,7 @@ public class Sheets_panel  {
 			default:
 				if(!text_appd_4.getText().isBlank()) {
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RECEIPT (Project_ID, Module_type, Vol, Date) VALUE ("
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.RECEIPT (Project_ID, Module_type, Vol, Date) VALUE ("
 																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()
 																	+", \'"+ text_appd_4.getText()+"\')");
 						
@@ -4516,7 +4459,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT ORDER BY REC_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.RECEIPT ORDER BY REC_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<7;i++) {
@@ -4531,7 +4474,7 @@ public class Sheets_panel  {
 				}else {
 					//text_appd_4.getText().isBlank()
 					try {
-						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO RECEIPT (Project_ID, Module_type, Vol) VALUE ("
+						resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.RECEIPT (Project_ID, Module_type, Vol) VALUE ("
 																	+text_appd_1.getText()+", \'"+text_appd_2.getText()+"\', "+text_appd_3.getText()+")");
 						
 						} catch (SQLException e) {
@@ -4540,7 +4483,7 @@ public class Sheets_panel  {
 						}
 					if (resultSet!=0) {
 						try {
-							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT ORDER BY REC_Sheet_ID DESC LIMIT 1");
+							ResultSet r =Term_project_main.conn.st.executeQuery("SELECT * FROM test.RECEIPT ORDER BY REC_Sheet_ID DESC LIMIT 1");
 							
 							if(r.next()) {
 								for(int i=1;i<7;i++) {
@@ -4584,7 +4527,7 @@ public class Sheets_panel  {
 			//RFQ
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM RFQ WHERE (RFQ_Sheet_ID="+text1.getText()+
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.RFQ WHERE (RFQ_Sheet_ID="+text1.getText()+
 												" AND Project_ID="+text2.getText()+" AND Inquiring_product=\'"+text3.getText()
 												+"\')");
 				
@@ -4609,7 +4552,7 @@ public class Sheets_panel  {
 				//QUOT
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM QUOTATION WHERE (QUO_Sheet_ID="+text1.getText()+
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.QUOTATION WHERE (QUO_Sheet_ID="+text1.getText()+
 												" AND Project_ID="+text2.getText()+" AND Inquiring_product=\'"+text3.getText()
 												+"\')");
 				
@@ -4632,7 +4575,7 @@ public class Sheets_panel  {
 			//REQ
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM REQUISITION WHERE (REQ_Sheet_ID="+text1.getText()+
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.REQUISITION WHERE (REQ_Sheet_ID="+text1.getText()+
 												" AND Project_ID="+text2.getText()+" AND Inquiring_product=\'"+text3.getText()
 												+"\')");
 				
@@ -4658,7 +4601,7 @@ public class Sheets_panel  {
 				//PUR
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (PUR_Sheet_ID="+text1.getText()+
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.PURCHASE WHERE (PUR_Sheet_ID="+text1.getText()+
 												" AND Project_ID="+text2.getText()+" AND Module_type=\'"+text3.getText()
 												+"\')");
 				
@@ -4681,7 +4624,7 @@ public class Sheets_panel  {
 				//EXAM
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (EX_Sheet_ID="+text1.getText()+
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.EXAMINATION WHERE (EX_Sheet_ID="+text1.getText()+
 												" AND Project_ID="+text2.getText()+" AND Module_type=\'"+text3.getText()
 												+"\')");
 				
@@ -4704,7 +4647,7 @@ public class Sheets_panel  {
 				//RCPT
 			try {	
 				
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (REC_Sheet_ID="+text1.getText()+
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.RECEIPT WHERE (REC_Sheet_ID="+text1.getText()+
 												" AND Project_ID="+text2.getText()+" AND Module_type=\'"+text3.getText()
 												+"\')");
 				

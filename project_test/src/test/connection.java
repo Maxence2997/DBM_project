@@ -20,7 +20,7 @@ public class connection {
 	static final String DB_URL = "jdbc:mysql://localhost:3306/test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 	//userid&password
 	static final String USER = "root";
-	static final String PASS = "yang19970429";
+	static final String PASS = "qazwsxedc12345678";
 	
 	public static Statement st;
 

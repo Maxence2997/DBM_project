@@ -86,6 +86,7 @@ public class Maintenance_panel  {
 		
 		
 		
+		
 		/**
 		 * @wbp.parser.entryPoint
 		 */
@@ -749,6 +750,16 @@ public class Maintenance_panel  {
 			 * pass in 3 JTextFields and use switch case to handle every situation which they are filled in or not. 
 			 */
 			
+			final String st_inquire = "SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name AS E_name, pj.Project_status AS P_status,\n"
+					+ "pj.Established_date AS Est_date, rfq.Inquiring_product AS Product, rfq.RFQ_Sheet_ID, quo.QUO_Sheet_ID,\n"
+					+ " req.REQ_Sheet_ID, pur.PUR_Sheet_ID, exam.EX_Sheet_ID, rcpt.REC_Sheet_ID FROM PROJECT AS pj \n"
+					+ "LEFT JOIN test.RFQ AS rfq ON rfq.Project_ID = pj.Project_ID LEFT JOIN test.QUOTATION AS quo \n"
+					+ "ON (quo.Project_ID = rfq.Project_ID AND quo.Inquiring_product = rfq.Inquiring_product)\n"
+					+ "LEFT JOIN test.REQUISITION AS req ON (req.Project_ID = quo.Project_ID AND req.Inquiring_product = quo.Inquiring_product)\n"
+					+ "LEFT JOIN test.PURCHASE AS pur ON (pur.Project_ID = req.Project_ID AND req.Inquiring_product = pur.Module_type)\n"
+					+ "LEFT JOIN test.EXAMINATION AS exam ON (exam.Project_ID = pur.Project_ID AND exam.Module_type = pur.Module_type)\n"
+					+ "LEFT JOIN test.RECEIPT AS rcpt ON (rcpt.Project_ID = exam.Project_ID AND rcpt.Module_type = exam.Module_type)\n"
+					+ "LEFT JOIN test.EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID";
 			
 			ArrayList<String[]> temp = new ArrayList();
 			
@@ -759,7 +770,7 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(lib.st_project_inquire+" WHERE (pj.Project_ID=" + 
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (pj.Project_ID=" + 
 																		projectID.getText()+" AND Emp_ID="+ empID.getText()+" AND pj.Established_date=\'"
 																						+est_date.getText()+"\')");
 							
@@ -781,7 +792,7 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(lib.st_project_inquire+" WHERE (pj.Project_ID=" 
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (pj.Project_ID=" 
 																				+projectID.getText()+" AND pj.Emp_ID="+ empID.getText()+")");
 							
 							while(resultSet.next()) {
@@ -802,7 +813,7 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(lib.st_project_inquire+" WHERE (pj.Project_ID=" 
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (pj.Project_ID=" 
 																		+ projectID.getText()+" AND pj.Established_date=\'"+est_date.getText()+"\')");
 							
 							while(resultSet.next()) {
@@ -825,7 +836,7 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(lib.st_project_inquire+" WHERE pj.Project_ID="+projectID.getText());
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE pj.Project_ID="+projectID.getText());
 																			
 							if(resultSet.next()) {
 								String [] temp_array = new String[6];
@@ -845,7 +856,7 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(lib.st_project_inquire+" WHERE (pj.Emp_ID="
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (pj.Emp_ID="
 																						+empID.getText()+" AND pj.Established_date=\'"+est_date.getText()+"\')");
 							
 							while(resultSet.next()) {
@@ -866,7 +877,7 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(lib.st_project_inquire+" WHERE pj.Emp_ID="+empID.getText());
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE pj.Emp_ID="+empID.getText());
 							while(resultSet.next()) {
 								String [] temp_array = new String[6];
 								for(int i = 1; i<7; i++) {
@@ -887,7 +898,7 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(lib.st_project_inquire+" WHERE pj.Established_date=\'"
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE pj.Established_date=\'"
 																							+est_date.getText()+"\'");
 							
 							while(resultSet.next()) {
@@ -918,10 +929,21 @@ public class Maintenance_panel  {
 		
 		private String[][] last_20(){
 			
+			final String st_inquire = "SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name AS E_name, pj.Project_status AS P_status,\n"
+					+ "pj.Established_date AS Est_date, rfq.Inquiring_product AS Product, rfq.RFQ_Sheet_ID, quo.QUO_Sheet_ID,\n"
+					+ " req.REQ_Sheet_ID, pur.PUR_Sheet_ID, exam.EX_Sheet_ID, rcpt.REC_Sheet_ID FROM PROJECT AS pj \n"
+					+ "LEFT JOIN test.RFQ AS rfq ON rfq.Project_ID = pj.Project_ID LEFT JOIN test.QUOTATION AS quo \n"
+					+ "ON (quo.Project_ID = rfq.Project_ID AND quo.Inquiring_product = rfq.Inquiring_product)\n"
+					+ "LEFT JOIN test.REQUISITION AS req ON (req.Project_ID = quo.Project_ID AND req.Inquiring_product = quo.Inquiring_product)\n"
+					+ "LEFT JOIN test.PURCHASE AS pur ON (pur.Project_ID = req.Project_ID AND req.Inquiring_product = pur.Module_type)\n"
+					+ "LEFT JOIN test.EXAMINATION AS exam ON (exam.Project_ID = pur.Project_ID AND exam.Module_type = pur.Module_type)\n"
+					+ "LEFT JOIN test.RECEIPT AS rcpt ON (rcpt.Project_ID = exam.Project_ID AND rcpt.Module_type = exam.Module_type)\n"
+					+ "LEFT JOIN test.EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID";
+			
 			ArrayList<String[]> temp = new ArrayList();
 			
 			try {
-				ResultSet resultSet = Term_project_main.conn.st.executeQuery(lib.st_project_inquire+ " ORDER BY pj.Established_date DESC LIMIT 20");
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+ " ORDER BY pj.Established_date DESC LIMIT 20");
 				
 				
 				while(resultSet.next()) {
@@ -964,8 +986,8 @@ public class Maintenance_panel  {
 					if (resultSet==1){
 						
 						ResultSet add_result = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name, "
-																			+ "pj.Established_date, pj.Project_status, pj.Delivery_progress FROM PROJECT "
-																			+ "AS pj LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID ORDER BY Project_ID "
+																			+ "pj.Established_date, pj.Project_status, pj.Delivery_progress FROM test.PROJECT "
+																			+ "AS pj LEFT JOIN test.EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID ORDER BY Project_ID "
 																			+ "DESC LIMIT 1");
 						if(add_result.next()) {
 							for(int i =1; i<7;i++) {
@@ -988,14 +1010,14 @@ public class Maintenance_panel  {
 			}else if(!(text_maint_date.getText().isBlank())){
 				//!(text_maint_date.getText().isBlank())
 				try {
-					resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO PROJECT (Emp_ID, Established_date, Project_status) VALUE ("
+					resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.PROJECT (Emp_ID, Established_date, Project_status) VALUE ("
 																	+ text_maint_empID.getText()+", \'"+text_maint_date.getText()+"\', \'just started\')");
 					
 					if (resultSet==1){
 						
 						ResultSet add_result = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name, pj.Established_date,"
-																	+ " pj.Project_status, pj.Delivery_progress FROM PROJECT AS pj "
-																	+ "LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID ORDER BY Project_ID DESC LIMIT 1");
+																	+ " pj.Project_status, pj.Delivery_progress FROM tset.PROJECT AS pj "
+																	+ "LEFT JOIN tset.EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID ORDER BY Project_ID DESC LIMIT 1");
 						
 						if(add_result.next()) {
 							for(int i =1; i<7;i++) {
@@ -1029,13 +1051,13 @@ public class Maintenance_panel  {
 			
 			try {
 				resultSet = Term_project_main.conn.st.executeUpdate("DELETE RFQ, QUOT, REQ,PUR,EXAM,RCPT, INV "
-						+ "FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
-						+ "LEFT JOIN QUOTATION AS QUOT ON QUOT.Project_ID = pj.Project_ID \n"
-						+ "LEFT JOIN REQUISITION AS REQ ON REQ.Project_ID = pj.Project_ID\n"
-						+ "LEFT JOIN PURCHASE AS PUR ON PUR.Project_ID = pj.Project_ID\n"
-						+ "LEFT JOIN EXAMINATION AS EXAM ON EXAM.Project_ID = pj.Project_ID\n"
-						+ "LEFT JOIN RECEIPT AS RCPT ON RCPT.Project_ID = pj.Project_ID \n"
-						+ "LEFT JOIN INVENTORY AS INV ON INV.Project_ID = pj.Project_ID WHERE pj.Project_ID="+lbl_maint_pjID_show.getText());
+						+ "FROM test.PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
+						+ "LEFT JOIN test.QUOTATION AS QUOT ON QUOT.Project_ID = pj.Project_ID \n"
+						+ "LEFT JOIN test.REQUISITION AS REQ ON REQ.Project_ID = pj.Project_ID\n"
+						+ "LEFT JOIN test.PURCHASE AS PUR ON PUR.Project_ID = pj.Project_ID\n"
+						+ "LEFT JOIN test.EXAMINATION AS EXAM ON EXAM.Project_ID = pj.Project_ID\n"
+						+ "LEFT JOIN test.RECEIPT AS RCPT ON RCPT.Project_ID = pj.Project_ID \n"
+						+ "LEFT JOIN test.INVENTORY AS INV ON INV.Project_ID = pj.Project_ID WHERE pj.Project_ID="+lbl_maint_pjID_show.getText());
 				
 				
 				resultSet2 = Term_project_main.conn.st.executeUpdate("DELETE FROM PROJECT WHERE Project_ID="+lbl_maint_pjID_show.getText());
@@ -1061,8 +1083,8 @@ public class Maintenance_panel  {
 			
 			try {
 				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name, pj.Established_date, "
-														+ "pj.Project_status, pj.Delivery_progress FROM PROJECT AS pj "
-														+ "LEFT JOIN EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID WHERE Project_ID=" + ID.getText());
+														+ "pj.Project_status, pj.Delivery_progress FROM test.PROJECT AS pj "
+														+ "LEFT JOIN test.EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID WHERE Project_ID=" + ID.getText());
 				
 				if(resultSet.next()) {
 					 

@@ -12,62 +12,17 @@ import javax.swing.JTextField;
 public class Library {
 	
 	
-	public final String st_progress = "SELECT \n"
-			+ "    pj.Project_ID,\n"
-			+ "    pj.Project_status,\n"
-			+ "    pj.Emp_ID,\n"
-			+ "    emp.Last_name AS Responsable,\n"
-			+ "    PUR.Module_type,\n"
-			+ "    CONCAT(FORMAT(((Pur.Vol*100)/ RCPT.Vol),0),'%') AS Product_Delivery,\n"
-			+ "    PUR.ESD,\n"
-			+ "    RCPT.Date,\n"
-			+ "    (CASE\n"
-			+ "        WHEN\n"
-			+ "            (CASE\n"
-			+ "                WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
-			+ "                ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
-			+ "            END) >= 29\n"
-			+ "        THEN\n"
-			+ "            'Violated'\n"
-			+ "        WHEN\n"
-			+ "            ((CASE\n"
-			+ "                WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
-			+ "                ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
-			+ "            END) < 29\n"
-			+ "                && (CASE\n"
-			+ "                WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
-			+ "                ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
-			+ "            END) >= 15)\n"
-			+ "        THEN\n"
-			+ "            'Delayed'\n"
-			+ "        ELSE 'In Time'\n"
-			+ "    END) AS Contract,\n"
-			+ "    (CASE\n"
-			+ "        WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
-			+ "        ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
-			+ "    END) AS Date_difference\n"
-			+ "FROM\n"
-			+ "    PROJECT AS pj\n"
-			+ "        LEFT JOIN\n"
-			+ "    EMPLOYEE AS emp ON emp.Emp_ID = pj.Emp_ID\n"
-			+ "        LEFT JOIN\n"
-			+ "    PURCHASE AS PUR ON (PUR.Project_ID = pj.Project_ID)\n"
-			+ "        LEFT JOIN\n"
-			+ "    RECEIPT AS RCPT ON (RCPT.Project_ID = PUR.Project_ID\n"
-			+ "        AND RCPT.Module_type = PUR.MOdule_type)";
 	
 	
 	
-	public final String st_project_inquire = "SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name AS E_name, pj.Project_status AS P_status,\n"
-			+ "pj.Established_date AS Est_date, rfq.Inquiring_product AS Product, rfq.RFQ_Sheet_ID, quo.QUO_Sheet_ID,\n"
-			+ " req.REQ_Sheet_ID, pur.PUR_Sheet_ID, exam.EX_Sheet_ID, rcpt.REC_Sheet_ID FROM PROJECT AS pj \n"
-			+ "LEFT JOIN RFQ AS rfq ON rfq.Project_ID = pj.Project_ID LEFT JOIN QUOTATION AS quo \n"
-			+ "ON (quo.Project_ID = rfq.Project_ID AND quo.Inquiring_product = rfq.Inquiring_product)\n"
-			+ "LEFT JOIN REQUISITION AS req ON (req.Project_ID = quo.Project_ID AND req.Inquiring_product = quo.Inquiring_product)\n"
-			+ "LEFT JOIN PURCHASE AS pur ON (pur.Project_ID = req.Project_ID AND req.Inquiring_product = pur.Module_type)\n"
-			+ "LEFT JOIN EXAMINATION AS exam ON (exam.Project_ID = pur.Project_ID AND exam.Module_type = pur.Module_type)\n"
-			+ "LEFT JOIN RECEIPT AS rcpt ON (rcpt.Project_ID = exam.Project_ID AND rcpt.Module_type = exam.Module_type)\n"
-			+ "LEFT JOIN EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID";
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public Library() {
 		
@@ -88,11 +43,11 @@ public class Library {
 			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID,RFQ.Sheet_type,QUOT.Sheet_type, REQ.Sheet_type, \n"
 																+ "PUR.Sheet_type, EXAM.Sheet_type, RCPT.Sheet_type\n"
 																+ "FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
-																+ "LEFT JOIN QUOTATION AS QUOT ON QUOT.Project_ID = pj.Project_ID \n"
-																+ "LEFT JOIN REQUISITION AS REQ ON REQ.Project_ID = pj.Project_ID\n"
-																+ "LEFT JOIN PURCHASE AS PUR ON PUR.Project_ID = pj.Project_ID\n"
-																+ "LEFT JOIN EXAMINATION AS EXAM ON EXAM.Project_ID = pj.Project_ID\n"
-																+ "LEFT JOIN RECEIPT AS RCPT ON RCPT.Project_ID = pj.Project_ID GROUP BY pj.Project_ID");
+																+ "LEFT JOIN test.QUOTATION AS QUOT ON QUOT.Project_ID = pj.Project_ID \n"
+																+ "LEFT JOIN test.REQUISITION AS REQ ON REQ.Project_ID = pj.Project_ID\n"
+																+ "LEFT JOIN test.PURCHASE AS PUR ON PUR.Project_ID = pj.Project_ID\n"
+																+ "LEFT JOIN test.EXAMINATION AS EXAM ON EXAM.Project_ID = pj.Project_ID\n"
+																+ "LEFT JOIN test.RECEIPT AS RCPT ON RCPT.Project_ID = pj.Project_ID GROUP BY pj.Project_ID");
 			
 			while(r.next()) {
 				String[] temp_array = new String[2];
@@ -122,7 +77,7 @@ public class Library {
 			
 			
 			try {
-			    int resultSet = Term_project_main.conn.st.executeUpdate("UPDATE PROJECT SET Project_status=\'"+temp.get(l)[1]
+			    int resultSet = Term_project_main.conn.st.executeUpdate("UPDATE test.PROJECT SET Project_status=\'"+temp.get(l)[1]
 										+"\' WHERE Project_ID="+temp.get(l)[0]);
 
 				;	
@@ -169,7 +124,7 @@ public class Library {
 		boolean res = false;
 		
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Supplier_ID FROM SUPPLIER WHERE Supplier_ID=\'"+supID.getText()+"\'");
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Supplier_ID FROM test.SUPPLIER WHERE Supplier_ID=\'"+supID.getText()+"\'");
 			
 			if(r.next()) {
 				
@@ -206,7 +161,7 @@ public class Library {
 			}
 		
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Project_ID FROM PROJECT WHERE Project_ID="+pjID.getText());
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Project_ID FROM test.PROJECT WHERE Project_ID="+pjID.getText());
 			
 			if(r.next()) {
 				
@@ -236,7 +191,7 @@ public class Library {
 		boolean res=false;
 
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Module_type FROM PRODUCT WHERE Module_type=\'"+module.getText()+"\'");
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Module_type FROM test.PRODUCT WHERE Module_type=\'"+module.getText()+"\'");
 			
 			if(r.next()) {
 				
@@ -293,7 +248,7 @@ public class Library {
 		
 		
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Emp_ID FROM EMPLOYEE WHERE Emp_ID="+empID.getText());
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Emp_ID FROM test.EMPLOYEE WHERE Emp_ID="+empID.getText());
 			
 			if(r.next()) {
 				
@@ -324,7 +279,7 @@ public class Library {
 		
 		
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Supervisor_ID FROM EMPLOYEE WHERE Supervisor_ID="+empID.getText());
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT Supervisor_ID FROM test.EMPLOYEE WHERE Supervisor_ID="+empID.getText());
 			
 			if(r.next()) {
 				

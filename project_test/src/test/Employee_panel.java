@@ -581,7 +581,7 @@ public class Employee_panel {
 			 */
 			ArrayList<String> temp = new ArrayList();
 			try {
-				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM EMPLOYEE WHERE Emp_ID=" + empID.getText());
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM test.EMPLOYEE WHERE Emp_ID=" + empID.getText());
 				if(resultSet.next()) {
 					
 //					System.out.println(resultSet.getString("Emp_ID") + "    " + resultSet.getString(
@@ -615,7 +615,7 @@ public class Employee_panel {
 			if(!text_emp_supervID.getText().isBlank()) {
 				
 				 try {
-					r = Term_project_main.conn.st.executeUpdate("INSERT INTO EMPLOYEE(First_name, Last_name, Address, Phone_number, Supervisor_ID, Performance)"
+					r = Term_project_main.conn.st.executeUpdate("INSERT INTO test.EMPLOYEE(First_name, Last_name, Address, Phone_number, Supervisor_ID, Performance)"
 					 										+ " VALUE(\'"+text_emp_first.getText()+ "\', \'"+text_emp_last.getText()+"\', \'"+text_emp_addr.getText()
 					 										+"\', \'"+text_emp_phone.getText()+"\', "+text_emp_supervID.getText()+", \'"+comboBox_emp_perf.getSelectedItem()
 					 										+"\')");
@@ -638,7 +638,7 @@ public class Employee_panel {
 			}else {
 				//text_emp_supervID.getText().isBlank()
 				 try {
-						r = Term_project_main.conn.st.executeUpdate("INSERT INTO EMPLOYEE(First_name, Last_name, Address, Phone_number, Performance)"
+						r = Term_project_main.conn.st.executeUpdate("INSERT INTO test.EMPLOYEE(First_name, Last_name, Address, Phone_number, Performance)"
 						 										+ " VALUE(\'"+text_emp_first.getText()+ "\', \'"+text_emp_last.getText()+"\', \'"+text_emp_addr.getText()
 						 										+"\', \'"+text_emp_phone.getText()+"\', \'"+comboBox_emp_perf.getSelectedItem()+"\')");
 						if (r==1) {
@@ -671,7 +671,7 @@ public class Employee_panel {
 			int r = 0;
 			if(!text_emp_supervID.getText().isBlank()) {
 				try {
-					 r = Term_project_main.conn.st.executeUpdate("UPDATE EMPLOYEE SET First_name=\'"+text_emp_first.getText()+ "\', Last_name=\'"
+					 r = Term_project_main.conn.st.executeUpdate("UPDATE test.EMPLOYEE SET First_name=\'"+text_emp_first.getText()+ "\', Last_name=\'"
 							 		+text_emp_last.getText()+"\', Address=\'"+text_emp_addr.getText()
 									+ "\', Phone_number=\'"+ text_emp_phone.getText()+"\', Supervisor_ID="+text_emp_supervID.getText()
 									+ ", Performance=\'"+comboBox_emp_perf.getSelectedItem()+"\' WHERE Emp_ID="+lbl_empID_show.getText());
@@ -684,7 +684,7 @@ public class Employee_panel {
 			}else {
 				//!text_emp_supervID.getText().isBlank()
 				try {
-					 r = Term_project_main.conn.st.executeUpdate("UPDATE EMPLOYEE SET First_name=\'"+text_emp_first.getText()+ "\', Last_name=\'"
+					 r = Term_project_main.conn.st.executeUpdate("UPDATE test.EMPLOYEE SET First_name=\'"+text_emp_first.getText()+ "\', Last_name=\'"
 							 		+text_emp_last.getText()+"\', Address=\'"+text_emp_addr.getText()
 									+ "\', Phone_number=\'"+ text_emp_phone.getText()+"\', Supervisor_ID=null"
 									+ ", Performance=\'"+comboBox_emp_perf.getSelectedItem()+"\' WHERE Emp_ID="+lbl_empID_show.getText());
@@ -703,7 +703,7 @@ public class Employee_panel {
 			
 			int r=0;
 			try {
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM EMPLOYEE WHERE Emp_ID="+empID.getText());
+				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.EMPLOYEE WHERE Emp_ID="+empID.getText());
 				
 				return r;
 			} catch (SQLException e) {

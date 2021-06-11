@@ -584,7 +584,7 @@ public class Supplier_panel {
 			case "11":
 
 				try {
-					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE (Supplier_ID=\'" + 
+					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM test.SUPPLIER WHERE (Supplier_ID=\'" + 
 							sup_ID.getText()+"\' AND Supplier_name=\'" +sup_name.getText()+"\')");
 					
 					while(resultSet.next()) {
@@ -605,7 +605,7 @@ public class Supplier_panel {
 					
 				
 				try {
-					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_ID=\'" 
+					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM test.SUPPLIER WHERE Supplier_ID=\'" 
 													+ text_sup_supID.getText() +"\'");
 					
 					while(resultSet.next()) {
@@ -626,7 +626,7 @@ public class Supplier_panel {
 			default:
 				
 				try {
-					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_name=\'" + 
+					ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM test.SUPPLIER WHERE Supplier_name=\'" + 
 													text_sup_name.getText()+"\'");
 					
 					while(resultSet.next()) {
@@ -666,12 +666,12 @@ public class Supplier_panel {
 		 **/
 		ArrayList<String> temp = new ArrayList();
 		try {
-			int resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO SUPPLIER(Supplier_ID, Supplier_name, Supplier_address, "
+			int resultSet = Term_project_main.conn.st.executeUpdate("INSERT INTO test.SUPPLIER(Supplier_ID, Supplier_name, Supplier_address, "
 					+ "Contact_name, Contact_mobile, Contact_email) VALUE (\'"+ get_new_supID()+"\', \'"+text_sup_name.getText()+"\', \'"+
 					text_sup_addr.getText()+"\', \'"+ text_sup_ctc.getText()+"\', \'"+
 					text_sup_mobile.getText()+"\', \'"+text_sup_mail.getText()+"\')");
 			if(resultSet==1) {
-				ResultSet r =  Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER ORDER BY Supplier_ID DESC LIMIT 1");
+				ResultSet r =  Term_project_main.conn.st.executeQuery("SELECT * FROM test.SUPPLIER ORDER BY Supplier_ID DESC LIMIT 1");
 			
 				while(r.next()) {
 					
@@ -699,7 +699,7 @@ public class Supplier_panel {
 		
 		String new_ID = "";
 		try {
-			ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT Supplier_ID FROM SUPPLIER  ORDER  BY Supplier_ID DESC");
+			ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT Supplier_ID FROM tset.SUPPLIER ORDER  BY Supplier_ID DESC");
 			if (resultSet.next()) {
 				
 			String previous = resultSet.getString(1);
@@ -726,7 +726,7 @@ public class Supplier_panel {
 		
 		int resultSet=0;
 		try {
-			resultSet = Term_project_main.conn.st.executeUpdate("DELETE FROM SUPPLIER WHERE Supplier_ID=\'" + lbl_sup_supID_show.getText()+"\'");
+			resultSet = Term_project_main.conn.st.executeUpdate("DELETE FROM test.SUPPLIER WHERE Supplier_ID=\'" + lbl_sup_supID_show.getText()+"\'");
 //			System.out.print("INSERT INTO SUPPLIER(Supplier_ID, Supplier_name, Supplier_address, "
 //					+ "Contact_name, Contact_mobile, Contact_email) VALUE (\'"+ get_new_supID()+"\', \'"+text_sup_name.getText()+"\', \'"+
 //					text_sup_addr.getText()+"\', \'"+ text_sup_ctc.getText()+"\', \'"+
@@ -751,7 +751,7 @@ public class Supplier_panel {
 		ArrayList<String> temp = new ArrayList();
 		
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM SUPPLIER WHERE Supplier_ID=\'"+supID.getText()+"\'");
+			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.SUPPLIER WHERE Supplier_ID=\'"+supID.getText()+"\'");
 			
 			if(r.next()) {
 				for(int i=1;i<7;i++) {
