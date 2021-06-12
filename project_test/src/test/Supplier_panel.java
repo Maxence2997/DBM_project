@@ -105,6 +105,32 @@ public class Supplier_panel {
 		supplier_panel.add(text_sup_name);
 		text_sup_name.setColumns(14);
 		
+		btn_sup_inquire = new JButton("Inquire");
+		btn_sup_inquire.setBounds(491, 76, 88, 26);
+		btn_sup_inquire.setVisible(true);
+		btn_sup_inquire.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String [] table_test_data = {"SP0000002", "Q-TIP", "Taoyuan", "Smith", "(02)25450002", "supplier002@gmail.com"};  //must show to test data
+				
+				String [] temp = inquire();					//if want to test table without DB, mark from this line until whole if-else
+
+				if (temp.length != 0){ // found data match
+
+					sup_table_model.addRow(temp);
+					sup_table.setVisible(true); 
+					scrollpane.setVisible(true);
+				}  											
+//				sup_table_model.addRow(table_test_data); //for test table  //must show to test data
+//				sup_table.setVisible(true); 
+//				scrollpane.setVisible(true);
+				else {
+					//no found data match 
+				}
+			}
+		});
+		supplier_panel.add(btn_sup_inquire);
+		
 		lbl_sup_addr = new JLabel("Address :");
 		lbl_sup_addr.setBounds(178, 107, 59, 16);
 		lbl_sup_addr.setVisible(false);
