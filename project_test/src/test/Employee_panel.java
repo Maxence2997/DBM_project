@@ -152,7 +152,7 @@ public class Employee_panel {
 			
 			lbl_emp_info = new JLabel("Message of execute result");
 			lbl_emp_info.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_emp_info.setBounds(115, 273, 434, 16);
+			lbl_emp_info.setBounds(48, 272, 451, 16);
 			lbl_emp_info.setVisible(false);
 			employee_panel.add(lbl_emp_info);
 			
@@ -472,7 +472,7 @@ public class Employee_panel {
 						
 			
 						
-			btn_emp_execute = new JButton();
+			btn_emp_execute = new JButton();  //btn_save_change. btn_add and btn_delete
 			btn_emp_execute.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (btn_emp_execute.getText().equalsIgnoreCase("Save Change")) {
@@ -610,6 +610,25 @@ public class Employee_panel {
 			btn_show_more.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
+					String[][] temp = show_more();
+					
+					if(temp.length==0) {
+						
+						lbl_emp_info.setText("the emp. for whom you inquire doesn't participate any project.");
+						lbl_emp_info.setVisible(true);
+						
+						
+						
+					}else {
+						//temp.length!=0
+						
+						String[] column_names = {"Emp. ID", "Name", "Project ID", "P.status", "Est. Date"};
+	            		
+	            		DefaultTableModel emp_table_model = new DefaultTableModel(temp, column_names);
+	            		emp_table.setModel(emp_table_model);
+					}
+					
+					
 					
 				}
 			});
@@ -618,12 +637,44 @@ public class Employee_panel {
 				
 		}
 		
+		
+		
+		private String[][] show_more(){
+			
+			ArrayList<String[]> temp = new ArrayList();
+			
+			try {
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM VIEW_EMPLOYEE_PROJECT WHERE Emp_ID="
+											+text_emp_empID.getText());
+				
+				while(resultSet.next()) {
+					String[] array = new String[5];
+					for(int i=1;i<6;i++) {
+						array[i-1]=resultSet.getString(i);
+					}
+					temp.add(array);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			String[][] result_array = new String[temp.size()][5];
+			int i=0;
+			for (String[] array_in_temp : temp) {
+				result_array[i++] = array_in_temp;
+			        }
+			return result_array;
+		}
+		
+		
+		
 		private String[][] show_table(){
 			
 			ArrayList<String[]> temp = new ArrayList();
 			
 			try {
-				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM VIEW_EMPLOYEE_WITH_SUPERVISOR WHERE Emp_ID="
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM VIEW_EMPLOYEE_SUPERVISOR WHERE Emp_ID="
 											+text_emp_empID.getText());
 				
 				while(resultSet.next()) {
@@ -657,13 +708,9 @@ public class Employee_panel {
 			 */
 			ArrayList<String> temp = new ArrayList();
 			try {
-				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM test.EMPLOYEE WHERE Emp_ID=" + empID.getText());
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM VIEW_EMPLOYEE_SUPERVISOR WHERE Emp_ID=" + empID.getText());
 				if(resultSet.next()) {
-					
-//					System.out.println(resultSet.getString("Emp_ID") + "    " + resultSet.getString(
-//							"First_name") + "   " + resultSet.getString("Last_name") + "   " + resultSet.getString("Address") 
-//							+ "   " + resultSet.getString("Phone_number") + "   " + resultSet.getString("Supervisor_ID")+ "   " 
-//							+ resultSet.getString("Performance"));
+				
 					
 					for(int i = 1; i<8; i++) {
 						temp.add(resultSet.getString(i));

@@ -274,7 +274,6 @@ public class Sheets_panel  {
 			            		append_table.setVisible(false);
 			            		scrollpane_append.setVisible(false);
 			            		btn_append_clear.setVisible(false);
-			            		btn_appd_append.setVisible(false);
 			            		lbl_appd_ins.setVisible(true);
 			            	}
 			            	
