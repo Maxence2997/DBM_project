@@ -283,7 +283,7 @@ public class Library {
 			
 			if(r.next()) {
 				
-				System.out.println(r.getString(1));
+				//System.out.println(r.getString(1));
 				res=true;
 			}
 			

@@ -62,6 +62,7 @@ public class Progress_panel {
 		
 		JLabel lbl_note = new JLabel("P.D.P = Product Delivery Progress, E.S.D = Estimated Ship Date");
 		lbl_note.setBounds(18, 170, 619, 16);
+		lbl_note.setVisible(false);
 		progress_panel.add(lbl_note);
 		
 		JButton btn_prog_inquire_all = new JButton("All");
@@ -80,6 +81,7 @@ public class Progress_panel {
 					
 					lbl_prog_message.setText("Data loaded");
 					lbl_prog_message.setVisible(true);
+					lbl_note.setVisible(true);
 					prog_table.setVisible(true);
 					scrollpane_prog.setVisible(true);
 					lbl_note.setVisible(true);
@@ -90,6 +92,7 @@ public class Progress_panel {
 					
 					lbl_prog_message.setText("No project is working");
 					lbl_prog_message.setVisible(true);
+					lbl_note.setVisible(false);
 					prog_table.setVisible(false);
 					scrollpane_prog.setVisible(false);
 					lbl_note.setVisible(false);
@@ -123,6 +126,7 @@ public class Progress_panel {
 //					column_model.getColumn(8).setPreferredWidth(30);
 					lbl_prog_message.setText("Data loaded");
 					lbl_prog_message.setVisible(true);
+					lbl_note.setVisible(true);
 					prog_table.setVisible(true);
 					scrollpane_prog.setVisible(true);
 					lbl_note.setVisible(true);
@@ -133,6 +137,7 @@ public class Progress_panel {
 					
 					lbl_prog_message.setText("No project is working");
 					lbl_prog_message.setVisible(true);
+					lbl_note.setVisible(false);
 					prog_table.setVisible(false);
 					scrollpane_prog.setVisible(false);
 					lbl_note.setVisible(false);
@@ -240,49 +245,7 @@ public class Progress_panel {
 		 * @since 06/07/2021
 		 */
 		
-		final String st_progress = "SELECT \n"
-				+ "    pj.Project_ID,\n"
-				+ "    pj.Project_status,\n"
-				+ "    pj.Emp_ID,\n"
-				+ "    emp.Last_name AS Responsable,\n"
-				+ "    PUR.Module_type,\n"
-				+ "    CONCAT(FORMAT(((Pur.Vol*100)/ RCPT.Vol),0),'%') AS Product_Delivery,\n"
-				+ "    PUR.ESD,\n"
-				+ "    RCPT.Date,\n"
-				+ "    (CASE\n"
-				+ "        WHEN\n"
-				+ "            (CASE\n"
-				+ "                WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
-				+ "                ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
-				+ "            END) >= 29\n"
-				+ "        THEN\n"
-				+ "            'Violated'\n"
-				+ "        WHEN\n"
-				+ "            ((CASE\n"
-				+ "                WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
-				+ "                ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
-				+ "            END) < 29\n"
-				+ "                && (CASE\n"
-				+ "                WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
-				+ "                ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
-				+ "            END) >= 15)\n"
-				+ "        THEN\n"
-				+ "            'Delayed'\n"
-				+ "        ELSE 'In Time'\n"
-				+ "    END) AS Contract,\n"
-				+ "    (CASE\n"
-				+ "        WHEN (Pur.Vol*100)/ RCPT.Vol < 100 THEN DATEDIFF(CURDATE(), PUR.ESD)\n"
-				+ "        ELSE DATEDIFF(RCPT.Date, PUR.ESD)\n"
-				+ "    END) AS Date_difference\n"
-				+ "FROM\n"
-				+ "    test.PROJECT AS pj\n"
-				+ "        LEFT JOIN\n"
-				+ "    test.EMPLOYEE AS emp ON emp.Emp_ID = pj.Emp_ID\n"
-				+ "        LEFT JOIN\n"
-				+ "    test.PURCHASE AS PUR ON (PUR.Project_ID = pj.Project_ID)\n"
-				+ "        LEFT JOIN\n"
-				+ "    test.RECEIPT AS RCPT ON (RCPT.Project_ID = PUR.Project_ID\n"
-				+ "        AND RCPT.Module_type = PUR.MOdule_type)";
+		final String st_progress = "SELECT * FROM VIEW_PROJECT_PROGRESS";
 		
 		ArrayList<String[]> temp = new ArrayList();
 		
@@ -294,18 +257,17 @@ public class Progress_panel {
 				
 				try {
 					
-					ResultSet r = Term_project_main.conn.st.executeQuery(st_progress+" ORDER BY Date_difference DESC");
+					ResultSet r = Term_project_main.conn.st.executeQuery(st_progress+" WHERE Date_diff >15 ORDER BY Date_diff DESC");
 					
 					while(r.next()) {
-						if(r.getInt(10)>=15) {
+						
 							String[] temp_array = new String[9];
 							for(int i =1;i<10;i++) {
 								
 								temp_array[i-1]=r.getString(i);
 								//System.out.print(temp_array[i-1]);
 							}
-							temp.add(temp_array);
-						}
+							temp.add(temp_array);	
 					}
 					
 				} catch (SQLException e) {
@@ -318,11 +280,11 @@ public class Progress_panel {
 				//not supervisor can only see the project on his responsibility
 				try {
 					
-					ResultSet r = Term_project_main.conn.st.executeQuery(st_progress+" ORDER BY Date_difference DESC"
-							+ " WHERE pj.Emp_ID="+Term_project_main.field_empID.getText());
+					ResultSet r = Term_project_main.conn.st.executeQuery(st_progress+" WHERE (Date_diff >15 AND Emp_ID="
+																			+Term_project_main.field_empID.getText()+") ORDER BY Date_diff DESC");
 					
 					while(r.next()) {
-						if(r.getInt(10)>=15) {
+						
 							String[] temp_array = new String[9];
 							for(int i =1;i<10;i++) {
 								
@@ -330,7 +292,7 @@ public class Progress_panel {
 								//System.out.print(temp_array[i-1]);
 							}
 							temp.add(temp_array);
-						}
+						
 					}
 					
 				} catch (SQLException e) {
@@ -347,7 +309,7 @@ public class Progress_panel {
 					
 					try {
 						
-						ResultSet r = Term_project_main.conn.st.executeQuery(st_progress+" WHERE pj.Project_ID="+text_prog_pjID.getText());
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_progress+" WHERE Project_ID="+text_prog_pjID.getText());
 						
 						while(r.next()) {
 							String[] temp_array = new String[9];
@@ -367,8 +329,8 @@ public class Progress_panel {
 					//not supervisor can only see the project on his responsibility
 					try {
 						
-						ResultSet r = Term_project_main.conn.st.executeQuery(st_progress+" WHERE (pj.Emp_ID="
-															+Term_project_main.field_empID.getText()+" AND pj.Project_ID="+text_prog_pjID.getText()+")");
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_progress+" WHERE (Emp_ID="
+															+Term_project_main.field_empID.getText()+" AND Project_ID="+text_prog_pjID.getText()+")");
 						
 						while(r.next()) {
 							String[] temp_array = new String[9];
@@ -391,7 +353,7 @@ public class Progress_panel {
 					
 					try {
 						
-						ResultSet r = Term_project_main.conn.st.executeQuery(st_progress);
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_progress+" ORDER BY Project_ID");
 						
 						while(r.next()) {
 							String[] temp_array = new String[9];
@@ -411,15 +373,14 @@ public class Progress_panel {
 					//not supervisor can only see the project on his responsibility
 					try {
 						
-						ResultSet r = Term_project_main.conn.st.executeQuery(st_progress+" WHERE pj.Emp_ID="+Term_project_main.field_empID.getText());
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_progress+" WHERE Emp_ID="+Term_project_main.field_empID.getText()+" ORDER BY Project_ID");
 						
 						while(r.next()) {
 							String[] temp_array = new String[9];
 							for(int i =1;i<10;i++) {
 								temp_array[i-1]=r.getString(i);
 							}
-							if(!(temp_array[5].equals("null")))
-								temp_array[5]=temp_array[5]+"%";
+							
 							temp.add(temp_array);
 						}
 					} catch (SQLException e) {

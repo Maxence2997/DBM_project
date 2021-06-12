@@ -13,8 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 public class Employee_panel {
 		/**
@@ -46,6 +49,9 @@ public class Employee_panel {
 		private JLabel lbl_emp_info;
 		
 		private JTextField text_emp_empID;
+		private JTable emp_table;
+		private JScrollPane scrollpane;
+		private JButton btn_show_more;
 		
 		
 		public Employee_panel() {
@@ -146,9 +152,26 @@ public class Employee_panel {
 			
 			lbl_emp_info = new JLabel("Message of execute result");
 			lbl_emp_info.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_emp_info.setBounds(115, 332, 434, 16);
+			lbl_emp_info.setBounds(115, 273, 434, 16);
 			lbl_emp_info.setVisible(false);
 			employee_panel.add(lbl_emp_info);
+			
+			emp_table = new JTable(){ 
+				@Override
+				public boolean isCellEditable(int row, int column)
+	            {
+	                                  return false;}//uneditable    
+			};
+			emp_table.setFillsViewportHeight(true);
+			//emp_table.setBounds(48,288,563,30);
+			emp_table.setVisible(false);
+			
+			
+			scrollpane = new JScrollPane(emp_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			scrollpane.setBounds(48,300,563,79);
+			scrollpane.setVisible(false);
+			//scrollpane.setPreferredSize(new Dimension(563, 50));   //whole scrollpane and table will disapear
+			employee_panel.add(scrollpane);
 			
 			JButton btn_clear = new JButton("Clear");
 			btn_clear.addActionListener(new ActionListener() {
@@ -166,7 +189,7 @@ public class Employee_panel {
 	            		lbl_empID_show.setVisible(false);
 	            		text_emp_empID.setVisible(true);
 	            		
-	            		set_visible(false);
+	            		set_visible(false);	
 	
 			     	}
 				}
@@ -337,6 +360,16 @@ public class Employee_panel {
 		            		comboBox_emp_perf.setVisible(true);
 		            		comboBox_emp_perf.setSelectedItem(temp.get(6));
 		            		
+		            		String[][] temp2 = show_table();
+		            		String[] column_names = {"Emp. ID", "Name", "Address", "Phone Num", "Perf.", "Super. ID", "Name"};
+		            		
+		            		DefaultTableModel emp_table_model = new DefaultTableModel(temp2, column_names);
+		            		emp_table.setModel(emp_table_model);
+		            		
+		            		emp_table.setVisible(true);
+		        			scrollpane.setVisible(true);
+		        			btn_show_more.setVisible(true);
+		            		
 		            		if(lib.supervisor_check(Term_project_main.field_empID)) 
 		            			
 		            			btn_emp_execute.setVisible(true);
@@ -383,6 +416,9 @@ public class Employee_panel {
 		            		
 		            		btn_emp_execute.setVisible(false);
 		            		
+		            		emp_table.setVisible(false);
+		        			scrollpane.setVisible(false);
+		        			btn_show_more.setVisible(false);
 		            		
 					     	btn_clear.setVisible(false);
 					     	
@@ -424,6 +460,10 @@ public class Employee_panel {
 	            		btn_emp_execute.setVisible(false);
 
 	            		btn_clear.setVisible(false);
+	            		
+	            		emp_table.setVisible(false);
+	        			scrollpane.setVisible(false);
+	        			btn_show_more.setVisible(false);
 				     		
 						}    	
 	            	}
@@ -562,13 +602,49 @@ public class Employee_panel {
 					
 					}
 				});
-			btn_emp_execute.setBounds(266, 281, 130, 29);
+			btn_emp_execute.setBounds(346, 234, 86, 29);
 			btn_emp_execute.setVisible(false);
 			employee_panel.add(btn_emp_execute);
+			
+			btn_show_more = new JButton("Shoe more");
+			btn_show_more.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					
+				}
+			});
+			btn_show_more.setBounds(511, 268, 100, 29);
+			employee_panel.add(btn_show_more);
 				
 		}
 		
-		
+		private String[][] show_table(){
+			
+			ArrayList<String[]> temp = new ArrayList();
+			
+			try {
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM VIEW_EMPLOYEE_WITH_SUPERVISOR WHERE Emp_ID="
+											+text_emp_empID.getText());
+				
+				while(resultSet.next()) {
+					String[] array = new String[7];
+					for(int i=1;i<8;i++) {
+						array[i-1]=resultSet.getString(i);
+					}
+					temp.add(array);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			String[][] result_array = new String[temp.size()][7];
+			int i=0;
+			for (String[] array_in_temp : temp) {
+				result_array[i++] = array_in_temp;
+			        }
+			return result_array;
+		}
 		
 		
 		private ArrayList<String> check(JTextField empID) {
@@ -757,6 +833,10 @@ public class Employee_panel {
 			comboBox_emp_perf.setVisible(bl);
 			
 			btn_emp_execute.setVisible(bl);
+			
+			emp_table.setVisible(bl);
+			scrollpane.setVisible(bl);
+			btn_show_more.setVisible(bl);
 			
 				
 		}

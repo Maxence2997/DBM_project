@@ -59,8 +59,6 @@ public class Maintenance_panel  {
 		private	JLabel lbl_maint_pjID;
 		private JLabel lbl_maint_emp_name_show;
 		private JLabel lbl_maint_status_show;
-		private JLabel lbl_maint_del_progress;
-		private JLabel lbl_maint_del_progress_show;
 		private JLabel lbl_date_default;
 		
 		private JButton btn_maint;
@@ -274,8 +272,8 @@ public class Maintenance_panel  {
 								
 								if (temp.length != 0 ) {
 									
-									String [] columns_name = {"Project ID", "Employee ID", "E.Name", "Est. Date", "Product", "RFQ ID", "QUOT. ID",
-											"REQ. ID", "PUR. ID", "EXAM. ID", "RCPT ID"};
+									String [] columns_name = {"Project ID", "Employee ID", "E.Name", "Status", "Product", "RFQ ID", "QUOT. ID",
+											"REQ. ID", "PUR. ID", "EXAM. ID", "RCPT ID","Est. Date"};
 									DefaultTableModel inq_table_model = new DefaultTableModel(temp, columns_name);
 									inq_table.setModel(inq_table_model);
 									
@@ -300,8 +298,8 @@ public class Maintenance_panel  {
 							
 							if (temp.length != 0 ) {
 								
-								String [] columns_name = {"Project ID", "Employee ID", "E.Name", "Est. Date", "Product", "RFQ ID", "QUOT. ID",
-										"REQ. ID", "PUR. ID", "EXAM. ID", "RCPT ID"};
+								String [] columns_name = {"Project ID", "Employee ID", "E.Name", "Status", "Product", "RFQ ID", "QUOT. ID",
+										"REQ. ID", "PUR. ID", "EXAM. ID", "RCPT ID","Est. Date"};
 								DefaultTableModel inq_table_model = new DefaultTableModel(temp, columns_name);
 								inq_table.setModel(inq_table_model);
 								
@@ -451,15 +449,6 @@ public class Maintenance_panel  {
 			lbl_maint_status_show.setBounds(260, 222, 130, 23);
 			maint_panel.add(lbl_maint_status_show);
 			
-			lbl_maint_del_progress = new JLabel("Delivery Progress :");
-			lbl_maint_del_progress.setBounds(131, 267, 117, 16);
-			maint_panel.add(lbl_maint_del_progress);
-			
-			lbl_maint_del_progress_show = new JLabel("NNNN");
-			lbl_maint_del_progress_show.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_maint_del_progress_show.setBounds(260, 267, 130, 16);
-			maint_panel.add(lbl_maint_del_progress_show);
-			
 			lbl_maint_result = new JLabel("");
 			lbl_maint_result.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_maint_result.setBounds(422, 114, 222, 66);
@@ -514,8 +503,7 @@ public class Maintenance_panel  {
 										lbl_maint_emp_name_show.setVisible(true);
 										lbl_maint_status_show.setText(temp.get(3));
 										lbl_maint_status_show.setVisible(true);
-										lbl_maint_del_progress_show.setText(temp.get(4));
-										lbl_maint_del_progress_show.setVisible(true);
+										
 										
 									}else {
 										//send message to user modify failed
@@ -539,8 +527,7 @@ public class Maintenance_panel  {
 									text_maint_date.setText(temp.get(3));
 									lbl_maint_status_show.setText(temp.get(4));
 									lbl_maint_status_show.setVisible(true);
-									lbl_maint_del_progress_show.setText(temp.get(5));
-									lbl_maint_del_progress_show.setVisible(true);
+									
 									
 								}else {
 									//send message to user modify failed
@@ -612,7 +599,7 @@ public class Maintenance_panel  {
 							lbl_maint_emp_name_show.setText(temp.get(2));
 							text_maint_date.setText(temp.get(3));
 							lbl_maint_status_show.setText(temp.get(4));
-							lbl_maint_del_progress_show.setText(temp.get(5));
+							
 							
 							btn_clear.setVisible(true);
 							text_maint_pjID.setText("");
@@ -684,7 +671,7 @@ public class Maintenance_panel  {
 			text_maint_empID.setText("");
 			lbl_maint_emp_name_show.setText("");
 			text_maint_date.setText("");
-			lbl_maint_del_progress_show.setText("");
+			
 			lbl_maint_status_show.setText("");
 			lbl_maint_result.setText("");
 			
@@ -707,9 +694,6 @@ public class Maintenance_panel  {
 			
 			lbl_maint_status.setVisible(bl);
 			lbl_maint_status_show.setVisible(bl);
-			
-			lbl_maint_del_progress.setVisible(bl);
-			lbl_maint_del_progress_show.setVisible(bl);
 			
 		}
 
@@ -750,16 +734,7 @@ public class Maintenance_panel  {
 			 * pass in 3 JTextFields and use switch case to handle every situation which they are filled in or not. 
 			 */
 			
-			final String st_inquire = "SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name AS E_name, pj.Project_status AS P_status,\n"
-					+ "pj.Established_date AS Est_date, rfq.Inquiring_product AS Product, rfq.RFQ_Sheet_ID, quo.QUO_Sheet_ID,\n"
-					+ " req.REQ_Sheet_ID, pur.PUR_Sheet_ID, exam.EX_Sheet_ID, rcpt.REC_Sheet_ID FROM PROJECT AS pj \n"
-					+ "LEFT JOIN test.RFQ AS rfq ON rfq.Project_ID = pj.Project_ID LEFT JOIN test.QUOTATION AS quo \n"
-					+ "ON (quo.Project_ID = rfq.Project_ID AND quo.Inquiring_product = rfq.Inquiring_product)\n"
-					+ "LEFT JOIN test.REQUISITION AS req ON (req.Project_ID = quo.Project_ID AND req.Inquiring_product = quo.Inquiring_product)\n"
-					+ "LEFT JOIN test.PURCHASE AS pur ON (pur.Project_ID = req.Project_ID AND req.Inquiring_product = pur.Module_type)\n"
-					+ "LEFT JOIN test.EXAMINATION AS exam ON (exam.Project_ID = pur.Project_ID AND exam.Module_type = pur.Module_type)\n"
-					+ "LEFT JOIN test.RECEIPT AS rcpt ON (rcpt.Project_ID = exam.Project_ID AND rcpt.Module_type = exam.Module_type)\n"
-					+ "LEFT JOIN test.EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID";
+			final String st_inquire = "SELECT * FROM VIEW_PROJECT";
 			
 			ArrayList<String[]> temp = new ArrayList();
 			
@@ -770,12 +745,12 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (pj.Project_ID=" + 
-																		projectID.getText()+" AND Emp_ID="+ empID.getText()+" AND pj.Established_date=\'"
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (Project_ID=" + 
+																		projectID.getText()+" AND Emp_ID="+ empID.getText()+" AND Est_date=\'"
 																						+est_date.getText()+"\')");
 							
 							if(resultSet.next()) {
-								String [] temp_array = new String[6];
+								String [] temp_array = new String[12];
 								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
@@ -792,11 +767,11 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (pj.Project_ID=" 
-																				+projectID.getText()+" AND pj.Emp_ID="+ empID.getText()+")");
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (Project_ID=" 
+																				+projectID.getText()+" AND Emp_ID="+ empID.getText()+")");
 							
 							while(resultSet.next()) {
-								String [] temp_array = new String[6];
+								String [] temp_array = new String[12];
 								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
@@ -813,11 +788,11 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (pj.Project_ID=" 
-																		+ projectID.getText()+" AND pj.Established_date=\'"+est_date.getText()+"\')");
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (Project_ID=" 
+																		+ projectID.getText()+" AND Est_date=\'"+est_date.getText()+"\')");
 							
 							while(resultSet.next()) {
-								String [] temp_array = new String[6];
+								String [] temp_array = new String[12];
 								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
@@ -836,10 +811,10 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE pj.Project_ID="+projectID.getText());
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE Project_ID="+projectID.getText());
 																			
 							if(resultSet.next()) {
-								String [] temp_array = new String[6];
+								String [] temp_array = new String[12];
 								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
@@ -856,11 +831,11 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (pj.Emp_ID="
-																						+empID.getText()+" AND pj.Established_date=\'"+est_date.getText()+"\')");
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE (Emp_ID="
+																						+empID.getText()+" AND Est_date=\'"+est_date.getText()+"\')");
 							
 							while(resultSet.next()) {
-								String [] temp_array = new String[6];
+								String [] temp_array = new String[12];
 								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
@@ -877,9 +852,9 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE pj.Emp_ID="+empID.getText());
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE Emp_ID="+empID.getText());
 							while(resultSet.next()) {
-								String [] temp_array = new String[6];
+								String [] temp_array = new String[12];
 								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
@@ -898,11 +873,10 @@ public class Maintenance_panel  {
 						
 						
 						try {
-							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE pj.Established_date=\'"
-																							+est_date.getText()+"\'");
+							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE Est_date=\'"+est_date.getText()+"\'");
 							
 							while(resultSet.next()) {
-								String [] temp_array = new String[6];
+								String [] temp_array = new String[12];
 								for(int i = 1; i<7; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
@@ -918,7 +892,7 @@ public class Maintenance_panel  {
 							break;
 							}		
 			}
-			String[][] result_array = new String[temp.size()][6];
+			String[][] result_array = new String[temp.size()][12];
 			int i=0;
 			for (String[] array_in_temp : temp) {
 				result_array[i++] = array_in_temp;
@@ -929,21 +903,12 @@ public class Maintenance_panel  {
 		
 		private String[][] last_20(){
 			
-			final String st_inquire = "SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name AS E_name, pj.Project_status AS P_status,\n"
-					+ "pj.Established_date AS Est_date, rfq.Inquiring_product AS Product, rfq.RFQ_Sheet_ID, quo.QUO_Sheet_ID,\n"
-					+ " req.REQ_Sheet_ID, pur.PUR_Sheet_ID, exam.EX_Sheet_ID, rcpt.REC_Sheet_ID FROM PROJECT AS pj \n"
-					+ "LEFT JOIN test.RFQ AS rfq ON rfq.Project_ID = pj.Project_ID LEFT JOIN test.QUOTATION AS quo \n"
-					+ "ON (quo.Project_ID = rfq.Project_ID AND quo.Inquiring_product = rfq.Inquiring_product)\n"
-					+ "LEFT JOIN test.REQUISITION AS req ON (req.Project_ID = quo.Project_ID AND req.Inquiring_product = quo.Inquiring_product)\n"
-					+ "LEFT JOIN test.PURCHASE AS pur ON (pur.Project_ID = req.Project_ID AND req.Inquiring_product = pur.Module_type)\n"
-					+ "LEFT JOIN test.EXAMINATION AS exam ON (exam.Project_ID = pur.Project_ID AND exam.Module_type = pur.Module_type)\n"
-					+ "LEFT JOIN test.RECEIPT AS rcpt ON (rcpt.Project_ID = exam.Project_ID AND rcpt.Module_type = exam.Module_type)\n"
-					+ "LEFT JOIN test.EMPLOYEE AS emp ON pj.Emp_ID = emp.Emp_ID";
+			final String st_inquire = "SELECT * FROM VIEW_PROJECT";
 			
 			ArrayList<String[]> temp = new ArrayList();
 			
 			try {
-				ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+ " ORDER BY pj.Established_date DESC LIMIT 20");
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+ " ORDER BY Est_date DESC LIMIT 20");
 				
 				
 				while(resultSet.next()) {
@@ -958,7 +923,7 @@ public class Maintenance_panel  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String[][] result_array = new String[temp.size()][6];
+			String[][] result_array = new String[temp.size()][12];
 			int i=0;
 			for (String[] array_in_temp : temp) {
 				result_array[i++] = array_in_temp;
@@ -986,11 +951,11 @@ public class Maintenance_panel  {
 					if (resultSet==1){
 						
 						ResultSet add_result = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name, "
-																			+ "pj.Established_date, pj.Project_status, pj.Delivery_progress FROM test.PROJECT "
+																			+ "pj.Established_date, pj.Project_status FROM test.PROJECT "
 																			+ "AS pj LEFT JOIN test.EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID ORDER BY Project_ID "
 																			+ "DESC LIMIT 1");
 						if(add_result.next()) {
-							for(int i =1; i<7;i++) {
+							for(int i =1; i<6;i++) {
 								temp.add(add_result.getString(i));
 								}
 						}
@@ -1083,12 +1048,12 @@ public class Maintenance_panel  {
 			
 			try {
 				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT pj.Project_ID, pj.Emp_ID, emp.Last_name, pj.Established_date, "
-														+ "pj.Project_status, pj.Delivery_progress FROM test.PROJECT AS pj "
+														+ "pj.Project_status FROM test.PROJECT AS pj "
 														+ "LEFT JOIN test.EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID WHERE Project_ID=" + ID.getText());
 				
 				if(resultSet.next()) {
 					 
-					for(int i = 1; i<7; i++) {
+					for(int i = 1; i<6; i++) {
 						temp.add(resultSet.getString(i));
 						//System.out.print(resultSet.getString(i));
 					}	
