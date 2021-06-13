@@ -158,6 +158,8 @@ public class Term_project_main {
 					if (lib.emp_check(field_empID)) {
 						
 						card_layout.show(frame.getContentPane(), "home");
+						cl_home.show(container_panel, "home");
+						
 						lbl_empID.setText(" Employee ID: " + field_empID.getText());
 					}else 
 						
