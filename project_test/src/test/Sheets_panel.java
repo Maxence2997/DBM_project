@@ -1023,7 +1023,7 @@ public class Sheets_panel  {
 							//each of them is filled
 							
 								
-								ArrayList<String> temp = check(text_mod_sheetID, text_mod_projectID, text_mod_pd);
+								ArrayList<String> temp = rmv_mod_check(text_mod_sheetID, text_mod_projectID, text_mod_pd);
 								
 								
 								//ArrayList<String> temp = new ArrayList(); //test data
@@ -2181,6 +2181,7 @@ public class Sheets_panel  {
 				text_remove_sheetID.setColumns(10);
 				
 				lbl_remove_sheetID_show = new JLabel("");
+				lbl_remove_sheetID_show.setHorizontalAlignment(SwingConstants.CENTER);
 				lbl_remove_sheetID_show.setBounds(167, 41, 146, 16);
 				lbl_remove_sheetID_show.setVisible(false);
 				remove_panel.add(lbl_remove_sheetID_show);
@@ -2219,11 +2220,13 @@ public class Sheets_panel  {
 				remove_panel.add(text_remove_confirm);
 				
 				text_remove_projectID = new JTextField();
+				text_remove_projectID.setHorizontalAlignment(SwingConstants.CENTER);
 				text_remove_projectID.setBounds(167, 73, 146, 26);
 				remove_panel.add(text_remove_projectID);
 				text_remove_projectID.setColumns(10);
 				
 				text_remove_pd = new JTextField();
+				text_remove_pd.setHorizontalAlignment(SwingConstants.CENTER);
 				text_remove_pd.setBounds(167, 111, 146, 26);
 				remove_panel.add(text_remove_pd);
 				text_remove_pd.setColumns(10);
@@ -2252,7 +2255,7 @@ public class Sheets_panel  {
 							
 						}else {
 							
-							ArrayList<String> temp_list = check(text_remove_sheetID, text_remove_projectID, text_remove_pd);
+							ArrayList<String> temp_list = rmv_mod_check(text_remove_sheetID, text_remove_projectID, text_remove_pd);
 							
 							if (temp_list.size()!=0) {
 								//data found
@@ -2264,10 +2267,10 @@ public class Sheets_panel  {
 								
 								if(temp_array[0][1].equalsIgnoreCase("RFQ")) {
 									
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Date"};
+									String[] columns_rfq = {"Sheet ID", "Sheet type", "Project ID", "Supplier", "Product", "Vol.", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_rfq = new DefaultTableModel(temp_array, columns_rfq);
+									remove_table.setModel(remove_table_model_rfq);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -2288,11 +2291,11 @@ public class Sheets_panel  {
 									
 								}else if (temp_array[0][1].equalsIgnoreCase("QUOT")) {
 									
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Unit Price",
+									String[] columns_quot = {"Sheet ID", "Sheet type", "Project ID", "Supplier", "Product", "Vol.", "Unit Price",
 											"Total_price", "ESD", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_quot = new DefaultTableModel(temp_array, columns_quot);
+									remove_table.setModel(remove_table_model_quot);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -2313,11 +2316,11 @@ public class Sheets_panel  {
 									
 								}else if (temp_array[0][1].equalsIgnoreCase("REQ")) {
 									
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Item Name", "Vol.", "Unit Price",
+									String[] columns_req = {"Sheet ID", "Sheet type", "Project ID", "Product", "Item Name", "Vol.", "Unit Price",
 											"Total_price", "Signature", "Supervisor", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_req = new DefaultTableModel(temp_array, columns_req);
+									remove_table.setModel(remove_table_model_req);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -2335,13 +2338,13 @@ public class Sheets_panel  {
 									lbl_remove_projectID_show.setVisible(true);
 									lbl_remove_pd_show.setVisible(true);
 									
-								}else if (temp_array[0][1].equalsIgnoreCase("PUR")) {
+								}else if (temp_array[0][1].equalsIgnoreCase("PURC")) {
 									
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Unit Price",
+									String[] columns_pur = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Unit Price",
 											"Total_price", "ESD", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_pur = new DefaultTableModel(temp_array, columns_pur);
+									remove_table.setModel(remove_table_model_pur);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -2361,10 +2364,10 @@ public class Sheets_panel  {
 									
 								}else if (temp_array[0][1].equalsIgnoreCase("EXAM")) {
 									
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Result", "Date"};
+									String[] columns_exam = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Result", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_exam = new DefaultTableModel(temp_array, columns_exam);
+									remove_table.setModel(remove_table_model_exam);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -2384,10 +2387,10 @@ public class Sheets_panel  {
 									
 								}else {
 									//temp_array[0][1].equalsIgnoreCase("RCPT")
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Date"};
+									String[] columns_rcpt = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_rcpt = new DefaultTableModel(temp_array, columns_rcpt);
+									remove_table.setModel(remove_table_model_rcpt);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -4429,7 +4432,7 @@ public class Sheets_panel  {
 	
 	
 	
-	private ArrayList<String> check(JTextField text1, JTextField text2, JTextField text3) {
+	private ArrayList<String> rmv_mod_check(JTextField text1, JTextField text2, JTextField text3) {
 		
 		
 		/**@author jyunanyang
@@ -4525,9 +4528,11 @@ public class Sheets_panel  {
 				while(r.next()) {
 					
 					for(int i=1; i<10;i++) {
+						System.out.print(r.getString(i)+"\t");
+						temp.add(r.getString(i));
 						
-						temp.add(r.getString(i));	
 					}
+					System.out.print("\n");
 				}
 				return temp;
 			

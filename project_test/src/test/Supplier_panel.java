@@ -155,7 +155,7 @@ public class Supplier_panel {
 		
 		lbl_result = new JLabel("");
 		lbl_result.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_result.setBounds(112, 219, 463, 16);
+		lbl_result.setBounds(48, 219, 560, 16);
 		lbl_result.setVisible(false);
 		supplier_panel.add(lbl_result);
 		
@@ -363,7 +363,7 @@ public class Supplier_panel {
 									
 					}else {
 						String[] column_names = { "SupplierID", "Name", "Address", "Contact", "Mobile","Email"};
-						sup_table_model = new DefaultTableModel(temp,column_names);
+						DefaultTableModel sup_table_model = new DefaultTableModel(temp,column_names);
 						
 						sup_table.setModel(sup_table_model);
 						
@@ -473,14 +473,22 @@ public class Supplier_panel {
 							 text_sup_mail.setText(temp.get(5));
 							 text_sup_mail.setVisible(true);
 							 
+							 String[] column_names = { "SupplierID", "Name", "Item", "Module"};
+							 String [][] array = show_more(text_sup_supID,text_sup_name);
+							 DefaultTableModel sup_table_model = new DefaultTableModel(array,column_names);
+								
+							 sup_table.setModel(sup_table_model);
+							 sup_table.setVisible(true);
+							 scrollpane.setVisible(true);
 							 btn_sup_1.setVisible(true);
 							 btn_sup_2.setVisible(true);
 							 btn_clear.setVisible(true);
+							 lbl_result.setText("products provided by "+temp.get(1)+" will be delete from DB simultaneously." );
+							 lbl_result.setVisible(true);
 							 
 							// btn_sup_delete.set				
 							 
-							 sup_table.setVisible(false);
-							 scrollpane.setVisible(false);
+							 
 							 btn_show_more.setVisible(false);
 						 }
 
@@ -496,12 +504,13 @@ public class Supplier_panel {
 				
 				if(btn_sup_2.getText().equalsIgnoreCase("delete")) {
 					
-					if (delete()==1) {
+					if (delete()>=2) {
 						
-						lbl_result.setText("Data deleted"); 
-						lbl_result.setVisible(true);	
+						lbl_result.setText("request succeed"); 
+						lbl_result.setVisible(true);
+						
 					}else{
-						lbl_result.setText("delete failed"); 
+						lbl_result.setText("request failed"); 
 						lbl_result.setVisible(true);	 
 					}
 				}else if(btn_sup_2.getText().equalsIgnoreCase("Add")){
@@ -877,17 +886,18 @@ public class Supplier_panel {
 		 **/
 		
 		int resultSet=0;
+		int k=0;
+		
 		try {
+			k = Term_project_main.conn.st.executeUpdate("DELETE FROM test.PRODUCT WHERE Supplier_ID=\'" + lbl_sup_supID_show.getText()+"\'");
+			
 			resultSet = Term_project_main.conn.st.executeUpdate("DELETE FROM test.SUPPLIER WHERE Supplier_ID=\'" + lbl_sup_supID_show.getText()+"\'");
-//			System.out.print("INSERT INTO SUPPLIER(Supplier_ID, Supplier_name, Supplier_address, "
-//					+ "Contact_name, Contact_mobile, Contact_email) VALUE (\'"+ get_new_supID()+"\', \'"+text_sup_name.getText()+"\', \'"+
-//					text_sup_addr.getText()+"\', \'"+ text_sup_ctc.getText()+"\', \'"+
-//					text_sup_mobile.getText()+"\', \'"+text_sup_mail.getText()+"\')");
-			return 	resultSet;	
+
+			return 	k+resultSet;	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return 	resultSet;	
+			return 	k+resultSet;	
 		}
 	}
 	
