@@ -451,7 +451,7 @@ public class Maintenance_panel  {
 			
 			lbl_maint_result = new JLabel("");
 			lbl_maint_result.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_maint_result.setBounds(422, 114, 222, 66);
+			lbl_maint_result.setBounds(422, 85, 222, 95);
 			maint_panel.add(lbl_maint_result);
 			
 			lbl_maint_ins = new JLabel("*obligatory");
@@ -546,12 +546,12 @@ public class Maintenance_panel  {
 						
 						if(delete()!=0) {
 							//send message to user modify succeed
-							lbl_maint_result.setText("Delete succeed");
+							lbl_maint_result.setText("Request succeed");
 							lbl_maint_result.setVisible(true);
 							
 						}else if(delete()==0) {
 							//send message to user modify failed
-							lbl_maint_result.setText("Delete failed");
+							
 							lbl_maint_result.setVisible(true);
 						}
 					}
@@ -1015,6 +1015,15 @@ public class Maintenance_panel  {
 			int resultSet2=0;
 			
 			try {
+				
+				ResultSet rs = Term_project_main.conn.st.executeQuery("SELECT * FROM test.INVENTORY WHERE Project_ID="+lbl_maint_pjID_show.getText());
+				
+				if (rs.next()) {
+					
+					lbl_maint_result.setText("You could not delete a project with purchasing inventory\n which means it's already/almost finished");
+					return resultSet+resultSet2;
+					
+				}
 				resultSet = Term_project_main.conn.st.executeUpdate("DELETE RFQ, QUOT, REQ,PUR,EXAM,RCPT, INV "
 						+ "FROM test.PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
 						+ "LEFT JOIN test.QUOTATION AS QUOT ON QUOT.Project_ID = pj.Project_ID \n"
@@ -1032,6 +1041,7 @@ public class Maintenance_panel  {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					lbl_maint_result.setText("Request failed.\n Please check data again");
 					return resultSet+resultSet2;
 					}
 			

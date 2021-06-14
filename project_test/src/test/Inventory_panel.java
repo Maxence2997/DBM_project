@@ -212,9 +212,7 @@ public class Inventory_panel {
 		 *  to inquire data in INVENTORY table 
 		 **/
 		
-		final String st_inventory = "SELECT inv.Inv_ID, inv.Item_name, inv.Module_type, "
-				+ "inv.Project_ID, pj.Emp_ID, emp.Last_name FROM test.INVENTORY AS inv LEFT JOIN test.PROJECT AS pj "
-				+ "ON pj.Project_ID=inv.Project_ID LEFT JOIN test.EMPLOYEE AS emp ON emp.Emp_ID=pj.Emp_ID";
+		final String st_inventory = "SELECT * FROM VIEW_INVENTORY_INFOS";
 		
 		ArrayList<String[]> temp = new ArrayList();
 		
@@ -225,8 +223,8 @@ public class Inventory_panel {
 					
 					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE (inv.Inv_ID="  
-													+InvID.getText()+" AND inv.Item_name=\'"+ item_name.getText()+"\' AND Module_type=\'"
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE ( Inv_ID="  
+													+InvID.getText()+" AND  Item_name=\'"+ item_name.getText()+"\' AND Module_type=\'"
 													+module_type.getText()+"\')");
 						while(resultSet.next()) {
 							String [] temp_array = new String[6];
@@ -250,8 +248,8 @@ public class Inventory_panel {
 					
 					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE (inv.Inv_ID=" 
-													+ InvID.getText()+" AND inv.Item_name=\'"+ item_name.getText()+"\')");
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE ( Inv_ID=" 
+													+ InvID.getText()+" AND  Item_name=\'"+ item_name.getText()+"\')");
 						while(resultSet.next()) {
 							String [] temp_array = new String[6];
 							for(int i = 1; i<7; i++) {
@@ -272,8 +270,8 @@ public class Inventory_panel {
 					
 					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE (inv.Inv_ID=" 
-													+ InvID.getText()+" AND inv.Module_type=\'"+module_type.getText()+"\')");
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE ( Inv_ID=" 
+													+ InvID.getText()+" AND  Module_type=\'"+module_type.getText()+"\')");
 						while(resultSet.next()) {
 							String [] temp_array = new String[6];
 							for(int i = 1; i<7; i++) {
@@ -294,7 +292,7 @@ public class Inventory_panel {
 					
 					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE inv.Inv_ID=" +InvID.getText());
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE  Inv_ID=" +InvID.getText());
 						while(resultSet.next()) {
 							String [] temp_array = new String[6];
 							for(int i = 1; i<7; i++) {
@@ -317,8 +315,8 @@ public class Inventory_panel {
 					
 					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE (inv.Item_name=\'"
-															+item_name.getText()+"\' AND inv.Module_type=\'"+module_type.getText()+"\')");
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE ( Item_name=\'"
+															+item_name.getText()+"\' AND  Module_type=\'"+module_type.getText()+"\')");
 						
 						while(resultSet.next()) {
 							String [] temp_array = new String[6];
@@ -341,7 +339,7 @@ public class Inventory_panel {
 					
 //					
 					try {
-						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE inv.Item_name=\'"
+						ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE  Item_name=\'"
 																									+item_name.getText()+"\'");
 						
 						while(resultSet.next()) {
@@ -365,7 +363,7 @@ public class Inventory_panel {
 					
 					
 				try {
-					ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE inv.Module_type=\'"+module_type.getText()+"\'");
+					ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inventory+" WHERE  Module_type=\'"+module_type.getText()+"\'");
 					
 					while(resultSet.next()) {
 						String [] temp_array = new String[6];

@@ -274,8 +274,21 @@ public class Sheets_panel  {
 			            		append_table.setVisible(false);
 			            		scrollpane_append.setVisible(false);
 			            		btn_append_clear.setVisible(false);
-			            		btn_appd_append.setVisible(false);
 			            		lbl_appd_ins.setVisible(true);
+			            	}else if(function.equalsIgnoreCase("Delete")) {
+			            		clear_remove_panel();
+			            		scrollpane_remove.setVisible(false);
+			            		remove_table.setVisible(false);
+			            		lbl_remove_confirm.setVisible(false);
+			            		text_remove_confirm.setVisible(false);
+			            		btn_remove_confirm.setVisible(false);
+			            		text_remove_sheetID.setVisible(true);
+			            		lbl_remove_sheetID_show.setVisible(false);
+			            		text_remove_projectID.setVisible(true);
+			            		lbl_remove_projectID_show.setVisible(false);
+			            		text_remove_pd.setVisible(true);
+			            		lbl_remove_pd_show.setVisible(false);
+			            		
 			            	}
 			            	
 			            	cl_sheet.show(sheet_container_panel, function);
@@ -1010,7 +1023,7 @@ public class Sheets_panel  {
 							//each of them is filled
 							
 								
-								ArrayList<String> temp = check(text_mod_sheetID, text_mod_projectID, text_mod_pd);
+								ArrayList<String> temp = rmv_mod_check(text_mod_sheetID, text_mod_projectID, text_mod_pd);
 								
 								
 								//ArrayList<String> temp = new ArrayList(); //test data
@@ -2162,9 +2175,71 @@ public class Sheets_panel  {
 				remove_panel.add(lbl_remove_sheetID);
 				
 				text_remove_sheetID = new JTextField();
+				text_remove_sheetID.setHorizontalAlignment(SwingConstants.CENTER);
 				text_remove_sheetID.setBounds(167, 36, 146, 26);
 				remove_panel.add(text_remove_sheetID);
 				text_remove_sheetID.setColumns(10);
+				
+				lbl_remove_sheetID_show = new JLabel("");
+				lbl_remove_sheetID_show.setHorizontalAlignment(SwingConstants.CENTER);
+				lbl_remove_sheetID_show.setBounds(167, 41, 146, 16);
+				lbl_remove_sheetID_show.setVisible(false);
+				remove_panel.add(lbl_remove_sheetID_show);
+				
+				lbl_remove_projectID_show = new JLabel("");
+				lbl_remove_projectID_show.setHorizontalAlignment(SwingConstants.CENTER);
+				lbl_remove_projectID_show.setBounds(167, 78, 146, 16);
+				lbl_remove_projectID_show.setVisible(false);
+				remove_panel.add(lbl_remove_projectID_show);
+				
+				lbl_remove_pd_show = new JLabel("");
+				lbl_remove_pd_show.setHorizontalAlignment(SwingConstants.CENTER);
+				lbl_remove_pd_show.setBounds(167, 116, 146, 16);
+				lbl_remove_pd_show.setVisible(false);
+				remove_panel.add(lbl_remove_pd_show);
+				
+				lbl_remove_message = new JLabel("");
+				lbl_remove_message.setHorizontalAlignment(SwingConstants.CENTER);
+				lbl_remove_message.setBounds(67, 167, 506, 16);
+				remove_panel.add(lbl_remove_message);
+				
+				lbl_remove_ins = new JLabel("*Obligatory");
+				lbl_remove_ins.setBounds(87, 13, 226, 16);
+				lbl_remove_ins.setVisible(true);
+				remove_panel.add(lbl_remove_ins);
+				
+				lbl_remove_confirm = new JLabel("Please write down \" I would like to remove this sheet permenantly.\"");
+				lbl_remove_confirm.setBounds(55, 250, 555, 16);
+				lbl_remove_confirm.setVisible(false);
+				remove_panel.add(lbl_remove_confirm);
+				
+				text_remove_confirm = new JTextField();
+				text_remove_confirm.setBounds(55, 263, 443, 26);
+				text_remove_confirm.setColumns(10);
+				text_remove_confirm.setVisible(false);
+				remove_panel.add(text_remove_confirm);
+				
+				text_remove_projectID = new JTextField();
+				text_remove_projectID.setHorizontalAlignment(SwingConstants.CENTER);
+				text_remove_projectID.setBounds(167, 73, 146, 26);
+				remove_panel.add(text_remove_projectID);
+				text_remove_projectID.setColumns(10);
+				
+				text_remove_pd = new JTextField();
+				text_remove_pd.setHorizontalAlignment(SwingConstants.CENTER);
+				text_remove_pd.setBounds(167, 111, 146, 26);
+				remove_panel.add(text_remove_pd);
+				text_remove_pd.setColumns(10);
+				
+				JLabel lbl_remove_projectID = new JLabel("*Project ID :");
+				lbl_remove_projectID.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_remove_projectID.setBounds(45, 78, 103, 16);
+				remove_panel.add(lbl_remove_projectID);
+				
+				JLabel lbl_remove_pd = new JLabel("*Product :");
+				lbl_remove_pd.setHorizontalAlignment(SwingConstants.RIGHT);
+				lbl_remove_pd.setBounds(45, 116, 103, 16);
+				remove_panel.add(lbl_remove_pd);
 				
 				JButton btn_remove_check = new JButton("Check");
 				btn_remove_check.setBounds(325, 36, 76, 29);
@@ -2180,7 +2255,7 @@ public class Sheets_panel  {
 							
 						}else {
 							
-							ArrayList<String> temp_list = check(text_remove_sheetID, text_remove_projectID, text_remove_pd);
+							ArrayList<String> temp_list = rmv_mod_check(text_remove_sheetID, text_remove_projectID, text_remove_pd);
 							
 							if (temp_list.size()!=0) {
 								//data found
@@ -2192,10 +2267,10 @@ public class Sheets_panel  {
 								
 								if(temp_array[0][1].equalsIgnoreCase("RFQ")) {
 									
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Date"};
+									String[] columns_rfq = {"Sheet ID", "Sheet type", "Project ID", "Supplier", "Product", "Vol.", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_rfq = new DefaultTableModel(temp_array, columns_rfq);
+									remove_table.setModel(remove_table_model_rfq);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -2216,11 +2291,11 @@ public class Sheets_panel  {
 									
 								}else if (temp_array[0][1].equalsIgnoreCase("QUOT")) {
 									
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Product", "Supplier", "Vol.", "Unit Price",
+									String[] columns_quot = {"Sheet ID", "Sheet type", "Project ID", "Supplier", "Product", "Vol.", "Unit Price",
 											"Total_price", "ESD", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_quot = new DefaultTableModel(temp_array, columns_quot);
+									remove_table.setModel(remove_table_model_quot);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -2241,11 +2316,11 @@ public class Sheets_panel  {
 									
 								}else if (temp_array[0][1].equalsIgnoreCase("REQ")) {
 									
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Item Name", "Vol.", "Unit Price",
+									String[] columns_req = {"Sheet ID", "Sheet type", "Project ID", "Product", "Item Name", "Vol.", "Unit Price",
 											"Total_price", "Signature", "Supervisor", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_req = new DefaultTableModel(temp_array, columns_req);
+									remove_table.setModel(remove_table_model_req);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -2263,13 +2338,13 @@ public class Sheets_panel  {
 									lbl_remove_projectID_show.setVisible(true);
 									lbl_remove_pd_show.setVisible(true);
 									
-								}else if (temp_array[0][1].equalsIgnoreCase("PUR")) {
+								}else if (temp_array[0][1].equalsIgnoreCase("PURC")) {
 									
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Unit Price",
+									String[] columns_pur = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Unit Price",
 											"Total_price", "ESD", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_pur = new DefaultTableModel(temp_array, columns_pur);
+									remove_table.setModel(remove_table_model_pur);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -2289,10 +2364,10 @@ public class Sheets_panel  {
 									
 								}else if (temp_array[0][1].equalsIgnoreCase("EXAM")) {
 									
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Result", "Date"};
+									String[] columns_exam = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Result", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_exam = new DefaultTableModel(temp_array, columns_exam);
+									remove_table.setModel(remove_table_model_exam);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -2312,10 +2387,10 @@ public class Sheets_panel  {
 									
 								}else {
 									//temp_array[0][1].equalsIgnoreCase("RCPT")
-									String[] columns = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Date"};
+									String[] columns_rcpt = {"Sheet ID", "Sheet type", "Project ID", "Module", "Vol.", "Date"};
 									
-									DefaultTableModel remove_table_model = new DefaultTableModel(temp_array, columns);
-									remove_table.setModel(remove_table_model);
+									DefaultTableModel remove_table_model_rcpt = new DefaultTableModel(temp_array, columns_rcpt);
+									remove_table.setModel(remove_table_model_rcpt);
 									
 									remove_table.setVisible(true);
 									scrollpane_remove.setVisible(true);
@@ -2372,18 +2447,7 @@ public class Sheets_panel  {
 				scrollpane_remove.setBounds(45,195,563,43);
 				scrollpane_remove.setVisible(false);
 				remove_panel.add(scrollpane_remove);
-				
-				lbl_remove_confirm = new JLabel("Please write down \" I would like to remove this sheet permenantly.\"");
-				lbl_remove_confirm.setBounds(55, 250, 555, 16);
-				lbl_remove_confirm.setVisible(false);
-				remove_panel.add(lbl_remove_confirm);
-				
-				text_remove_confirm = new JTextField();
-				text_remove_confirm.setBounds(55, 263, 443, 26);
-				text_remove_confirm.setColumns(10);
-				text_remove_confirm.setVisible(false);
-				remove_panel.add(text_remove_confirm);
-				
+			
 				btn_remove_confirm = new JButton("Confirm");
 				btn_remove_confirm.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
@@ -2394,6 +2458,8 @@ public class Sheets_panel  {
 							
 								lbl_remove_message.setText("Delete succeed");
 								lbl_remove_message.setVisible(true);
+								
+								
 								
 							}else {
 								lbl_remove_message.setText("Delete failed, errors occurred.");
@@ -2406,54 +2472,30 @@ public class Sheets_panel  {
 				btn_remove_confirm.setVisible(false);
 				remove_panel.add(btn_remove_confirm);
 				
-				text_remove_projectID = new JTextField();
-				text_remove_projectID.setBounds(167, 73, 146, 26);
-				remove_panel.add(text_remove_projectID);
-				text_remove_projectID.setColumns(10);
 				
-				text_remove_pd = new JTextField();
-				text_remove_pd.setBounds(167, 111, 146, 26);
-				remove_panel.add(text_remove_pd);
-				text_remove_pd.setColumns(10);
-				
-				JLabel lbl_remove_projectID = new JLabel("*Project ID :");
-				lbl_remove_projectID.setHorizontalAlignment(SwingConstants.RIGHT);
-				lbl_remove_projectID.setBounds(45, 78, 103, 16);
-				remove_panel.add(lbl_remove_projectID);
-				
-				JLabel lbl_remove_pd = new JLabel("*Product :");
-				lbl_remove_pd.setHorizontalAlignment(SwingConstants.RIGHT);
-				lbl_remove_pd.setBounds(45, 116, 103, 16);
-				remove_panel.add(lbl_remove_pd);
 				
 				JButton btn_remove_clear = new JButton("Clear");
+				btn_remove_clear.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						
+						clear_remove_panel();
+	            		scrollpane_remove.setVisible(false);
+	            		remove_table.setVisible(false);
+	            		lbl_remove_confirm.setVisible(false);
+	            		text_remove_confirm.setVisible(false);
+	            		btn_remove_confirm.setVisible(false);
+	            		text_remove_sheetID.setVisible(true);
+	            		lbl_remove_sheetID_show.setVisible(false);
+	            		text_remove_projectID.setVisible(true);
+	            		lbl_remove_projectID_show.setVisible(false);
+	            		text_remove_pd.setVisible(true);
+	            		lbl_remove_pd_show.setVisible(false);
+	            		
+					}
+				});
 				btn_remove_clear.setBounds(325, 77, 76, 29);
 				remove_panel.add(btn_remove_clear);
 				
-				lbl_remove_sheetID_show = new JLabel("");
-				lbl_remove_sheetID_show.setBounds(167, 41, 146, 16);
-				lbl_remove_sheetID_show.setVisible(false);
-				remove_panel.add(lbl_remove_sheetID_show);
-				
-				lbl_remove_projectID_show = new JLabel("");
-				lbl_remove_projectID_show.setBounds(167, 78, 146, 16);
-				lbl_remove_projectID_show.setVisible(false);
-				remove_panel.add(lbl_remove_projectID_show);
-				
-				lbl_remove_pd_show = new JLabel("");
-				lbl_remove_pd_show.setBounds(167, 116, 146, 16);
-				lbl_remove_pd_show.setVisible(false);
-				remove_panel.add(lbl_remove_pd_show);
-				
-				lbl_remove_message = new JLabel("");
-				lbl_remove_message.setHorizontalAlignment(SwingConstants.CENTER);
-				lbl_remove_message.setBounds(67, 167, 506, 16);
-				remove_panel.add(lbl_remove_message);
-				
-				lbl_remove_ins = new JLabel("*Obligatory");
-				lbl_remove_ins.setBounds(87, 13, 226, 16);
-				lbl_remove_ins.setVisible(true);
-				remove_panel.add(lbl_remove_ins);
 				
 		
 				}
@@ -2587,6 +2629,7 @@ public class Sheets_panel  {
 		lbl_mod_message.setText("");
 	}
 	
+	
 	public void clear_app_panel() {
 		
 		
@@ -2603,6 +2646,19 @@ public class Sheets_panel  {
       
 	}
 	
+	
+	public void clear_remove_panel() {
+		
+		text_remove_sheetID.setText("");
+		text_remove_projectID.setText("");
+		text_remove_pd.setText("");
+		lbl_remove_sheetID_show.setText("");
+		lbl_remove_projectID_show.setText("");
+		lbl_remove_pd_show.setText("");
+	}
+	
+	
+	
 			
 	private String[][] inquire_all(JTextField first, JTextField second, JTextField third){
 				
@@ -2613,149 +2669,71 @@ public class Sheets_panel  {
 		
 		ArrayList<String[]> temp = new ArrayList();
 				
-		final String st_inq_all_pj = "SELECT * FROM test.PROJECT AS pj LEFT JOIN test.RFQ ON pj.Project_ID = RFQ.Project_ID\n"
-									+ "LEFT JOIN test.QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
-									+ "AND RFQ.Inquiring_product = QUOT.Inquiring_product)\n"
-									+ "LEFT JOIN test.REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
-									+ "AND REQ.Inquiring_product = QUOT.Inquiring_product)\n"
-									+ "LEFT JOIN test.PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
-									+ "AND PUR.Module_type = REQ.Inquiring_product)\n"
-									+ "LEFT JOIN test.EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
-									+ "AND EXAM.Module_type = PUR.Module_type)\n"
-									+ "LEFT JOIN test.RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
-									+ "AND RCPT.Module_type = EXAM.MOdule_type) LEFT JOIN test.SUPPLIER AS SUP \n"
-									+ "ON (sup.Supplier_ID=RFQ.Supplier_ID AND sup.Supplier_ID=QUOT.Supplier_ID)";
+		final String st_inq_all_pj = "SELECT * FROM VIEW_PROJECT_6_SHEETS";
 		
-		final String st_inq_all_sheets = "SELECT * FROM test.RFQ \n"
-									+ "LEFT JOIN test.QUOTATION AS QUOT ON (RFQ.Project_ID  = QUOT.Project_ID \n"
-									+ "AND RFQ.Inquiring_product = QUOT.Inquiring_product)\n"
-									+ "LEFT JOIN test.REQUISITION AS REQ ON (REQ.Project_ID = QUOT.Project_ID \n"
-									+ "AND REQ.Inquiring_product = QUOT.Inquiring_product)\n"
-									+ "LEFT JOIN test.PURCHASE AS PUR ON (PUR.Project_ID = REQ.Project_ID \n"
-									+ "AND PUR.Module_type = REQ.Inquiring_product)\n"
-									+ "LEFT JOIN test.EXAMINATION AS EXAM ON (EXAM.Project_ID = PUR.Project_ID \n"
-									+ "AND EXAM.Module_type = PUR.Module_type)\n"
-									+ "LEFT JOIN test.RECEIPT AS RCPT ON (RCPT.Project_ID = EXAM.Project_ID \n"
-									+ "AND RCPT.Module_type = EXAM.MOdule_type) LEFT JOIN tset.SUPPLIER AS SUP \n"
-									+ "ON (sup.Supplier_ID=RFQ.Supplier_ID AND sup.Supplier_ID=QUOT.Supplier_ID)";
+		final String st_inq_all_sheets = "SELECT * FROM VIEW_6_SHEETS";
 							
 			switch(lib.check_text_fields(first, second,third)) {
 				
 				
 				case "011":
 					try {
-						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_pj+" WHERE (pj.Project_ID="
-								+ text_inq_projectID.getText()+"AND RFQ.Inquiring_product=\'"+text_inq_pd.getText()+"\')");
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_pj+" WHERE (Project_ID="
+								+ text_inq_projectID.getText()+"AND RFQ_pd=\'"+text_inq_pd.getText()+"\')");
 						
 						while(r.next()) {
 							
-							if(r.getString(6)!= null) {
+							if(r.getString(3)!= null) {
 								
 								String [] rfq = new String[7];
-								for(int i =6; i<13;i++) {
-									
-									rfq[0]=r.getString(1);
-									
-									if(i==8) 
-										continue;
-									
-									else if(i>8)
-										rfq[i-6]=r.getString(i);
-									
-									else
-										rfq[i-5]=r.getString(i);		
+								for(int i =2; i<9;i++) {
+									rfq[i-2]=r.getString(i);		
 								}
-								rfq = lib.insert(rfq, r.getString(57), 5);
+								rfq = lib.insert(rfq, r.getString(1), 2);
 								temp.add(rfq);
 								
-								if(r.getString(13)!= null) {
+								if(r.getString(10)!= null) {
 									
 									String [] quo = new String[10];
-									for(int i =13; i<23;i++) {
-										
-										quo[0]=r.getString(1);
-										
-										if(i==15) 
-											continue;
-										
-										else if(i>15)
-											quo[i-13]=r.getString(i);
-										
-										else
-											quo[i-12]=r.getString(i);		
+									for(int i =9; i<19;i++) {
+										quo[i-9]=r.getString(i);		
 									}
-									quo = lib.insert(quo, r.getString(57), 5);
+									quo = lib.insert(quo, r.getString(1), 2);
 									temp.add(quo);
 									
-									if(r.getString(23)!= null) {
+									if(r.getString(20)!= null) {
 										String [] req = new String[11];
-										for(int i =23; i<34;i++) {
-											
-											req[0]=r.getString(1);
-											
-											if(i==25) 
-												continue;
-											
-											else if(i>25)
-												req[i-23]=r.getString(i);
-											
-											else
-												req[i-22]=r.getString(i);		
+										for(int i =19; i<30;i++) {
+											req[i-19]=r.getString(i);		
 										}
+										req = lib.insert(req, r.getString(1), 2);
 										temp.add(req);
 										
-										if (r.getString(34)!= null) {
+										if (r.getString(31)!= null) {
 											
-											String [] pur = new String[9];
-											for(int i =34; i<43;i++) {
-												
-												pur[0]=r.getString(1);
-												
-												if(i==37) 
-													continue;
-												
-												else if(i>37)
-													pur[i-34]=r.getString(i);
-												
-												else
-													pur[i-33]=r.getString(i);		
+											String [] pur = new String[8];
+											for(int i =30; i<38;i++) {
+												pur[i-30]=r.getString(i);		
 											}
+											pur = lib.insert(pur, r.getString(1), 2);
 											temp.add(pur);
 											
-											if(r.getString(43)!= null) {
+											if(r.getString(39)!= null) {
 												
-												String [] exam = new String[7];
-												for(int i =43; i<50;i++) {
-													
-													exam[0]=r.getString(1);
-													
-													if(i==45) 
-														continue;
-													
-													else if(i>45)
-														exam[i-43]=r.getString(i);
-													
-													else
-														exam[i-42]=r.getString(i);		
+												String [] exam = new String[6];
+												for(int i =39; i<45;i++) {
+													exam[i-39]=r.getString(i);		
 												}
+												exam = lib.insert(exam, r.getString(1), 2);
 												temp.add(exam);
 												
-												if(r.getString(50)!= null) {
+												if(r.getString(46)!= null) {
 													
-													String [] rcpt = new String[6];
-													for(int i =50; i<56;i++) {
-														
-														rcpt[0]=r.getString(1);
-														
-														if(i==52) 
-															continue;
-														
-														else if(i>52)
-															rcpt[i-50]=r.getString(i);
-														
-														else
-															rcpt[i-49]=r.getString(i);		
+													String [] rcpt = new String[5];
+													for(int i =45; i<50;i++) {
+														rcpt[i-45]=r.getString(i);		
 													}
+													rcpt = lib.insert(rcpt, r.getString(1), 2);
 													temp.add(rcpt);	
 												}
 											}
@@ -2777,117 +2755,61 @@ public class Sheets_panel  {
 					
 					try {
 						
-						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_pj+" WHERE pj.Project_ID="+text_inq_projectID.getText());
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_pj+" WHERE Project_ID="+text_inq_projectID.getText());
 						
 						while(r.next()) {
 							
-							if(r.getString(6)!= null) {
+							if(r.getString(3)!= null) {
 								
 								String [] rfq = new String[7];
-								for(int i =6; i<13;i++) {
-									
-									rfq[0]=r.getString(1);
-									
-									if(i==8) 
-										continue;
-									
-									else if(i>8)
-										rfq[i-6]=r.getString(i);
-									
-									else
-										rfq[i-5]=r.getString(i);		
+								for(int i =2; i<9;i++) {
+									rfq[i-2]=r.getString(i);		
 								}
-								rfq = lib.insert(rfq, r.getString(57), 5);
+								rfq = lib.insert(rfq, r.getString(1), 2);
 								temp.add(rfq);
 								
-								if(r.getString(13)!= null) {
+								if(r.getString(10)!= null) {
 									
 									String [] quo = new String[10];
-									for(int i =13; i<23;i++) {
-										
-										quo[0]=r.getString(1);
-										
-										if(i==15) 
-											continue;
-										
-										else if(i>15)
-											quo[i-13]=r.getString(i);
-										
-										else
-											quo[i-12]=r.getString(i);		
+									for(int i =9; i<19;i++) {
+										quo[i-9]=r.getString(i);		
 									}
-									quo = lib.insert(quo, r.getString(57), 5);
+									quo = lib.insert(quo, r.getString(1), 2);
 									temp.add(quo);
 									
-									if(r.getString(23)!= null) {
+									if(r.getString(20)!= null) {
 										String [] req = new String[11];
-										for(int i =23; i<34;i++) {
-											
-											req[0]=r.getString(1);
-											
-											if(i==25) 
-												continue;
-											
-											else if(i>25)
-												req[i-23]=r.getString(i);
-											
-											else
-												req[i-22]=r.getString(i);		
+										for(int i =19; i<30;i++) {
+											req[i-19]=r.getString(i);		
 										}
+										req = lib.insert(req, r.getString(1), 2);
 										temp.add(req);
 										
-										if (r.getString(34)!= null) {
+										if (r.getString(31)!= null) {
 											
-											String [] pur = new String[9];
-											for(int i =34; i<43;i++) {
-												
-												pur[0]=r.getString(1);
-												
-												if(i==37) 
-													continue;
-												
-												else if(i>37)
-													pur[i-34]=r.getString(i);
-												
-												else
-													pur[i-33]=r.getString(i);		
+											String [] pur = new String[8];
+											for(int i =30; i<38;i++) {
+												pur[i-30]=r.getString(i);		
 											}
+											pur = lib.insert(pur, r.getString(1), 2);
 											temp.add(pur);
 											
-											if(r.getString(43)!= null) {
+											if(r.getString(39)!= null) {
 												
-												String [] exam = new String[7];
-												for(int i =43; i<50;i++) {
-													
-													exam[0]=r.getString(1);
-													
-													if(i==45) 
-														continue;
-													
-													else if(i>45)
-														exam[i-43]=r.getString(i);
-													
-													else
-														exam[i-42]=r.getString(i);		
+												String [] exam = new String[6];
+												for(int i =39; i<45;i++) {
+													exam[i-39]=r.getString(i);		
 												}
+												exam = lib.insert(exam, r.getString(1), 2);
 												temp.add(exam);
 												
-												if(r.getString(50)!= null) {
+												if(r.getString(46)!= null) {
 													
-													String [] rcpt = new String[6];
-													for(int i =50; i<56;i++) {
-														
-														rcpt[0]=r.getString(1);
-														
-														if(i==52) 
-															continue;
-														
-														else if(i>52)
-															rcpt[i-50]=r.getString(i);
-														
-														else
-															rcpt[i-49]=r.getString(i);		
+													String [] rcpt = new String[5];
+													for(int i =45; i<50;i++) {
+														rcpt[i-45]=r.getString(i);		
 													}
+													rcpt = lib.insert(rcpt, r.getString(1), 2);
 													temp.add(rcpt);	
 												}
 											}
@@ -2909,62 +2831,60 @@ public class Sheets_panel  {
 				case "001":	
 					
 					try {
-						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_sheets+" WHERE RFQ.Inquiring_product=\'"+text_inq_pd.getText()+"\'");
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_sheets+" WHERE RFQ_pd=\'"+text_inq_pd.getText()+"\'");
 						
 						while(r.next()) {
 							
-							if(r.getString(1)!= null) {
+							if(r.getString(2)!= null) {
 								
-								String [] rfq = new String[7];
-								for(int i =1; i<8;i++) {
+								String [] rfq = new String[8];
+								for(int i =1; i<9;i++) {
 
 									rfq[i-1]=r.getString(i);		
 								}
-								rfq = lib.insert(rfq, r.getString(52), 5);
 								temp.add(rfq);
 								
-								if(r.getString(8)!= null) {
+								if(r.getString(10)!= null) {
 									
-									String [] quo = new String[10];
-									for(int i =8; i<18;i++) {
+									String [] quo = new String[11];
+									for(int i =9; i<20;i++) {
 										
-										quo[i-8]=r.getString(i);		
+										quo[i-9]=r.getString(i);		
 									}
-									quo = lib.insert(quo, r.getString(57), 5);
 									temp.add(quo);
 									
-									if(r.getString(18)!= null) {
-										String [] req = new String[11];
-										for(int i =18; i<29;i++) {
+									if(r.getString(21)!= null) {
+										String [] req = new String[12];
+										for(int i =20; i<32;i++) {
 
-											req[i-18]=r.getString(i);		
+											req[i-20]=r.getString(i);		
 										}
 										temp.add(req);
 										
-										if (r.getString(29)!= null) {
+										if (r.getString(33)!= null) {
 											
 											String [] pur = new String[9];
-											for(int i =29; i<38;i++) {
+											for(int i =32; i<41;i++) {
 												
-												pur[i-29]=r.getString(i);		
+												pur[i-32]=r.getString(i);		
 											}
 											temp.add(pur);
 											
-											if(r.getString(38)!= null) {
+											if(r.getString(42)!= null) {
 												
 												String [] exam = new String[7];
-												for(int i =38; i<45;i++) {
+												for(int i =41; i<48;i++) {
 													
-													exam[i-38]=r.getString(i);		
+													exam[i-41]=r.getString(i);		
 												}
 												temp.add(exam);
 												
-												if(r.getString(45)!= null) {
+												if(r.getString(49)!= null) {
 													
 													String [] rcpt = new String[6];
-													for(int i =45; i<51;i++) {
+													for(int i =48; i<54;i++) {
 														
-														rcpt[i-45]=r.getString(i);		
+														rcpt[i-48]=r.getString(i);		
 													}
 													temp.add(rcpt);	
 												}
@@ -3301,8 +3221,8 @@ public class Sheets_panel  {
 				case "REQ":
 					
 					final String st_req = "SELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID, req.Inquiring_product, req.Item_name,\n"
-							+ " req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID, emp.Last_name,req.Date FROM \n"
-							+ " test.REQUISITION AS req LEFT JOIN test.EMPLOYEE AS emp ON emp.Emp_ID=req.Supervisor_ID";
+							+ " req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID,CONCAT(emp.First_name,\' \', emp.Last_name) AS Name,req.Date FROM \n"
+							+ "test.REQUISITION AS req LEFT JOIN test.EMPLOYEE AS emp ON emp.Emp_ID=req.Supervisor_ID";
 					
 					switch(lib.check_text_fields(first, second, third)) {
 					
@@ -4512,7 +4432,7 @@ public class Sheets_panel  {
 	
 	
 	
-	private ArrayList<String> check(JTextField text1, JTextField text2, JTextField text3) {
+	private ArrayList<String> rmv_mod_check(JTextField text1, JTextField text2, JTextField text3) {
 		
 		
 		/**@author jyunanyang
@@ -4608,9 +4528,11 @@ public class Sheets_panel  {
 				while(r.next()) {
 					
 					for(int i=1; i<10;i++) {
+						System.out.print(r.getString(i)+"\t");
+						temp.add(r.getString(i));
 						
-						temp.add(r.getString(i));	
 					}
+					System.out.print("\n");
 				}
 				return temp;
 			

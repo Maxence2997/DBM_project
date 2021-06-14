@@ -152,7 +152,7 @@ public class Employee_panel {
 			
 			lbl_emp_info = new JLabel("Message of execute result");
 			lbl_emp_info.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_emp_info.setBounds(115, 273, 434, 16);
+			lbl_emp_info.setBounds(48, 272, 451, 16);
 			lbl_emp_info.setVisible(false);
 			employee_panel.add(lbl_emp_info);
 			
@@ -224,7 +224,9 @@ public class Employee_panel {
 							text_emp_empID.setVisible(true);
 				    		btn_emp_confirmID.setVisible(true);
 				    		btn_clear.setVisible(false);
-					            		
+				    		emp_table.setVisible(false);
+		        			scrollpane.setVisible(false);
+		        			btn_show_more.setVisible(false);    		
 				    		//textField
 				    		clear_text();
 				    		
@@ -239,6 +241,9 @@ public class Employee_panel {
 			         		text_emp_empID.setVisible(false);
 				       		btn_emp_confirmID.setVisible(false);
 				       		btn_clear.setVisible(true);
+				       		emp_table.setVisible(false);
+		        			scrollpane.setVisible(false);
+		        			btn_show_more.setVisible(false);
 						          		
 				      		//textField
 		            		clear_text();
@@ -253,6 +258,9 @@ public class Employee_panel {
 			            	btn_emp_confirmID.setVisible(true);
 			            	text_emp_empID.setVisible(true);
 			            	btn_clear.setVisible(false);
+			            	emp_table.setVisible(false);
+		        			scrollpane.setVisible(false);
+		        			btn_show_more.setVisible(false);
 				           	//textField
 				      		clear_text();
 				       	}
@@ -283,6 +291,9 @@ public class Employee_panel {
 			         		text_emp_empID.setVisible(false);
 				       		btn_emp_confirmID.setVisible(false);
 				       		btn_clear.setVisible(false);
+				       		emp_table.setVisible(false);
+		        			scrollpane.setVisible(false);
+		        			btn_show_more.setVisible(false);
 						          		
 				      		//textField
 				       		clear_text();
@@ -298,6 +309,9 @@ public class Employee_panel {
 			            	btn_emp_confirmID.setVisible(false);
 			            	text_emp_empID.setVisible(false);  
 			            	btn_clear.setVisible(false);
+			            	emp_table.setVisible(false);
+		        			scrollpane.setVisible(false);
+		        			btn_show_more.setVisible(false);
 				           	//textField
 			            	clear_text();
 			            	lbl_emp_info.setText("Sorry, this function is only for supervisor.");
@@ -472,11 +486,11 @@ public class Employee_panel {
 						
 			
 						
-			btn_emp_execute = new JButton();
+			btn_emp_execute = new JButton();  //btn_save_change. btn_add and btn_delete
 			btn_emp_execute.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (btn_emp_execute.getText().equalsIgnoreCase("Save Change")) {
-						if((!text_emp_supervID.getText().isBlank())&lib.supervisor_check(text_emp_supervID)) {
+						if((!text_emp_supervID.getText().isBlank())&lib.emp_check(text_emp_supervID)) {
 							if(text_emp_first.getText().isBlank()|text_emp_last.getText().isBlank()|text_emp_addr.getText().isBlank()
 									|text_emp_phone.getText().isBlank()) {
 								
@@ -541,7 +555,7 @@ public class Employee_panel {
 			            		text_emp_empID.setVisible(true);
 			            		clear_text();
 			            		set_visible(false);
-								lbl_emp_info.setText("Delete failed");
+								
 								lbl_emp_info.setVisible(true);
 							}
 					}else if(btn_emp_execute.getText().equalsIgnoreCase("Add")) {
@@ -610,6 +624,25 @@ public class Employee_panel {
 			btn_show_more.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
+					String[][] temp = show_more();
+					
+					if(temp.length==0) {
+						
+						lbl_emp_info.setText("the emp. for whom you inquire doesn't participate any project.");
+						lbl_emp_info.setVisible(true);
+						
+						
+						
+					}else {
+						//temp.length!=0
+						
+						String[] column_names = {"Emp. ID", "Name", "Project ID", "P.status", "Est. Date"};
+	            		
+	            		DefaultTableModel emp_table_model = new DefaultTableModel(temp, column_names);
+	            		emp_table.setModel(emp_table_model);
+					}
+					
+					
 					
 				}
 			});
@@ -618,12 +651,44 @@ public class Employee_panel {
 				
 		}
 		
+		
+		
+		private String[][] show_more(){
+			
+			ArrayList<String[]> temp = new ArrayList();
+			
+			try {
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM VIEW_EMPLOYEE_PROJECT WHERE Emp_ID="
+											+text_emp_empID.getText());
+				
+				while(resultSet.next()) {
+					String[] array = new String[5];
+					for(int i=1;i<6;i++) {
+						array[i-1]=resultSet.getString(i);
+					}
+					temp.add(array);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			String[][] result_array = new String[temp.size()][5];
+			int i=0;
+			for (String[] array_in_temp : temp) {
+				result_array[i++] = array_in_temp;
+			        }
+			return result_array;
+		}
+		
+		
+		
 		private String[][] show_table(){
 			
 			ArrayList<String[]> temp = new ArrayList();
 			
 			try {
-				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM VIEW_EMPLOYEE_WITH_SUPERVISOR WHERE Emp_ID="
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM VIEW_EMPLOYEE_SUPERVISOR WHERE Emp_ID="
 											+text_emp_empID.getText());
 				
 				while(resultSet.next()) {
@@ -657,13 +722,9 @@ public class Employee_panel {
 			 */
 			ArrayList<String> temp = new ArrayList();
 			try {
-				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM test.EMPLOYEE WHERE Emp_ID=" + empID.getText());
+				ResultSet resultSet = Term_project_main.conn.st.executeQuery("SELECT * FROM EMPLOYEE WHERE Emp_ID=" + empID.getText());
 				if(resultSet.next()) {
-					
-//					System.out.println(resultSet.getString("Emp_ID") + "    " + resultSet.getString(
-//							"First_name") + "   " + resultSet.getString("Last_name") + "   " + resultSet.getString("Address") 
-//							+ "   " + resultSet.getString("Phone_number") + "   " + resultSet.getString("Supervisor_ID")+ "   " 
-//							+ resultSet.getString("Performance"));
+				
 					
 					for(int i = 1; i<8; i++) {
 						temp.add(resultSet.getString(i));
@@ -778,13 +839,77 @@ public class Employee_panel {
 		private int delete_emp(JTextField empID) {
 			
 			int r=0;
+			String temp_supv ="";
 			try {
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.EMPLOYEE WHERE Emp_ID="+empID.getText());
+				//re-assign supervisor for subordinates of the employee who is going to be deleted
+				ResultSet r2 = Term_project_main.conn.st.executeQuery("SELECT Supervisor_ID FROM EMPLOYEE WHERE Emp_ID ="+empID.getText());
 				
+				
+				if(r2.next()) {
+				//if employee who is going to be deleted has supervisor
+					
+				temp_supv = r2.getString(1);
+				
+				}
+				
+				ArrayList<String> emps = new ArrayList();
+				
+				ResultSet r3 = Term_project_main.conn.st.executeQuery("SELECT Emp_ID FROM EMPLOYEE WHERE Supervisor_ID ="+empID.getText());
+				
+				while(r3.next()) {
+					//if employee who is going to be deleted has subordinates
+	
+					emps.add(r3.getString(1));
+				}
+				
+				//check his project
+				ArrayList<String> pjs = new ArrayList();
+				
+				ResultSet r4 = Term_project_main.conn.st.executeQuery("SELECT Project_ID FROM PROJECT WHERE Emp_ID ="+empID.getText());
+				
+				while(r4.next()) {
+					//if employee who is going to be deleted has basic emp under him/her
+	
+					pjs.add(r4.getString(1));
+				}
+				
+				
+				if(!temp_supv.isBlank()) {
+					//has supervisor
+					if(emps.size()!=0) {
+						//hse subordinates
+						
+						for(int i=0; i<emps.size();i++) {
+							Term_project_main.conn.st.executeUpdate("UPDATE test.EMPLOYEE SET Supervisor_ID="+temp_supv+"WHERE Emp_ID="+emps.get(i));
+						}						
+					}
+					
+					if(pjs.size()!=0) {
+						//has projects
+						for(int i=0; i<emps.size();i++) {
+							Term_project_main.conn.st.executeUpdate("UPDATE test.PROJECT SET Emp_ID="+temp_supv+"WHERE Project_ID="+pjs.get(i));
+						}
+					}
+					r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.EMPLOYEE WHERE Emp_ID="+empID.getText());
+					
+					
+				}else {
+					//doesn't have supvervisor
+					if(emps.size()==0 & pjs.size()==0) {
+						//hse no subordinate
+						
+						r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.EMPLOYEE WHERE Emp_ID="+empID.getText());
+						
+					}else {
+						lbl_emp_info.setText("You would have to re-assign his works to someone else first");
+					}	
+				}
 				return r;
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				lbl_emp_info.setText("Request failed");
 				return r;
 			}
 			
@@ -841,6 +966,8 @@ public class Employee_panel {
 				
 		}
 	
+		
+		
 		public JComboBox get_comboBox_employeeAction() {
 			
 			return comboBox_emp_action;
