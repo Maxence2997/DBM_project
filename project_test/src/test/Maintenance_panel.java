@@ -376,6 +376,13 @@ public class Maintenance_panel  {
 			inq_panel.add(lbl_inq_date_format);
 		}
 		
+		
+		
+		
+		
+		
+		
+		
 		//Second panel - Maintenance
 		private void add_maintenance_panel() {
 			

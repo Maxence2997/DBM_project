@@ -419,8 +419,8 @@ public class Sheets_panel  {
 									String[][] temp = inquire("RFQ", text_inq_sheetID,text_inq_projectID,text_inq_pd);
 									if(temp.length!=0) {
 										
-										String[] columns_name = {"Sheet ID", "Type", "Project ID", "Supplier ID", "Inquiring Product", 
-												"Name", "Vol.", "Date"};
+										String[] columns_name = {"Sheet ID", "Type", "Project ID", "Supplier ID","Name", "Inquiring Product", 
+												 "Vol.", "Date"};
 										DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
 										inq_table.setModel(inq_table_model);
 										inq_table.setVisible(true);
@@ -487,7 +487,7 @@ public class Sheets_panel  {
 								String[][] temp = inquire("PUR", text_inq_sheetID,text_inq_projectID,text_inq_pd);
 								if(temp.length!=0) {
 									
-									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Module", "Vol.",
+									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Supplier_ID", "Name", "Module", "Vol.",
 											"Unit Price", "Total Price", "ESD", "Date"};
 									
 									DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
@@ -510,7 +510,7 @@ public class Sheets_panel  {
 								String[][] temp = inquire("EXAM", text_inq_sheetID,text_inq_projectID,text_inq_pd);
 								if(temp.length!=0) {
 									
-									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Module", "Vol.", "Result", "Date"};
+									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Supplier_ID", "Name", "Module", "Vol.", "Result", "Date"};
 									
 									DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
 									inq_table.setModel(inq_table_model);
@@ -532,7 +532,7 @@ public class Sheets_panel  {
 								String[][] temp = inquire("RCPT", text_inq_sheetID,text_inq_projectID,text_inq_pd);
 								if(temp.length!=0) {
 									
-									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Module", "Vol.", "Date"};
+									String[] columns_name = {"Sheet ID", "Type", "Project ID", "Supplier_ID", "Name", "Module", "Vol.", "Date"};
 									
 									DefaultTableModel inq_table_model = new DefaultTableModel(temp,columns_name);
 									inq_table.setModel(inq_table_model);
@@ -2668,72 +2668,64 @@ public class Sheets_panel  {
 		 */
 		
 		ArrayList<String[]> temp = new ArrayList();
-				
-		final String st_inq_all_pj = "SELECT * FROM VIEW_PROJECT_6_SHEETS";
 		
-		final String st_inq_all_sheets = "SELECT * FROM VIEW_6_SHEETS";
+		String st_inq_all_sheets = "SELECT * FROM VIEW_6_SHEETS";
 							
 			switch(lib.check_text_fields(first, second,third)) {
 				
 				
 				case "011":
 					try {
-						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_pj+" WHERE (Project_ID="
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_sheets+" WHERE (RFQ_pj_ID="
 								+ text_inq_projectID.getText()+"AND RFQ_pd=\'"+text_inq_pd.getText()+"\')");
 						
 						while(r.next()) {
 							
-							if(r.getString(3)!= null) {
+							if(r.getString(2)!= null) {
 								
-								String [] rfq = new String[7];
-								for(int i =2; i<9;i++) {
-									rfq[i-2]=r.getString(i);		
+								String [] rfq = new String[8];
+								for(int i =1; i<9;i++) {
+									rfq[i-1]=r.getString(i);		
 								}
-								rfq = lib.insert(rfq, r.getString(1), 2);
 								temp.add(rfq);
 								
 								if(r.getString(10)!= null) {
 									
-									String [] quo = new String[10];
-									for(int i =9; i<19;i++) {
+									String [] quo = new String[11];
+									for(int i =9; i<20;i++) {
 										quo[i-9]=r.getString(i);		
 									}
-									quo = lib.insert(quo, r.getString(1), 2);
 									temp.add(quo);
 									
-									if(r.getString(20)!= null) {
-										String [] req = new String[11];
-										for(int i =19; i<30;i++) {
-											req[i-19]=r.getString(i);		
+									if(r.getString(21)!= null) {
+										String [] req = new String[12];
+										for(int i =20; i<32;i++) {
+											req[i-20]=r.getString(i);		
 										}
-										req = lib.insert(req, r.getString(1), 2);
 										temp.add(req);
 										
-										if (r.getString(31)!= null) {
+										if (r.getString(33)!= null) {
 											
-											String [] pur = new String[8];
-											for(int i =30; i<38;i++) {
-												pur[i-30]=r.getString(i);		
+											String [] pur = new String[11];
+											for(int i =32; i<43;i++) {
+												pur[i-43]=r.getString(i);		
 											}
-											pur = lib.insert(pur, r.getString(1), 2);
 											temp.add(pur);
 											
-											if(r.getString(39)!= null) {
+											if(r.getString(44)!= null) {
 												
-												String [] exam = new String[6];
-												for(int i =39; i<45;i++) {
-													exam[i-39]=r.getString(i);		
+												String [] exam = new String[9];
+												for(int i =43; i<52;i++) {
+													exam[i-43]=r.getString(i);		
 												}
-												exam = lib.insert(exam, r.getString(1), 2);
 												temp.add(exam);
 												
-												if(r.getString(46)!= null) {
+												if(r.getString(53)!= null) {
 													
-													String [] rcpt = new String[5];
-													for(int i =45; i<50;i++) {
-														rcpt[i-45]=r.getString(i);		
+													String [] rcpt = new String[8];
+													for(int i =52; i<60;i++) {
+														rcpt[i-52]=r.getString(i);		
 													}
-													rcpt = lib.insert(rcpt, r.getString(1), 2);
 													temp.add(rcpt);	
 												}
 											}
@@ -2755,62 +2747,56 @@ public class Sheets_panel  {
 					
 					try {
 						
-						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_pj+" WHERE Project_ID="+text_inq_projectID.getText());
+						ResultSet r = Term_project_main.conn.st.executeQuery(st_inq_all_sheets+" WHERE RFQ_pj_ID="+text_inq_projectID.getText());
 						
 						while(r.next()) {
 							
-							if(r.getString(3)!= null) {
+							if(r.getString(2)!= null) {
 								
-								String [] rfq = new String[7];
-								for(int i =2; i<9;i++) {
-									rfq[i-2]=r.getString(i);		
+								String [] rfq = new String[8];
+								for(int i =1; i<9;i++) {
+									rfq[i-1]=r.getString(i);		
 								}
-								rfq = lib.insert(rfq, r.getString(1), 2);
 								temp.add(rfq);
 								
 								if(r.getString(10)!= null) {
 									
-									String [] quo = new String[10];
-									for(int i =9; i<19;i++) {
+									String [] quo = new String[11];
+									for(int i =9; i<20;i++) {
 										quo[i-9]=r.getString(i);		
 									}
-									quo = lib.insert(quo, r.getString(1), 2);
 									temp.add(quo);
 									
-									if(r.getString(20)!= null) {
-										String [] req = new String[11];
-										for(int i =19; i<30;i++) {
-											req[i-19]=r.getString(i);		
+									if(r.getString(21)!= null) {
+										String [] req = new String[12];
+										for(int i =20; i<32;i++) {
+											req[i-20]=r.getString(i);		
 										}
-										req = lib.insert(req, r.getString(1), 2);
 										temp.add(req);
 										
-										if (r.getString(31)!= null) {
+										if (r.getString(33)!= null) {
 											
-											String [] pur = new String[8];
-											for(int i =30; i<38;i++) {
-												pur[i-30]=r.getString(i);		
+											String [] pur = new String[11];
+											for(int i =32; i<43;i++) {
+												pur[i-43]=r.getString(i);		
 											}
-											pur = lib.insert(pur, r.getString(1), 2);
 											temp.add(pur);
 											
-											if(r.getString(39)!= null) {
+											if(r.getString(44)!= null) {
 												
-												String [] exam = new String[6];
-												for(int i =39; i<45;i++) {
-													exam[i-39]=r.getString(i);		
+												String [] exam = new String[9];
+												for(int i =43; i<52;i++) {
+													exam[i-43]=r.getString(i);		
 												}
-												exam = lib.insert(exam, r.getString(1), 2);
 												temp.add(exam);
 												
-												if(r.getString(46)!= null) {
+												if(r.getString(53)!= null) {
 													
-													String [] rcpt = new String[5];
-													for(int i =45; i<50;i++) {
-														rcpt[i-45]=r.getString(i);		
+													String [] rcpt = new String[8];
+													for(int i =52; i<60;i++) {
+														rcpt[i-52]=r.getString(i);		
 													}
-													rcpt = lib.insert(rcpt, r.getString(1), 2);
-													temp.add(rcpt);	
+													temp.add(rcpt);		
 												}
 											}
 										}
@@ -2839,7 +2825,6 @@ public class Sheets_panel  {
 								
 								String [] rfq = new String[8];
 								for(int i =1; i<9;i++) {
-
 									rfq[i-1]=r.getString(i);		
 								}
 								temp.add(rfq);
@@ -2848,7 +2833,6 @@ public class Sheets_panel  {
 									
 									String [] quo = new String[11];
 									for(int i =9; i<20;i++) {
-										
 										quo[i-9]=r.getString(i);		
 									}
 									temp.add(quo);
@@ -2856,37 +2840,33 @@ public class Sheets_panel  {
 									if(r.getString(21)!= null) {
 										String [] req = new String[12];
 										for(int i =20; i<32;i++) {
-
 											req[i-20]=r.getString(i);		
 										}
 										temp.add(req);
 										
 										if (r.getString(33)!= null) {
 											
-											String [] pur = new String[9];
-											for(int i =32; i<41;i++) {
-												
-												pur[i-32]=r.getString(i);		
+											String [] pur = new String[11];
+											for(int i =32; i<43;i++) {
+												pur[i-43]=r.getString(i);		
 											}
 											temp.add(pur);
 											
-											if(r.getString(42)!= null) {
+											if(r.getString(44)!= null) {
 												
-												String [] exam = new String[7];
-												for(int i =41; i<48;i++) {
-													
-													exam[i-41]=r.getString(i);		
+												String [] exam = new String[9];
+												for(int i =43; i<52;i++) {
+													exam[i-43]=r.getString(i);		
 												}
 												temp.add(exam);
 												
-												if(r.getString(49)!= null) {
+												if(r.getString(53)!= null) {
 													
-													String [] rcpt = new String[6];
-													for(int i =48; i<54;i++) {
-														
-														rcpt[i-48]=r.getString(i);		
+													String [] rcpt = new String[8];
+													for(int i =52; i<60;i++) {
+														rcpt[i-52]=r.getString(i);		
 													}
-													temp.add(rcpt);	
+													temp.add(rcpt);		
 												}
 											}
 										}
@@ -2947,7 +2927,7 @@ public class Sheets_panel  {
 //				System.out.println();
 //				System.out.println();
 				
-				String[][] result_array = new String[temp.size()][11];
+				String[][] result_array = new String[temp.size()][12];
 				int i=0;
 				for (String[] array_in_temp : temp) {
 					result_array[i++] = array_in_temp;
@@ -3334,14 +3314,19 @@ public class Sheets_panel  {
 					
 				case "PUR":
 					
-					switch(lib.check_text_fields(first, second, third)) {
+					String st_pur = "SELECT pur.PUR_Sheet_ID, Sheet_type, pur.Project_ID, pur.Supplier_ID, sup.Supplier_name, "
+							+ "pur.Module_type, pur.Vol, pur.Unit_price, pur.total_price, pur.ESD, pur.Date "
+							+ "FROM PURCHASE AS pur INNER JOIN SUPPLIER AS sup ON sup.Supplier_ID=pur.Supplier_ID";
 					
+					switch(lib.check_text_fields(first, second, third)) {
+						
+						
 						case "111":
 							
 						try {
-							r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (PUR_Sheet_ID="
-											+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
-											+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+							r = Term_project_main.conn.st.executeQuery(st_pur+" WHERE (pur.PUR_Sheet_ID="
+											+text_inq_sheetID.getText()+" AND pur.Project_ID ="+text_inq_projectID.getText()
+											+" AND pur.Module_type =\'"+text_inq_pd.getText()+"\')");
 
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
@@ -3354,8 +3339,8 @@ public class Sheets_panel  {
 						case "110":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (PUR_Sheet_ID="
-												+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
+								r = Term_project_main.conn.st.executeQuery(st_pur+" WHERE (pur.PUR_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND pur.Project_ID ="+text_inq_projectID.getText()+")");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3367,8 +3352,8 @@ public class Sheets_panel  {
 						case "101":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (PUR_Sheet_ID="
-												+text_inq_sheetID.getText()+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+								r = Term_project_main.conn.st.executeQuery(st_pur+" WHERE (pur.PUR_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND pur.Module_type =\'"+text_inq_pd.getText()+"\')");
 								
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3380,7 +3365,7 @@ public class Sheets_panel  {
 						case "100":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE PUR_Sheet_ID="+text_inq_sheetID.getText());
+								r = Term_project_main.conn.st.executeQuery(st_pur+" WHERE pur.PUR_Sheet_ID="+text_inq_sheetID.getText());
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3392,8 +3377,8 @@ public class Sheets_panel  {
 						case "011":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE (Project_ID ="+text_inq_projectID.getText()
-												+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+								r = Term_project_main.conn.st.executeQuery(st_pur+" WHERE (pur.Project_ID ="+text_inq_projectID.getText()
+												+" AND pur.Module_type =\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3405,7 +3390,7 @@ public class Sheets_panel  {
 						case "010":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE Project_ID ="+text_inq_projectID.getText());
+								r = Term_project_main.conn.st.executeQuery(st_pur+" WHERE pur.Project_ID ="+text_inq_projectID.getText());
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3417,7 +3402,7 @@ public class Sheets_panel  {
 						default:
 							//001
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM PURCHASE WHERE Module_type =\'"+text_inq_pd.getText()+"\')");
+								r = Term_project_main.conn.st.executeQuery(st_pur+" WHERE pur.Module_type =\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3429,7 +3414,7 @@ public class Sheets_panel  {
 					try {
 						while(r.next()) {
 							
-							String[] temp_array = new String[9];
+							String[] temp_array = new String[11];
 							
 							for(int i=1;i<10;i++) 
 								temp_array[i-1]=r.getString(i);
@@ -3444,14 +3429,17 @@ public class Sheets_panel  {
 					
 				case "EXAM":
 					
+					String st_exam = "SELECT ex.EX_Sheet_ID, ex.Sheet_type, ex.Project_ID, ex.Supplier_ID, "
+							+ "sup.Supplier_name, ex.Module_type, ex.Vol, ex.Result, ex.Date FROM EXAMINATION AS ex INNER JOIN SUPPLIER AS sup"
+							+ " ON sup.Supplier_ID = ex.Supplier_ID";
 					switch(lib.check_text_fields(first, second, third)) {
 					
 						case "111":
 							
 						try {
-							r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (EX_Sheet_ID="
-											+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
-											+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+							r = Term_project_main.conn.st.executeQuery(st_exam+" WHERE (ex.EX_Sheet_ID="
+											+text_inq_sheetID.getText()+" AND ex.Project_ID ="+text_inq_projectID.getText()
+											+" AND ex.Module_type =\'"+text_inq_pd.getText()+"\')");
 
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
@@ -3464,8 +3452,8 @@ public class Sheets_panel  {
 						case "110":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (EX_Sheet_ID="
-												+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
+								r = Term_project_main.conn.st.executeQuery(st_exam+" WHERE (ex.EX_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND ex.Project_ID ="+text_inq_projectID.getText()+")");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3477,8 +3465,8 @@ public class Sheets_panel  {
 						case "101":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (EX_Sheet_ID="
-												+text_inq_sheetID.getText()+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+								r = Term_project_main.conn.st.executeQuery(st_exam+" WHERE (ex.EX_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND ex.Module_type =\'"+text_inq_pd.getText()+"\')");
 								
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3490,8 +3478,7 @@ public class Sheets_panel  {
 						case "100":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE EX_Sheet_ID="
-																						+text_inq_sheetID.getText());
+								r = Term_project_main.conn.st.executeQuery(st_exam+" WHERE ex.EX_Sheet_ID="+text_inq_sheetID.getText());
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3503,9 +3490,8 @@ public class Sheets_panel  {
 						case "011":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE (Project_ID ="
-												+text_inq_projectID.getText()
-												+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+								r = Term_project_main.conn.st.executeQuery(st_exam+" WHERE (ex.Project_ID ="+text_inq_projectID.getText()
+												+" AND ex.Module_type =\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3517,8 +3503,7 @@ public class Sheets_panel  {
 						case "010":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE Project_ID ="
-															+text_inq_projectID.getText());
+								r = Term_project_main.conn.st.executeQuery(st_exam+" WHERE ex.Project_ID ="+text_inq_projectID.getText());
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3530,8 +3515,7 @@ public class Sheets_panel  {
 						default:
 							//001
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM EXAMINATION WHERE Module_type =\'"
-															+text_inq_pd.getText()+"\')");
+								r = Term_project_main.conn.st.executeQuery(st_exam+" WHERE Module_type =\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3540,10 +3524,11 @@ public class Sheets_panel  {
 							}
 							break;
 					}
+			
 					try {
 						while(r.next()) {
 							
-							String[] temp_array = new String[7];
+							String[] temp_array = new String[9];
 							
 							for(int i=1;i<8;i++) 
 								temp_array[i-1]=r.getString(i);
@@ -3558,15 +3543,17 @@ public class Sheets_panel  {
 				
 				default:
 				//case "RCPT":
-					
+					String st_rcpt = "SELECT rcpt.REC_Sheet_ID, rcpt.Sheet_type, rcpt.Project_ID, rcpt.Supplier_ID, "
+								+ "sup.Supplier_name, rcpt.Module_type, rcpt.Vol, rcpt.Result, rcpt.Date FROM RECEIPT AS rcpt INNER JOIN SUPPLIER AS sup"
+								+ " ON sup.Supplier_ID = rcpt.Supplier_ID";
 					switch(lib.check_text_fields(first, second, third)) {
 					
 						case "111":
 							
 						try {
-							r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (REC_Sheet_ID="
-											+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()
-											+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+							r = Term_project_main.conn.st.executeQuery(st_rcpt+" WHERE (rcpt.REC_Sheet_ID="
+											+text_inq_sheetID.getText()+" AND rcpt.Project_ID ="+text_inq_projectID.getText()
+											+" AND rcpt.Module_type =\'"+text_inq_pd.getText()+"\')");
 
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
@@ -3579,8 +3566,8 @@ public class Sheets_panel  {
 						case "110":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (REC_Sheet_ID="
-												+text_inq_sheetID.getText()+" AND Project_ID ="+text_inq_projectID.getText()+")");
+								r = Term_project_main.conn.st.executeQuery(st_rcpt+" WHERE (rcpt.REC_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND rcpt.Project_ID ="+text_inq_projectID.getText()+")");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3592,8 +3579,8 @@ public class Sheets_panel  {
 						case "101":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (REC_Sheet_ID="
-												+text_inq_sheetID.getText()+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+								r = Term_project_main.conn.st.executeQuery(st_rcpt+" WHERE (rcpt.REC_Sheet_ID="
+												+text_inq_sheetID.getText()+" AND rcpt.Module_type =\'"+text_inq_pd.getText()+"\')");
 								
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3605,7 +3592,7 @@ public class Sheets_panel  {
 						case "100":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE REC_Sheet_ID="
+								r = Term_project_main.conn.st.executeQuery(st_rcpt+" WHERE rcpt.REC_Sheet_ID="
 																						+text_inq_sheetID.getText());
 
 							} catch (SQLException e) {
@@ -3618,9 +3605,9 @@ public class Sheets_panel  {
 						case "011":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE (Project_ID ="
+								r = Term_project_main.conn.st.executeQuery(st_rcpt+" WHERE (rcpt.Project_ID ="
 												+text_inq_projectID.getText()
-												+" AND Module_type =\'"+text_inq_pd.getText()+"\')");
+												+" AND rcpt.Module_type =\'"+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
@@ -3632,7 +3619,7 @@ public class Sheets_panel  {
 						case "010":
 							
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE Project_ID ="
+								r = Term_project_main.conn.st.executeQuery(st_rcpt+" WHERE rcpt.Project_ID ="
 															+text_inq_projectID.getText());
 
 							} catch (SQLException e) {
@@ -3645,7 +3632,7 @@ public class Sheets_panel  {
 						default:
 							//001
 							try {
-								r = Term_project_main.conn.st.executeQuery("SELECT * FROM RECEIPT WHERE Module_type =\'"
+								r = Term_project_main.conn.st.executeQuery(st_rcpt+" WHERE rcpt.Module_type =\'"
 															+text_inq_pd.getText()+"\')");
 
 							} catch (SQLException e) {
@@ -3658,7 +3645,7 @@ public class Sheets_panel  {
 					try {
 						while(r.next()) {
 							
-							String[] temp_array = new String[6];
+							String[] temp_array = new String[8];
 							
 							for(int i=1;i<7;i++) 
 								temp_array[i-1]=r.getString(i);

@@ -13,17 +13,6 @@ public class Library {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public Library() {
 		
 	}
@@ -87,6 +76,8 @@ public class Library {
 			}
 		}	
 	}
+	
+	
 	
 	
 	public boolean num_not_null_check(JTextField num) {
