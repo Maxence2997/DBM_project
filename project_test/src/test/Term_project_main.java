@@ -110,11 +110,11 @@ public class Term_project_main {
 		
 		frame.getContentPane().setLayout(card_layout);
 		
-		//conn = new connection();
+		conn = new connection();
 		//conn = new connection(4);
 		
 		login_panel();
-		home_panel();
+		
 		
 		frame.setVisible(true);
 		
@@ -137,6 +137,10 @@ public class Term_project_main {
 			label_empID.setBounds(100, 191, 104, 16);
 			login_panel.add(label_empID);
 			
+			JLabel login_result = new JLabel("");
+			login_result.setBounds(201, 245, 245, 26);
+			login_panel.add(login_result);
+			
 			field_empID = new JTextField(8);
 			field_empID.setBounds(229, 186, 163, 26);
 			login_panel.add(field_empID);
@@ -144,25 +148,24 @@ public class Term_project_main {
 			field_empID.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					//card_layout.show(frame.getContentPane(), "home");
+//					card_layout.show(frame.getContentPane(), "home");
+//					cl_home.show(container_panel, "home");
 					
-					card_layout.show(frame.getContentPane(), "home");
-					cl_home.show(container_panel, "home");
+					lib = new Library();
+					home_panel();
+					lib.adjust_PROJECT();
 					
-//					lib = new Library();
-//					lib.adjust_PROJECT();
-//					
-//					if (lib.emp_check(field_empID)) {
-//						
-//						card_layout.show(frame.getContentPane(), "home");
-//						cl_home.show(container_panel, "home");
-//						
-//						lbl_empID.setText(" Employee ID: " + field_empID.getText());
-//						Term_project_main.field_empID.setText("");
-//					}else 
-//						
-//						login_result.setText("Employee ID is invalid, please refill it.");
-//						Term_project_main.field_empID.setText("");
+					if (lib.emp_check(field_empID)) {
+						
+						card_layout.show(frame.getContentPane(), "home");
+						cl_home.show(container_panel, "home");
+						
+						lbl_empID.setText(" Employee ID: " + field_empID.getText());
+						Term_project_main.field_empID.setText("");
+					}else 
+						
+						login_result.setText("Employee ID is invalid, please refill it.");
+						Term_project_main.field_empID.setText("");
 //						
 					}
 					
@@ -171,33 +174,31 @@ public class Term_project_main {
 				
 			});
 			
-			JLabel login_result = new JLabel("");
-			login_result.setBounds(201, 245, 245, 26);
-			login_panel.add(login_result);
+			
 			
 			
 			JButton button_login = new JButton("Log-in");
 			button_login.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					//card_layout.show(frame.getContentPane(), "home");
 					
-					card_layout.show(frame.getContentPane(), "home");
-					cl_home.show(container_panel, "home");
+//					card_layout.show(frame.getContentPane(), "home");
+//					cl_home.show(container_panel, "home");
 					
-//					lib = new Library();
-//					lib.adjust_PROJECT();
-//					
-//					if (lib.emp_check(field_empID)) {
-//						
-//						card_layout.show(frame.getContentPane(), "home");
-//						cl_home.show(container_panel, "home");
-//						
-//						lbl_empID.setText(" Employee ID: " + field_empID.getText());
-//						Term_project_main.field_empID.setText("");
-//					}else 
-//						
-//						login_result.setText("Employee ID is invalid, please refill it.");
+					lib = new Library();
+					home_panel();
+					lib.adjust_PROJECT();
+					
+					if (lib.emp_check(field_empID)) {
+						
+						card_layout.show(frame.getContentPane(), "home");
+						cl_home.show(container_panel, "home");
+						
+						lbl_empID.setText(" Employee ID: " + field_empID.getText());
+						Term_project_main.field_empID.setText("");
+					}else 
+						
+						login_result.setText("Employee ID is invalid, please refill it.");
 //						
 					}
 				
