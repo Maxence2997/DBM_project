@@ -101,6 +101,7 @@ public class Maintenance_panel  {
 			
 			//core sheet panel which contains comboBox
 			core_maint_panel = new JPanel();
+			core_maint_panel.setBounds(0,26,1000,450);
 			Term_project_main.container_panel.add(core_maint_panel,"maintenance");
 			core_maint_panel.setLayout(null);
 			
@@ -108,7 +109,7 @@ public class Maintenance_panel  {
 			cl_maint = new CardLayout();
 			maint_container_panel = new JPanel(cl_maint);
 			
-			maint_container_panel.setBounds(0, 35, 666, 348);
+			maint_container_panel.setBounds(0, 35, 1000, 380);
 			maint_container_panel.setBackground(Color.CYAN);
 			core_maint_panel.add(maint_container_panel);
 			
@@ -298,12 +299,15 @@ public class Maintenance_panel  {
 							
 							if (temp.length != 0 ) {
 								
-								String [] columns_name = {"Project ID", "Employee ID", "E.Name", "Status", "Product", "RFQ ID", "QUOT. ID",
+								String [] columns_name = {"Project ID", "Employee ID", "Name", "Status", "Product", "RFQ ID", "QUOT. ID",
 										"REQ. ID", "PUR. ID", "EXAM. ID", "RCPT ID","Est. Date"};
 								DefaultTableModel inq_table_model = new DefaultTableModel(temp, columns_name);
 								inq_table.setModel(inq_table_model);
 								
-								TableColumnModel column_model = inq_table.getColumnModel();
+								inq_table.getColumnModel().getColumn(2).setPreferredWidth(100);
+								inq_table.getColumnModel().getColumn(3).setPreferredWidth(50);
+								inq_table.getColumnModel().getColumn(4).setPreferredWidth(70);
+								inq_table.getColumnModel().getColumn(11).setPreferredWidth(90);
 								
 								inq_table.setVisible(true);
 								scrollpane.setVisible(true);
@@ -330,8 +334,8 @@ public class Maintenance_panel  {
 			btn_inq_last20.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
-					String [] columns_name ={"Project ID", "Employee ID", "E.Name", "Est. Date", "Product", "RFQ ID", "QUOT. ID",
-							"REQ. ID", "PUR. ID", "EXAM. ID", "RCPT ID"};
+					String [] columns_name = {"Project ID", "Employee ID", "Name", "Status", "Product", "RFQ ID", "QUOT. ID",
+							"REQ. ID", "PUR. ID", "EXAM. ID", "RCPT ID","Est. Date"};
 					
 					
 					String[][] temp = last_20();
@@ -339,8 +343,10 @@ public class Maintenance_panel  {
 					DefaultTableModel inq_table_model = new DefaultTableModel(temp, columns_name);
 					inq_table.setModel(inq_table_model);
 					
-					TableColumnModel column_model = inq_table.getColumnModel();
-					
+					inq_table.getColumnModel().getColumn(2).setPreferredWidth(100);
+					inq_table.getColumnModel().getColumn(3).setPreferredWidth(50);
+					inq_table.getColumnModel().getColumn(4).setPreferredWidth(80);
+					inq_table.getColumnModel().getColumn(11).setPreferredWidth(90);
 					inq_table.setVisible(true);
 					scrollpane.setVisible(true);
 					lbl_result.setText("Data load succeed");
@@ -364,7 +370,7 @@ public class Maintenance_panel  {
 			inq_table.setVisible(false);
 			
 			scrollpane = new JScrollPane(inq_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			scrollpane.setBounds(49,241,563,87);
+			scrollpane.setBounds(49,241,900,87);
 			scrollpane.setVisible(false);
 			inq_panel.add(scrollpane);
 			
@@ -758,7 +764,7 @@ public class Maintenance_panel  {
 							
 							if(resultSet.next()) {
 								String [] temp_array = new String[12];
-								for(int i = 1; i<7; i++) {
+								for(int i = 1; i<13; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);	
@@ -779,7 +785,7 @@ public class Maintenance_panel  {
 							
 							while(resultSet.next()) {
 								String [] temp_array = new String[12];
-								for(int i = 1; i<7; i++) {
+								for(int i = 1; i<13; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);
@@ -800,7 +806,7 @@ public class Maintenance_panel  {
 							
 							while(resultSet.next()) {
 								String [] temp_array = new String[12];
-								for(int i = 1; i<7; i++) {
+								for(int i = 1; i<13; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);
@@ -822,7 +828,7 @@ public class Maintenance_panel  {
 																			
 							if(resultSet.next()) {
 								String [] temp_array = new String[12];
-								for(int i = 1; i<7; i++) {
+								for(int i = 1; i<13; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);
@@ -843,7 +849,7 @@ public class Maintenance_panel  {
 							
 							while(resultSet.next()) {
 								String [] temp_array = new String[12];
-								for(int i = 1; i<7; i++) {
+								for(int i = 1; i<13; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);	
@@ -862,7 +868,7 @@ public class Maintenance_panel  {
 							ResultSet resultSet = Term_project_main.conn.st.executeQuery(st_inquire+" WHERE Emp_ID="+empID.getText());
 							while(resultSet.next()) {
 								String [] temp_array = new String[12];
-								for(int i = 1; i<7; i++) {
+								for(int i = 1; i<13; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);	
@@ -884,7 +890,7 @@ public class Maintenance_panel  {
 							
 							while(resultSet.next()) {
 								String [] temp_array = new String[12];
-								for(int i = 1; i<7; i++) {
+								for(int i = 1; i<13; i++) {
 									temp_array[i-1]= resultSet.getString(i);
 								}
 								temp.add(temp_array);	
@@ -919,8 +925,8 @@ public class Maintenance_panel  {
 				
 				
 				while(resultSet.next()) {
-					String [] temp_array = new String[6];
-					for(int i = 1; i<7; i++) {
+					String [] temp_array = new String[12];
+					for(int i = 1; i<13; i++) {
 						temp_array[i-1]= resultSet.getString(i);
 					}
 					temp.add(temp_array);

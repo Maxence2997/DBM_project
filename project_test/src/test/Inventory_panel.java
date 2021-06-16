@@ -46,6 +46,7 @@ public class Inventory_panel {
 	private void panel() {
 		
 		inventory_panel = new JPanel();
+		inventory_panel.setBounds(0, 26, 1000, 450);
 		Term_project_main.container_panel.add(inventory_panel,"inventory");
 		inventory_panel.setLayout(null);
 		

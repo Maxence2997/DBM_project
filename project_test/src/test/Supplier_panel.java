@@ -12,6 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -71,6 +72,7 @@ public class Supplier_panel {
 		 */
 
 		supplier_panel = new JPanel();
+		supplier_panel.setBounds(0, 26, 1000, 450);
 		Term_project_main.container_panel.add(supplier_panel, "supplier");
 
 		lbl_sup_supID = new JLabel("Supplier ID :");
@@ -157,12 +159,31 @@ public class Supplier_panel {
 		JButton btn_show_more = new JButton("Show more");
 		btn_show_more.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				
 				String[][] temp = show_more(text_sup_supID, text_sup_name);
-				String[] column_names = { "SupplierID", "S.Name", "Item", "Module" };
-				sup_table_model = new DefaultTableModel(temp, column_names);
+				
+				if(temp.length==0) {
+					lbl_result.setVisible(true);
+					lbl_result.setText("No record for the products of the supplier");
+				}else {
+					
+					String[] column_names = { "SupplierID", "S.Name", "Item", "Module" };
+					
+					JScrollPane scrollpane = new JScrollPane();
+					JTable table = new JTable() {
+						@Override
+						public boolean isCellEditable(int row, int column) {
+							return false;
+						}// uneditable
+					};
 
-				sup_table.setModel(sup_table_model);
+					DefaultTableModel emp_table_model = new DefaultTableModel(temp, column_names);
+					table.setModel(emp_table_model);
+					scrollpane.setPreferredSize(new Dimension(600, 125));
+					scrollpane.setViewportView(table);
+					JOptionPane.showMessageDialog(null, scrollpane, "Suppliers' products Infos", 1);
+				}
+				
 
 			}
 		});

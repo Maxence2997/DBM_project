@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -34,6 +35,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.SystemColor;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JRadioButton;
 
 public class Term_project_main {
@@ -62,7 +64,7 @@ public class Term_project_main {
 	
 	private Project_panels pj_panels;
 	
-	
+
 	
 	
 	public static CardLayout card_layout;
@@ -104,7 +106,7 @@ public class Term_project_main {
 		
 		frame = new JFrame("System");
 		//frame.setBounds(100, 100, 666, 466);
-		frame.setBounds(100, 100, 786, 550);
+		frame.setBounds(100, 100, 1000, 550);
 		
 		card_layout = new CardLayout();
 		
@@ -114,7 +116,7 @@ public class Term_project_main {
 		//conn = new connection(4);
 		
 		login_panel();
-		
+		home_panel();
 		
 		frame.setVisible(true);
 		
@@ -153,6 +155,7 @@ public class Term_project_main {
 					
 					lib = new Library();
 					home_panel();
+					
 					lib.adjust_PROJECT();
 					
 					if (lib.emp_check(field_empID)) {
@@ -161,11 +164,55 @@ public class Term_project_main {
 						cl_home.show(container_panel, "home");
 						
 						lbl_empID.setText(" Employee ID: " + field_empID.getText());
-						Term_project_main.field_empID.setText("");
+						
+						JScrollPane scrollpane = new JScrollPane(); 
+						JTable table = new JTable() {
+							@Override
+							public boolean isCellEditable(int row, int column) {
+								return false;
+							}// uneditable
+						};
+						
+						if (lib.supervisor_check(Term_project_main.field_empID)&(lib.show_unsign_req().length!=0)) {
+							
+							String[] columns_name = {"Sheet ID", "Type", "Project ID", "Product", "Item", "Vol.", "Unit Price", 
+									"Total Price", "Signature", "Supervisor ID", "Name","Date"};
+							
+							DefaultTableModel table_model = new DefaultTableModel(lib.show_unsign_req(), columns_name);
+							table.setModel(table_model);
+							scrollpane.setPreferredSize(new Dimension(1000,125));
+							scrollpane.setViewportView(table);
+							table.getColumnModel().getColumn(1).setPreferredWidth(50);
+							table.getColumnModel().getColumn(10).setPreferredWidth(120);
+							table.getColumnModel().getColumn(11).setPreferredWidth(100);
+							JOptionPane.showMessageDialog(home_panel, scrollpane, "Unsigned Documents", 2);
+							
+						}
+						else if ((!lib.supervisor_check(Term_project_main.field_empID))&(lib.show_project_status().length!=0)){
+							
+							String[] columns_name = { "Project ID", "Status", "Employee ID", "Name", "Module", "*P.D.P",
+									"Supplier ID", "Name", "*E.S.D", "Receipt Date", "Contract" };
+							
+							DefaultTableModel table_model = new DefaultTableModel(lib.show_project_status(), columns_name);
+							table.setModel(table_model);
+							scrollpane.setPreferredSize(new Dimension(800,125));
+							scrollpane.setViewportView(table);
+							table.getColumnModel().getColumn(0).setPreferredWidth(90);
+							table.getColumnModel().getColumn(1).setPreferredWidth(50);
+							table.getColumnModel().getColumn(2).setPreferredWidth(100);
+							table.getColumnModel().getColumn(3).setPreferredWidth(100);
+							table.getColumnModel().getColumn(5).setPreferredWidth(50);
+							table.getColumnModel().getColumn(6).setPreferredWidth(100);
+							table.getColumnModel().getColumn(8).setPreferredWidth(100);
+							table.getColumnModel().getColumn(9).setPreferredWidth(100);
+							
+							JOptionPane.showMessageDialog(home_panel, scrollpane, "Delivery Caution", 2);
+						}
+						//Term_project_main.field_empID.setText("");
 					}else 
 						
 						login_result.setText("Employee ID is invalid, please refill it.");
-						Term_project_main.field_empID.setText("");
+						//Term_project_main.field_empID.setText("");
 //						
 					}
 					
@@ -186,7 +233,8 @@ public class Term_project_main {
 //					cl_home.show(container_panel, "home");
 					
 					lib = new Library();
-					home_panel();
+					
+					
 					lib.adjust_PROJECT();
 					
 					if (lib.emp_check(field_empID)) {
@@ -195,7 +243,50 @@ public class Term_project_main {
 						cl_home.show(container_panel, "home");
 						
 						lbl_empID.setText(" Employee ID: " + field_empID.getText());
-						Term_project_main.field_empID.setText("");
+						
+						JScrollPane scrollpane = new JScrollPane(); 
+						JTable table = new JTable() {
+							@Override
+							public boolean isCellEditable(int row, int column) {
+								return false;
+							}// uneditable
+						};
+						
+						if (lib.supervisor_check(Term_project_main.field_empID)&(lib.show_unsign_req().length!=0)){
+							
+							String[] columns_name = {"Sheet ID", "Type", "Project ID", "Product", "Item", "Vol.", "Unit Price", 
+									"Total Price", "Signature", "Supervisor ID", "Supervisor","Date"};
+							
+							DefaultTableModel table_model = new DefaultTableModel(lib.show_unsign_req(), columns_name);
+							table.setModel(table_model);
+							scrollpane.setPreferredSize(new Dimension(1000,125));
+							scrollpane.setViewportView(table);
+							table.getColumnModel().getColumn(1).setPreferredWidth(50);
+							table.getColumnModel().getColumn(10).setPreferredWidth(120);
+							table.getColumnModel().getColumn(11).setPreferredWidth(100);
+							JOptionPane.showMessageDialog(home_panel, scrollpane, "Unsigned Documents", 2);
+						}
+						else if((!lib.supervisor_check(Term_project_main.field_empID))&(lib.show_project_status().length!=0)) {
+							
+							String[] columns_name = { "Project ID", "P.status", "Employee ID", "Name", "Module", "*P.D.P",
+									"Supplier ID", "Name", "*E.S.D", "Receipt Date", "Contract" };
+							
+							DefaultTableModel table_model = new DefaultTableModel(lib.show_project_status(), columns_name);
+							table.setModel(table_model);
+							scrollpane.setPreferredSize(new Dimension(800,125));
+							scrollpane.setViewportView(table);
+							table.getColumnModel().getColumn(0).setPreferredWidth(90);
+							table.getColumnModel().getColumn(1).setPreferredWidth(50);
+							table.getColumnModel().getColumn(2).setPreferredWidth(100);
+							table.getColumnModel().getColumn(3).setPreferredWidth(100);
+							table.getColumnModel().getColumn(5).setPreferredWidth(50);
+							table.getColumnModel().getColumn(6).setPreferredWidth(100);
+							table.getColumnModel().getColumn(8).setPreferredWidth(100);
+							table.getColumnModel().getColumn(9).setPreferredWidth(100);
+							
+							JOptionPane.showMessageDialog(home_panel, scrollpane, "Delivery Caution", 2);
+						}
+						//Term_project_main.field_empID.setText("");
 					}else 
 						
 						login_result.setText("Employee ID is invalid, please refill it.");
@@ -215,12 +306,13 @@ public class Term_project_main {
 			
 			//home panel which contains only EMPID, button log-out, btn_reminder and button home
 			home_panel = new JPanel();
+			//home_panel.setbo
 			frame.getContentPane().add(home_panel, "home");
 			home_panel.setLayout(null);
 			
 			
 			JButton btn_logout = new JButton("Log-out");
-			btn_logout.setBounds(0, 409, 96, 29);
+			btn_logout.setBounds(0, 487, 96, 29);
 			btn_logout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					card_layout.show(frame.getContentPane(),"login");
@@ -237,13 +329,55 @@ public class Term_project_main {
 			btn_reminder.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
+					/**
+					 * @author Ray
+					 * @since 06/15/2021
+					 * 
+					 * @editor Jyun An
+					 * @since 06/16/2021
+					 */
+					JScrollPane scrollpane = new JScrollPane(); 
+					JTable table = new JTable() {
+						@Override
+						public boolean isCellEditable(int row, int column) {
+							return false;
+						}// uneditable
+					};
+					
 					if (lib.supervisor_check(Term_project_main.field_empID)) {
 						
-						JOptionPane.showMessageDialog(home_panel, "Message", "Unsigned Documents", 2);
+						String[] columns_name = {"Sheet ID", "Type", "Project ID", "Product", "Item", "Vol.", "Unit Price", 
+								"Total Price", "Signature", "Supervisor ID", "Supervisor","Date"};
+						
+						DefaultTableModel table_model = new DefaultTableModel(lib.show_unsign_req(), columns_name);
+						table.setModel(table_model);
+						scrollpane.setPreferredSize(new Dimension(1000,125));
+						scrollpane.setViewportView(table);
+						table.getColumnModel().getColumn(1).setPreferredWidth(50);
+						table.getColumnModel().getColumn(10).setPreferredWidth(120);
+						table.getColumnModel().getColumn(11).setPreferredWidth(100);
+						JOptionPane.showMessageDialog(home_panel, scrollpane, "Unsigned Documents", 2);
 					}
 					else {
 						
-						JOptionPane.showMessageDialog(home_panel, "Message", "Delivery Caution", 2);
+						String[] columns_name = { "Project ID", "P.status", "Employee ID", "Name", "Module", "*P.D.P",
+								"Supplier ID", "Name", "*E.S.D", "Receipt Date", "Contract" };
+						
+						DefaultTableModel table_model = new DefaultTableModel(lib.show_project_status(), columns_name);
+						
+						table.setModel(table_model);
+						scrollpane.setPreferredSize(new Dimension(800,125));
+						scrollpane.setViewportView(table);
+						table.getColumnModel().getColumn(0).setPreferredWidth(90);
+						table.getColumnModel().getColumn(1).setPreferredWidth(50);
+						table.getColumnModel().getColumn(2).setPreferredWidth(100);
+						table.getColumnModel().getColumn(3).setPreferredWidth(100);
+						table.getColumnModel().getColumn(5).setPreferredWidth(50);
+						table.getColumnModel().getColumn(6).setPreferredWidth(100);
+						table.getColumnModel().getColumn(8).setPreferredWidth(100);
+						table.getColumnModel().getColumn(9).setPreferredWidth(100);
+						
+						JOptionPane.showMessageDialog(home_panel, scrollpane, "Delivery Caution", 2);
 					}
 				}
 			});
@@ -252,7 +386,7 @@ public class Term_project_main {
 			
 			cl_home = new CardLayout();
 			container_panel = new JPanel(cl_home);
-			container_panel.setBounds(0, 26, 666, 383);
+			container_panel.setBounds(0, 26, 1000, 450);
 			container_panel.setBackground(Color.CYAN);
 			home_panel.add(container_panel);
 			
@@ -381,7 +515,7 @@ public class Term_project_main {
 					
 				}
 			});
-			btn_home.setBounds(579, 409, 81, 29);
+			btn_home.setBounds(919, 487, 81, 29);
 			home_panel.add(btn_home);
 			
 			pj_panels = new Project_panels();

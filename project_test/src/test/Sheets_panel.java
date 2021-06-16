@@ -35,6 +35,8 @@ public class Sheets_panel  {
      * Seperated from Project_test
      **/
 	
+	
+	
 	private Library lib;
 
 	private JComboBox comboBox_sheets;
@@ -153,7 +155,9 @@ public class Sheets_panel  {
 	public Sheets_panel() {
 		
 		lib = new Library();
+		
 		panels();
+		
 		
 	}
 	
@@ -161,13 +165,14 @@ public class Sheets_panel  {
 				
 		//core sheet panel which contains comboBox
 		core_sheet_panel = new JPanel();
+		core_sheet_panel.setBounds(0,26,1000,450);
 		Term_project_main.container_panel.add(core_sheet_panel,"sheets");
 		core_sheet_panel.setLayout(null);
 				
 		//smaller panel on the core sheet panel
 		cl_sheet = new CardLayout();
 		sheet_container_panel = new JPanel(cl_sheet);
-		sheet_container_panel.setBounds(0, 36, 662, 348);
+		sheet_container_panel.setBounds(0, 36, 1000, 380);
 		sheet_container_panel.setBackground(Color.CYAN);
 		core_sheet_panel.add(sheet_container_panel);
 				
@@ -192,7 +197,7 @@ public class Sheets_panel  {
 				if (function.equalsIgnoreCase("signature")){
 					if(lib.supervisor_check(Term_project_main.field_empID)) {
 						
-						String[][] temp = show_unsign_req();
+						String[][] temp = lib.show_unsign_req();
 						
 						if(temp.length!=0) {
 							
@@ -592,7 +597,7 @@ public class Sheets_panel  {
 		inq_table.setVisible(false);
 
 		scrollpane_inq = new JScrollPane(inq_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollpane_inq.setBounds(52,219,559,100);
+		scrollpane_inq.setBounds(22,220,950,100);
 				
 		inq_panel.add(scrollpane_inq);
 				
@@ -2231,7 +2236,7 @@ public class Sheets_panel  {
 
 		scrollpane_append = new JScrollPane(append_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollpane_append.setBounds(55, 279, 563, 48);
+		scrollpane_append.setBounds(27, 288, 950, 60);
 
 		append_panel.add(scrollpane_append);
 
@@ -2311,7 +2316,8 @@ public class Sheets_panel  {
 		remove_panel.add(lbl_remove_confirm);
 
 		text_remove_confirm = new JTextField();
-		text_remove_confirm.setBounds(55, 263, 443, 26);
+		text_remove_confirm.setHorizontalAlignment(SwingConstants.CENTER);
+		text_remove_confirm.setBounds(55, 263, 611, 26);
 		text_remove_confirm.setColumns(10);
 		text_remove_confirm.setVisible(false);
 		remove_panel.add(text_remove_confirm);
@@ -2624,7 +2630,7 @@ public class Sheets_panel  {
 		remove_table.setVisible(false);
 
 		scrollpane_remove = new JScrollPane(remove_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollpane_remove.setBounds(45, 195, 563, 43);
+		scrollpane_remove.setBounds(27, 195, 950, 43);
 		scrollpane_remove.setVisible(false);
 		remove_panel.add(scrollpane_remove);
 
@@ -2718,7 +2724,7 @@ public class Sheets_panel  {
 
 		scrollpane_sign = new JScrollPane(sign_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollpane_sign.setBounds(46, 189, 563, 87);
+		scrollpane_sign.setBounds(27, 192, 950, 125);
 		scrollpane_sign.setVisible(false);
 		sign_panel.add(scrollpane_sign);
 
@@ -2736,7 +2742,7 @@ public class Sheets_panel  {
 				}
 			}
 		});
-		btn_sign_sign.setBounds(528, 281, 81, 29);
+		btn_sign_sign.setBounds(896, 325, 81, 29);
 		sign_panel.add(btn_sign_sign);
 		// btn_sign.setVisible(true);
 
@@ -2744,7 +2750,7 @@ public class Sheets_panel  {
 		btn_sign_refresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				String[][] temp = show_unsign_req();
+				String[][] temp = lib.show_unsign_req();
 
 				if (temp.length != 0) {
 
@@ -3844,40 +3850,7 @@ public class Sheets_panel  {
 	
 	
 	
-	private String[][] show_unsign_req() {
-		
-		
-		ArrayList <String[]> temp = new ArrayList();
 	
-		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT req.REQ_Sheet_ID, req.Sheet_type, req.Project_ID,req.Inquiring_product, "
-															+ "req.Item_name, req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID,"
-															+ " emp.Last_name, req.Date FROM test.REQUISITION AS req LEFT JOIN test.EMPLOYEE AS emp "
-															+ "ON req.Supervisor_ID = emp.Emp_ID WHERE (Signature='False' AND req.Supervisor_ID="
-															+Term_project_main.field_empID.getText()+")");
-			
-			while(r.next()) {
-				
-				String[] temp_array = new String[12];
-				
-				for(int i=1;i<13;i++) {
-					
-					temp_array[i-1]=r.getString(i);
-				}temp.add(temp_array);
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		String[][] result_array = new String[temp.size()][12];
-		int i=0;
-		for (String[] array_in_temp : temp) {
-			result_array[i++] = array_in_temp;
-		        }
-		return result_array;
-	}
 	
 	
 	

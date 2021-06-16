@@ -31,6 +31,7 @@ public class Project_panels {
 	private void panels() {
 		
 		project_panel = new JPanel();
+		project_panel.setBounds(0, 26, 1000, 450);
 		Term_project_main.container_panel.add(project_panel,"project");
 		project_panel.setLayout(null);
 		
