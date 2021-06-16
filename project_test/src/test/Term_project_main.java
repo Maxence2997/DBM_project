@@ -315,7 +315,10 @@ public class Term_project_main {
 			btn_logout.setBounds(0, 499, 96, 29);
 			btn_logout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					card_layout.show(frame.getContentPane(),"login");
+					int option = JOptionPane.showConfirmDialog(core_home_panel, "Sure to logout?","Logout", JOptionPane.YES_NO_OPTION);
+					if (option == JOptionPane.YES_OPTION) {
+						card_layout.show(frame.getContentPane(),"login");
+					}
 				}
 			});
 			home_panel.add(btn_logout);
