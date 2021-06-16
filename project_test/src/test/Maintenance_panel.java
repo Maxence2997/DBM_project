@@ -123,7 +123,7 @@ public class Maintenance_panel  {
 			
 			
 			comboBox_pj = new JComboBox( new String[] {"-----------","Inquire","Modify","Append", "Delete"});
-			comboBox_pj.setBounds(245, 7, 159, 27);
+			comboBox_pj.setBounds(435, 5, 159, 27);
 
 			comboBox_pj.addActionListener(new ActionListener() {
 		            @Override
@@ -219,41 +219,41 @@ public class Maintenance_panel  {
 			inq_panel.setLayout(null);
 			
 					
-			JLabel lbl_inq_pjID = new JLabel("project ID :");
+			JLabel lbl_inq_pjID = new JLabel("Project ID :");
 			lbl_inq_pjID.setHorizontalAlignment(SwingConstants.RIGHT);
-			lbl_inq_pjID.setBounds(50, 11, 86, 16);
+			lbl_inq_pjID.setBounds(250, 45, 86, 16);
 			inq_panel.add(lbl_inq_pjID);
 					
 			text_inq_pjID = new JTextField();
 			text_inq_pjID.setHorizontalAlignment(SwingConstants.CENTER);
-			text_inq_pjID.setBounds(136, 6, 141, 26);
+			text_inq_pjID.setBounds(336, 40, 141, 26);
 			inq_panel.add(text_inq_pjID);
 			text_inq_pjID.setColumns(10);
 					
 			JLabel lbl_inq_date = new JLabel("Est. Date :");
-			lbl_inq_date.setBounds(30, 97, 106, 16);
+			lbl_inq_date.setBounds(230, 131, 106, 16);
 			lbl_inq_date.setHorizontalAlignment(SwingConstants.RIGHT);
 			inq_panel.add(lbl_inq_date);
 					
 			text_inq_date = new JTextField();
 			text_inq_date.setHorizontalAlignment(SwingConstants.CENTER);
-			text_inq_date.setBounds(136, 92, 141, 26);
+			text_inq_date.setBounds(336, 126, 141, 26);
 			inq_panel.add(text_inq_date);
 			text_inq_date.setColumns(10);
 			
 			JLabel lbl_inq_empID = new JLabel("Employee ID :");
 			lbl_inq_empID.setHorizontalAlignment(SwingConstants.RIGHT);
-			lbl_inq_empID.setBounds(50, 57, 86, 16);
+			lbl_inq_empID.setBounds(250, 88, 86, 16);
 			inq_panel.add(lbl_inq_empID);
 					
 			text_inq_empID = new JTextField();
 			text_inq_empID.setHorizontalAlignment(SwingConstants.CENTER);
-			text_inq_empID.setBounds(136, 54, 141, 26);
+			text_inq_empID.setBounds(336, 84, 141, 26);
 			inq_panel.add(text_inq_empID);
 			text_inq_empID.setColumns(10);
 			
 			JButton btn_inq_inquire = new JButton("Inquire");
-			btn_inq_inquire.setBounds(364, 52, 87, 29);
+			btn_inq_inquire.setBounds(564, 86, 87, 29);
 			btn_inq_inquire.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
@@ -330,7 +330,7 @@ public class Maintenance_panel  {
 			inq_panel.add(btn_inq_inquire);
 							
 			JButton btn_inq_last20 = new JButton("Last 20");
-			btn_inq_last20.setBounds(364, 92, 87, 29);
+			btn_inq_last20.setBounds(564, 126, 87, 29);
 			btn_inq_last20.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					
@@ -355,7 +355,7 @@ public class Maintenance_panel  {
 			inq_panel.add(btn_inq_last20);
 					
 			lbl_result = new JLabel("");
-			lbl_result.setBounds(30, 152, 529, 16);
+			lbl_result.setBounds(230, 186, 529, 16);
 			inq_panel.add(lbl_result);
 					
 			inq_table = new JTable() {
@@ -370,14 +370,14 @@ public class Maintenance_panel  {
 			inq_table.setVisible(false);
 			
 			scrollpane = new JScrollPane(inq_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			scrollpane.setBounds(49,241,900,87);
+			scrollpane.setBounds(49,228,900,135);
 			scrollpane.setVisible(false);
 			inq_panel.add(scrollpane);
 			
 			lbl_inq_date_format = new JLabel("YYYY-MM-DD");
 			lbl_inq_date_format.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 			lbl_inq_date_format.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_inq_date_format.setBounds(136, 117, 141, 16);
+			lbl_inq_date_format.setBounds(336, 151, 141, 16);
 			lbl_inq_date_format.setVisible(true);
 			inq_panel.add(lbl_inq_date_format);
 		}

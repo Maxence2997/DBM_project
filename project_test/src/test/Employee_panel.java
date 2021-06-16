@@ -71,87 +71,87 @@ public class Employee_panel {
 
 		lbl_empID_show = new JLabel("");
 		lbl_empID_show.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_empID_show.setBounds(230, 74, 202, 16);
+		lbl_empID_show.setBounds(393, 75, 202, 16);
 		lbl_empID_show.setVisible(false);
 		employee_panel.add(lbl_empID_show);
 
 		JLabel lbl_emp_empID = new JLabel("Employee ID :");
-		lbl_emp_empID.setBounds(115, 73, 86, 16);
+		lbl_emp_empID.setBounds(271, 75, 86, 16);
 		employee_panel.add(lbl_emp_empID);
 
 		text_emp_empID = new JTextField();
-		text_emp_empID.setBounds(230, 68, 202, 26);
+		text_emp_empID.setBounds(393, 68, 202, 26);
 		employee_panel.add(text_emp_empID);
 		text_emp_empID.setColumns(16);
 
 		lbl_emp_first = new JLabel("First Name :");
-		lbl_emp_first.setBounds(115, 101, 76, 16);
+		lbl_emp_first.setBounds(271, 103, 76, 16);
 		lbl_emp_first.setVisible(false);
 		employee_panel.add(lbl_emp_first);
 
 		text_emp_first = new JTextField();
 		text_emp_first.setHorizontalAlignment(SwingConstants.CENTER);
-		text_emp_first.setBounds(230, 96, 202, 26);
+		text_emp_first.setBounds(393, 97, 202, 26);
 		text_emp_first.setVisible(false);
 		employee_panel.add(text_emp_first);
 		text_emp_first.setColumns(16);
 
 		lbl_emp_last = new JLabel("Last Name :");
-		lbl_emp_last.setBounds(115, 127, 74, 16);
+		lbl_emp_last.setBounds(271, 129, 74, 16);
 		lbl_emp_last.setVisible(false);
 		employee_panel.add(lbl_emp_last);
 
 		text_emp_last = new JTextField();
 		text_emp_last.setHorizontalAlignment(SwingConstants.CENTER);
-		text_emp_last.setBounds(230, 122, 202, 26);
+		text_emp_last.setBounds(393, 123, 202, 26);
 		text_emp_last.setVisible(false);
 		employee_panel.add(text_emp_last);
 		text_emp_last.setColumns(16);
 
 		text_emp_addr = new JTextField();
 		text_emp_addr.setHorizontalAlignment(SwingConstants.CENTER);
-		text_emp_addr.setBounds(230, 148, 202, 26);
+		text_emp_addr.setBounds(393, 149, 202, 26);
 		text_emp_addr.setVisible(false);
 
 		lbl_emp_addr = new JLabel("Address :");
-		lbl_emp_addr.setBounds(115, 153, 59, 16);
+		lbl_emp_addr.setBounds(271, 155, 59, 16);
 		lbl_emp_addr.setVisible(false);
 		employee_panel.add(lbl_emp_addr);
 		employee_panel.add(text_emp_addr);
 		text_emp_addr.setColumns(16);
 
 		lbl_emp_phone = new JLabel("Phone Number :");
-		lbl_emp_phone.setBounds(115, 179, 100, 16);
+		lbl_emp_phone.setBounds(271, 181, 100, 16);
 		lbl_emp_phone.setVisible(false);
 		employee_panel.add(lbl_emp_phone);
 
 		text_emp_phone = new JTextField();
 		text_emp_phone.setHorizontalAlignment(SwingConstants.CENTER);
-		text_emp_phone.setBounds(230, 174, 202, 26);
+		text_emp_phone.setBounds(393, 175, 202, 26);
 		text_emp_phone.setVisible(false);
 		employee_panel.add(text_emp_phone);
 		text_emp_phone.setColumns(16);
 
 		lbl_emp_supervID = new JLabel("Supervisor ID :");
-		lbl_emp_supervID.setBounds(115, 205, 92, 16);
+		lbl_emp_supervID.setBounds(271, 207, 92, 16);
 		lbl_emp_supervID.setVisible(false);
 		employee_panel.add(lbl_emp_supervID);
 
 		text_emp_supervID = new JTextField();
 		text_emp_supervID.setHorizontalAlignment(SwingConstants.CENTER);
-		text_emp_supervID.setBounds(230, 200, 202, 26);
+		text_emp_supervID.setBounds(393, 201, 202, 26);
 		text_emp_supervID.setVisible(false);
 		employee_panel.add(text_emp_supervID);
 		text_emp_supervID.setColumns(16);
 
 		lbl_emp_perf = new JLabel("Performance :");
-		lbl_emp_perf.setBounds(115, 234, 86, 16);
+		lbl_emp_perf.setBounds(271, 236, 86, 16);
 		lbl_emp_perf.setVisible(false);
 		employee_panel.add(lbl_emp_perf);
 
 		lbl_emp_info = new JLabel("Message of execute result");
 		lbl_emp_info.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_emp_info.setBounds(48, 272, 451, 16);
+		lbl_emp_info.setBounds(271, 268, 451, 16);
 		lbl_emp_info.setVisible(false);
 		employee_panel.add(lbl_emp_info);
 
@@ -167,7 +167,7 @@ public class Employee_panel {
 
 		scrollpane = new JScrollPane(emp_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollpane.setBounds(48, 300, 600, 79);
+		scrollpane.setBounds(178, 300, 650, 144);
 		scrollpane.setVisible(false);
 		// scrollpane.setPreferredSize(new Dimension(563, 50)); //whole scrollpane and
 		// table will disapear
@@ -193,18 +193,18 @@ public class Employee_panel {
 				}
 			}
 		});
-		btn_clear.setBounds(459, 114, 85, 29);
+		btn_clear.setBounds(633, 115, 85, 29);
 		employee_panel.add(btn_clear);
 
 		comboBox_emp_perf = new JComboBox();
-		comboBox_emp_perf.setBounds(230, 229, 65, 27);
+		comboBox_emp_perf.setBounds(393, 230, 65, 27);
 		comboBox_emp_perf.setForeground(Color.BLACK);
 		comboBox_emp_perf.setModel(new DefaultComboBoxModel(new String[] { "A", "B", "C" }));
 		comboBox_emp_perf.setVisible(false);
 		employee_panel.add(comboBox_emp_perf);
 
 		comboBox_emp_action = new JComboBox();
-		comboBox_emp_action.setBounds(251, 35, 160, 27);
+		comboBox_emp_action.setBounds(414, 36, 160, 27);
 		comboBox_emp_action.setModel(
 				new DefaultComboBoxModel(new String[] { "Show & Adjust", "Add Employee", "Delete Employee" }));
 		function = (String) comboBox_emp_action.getSelectedItem(); // get the selected item
@@ -324,7 +324,7 @@ public class Employee_panel {
 		employee_panel.add(comboBox_emp_action);
 
 		btn_emp_confirmID = new JButton("Confirm");
-		btn_emp_confirmID.setBounds(449, 67, 95, 29);
+		btn_emp_confirmID.setBounds(623, 68, 95, 29);
 		btn_emp_confirmID.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -616,11 +616,11 @@ public class Employee_panel {
 
 			}
 		});
-		btn_emp_execute.setBounds(346, 234, 86, 29);
+		btn_emp_execute.setBounds(509, 235, 86, 29);
 		btn_emp_execute.setVisible(false);
 		employee_panel.add(btn_emp_execute);
 
-		btn_show_more = new JButton("Shoe more");
+		btn_show_more = new JButton("Show more");
 		btn_show_more.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -655,7 +655,7 @@ public class Employee_panel {
 
 			}
 		});
-		btn_show_more.setBounds(511, 268, 100, 29);
+		btn_show_more.setBounds(734, 264, 100, 29);
 		employee_panel.add(btn_show_more);
 
 	}

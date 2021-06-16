@@ -136,7 +136,7 @@ public class Term_project_main {
 			
 			
 			JLabel label_empID = new JLabel("Employee ID :");
-			label_empID.setBounds(100, 191, 104, 16);
+			label_empID.setBounds(286, 192, 104, 16);
 			login_panel.add(label_empID);
 			
 			JLabel login_result = new JLabel("");
@@ -144,7 +144,7 @@ public class Term_project_main {
 			login_panel.add(login_result);
 			
 			field_empID = new JTextField(8);
-			field_empID.setBounds(229, 186, 163, 26);
+			field_empID.setBounds(415, 187, 163, 26);
 			login_panel.add(field_empID);
 			field_empID.setColumns(10);
 			field_empID.addActionListener(new ActionListener() {
@@ -296,7 +296,7 @@ public class Term_project_main {
 				
 				
 			});
-			button_login.setBounds(421, 186, 117, 29);
+			button_login.setBounds(607, 187, 117, 29);
 			login_panel.add(button_login);
 	
 		}
@@ -312,7 +312,7 @@ public class Term_project_main {
 			
 			
 			JButton btn_logout = new JButton("Log-out");
-			btn_logout.setBounds(0, 487, 96, 29);
+			btn_logout.setBounds(0, 499, 96, 29);
 			btn_logout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					card_layout.show(frame.getContentPane(),"login");
@@ -381,7 +381,7 @@ public class Term_project_main {
 					}
 				}
 			});
-			btn_reminder.setBounds(626, 0, 40, 26);
+			btn_reminder.setBounds(960, 0, 40, 26);
 			home_panel.add(btn_reminder);
 			
 			cl_home = new CardLayout();
@@ -397,7 +397,7 @@ public class Term_project_main {
 			container_panel.add(core_home_panel,"home");
 			
 			JButton btn_project = new JButton("Project");
-			btn_project.setBounds(91, 39, 103, 29);
+			btn_project.setBounds(334, 71, 103, 29);
 			btn_project.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					cl_home.show(container_panel, "project");
@@ -408,14 +408,14 @@ public class Term_project_main {
 			core_home_panel.add(btn_project);
 			
 			JLabel lbl_sheet = new JLabel("Project management ");
-			lbl_sheet.setBounds(227, 45, 385, 16);
+			lbl_sheet.setBounds(470, 77, 385, 16);
 			core_home_panel.add(lbl_sheet);
 			
 			//Author: Ray
 			//Date: 05/31
 			//Default text field as empty
 			JButton btn_invent = new JButton("Inventory");
-			btn_invent.setBounds(91, 131, 103, 29);
+			btn_invent.setBounds(334, 163, 103, 29);
 			btn_invent.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 //					inv_panel.get_text_invID().setText("");
@@ -435,14 +435,14 @@ public class Term_project_main {
 			core_home_panel.add(btn_invent);
 			
 			JLabel lbl_invent = new JLabel("Inquire the vol. of Inventory");
-			lbl_invent.setBounds(227, 137, 385, 16);
+			lbl_invent.setBounds(470, 169, 385, 16);
 			core_home_panel.add(lbl_invent);
 			
 			//Author: Ray
 			//Date: 05/31
 			//Default text field as empty
 			JButton btn_sup = new JButton("Supplier");
-			btn_sup.setBounds(91, 222, 103, 29);
+			btn_sup.setBounds(334, 254, 103, 29);
 			btn_sup.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					sup_panel.get_combobox_sup().setSelectedIndex(0);
@@ -470,7 +470,7 @@ public class Term_project_main {
 			core_home_panel.add(btn_sup);
 			
 			JLabel lbl_sup = new JLabel("Suppliers' information maintenance");
-			lbl_sup.setBounds(227, 228, 385, 16);
+			lbl_sup.setBounds(470, 260, 385, 16);
 			core_home_panel.add(lbl_sup);
 			
 			//Author: Ray
@@ -499,12 +499,12 @@ public class Term_project_main {
 					cl_home.show(container_panel, "employee");
 				}
 			});
-			btn_emp.setBounds(91, 314, 103, 29);
+			btn_emp.setBounds(334, 346, 103, 29);
 			core_home_panel.add(btn_emp);
 			
 			
 			lbl_emp = new JLabel("Employees' information maintenance");
-			lbl_emp.setBounds(227, 321, 385, 16);
+			lbl_emp.setBounds(470, 353, 385, 16);
 			core_home_panel.add(lbl_emp);
 			
 			JButton btn_home = new JButton("Home");
@@ -515,7 +515,7 @@ public class Term_project_main {
 					
 				}
 			});
-			btn_home.setBounds(919, 487, 81, 29);
+			btn_home.setBounds(919, 499, 81, 29);
 			home_panel.add(btn_home);
 			
 			pj_panels = new Project_panels();

@@ -51,35 +51,35 @@ public class Inventory_panel {
 		inventory_panel.setLayout(null);
 		
 		JLabel lbl_inv_ID = new JLabel("Inventory ID :");
-		lbl_inv_ID.setBounds(84, 40, 88, 16);
+		lbl_inv_ID.setBounds(281, 62, 88, 16);
 		lbl_inv_ID.setHorizontalAlignment(SwingConstants.RIGHT);
 		inventory_panel.add(lbl_inv_ID);
 		
 		text_invID = new JTextField();
 		text_invID.setHorizontalAlignment(SwingConstants.CENTER);
-		text_invID.setBounds(176, 35, 108, 26);
+		text_invID.setBounds(386, 60, 108, 26);
 		inventory_panel.add(text_invID);
 		text_invID.setColumns(10);
 		
 		JLabel lbl_inv_item_name = new JLabel("Item Name :");
-		lbl_inv_item_name.setBounds(346, 40, 88, 16);
+		lbl_inv_item_name.setBounds(281, 118, 88, 16);
 		lbl_inv_item_name.setHorizontalAlignment(SwingConstants.RIGHT);
 		inventory_panel.add(lbl_inv_item_name);
 		
 		text_inv_item = new JTextField();
 		text_inv_item.setHorizontalAlignment(SwingConstants.CENTER);
-		text_inv_item.setBounds(438, 35, 112, 26);
+		text_inv_item.setBounds(386, 116, 112, 26);
 		inventory_panel.add(text_inv_item);
 		text_inv_item.setColumns(10);
 		
-		JLabel lbl_inv_module = new JLabel("Module  Type : ");
-		lbl_inv_module.setBounds(62, 102, 110, 16);
+		JLabel lbl_inv_module = new JLabel("Module  Type :");
+		lbl_inv_module.setBounds(259, 179, 110, 16);
 		lbl_inv_module.setHorizontalAlignment(SwingConstants.RIGHT);
 		inventory_panel.add(lbl_inv_module);
 		
 		text_inv_pd = new JTextField();
 		text_inv_pd.setHorizontalAlignment(SwingConstants.CENTER);
-		text_inv_pd.setBounds(176, 97, 108, 26);
+		text_inv_pd.setBounds(386, 177, 108, 26);
 		inventory_panel.add(text_inv_pd);
 		text_inv_pd.setColumns(10);
 		
@@ -153,7 +153,7 @@ public class Inventory_panel {
 				}
 			}
 		});
-		btn_inv_inquire.setBounds(462, 158, 88, 29);
+		btn_inv_inquire.setBounds(554, 177, 88, 29);
 		inventory_panel.add(btn_inv_inquire);
 		
 		inv_table = new JTable(){ 
@@ -168,13 +168,13 @@ public class Inventory_panel {
 		inv_table.setVisible(false);
 
 		scrollpane = new JScrollPane(inv_table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollpane.setBounds(49,241,563,87);
+		scrollpane.setBounds(245,271,508,150);
 		scrollpane.setVisible(false);
 		
 		inventory_panel.add(scrollpane);
 		
 		lbl_inv_message = new JLabel("");
-		lbl_inv_message.setBounds(62, 199, 492, 16);
+		lbl_inv_message.setBounds(253, 230, 492, 16);
 		lbl_inv_message.setVisible(false);
 		inventory_panel.add(lbl_inv_message);
 		
@@ -185,7 +185,7 @@ public class Inventory_panel {
 				clear();
 			}
 		});
-		btn_clear.setBounds(474, 97, 76, 29);
+		btn_clear.setBounds(643, 177, 76, 29);
 		inventory_panel.add(btn_clear);
 
 	

@@ -45,11 +45,11 @@ public class Project_panels {
 				// btn_back2Project.setVisible(true);
 			}
 		});
-		btn_pj_maint.setBounds(130, 98, 123, 29);
+		btn_pj_maint.setBounds(302, 126, 123, 29);
 		project_panel.add(btn_pj_maint);
 		
 		JLabel lbl_pj_maint = new JLabel("Project Inquiring, Modifying...");
-		lbl_pj_maint.setBounds(315, 104, 187, 16);
+		lbl_pj_maint.setBounds(487, 132, 187, 16);
 		project_panel.add(lbl_pj_maint);
 		
 		JButton btn_pj_prog= new JButton("Progress ");
@@ -62,11 +62,11 @@ public class Project_panels {
 				// btn_back2Project.setVisible(true);
 			}
 		});
-		btn_pj_prog.setBounds(130, 192, 123, 29);
+		btn_pj_prog.setBounds(302, 220, 123, 29);
 		project_panel.add(btn_pj_prog);
 		
 		JLabel lbl_pj_prog = new JLabel("Project Progess Inquiring");
-		lbl_pj_prog.setBounds(315, 198, 187, 16);
+		lbl_pj_prog.setBounds(487, 226, 187, 16);
 		project_panel.add(lbl_pj_prog);
 		
 		JButton btn_pj_sheet = new JButton("Sheets");
@@ -79,15 +79,15 @@ public class Project_panels {
 				 //btn_back2Project.setVisible(true);
 			}
 		});
-		btn_pj_sheet.setBounds(130, 286, 123, 29);
+		btn_pj_sheet.setBounds(302, 314, 123, 29);
 		project_panel.add(btn_pj_sheet);
 		
 		JLabel lbl_pj_sheet = new JLabel("Sheets' Maintenance");
-		lbl_pj_sheet.setBounds(315, 292, 187, 16);
+		lbl_pj_sheet.setBounds(487, 320, 187, 16);
 		project_panel.add(lbl_pj_sheet);
 		
 		JLabel lbl_pj = new JLabel("Project");
-		lbl_pj.setBounds(6, 6, 61, 16);
+		lbl_pj.setBounds(26, 16, 61, 16);
 		project_panel.add(lbl_pj);
 		
 		pj_subpanels = new Maintenance_panel();

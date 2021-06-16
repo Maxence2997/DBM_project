@@ -45,20 +45,20 @@ public class Progress_panel {
 		progress_panel.setLayout(null);
 
 		JLabel lbl_prog = new JLabel("Progress");
-		lbl_prog.setBounds(48, 12, 54, 16);
+		lbl_prog.setBounds(51, 14, 54, 16);
 		progress_panel.add(lbl_prog);
 
 		JLabel lbl_prog_projectID = new JLabel("Project ID :");
-		lbl_prog_projectID.setBounds(73, 85, 69, 29);
+		lbl_prog_projectID.setBounds(396, 71, 69, 29);
 		progress_panel.add(lbl_prog_projectID);
 
 		text_prog_pjID = new JTextField();
-		text_prog_pjID.setBounds(146, 86, 119, 26);
+		text_prog_pjID.setBounds(469, 72, 119, 26);
 		progress_panel.add(text_prog_pjID);
 		text_prog_pjID.setColumns(10);
 
 		JLabel lbl_note = new JLabel("P.D.P = Product Delivery Progress, E.S.D = Estimated Ship Date");
-		lbl_note.setBounds(18, 170, 619, 16);
+		lbl_note.setBounds(51, 211, 619, 16);
 		lbl_note.setVisible(false);
 		progress_panel.add(lbl_note);
 
@@ -101,7 +101,7 @@ public class Progress_panel {
 				}
 			}
 		});
-		btn_prog_inquire_all.setBounds(500, 108, 77, 29);
+		btn_prog_inquire_all.setBounds(738, 206, 77, 29);
 		progress_panel.add(btn_prog_inquire_all);
 
 		JButton btn_prog_attention = new JButton("Attention !");
@@ -141,7 +141,7 @@ public class Progress_panel {
 				}
 			}
 		});
-		btn_prog_attention.setBounds(480, 141, 111, 29);
+		btn_prog_attention.setBounds(827, 206, 111, 29);
 		progress_panel.add(btn_prog_attention);
 
 		prog_table = new JTable() {
@@ -158,7 +158,7 @@ public class Progress_panel {
 
 		scrollpane_prog = new JScrollPane(prog_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollpane_prog.setBounds(18, 198, 965, 158);
+		scrollpane_prog.setBounds(18, 245, 965, 158);
 		scrollpane_prog.setVisible(false);
 
 		progress_panel.add(scrollpane_prog);
@@ -217,11 +217,11 @@ public class Progress_panel {
 
 			}
 		});
-		btnNewButton.setBounds(287, 86, 77, 29);
+		btnNewButton.setBounds(634, 72, 77, 29);
 		progress_panel.add(btnNewButton);
 
 		lbl_prog_message = new JLabel("");
-		lbl_prog_message.setBounds(73, 133, 384, 16);
+		lbl_prog_message.setBounds(365, 143, 384, 16);
 		lbl_prog_message.setVisible(false);
 		progress_panel.add(lbl_prog_message);
 
