@@ -140,7 +140,7 @@ public class Term_project_main {
 			login_panel.add(label_empID);
 			
 			JLabel login_result = new JLabel("");
-			login_result.setBounds(201, 245, 245, 26);
+			login_result.setBounds(286, 246, 438, 26);
 			login_panel.add(login_result);
 			
 			field_empID = new JTextField(8);
@@ -312,7 +312,7 @@ public class Term_project_main {
 			
 			
 			JButton btn_logout = new JButton("Log-out");
-			btn_logout.setBounds(0, 499, 96, 29);
+			btn_logout.setBounds(0, 488, 96, 29);
 			btn_logout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					int option = JOptionPane.showConfirmDialog(core_home_panel, "Sure to logout?","Logout", JOptionPane.YES_NO_OPTION);
@@ -328,7 +328,7 @@ public class Term_project_main {
 			home_panel.add(lbl_empID);
 			
 			
-			JButton btn_reminder = new JButton("R");
+			JButton btn_reminder = new JButton("Reminder");
 			btn_reminder.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
@@ -384,7 +384,7 @@ public class Term_project_main {
 					}
 				}
 			});
-			btn_reminder.setBounds(960, 0, 40, 26);
+			btn_reminder.setBounds(891, 0, 109, 26);
 			home_panel.add(btn_reminder);
 			
 			cl_home = new CardLayout();
@@ -518,7 +518,7 @@ public class Term_project_main {
 					
 				}
 			});
-			btn_home.setBounds(919, 499, 81, 29);
+			btn_home.setBounds(913, 488, 81, 29);
 			home_panel.add(btn_home);
 			
 			pj_panels = new Project_panels();

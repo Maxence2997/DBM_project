@@ -87,6 +87,7 @@ public class Supplier_panel {
 		text_sup_supID.setColumns(14);
 
 		lbl_sup_supID_show = new JLabel("");
+		lbl_sup_supID_show.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_sup_supID_show.setBounds(430, 94, 174, 16);
 		lbl_sup_supID_show.setVisible(false);
 		supplier_panel.add(lbl_sup_supID_show);
@@ -159,16 +160,16 @@ public class Supplier_panel {
 		JButton btn_show_more = new JButton("Show more");
 		btn_show_more.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				String[][] temp = show_more(text_sup_supID, text_sup_name);
-				
-				if(temp.length==0) {
+
+				if (temp.length == 0) {
 					lbl_result.setVisible(true);
 					lbl_result.setText("No record for the products of the supplier");
-				}else {
-					
-					String[] column_names = { "SupplierID", "S.Name", "Item", "Module" };
-					
+				} else {
+
+					String[] column_names = { "SupplierID", "Name", "Item", "Module" };
+
 					JScrollPane scrollpane = new JScrollPane();
 					JTable table = new JTable() {
 						@Override
@@ -183,7 +184,6 @@ public class Supplier_panel {
 					scrollpane.setViewportView(table);
 					JOptionPane.showMessageDialog(null, scrollpane, "Suppliers' products Infos", 1);
 				}
-				
 
 			}
 		});
@@ -213,7 +213,7 @@ public class Supplier_panel {
 		comboBox_sup = new JComboBox();
 		comboBox_sup.setBounds(447, 43, 135, 27);
 		comboBox_sup.setModel(
-				new DefaultComboBoxModel(new String[] {"Inquire", "Add Supplier", "Add Product", "Delete"}));
+				new DefaultComboBoxModel(new String[] { "Inquire", "Add Supplier", "Add Product", "Delete" }));
 		supplierFunction = (String) comboBox_sup.getSelectedItem();
 		comboBox_sup.addActionListener(new ActionListener() {
 			@Override
@@ -230,7 +230,7 @@ public class Supplier_panel {
 					lbl_sup_name.setVisible(true);
 					text_sup_name.setVisible(true);
 
-					lbl_sup_addr = new JLabel("Address :");
+					lbl_sup_addr.setText("Address :");
 					lbl_sup_addr.setVisible(false);
 					text_sup_addr.setVisible(false);
 
@@ -267,7 +267,7 @@ public class Supplier_panel {
 					lbl_sup_name.setVisible(true);
 					text_sup_name.setVisible(true);
 
-					lbl_sup_addr = new JLabel("Address :");
+					lbl_sup_addr.setText("Address :");
 					lbl_sup_addr.setVisible(true);
 					text_sup_addr.setVisible(true);
 
@@ -306,7 +306,7 @@ public class Supplier_panel {
 
 					text_sup_supID.setVisible(true);
 
-					lbl_sup_addr = new JLabel("Module :");
+					lbl_sup_addr.setText("Module :");
 					lbl_sup_addr.setVisible(false);
 					text_sup_addr.setVisible(false);
 
@@ -343,7 +343,7 @@ public class Supplier_panel {
 
 					text_sup_supID.setVisible(true);
 
-					lbl_sup_addr = new JLabel("Address :");
+					lbl_sup_addr.setText("Address :");
 					lbl_sup_addr.setVisible(false);
 					text_sup_addr.setVisible(false);
 
@@ -465,7 +465,7 @@ public class Supplier_panel {
 
 						btn_sup_2.setVisible(false);
 
-						btn_clear.setVisible(false);
+						btn_clear.setVisible(true);
 					}
 
 				} else if (btn_sup_1.getText().equalsIgnoreCase("Check")) {
@@ -477,7 +477,7 @@ public class Supplier_panel {
 						if (temp.size() == 0) {
 
 							btn_sup_1.setVisible(true);
-							btn_clear.setVisible(true);
+							btn_clear.setVisible(false);
 							btn_sup_2.setVisible(false);
 
 							text_sup_supID.setVisible(true);
@@ -533,7 +533,7 @@ public class Supplier_panel {
 							text_sup_mail.setText(temp.get(5));
 							text_sup_mail.setVisible(true);
 
-							String[] column_names = { "SupplierID", "Name", "Item", "Module" };
+							String[] column_names = { "Supplier ID", "Name", "Item", "Module" };
 							String[][] array = show_more(text_sup_supID, text_sup_name);
 							DefaultTableModel sup_table_model = new DefaultTableModel(array, column_names);
 							sup_table.setModel(sup_table_model);
@@ -558,7 +558,7 @@ public class Supplier_panel {
 						if (temp.size() == 0) {
 
 							btn_sup_1.setVisible(true);
-							btn_clear.setVisible(true);
+							btn_clear.setVisible(false);
 							btn_sup_2.setVisible(false);
 
 							text_sup_supID.setVisible(true);
@@ -668,32 +668,40 @@ public class Supplier_panel {
 					}
 				} else if (btn_sup_2.getText().equalsIgnoreCase("Add Product")) {
 					// 00
-					String[][] temp = add_product();
+					if (lib.module_check(text_sup_addr)) {
+						// module already exist
+						lbl_result.setText("Request failed because this module already exist.");
+						lbl_result.setVisible(true);
 
-					if (text_sup_addr.getText().substring(0, 1).equals("C"))
+					}
 
-						text_sup_name.setText("CPU");
+					else {
+						String[][] temp = add_product();
 
-					else if ((text_sup_addr.getText().substring(0, 1).equals("G")))
+						if (text_sup_addr.getText().substring(0, 1).equals("C"))
 
-						text_sup_name.setText("GPU");
+							text_sup_name.setText("CPU");
 
-					else if (text_sup_addr.getText().substring(0, 1).equals("R"))
+						else if ((text_sup_addr.getText().substring(0, 1).equals("G")))
 
-						text_sup_name.setText("RAM");
+							text_sup_name.setText("GPU");
 
-					else
-						text_sup_name.setText("Unknown");
+						else if (text_sup_addr.getText().substring(0, 1).equals("R"))
 
-					text_sup_name.setVisible(true);
+							text_sup_name.setText("RAM");
 
-					String[] column_names = { "SupplierID", "Name", "Item", "Module" };
+						else
+							text_sup_name.setText("Unknown");
 
-					DefaultTableModel sup_table_model = new DefaultTableModel(temp, column_names);
-					sup_table.setModel(sup_table_model);
-					sup_table.setVisible(true);
-					scrollpane.setVisible(true);
+						text_sup_name.setVisible(true);
 
+						String[] column_names = { "SupplierID", "Name", "Item", "Module" };
+
+						DefaultTableModel sup_table_model = new DefaultTableModel(temp, column_names);
+						sup_table.setModel(sup_table_model);
+						sup_table.setVisible(true);
+						scrollpane.setVisible(true);
+					}
 				}
 			}
 		});

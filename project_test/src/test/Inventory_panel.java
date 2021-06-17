@@ -104,8 +104,9 @@ public class Inventory_panel {
 						String[] column_names = { "Inventory ID", "Item", "Module", "Project ID", "Responsable ID", "R.Name"};
 						inv_table_model = new DefaultTableModel(temp,column_names);  
 						inv_table.setModel(inv_table_model);
-						TableColumnModel column_model = inv_table.getColumnModel();
-						column_model.getColumn(1).setPreferredWidth(30);
+						
+						inv_table.getColumnModel().getColumn(1).setPreferredWidth(30);
+						inv_table.getColumnModel().getColumn(2).setPreferredWidth(50);
 						inv_table.setVisible(true);
 						scrollpane.setVisible(true);
 						lbl_inv_message.setText("Data loaded");;
@@ -134,6 +135,8 @@ public class Inventory_panel {
 						String[] column_names = { "Inventory ID", "Item", "Module", "Project ID", "Responsable ID", "R.Name"};
 						inv_table_model = new DefaultTableModel(temp,column_names);  
 						inv_table.setModel(inv_table_model);
+						inv_table.getColumnModel().getColumn(1).setPreferredWidth(30);
+						inv_table.getColumnModel().getColumn(2).setPreferredWidth(50);
 						inv_table.setVisible(true);
 						scrollpane.setVisible(true);
 						lbl_inv_message.setText("Data loaded");

@@ -221,7 +221,8 @@ public class Progress_panel {
 		progress_panel.add(btnNewButton);
 
 		lbl_prog_message = new JLabel("");
-		lbl_prog_message.setBounds(365, 143, 384, 16);
+		lbl_prog_message.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_prog_message.setBounds(343, 144, 384, 16);
 		lbl_prog_message.setVisible(false);
 		progress_panel.add(lbl_prog_message);
 

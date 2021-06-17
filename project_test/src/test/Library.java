@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 
 public class Library {
 
+	private String[][] temp;
+
 	public Library() {
 
 	}
@@ -20,7 +22,8 @@ public class Library {
 		ArrayList<String[]> temp = new ArrayList();
 
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.view_unsigned_req WHERE Supervisor_ID="
+			ResultSet r = Term_project_main.conn.st
+					.executeQuery("SELECT * FROM test.view_unsigned_req WHERE Supervisor_ID="
 							+ Term_project_main.field_empID.getText());
 
 			while (r.next()) {
@@ -47,7 +50,6 @@ public class Library {
 		return result_array;
 	}
 
-	
 	public void adjust_PROJECT() {
 
 		/**
@@ -108,7 +110,6 @@ public class Library {
 		}
 	}
 
-	
 	public String[][] show_project_status() {
 
 		/**
@@ -120,35 +121,35 @@ public class Library {
 
 		ArrayList<String[]> temp = new ArrayList();
 
-		
-			try {
+		try {
 //				System.out.print(st_progress + " WHERE (P_Delivery_pct<50 AND Date_diff>29 AND Emp_ID="
 //						+ Term_project_main.field_empID.getText() + ") ORDER BY Date_diff DESC");
 //				
-				ResultSet r = Term_project_main.conn.st.executeQuery(st_progress + " WHERE (P_Delivery_pct<50 AND Date_diff>29 AND Emp_ID="
-						+ Term_project_main.field_empID.getText() + ") ORDER BY Date_diff DESC");
+			ResultSet r = Term_project_main.conn.st
+					.executeQuery(st_progress + " WHERE (P_Delivery_pct<50 AND Date_diff>29 AND Emp_ID="
+							+ Term_project_main.field_empID.getText() + ") ORDER BY Date_diff DESC");
 
-				while (r.next()) {
+			while (r.next()) {
 
-					String[] temp_array = new String[12];
-					for (int i = 1; i < 13; i++) {
-						
-						if (i==6)
-								temp_array[i-1]= (r.getString(i)+"%");
-						
-						else
-							temp_array[i - 1] = r.getString(i);
-							// System.out.print(temp_array[i-1]);
-					}
-					temp.add(temp_array);
+				String[] temp_array = new String[12];
+				for (int i = 1; i < 13; i++) {
 
+					if (i == 6)
+						temp_array[i - 1] = (r.getString(i) + "%");
+
+					else
+						temp_array[i - 1] = r.getString(i);
+					// System.out.print(temp_array[i-1]);
 				}
+				temp.add(temp_array);
 
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		String[][] result_array = new String[temp.size()][12];
 		int i = 0;
 		for (String[] array_in_temp : temp) {
@@ -298,8 +299,6 @@ public class Library {
 		 *        Employee table or not
 		 */
 
-		boolean res = false;
-
 		try {
 			Integer.parseInt(empID.getText());
 			// test empID.getText() is blank or alphabet
@@ -307,7 +306,7 @@ public class Library {
 		} catch (NumberFormatException ex) {
 			// handle exception here
 
-			return res;
+			return false;
 		}
 
 		try {
@@ -316,16 +315,16 @@ public class Library {
 
 			if (r.next()) {
 
-				res = true;
+				return true;
 			}
 
-			return res;
+			return false;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			// e.printStackTrace();
+			//e.printStackTrace();
 
-			return res;
+			return false;
 		}
 	}
 
@@ -476,5 +475,42 @@ public class Library {
 			// 1-0-1
 			return "01";
 		}
+	}
+
+	public void sort(String[][] array) {
+		this.temp = array;
+
+		quickSort(0, temp.length - 1);
+		// System.out.println("Done");
+	}
+
+	private void quickSort(int leftbound, int rightbound) {
+		// 1. implement quickSort algorithm
+
+		if (leftbound > rightbound)
+			return;
+
+		int pivot = Integer.parseInt(temp[rightbound][0]);
+		int right = rightbound - 1;
+		int left = leftbound;
+		int swapindex = leftbound;
+		for (int i = left; i <= right; i++) {
+			if (Integer.parseInt(temp[i][0]) < pivot) {
+				swap(swapindex, i);
+				swapindex++;
+
+			}
+
+		}
+		swap(swapindex, rightbound);
+		quickSort(leftbound, swapindex - 1);
+		quickSort(swapindex + 1, rightbound);
+
+	}
+
+	private void swap(int aIndex, int bIndex) {
+		String[] temp2 = temp[aIndex];
+		temp[aIndex] = temp[bIndex];
+		temp[bIndex] = temp2;
 	}
 }

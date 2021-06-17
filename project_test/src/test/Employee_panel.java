@@ -80,6 +80,7 @@ public class Employee_panel {
 		employee_panel.add(lbl_emp_empID);
 
 		text_emp_empID = new JTextField();
+		text_emp_empID.setHorizontalAlignment(SwingConstants.CENTER);
 		text_emp_empID.setBounds(393, 68, 202, 26);
 		employee_panel.add(text_emp_empID);
 		text_emp_empID.setColumns(16);
@@ -151,7 +152,7 @@ public class Employee_panel {
 
 		lbl_emp_info = new JLabel("Message of execute result");
 		lbl_emp_info.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_emp_info.setBounds(271, 268, 451, 16);
+		lbl_emp_info.setBounds(178, 302, 650, 16);
 		lbl_emp_info.setVisible(false);
 		employee_panel.add(lbl_emp_info);
 
@@ -167,7 +168,7 @@ public class Employee_panel {
 
 		scrollpane = new JScrollPane(emp_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollpane.setBounds(178, 300, 650, 144);
+		scrollpane.setBounds(178, 330, 650, 80);
 		scrollpane.setVisible(false);
 		// scrollpane.setPreferredSize(new Dimension(563, 50)); //whole scrollpane and
 		// table will disapear
@@ -193,7 +194,7 @@ public class Employee_panel {
 				}
 			}
 		});
-		btn_clear.setBounds(633, 115, 85, 29);
+		btn_clear.setBounds(623, 115, 95, 29);
 		employee_panel.add(btn_clear);
 
 		comboBox_emp_perf = new JComboBox();
@@ -394,9 +395,13 @@ public class Employee_panel {
 
 						else
 							btn_emp_execute.setVisible(false);
-
-						lbl_emp_info.setText("Data loaded");
+						
+						if (function.equals("Show & Adjust")) 
+							lbl_emp_info.setText("Data loaded");
+						else
+							lbl_emp_info.setText("the projects and subordinates in his/her charge will be transfered to the supervisor automatically");
 						lbl_emp_info.setVisible(true);
+						
 
 					} else {
 						// temp.size()==0
@@ -543,7 +548,7 @@ public class Employee_panel {
 						text_emp_empID.setVisible(true);
 						clear_text();
 						set_visible(false);
-						lbl_emp_info.setText("Delete succeed");
+						lbl_emp_info.setText("Request succeed");
 						lbl_emp_info.setVisible(true);
 
 					} else {
@@ -555,12 +560,13 @@ public class Employee_panel {
 						text_emp_empID.setVisible(true);
 						clear_text();
 						set_visible(false);
-
+						lbl_emp_info.setText("Request failed");
 						lbl_emp_info.setVisible(true);
 					}
 				} else if (btn_emp_execute.getText().equalsIgnoreCase("Add")) {
-					//
-					if ((!text_emp_supervID.getText().isBlank()) & lib.supervisor_check(text_emp_supervID)) {
+					System.out.print("IN");
+					if ((!text_emp_supervID.getText().isBlank()) & lib.emp_check(text_emp_supervID)) {
+						System.out.print("1");
 						if (text_emp_first.getText().isBlank() | text_emp_last.getText().isBlank()
 								| text_emp_addr.getText().isBlank() | text_emp_phone.getText().isBlank()) {
 
@@ -585,6 +591,7 @@ public class Employee_panel {
 							}
 						}
 					} else if (text_emp_supervID.getText().isBlank()) {
+						System.out.print("2");
 						if (text_emp_first.getText().isBlank() | text_emp_last.getText().isBlank()
 								| text_emp_addr.getText().isBlank() | text_emp_phone.getText().isBlank()) {
 
@@ -609,6 +616,8 @@ public class Employee_panel {
 							}
 						}
 					} else {
+						System.out.print("3");
+						System.out.print(lib.emp_check(text_emp_supervID));
 						lbl_emp_info.setText("Supervisor ID is not in Employee table or format invalid.");
 						lbl_emp_info.setVisible(true);
 					}
@@ -616,7 +625,7 @@ public class Employee_panel {
 
 			}
 		});
-		btn_emp_execute.setBounds(509, 235, 86, 29);
+		btn_emp_execute.setBounds(605, 236, 114, 29);
 		btn_emp_execute.setVisible(false);
 		employee_panel.add(btn_emp_execute);
 
@@ -628,7 +637,7 @@ public class Employee_panel {
 
 				if (temp.length == 0) {
 
-					lbl_emp_info.setText("the emp. for whom you inquire doesn't participate any project.");
+					lbl_emp_info.setText("the emp. whom you inquire doesn't participate any project.");
 					lbl_emp_info.setVisible(true);
 
 				} else {
