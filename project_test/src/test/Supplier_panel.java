@@ -76,83 +76,83 @@ public class Supplier_panel {
 		Term_project_main.container_panel.add(supplier_panel, "supplier");
 
 		lbl_sup_supID = new JLabel("Supplier ID :");
-		lbl_sup_supID.setBounds(160, 55, 77, 16);
+		lbl_sup_supID.setBounds(341, 94, 77, 16);
 		lbl_sup_supID.setHorizontalAlignment(SwingConstants.RIGHT);
 		supplier_panel.add(lbl_sup_supID);
 
 		text_sup_supID = new JTextField();
 		text_sup_supID.setHorizontalAlignment(SwingConstants.CENTER);
-		text_sup_supID.setBounds(245, 50, 178, 26);
+		text_sup_supID.setBounds(426, 89, 178, 26);
 		supplier_panel.add(text_sup_supID);
 		text_sup_supID.setColumns(14);
 
 		lbl_sup_supID_show = new JLabel("");
-		lbl_sup_supID_show.setBounds(249, 55, 174, 16);
+		lbl_sup_supID_show.setBounds(430, 94, 174, 16);
 		lbl_sup_supID_show.setVisible(false);
 		supplier_panel.add(lbl_sup_supID_show);
 
 		lbl_sup_name = new JLabel("Name :");
 		lbl_sup_name.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbl_sup_name.setBounds(138, 81, 99, 16);
+		lbl_sup_name.setBounds(319, 120, 99, 16);
 		supplier_panel.add(lbl_sup_name);
 
 		text_sup_name = new JTextField();
 		text_sup_name.setHorizontalAlignment(SwingConstants.CENTER);
-		text_sup_name.setBounds(245, 76, 178, 26);
+		text_sup_name.setBounds(426, 115, 178, 26);
 		supplier_panel.add(text_sup_name);
 		text_sup_name.setColumns(14);
 
 		lbl_sup_addr = new JLabel("");
-		lbl_sup_addr.setBounds(178, 107, 59, 16);
+		lbl_sup_addr.setBounds(359, 146, 59, 16);
 		lbl_sup_addr.setVisible(false);
 		supplier_panel.add(lbl_sup_addr);
 
 		text_sup_addr = new JTextField();
 		text_sup_addr.setHorizontalAlignment(SwingConstants.CENTER);
-		text_sup_addr.setBounds(245, 102, 178, 26);
+		text_sup_addr.setBounds(426, 141, 178, 26);
 		text_sup_addr.setVisible(false);
 		supplier_panel.add(text_sup_addr);
 		text_sup_addr.setColumns(14);
 
 		lbl_sup_ctc = new JLabel("Contact :");
-		lbl_sup_ctc.setBounds(180, 133, 57, 16);
+		lbl_sup_ctc.setBounds(361, 172, 57, 16);
 		lbl_sup_ctc.setVisible(false);
 		supplier_panel.add(lbl_sup_ctc);
 
 		text_sup_ctc = new JTextField();
 		text_sup_ctc.setHorizontalAlignment(SwingConstants.CENTER);
-		text_sup_ctc.setBounds(245, 128, 178, 26);
+		text_sup_ctc.setBounds(426, 167, 178, 26);
 		text_sup_ctc.setVisible(false);
 		supplier_panel.add(text_sup_ctc);
 		text_sup_ctc.setColumns(14);
 
 		lbl_sup_mobile = new JLabel("Mobile :");
-		lbl_sup_mobile.setBounds(187, 159, 50, 16);
+		lbl_sup_mobile.setBounds(368, 198, 50, 16);
 		lbl_sup_mobile.setVisible(false);
 		supplier_panel.add(lbl_sup_mobile);
 
 		text_sup_mobile = new JTextField();
 		text_sup_mobile.setHorizontalAlignment(SwingConstants.CENTER);
-		text_sup_mobile.setBounds(245, 154, 178, 26);
+		text_sup_mobile.setBounds(426, 193, 178, 26);
 		text_sup_mobile.setVisible(false);
 		supplier_panel.add(text_sup_mobile);
 		text_sup_mobile.setColumns(14);
 
 		lbl_sup_mail = new JLabel("Mail :");
-		lbl_sup_mail.setBounds(203, 186, 34, 16);
+		lbl_sup_mail.setBounds(384, 225, 34, 16);
 		lbl_sup_mail.setVisible(false);
 		supplier_panel.add(lbl_sup_mail);
 
 		text_sup_mail = new JTextField();
 		text_sup_mail.setHorizontalAlignment(SwingConstants.CENTER);
-		text_sup_mail.setBounds(245, 181, 178, 26);
+		text_sup_mail.setBounds(426, 220, 178, 26);
 		text_sup_mail.setVisible(false);
 		supplier_panel.add(text_sup_mail);
 		text_sup_mail.setColumns(14);
 
 		lbl_result = new JLabel("");
 		lbl_result.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_result.setBounds(48, 219, 560, 16);
+		lbl_result.setBounds(229, 258, 560, 16);
 		lbl_result.setVisible(false);
 		supplier_panel.add(lbl_result);
 
@@ -187,7 +187,7 @@ public class Supplier_panel {
 
 			}
 		});
-		btn_show_more.setBounds(491, 333, 117, 29);
+		btn_show_more.setBounds(675, 386, 117, 29);
 		btn_show_more.setVisible(false);
 
 		supplier_panel.add(btn_show_more);
@@ -204,16 +204,16 @@ public class Supplier_panel {
 
 		scrollpane = new JScrollPane(sup_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollpane.setBounds(48, 247, 563, 81);
+		scrollpane.setBounds(229, 287, 563, 81);
 		scrollpane.setVisible(false);
 		// scrollpane.setPreferredSize(new Dimension(563, 50)); //whole scrollpane and
 		// table will disapear
 		supplier_panel.add(scrollpane);
 
 		comboBox_sup = new JComboBox();
-		comboBox_sup.setBounds(266, 4, 135, 27);
+		comboBox_sup.setBounds(447, 43, 135, 27);
 		comboBox_sup.setModel(
-				new DefaultComboBoxModel(new String[] { "Inquire", "Add Supplier", "Add product", "Delete" }));
+				new DefaultComboBoxModel(new String[] {"Inquire", "Add Supplier", "Add Product", "Delete"}));
 		supplierFunction = (String) comboBox_sup.getSelectedItem();
 		comboBox_sup.addActionListener(new ActionListener() {
 			@Override
@@ -375,7 +375,7 @@ public class Supplier_panel {
 		supplier_panel.add(comboBox_sup);
 
 		btn_sup_1 = new JButton("");
-		btn_sup_1.setBounds(435, 51, 88, 26);
+		btn_sup_1.setBounds(616, 90, 88, 26);
 		btn_sup_1.setVisible(true);
 		btn_sup_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -697,7 +697,7 @@ public class Supplier_panel {
 				}
 			}
 		});
-		btn_sup_2.setBounds(491, 180, 84, 29);
+		btn_sup_2.setBounds(672, 219, 104, 29);
 		btn_sup_2.setVisible(false);
 		supplier_panel.add(btn_sup_2);
 
@@ -772,7 +772,7 @@ public class Supplier_panel {
 
 			}
 		});
-		btn_clear.setBounds(435, 94, 88, 29);
+		btn_clear.setBounds(616, 133, 88, 29);
 		btn_clear.setVisible(false);
 		supplier_panel.add(btn_clear);
 
