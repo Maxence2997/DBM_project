@@ -373,78 +373,78 @@ public class Maintenance_panel {
 		maint_container_panel.add(maint_panel, "Maintenance");
 		maint_panel.setLayout(null);
 
-		lbl_maint_pjID = new JLabel("*project ID :");
+		lbl_maint_pjID = new JLabel("*Project ID :");
 		lbl_maint_pjID.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbl_maint_pjID.setBounds(162, 41, 86, 16);
+		lbl_maint_pjID.setBounds(350, 59, 86, 16);
 		maint_panel.add(lbl_maint_pjID);
 
 		text_maint_pjID = new JTextField();
 		text_maint_pjID.setHorizontalAlignment(SwingConstants.CENTER);
-		text_maint_pjID.setBounds(260, 36, 130, 30);
+		text_maint_pjID.setBounds(448, 54, 130, 30);
 		maint_panel.add(text_maint_pjID);
 		text_maint_pjID.setColumns(10);
 
 		lbl_maint_pjID_show = new JLabel("");
 		lbl_maint_pjID_show.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_maint_pjID_show.setBounds(260, 41, 130, 25);
+		lbl_maint_pjID_show.setBounds(448, 59, 130, 25);
 		lbl_maint_pjID_show.setVisible(false);
 		maint_panel.add(lbl_maint_pjID_show);
 
 		lbl_maint_empID = new JLabel("*Employee ID :");
 		lbl_maint_empID.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbl_maint_empID.setBounds(142, 85, 106, 16);
+		lbl_maint_empID.setBounds(330, 103, 106, 16);
 		maint_panel.add(lbl_maint_empID);
 
 		text_maint_empID = new JTextField();
 		text_maint_empID.setHorizontalAlignment(SwingConstants.CENTER);
-		text_maint_empID.setBounds(260, 78, 130, 30);
+		text_maint_empID.setBounds(448, 96, 130, 30);
 		maint_panel.add(text_maint_empID);
 		text_maint_empID.setColumns(10);
 
 		lbl_maint_emp_name = new JLabel("Employee Name :");
 		lbl_maint_emp_name.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbl_maint_emp_name.setBounds(111, 127, 137, 16);
+		lbl_maint_emp_name.setBounds(299, 145, 137, 16);
 		maint_panel.add(lbl_maint_emp_name);
 
 		lbl_maint_emp_name_show = new JLabel("");
 		lbl_maint_emp_name_show.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_maint_emp_name_show.setBounds(260, 120, 130, 30);
+		lbl_maint_emp_name_show.setBounds(448, 138, 130, 30);
 		maint_panel.add(lbl_maint_emp_name_show);
 
 		lbl_maint_date = new JLabel("Est. Date :");
-		lbl_maint_date.setBounds(142, 164, 108, 16);
+		lbl_maint_date.setBounds(330, 182, 108, 16);
 		lbl_maint_date.setHorizontalAlignment(SwingConstants.RIGHT);
 		maint_panel.add(lbl_maint_date);
 
 		text_maint_date = new JTextField();
 		text_maint_date.setHorizontalAlignment(SwingConstants.CENTER);
-		text_maint_date.setBounds(260, 157, 130, 30);
+		text_maint_date.setBounds(448, 175, 130, 30);
 		maint_panel.add(text_maint_date);
 		text_maint_date.setColumns(10);
 
 		lbl_date_default = new JLabel("YYYY-MM-DD ");
 		lbl_date_default.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_date_default.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
-		lbl_date_default.setBounds(270, 191, 108, 25);
+		lbl_date_default.setBounds(458, 209, 108, 25);
 		maint_panel.add(lbl_date_default);
 
 		lbl_maint_status = new JLabel("Project Status :");
 		lbl_maint_status.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbl_maint_status.setBounds(146, 225, 102, 16);
+		lbl_maint_status.setBounds(334, 243, 102, 16);
 		maint_panel.add(lbl_maint_status);
 
 		lbl_maint_status_show = new JLabel("NNNN");
 		lbl_maint_status_show.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_maint_status_show.setBounds(260, 222, 130, 23);
+		lbl_maint_status_show.setBounds(448, 240, 130, 23);
 		maint_panel.add(lbl_maint_status_show);
 
 		lbl_maint_result = new JLabel("");
 		lbl_maint_result.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_maint_result.setBounds(162, 295, 367, 43);
+		lbl_maint_result.setBounds(330, 313, 367, 43);
 		maint_panel.add(lbl_maint_result);
 
 		lbl_maint_ins = new JLabel("*obligatory");
-		lbl_maint_ins.setBounds(33, 41, 93, 16);
+		lbl_maint_ins.setBounds(208, 59, 93, 16);
 		lbl_maint_ins.setVisible(true);
 		maint_panel.add(lbl_maint_ins);
 
@@ -546,7 +546,7 @@ public class Maintenance_panel {
 				}
 			}
 		});
-		btn_maint.setBounds(490, 200, 87, 29);
+		btn_maint.setBounds(678, 218, 87, 29);
 		maint_panel.add(btn_maint);
 
 		btn_maint_check = new JButton("Check ");
@@ -616,7 +616,7 @@ public class Maintenance_panel {
 
 			}
 		});
-		btn_maint_check.setBounds(402, 36, 78, 29);
+		btn_maint_check.setBounds(616, 54, 78, 29);
 		maint_panel.add(btn_maint_check);
 
 		btn_clear = new JButton("Clear");
@@ -640,7 +640,7 @@ public class Maintenance_panel {
 				}
 			}
 		});
-		btn_clear.setBounds(481, 36, 86, 29);
+		btn_clear.setBounds(695, 54, 86, 29);
 		maint_panel.add(btn_clear);
 
 	}
