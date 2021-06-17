@@ -64,9 +64,6 @@ public class Term_project_main {
 	
 	private Project_panels pj_panels;
 	
-
-	
-	
 	public static CardLayout card_layout;
 	public static CardLayout cl_home;
 	private Library lib;
