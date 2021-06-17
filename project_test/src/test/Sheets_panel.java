@@ -201,8 +201,8 @@ public class Sheets_panel  {
 						
 						if(temp.length!=0) {
 							
-							String[] columns_name = {"Sheet ID", "Sheet Type", "Project ID", "Product", "Item", "Vol.", "Unit Price", 
-									"Total Price", "Signature", "Supervisor ID", "Supervisor","Date"};
+							String[] columns_name = { "Sheet ID", "Type", "Project ID", "Module", "Item", "Vol.",
+											"Unit Price", "Total Price", "Signature", "Supervisor ID", "Name", "Date" };
 									
 							lbl_sign_sorry.setVisible(false);
 							btn_sign_sign.setVisible(true);
@@ -212,6 +212,10 @@ public class Sheets_panel  {
 							
 							DefaultTableModel sign_table_model = new DefaultTableModel(temp,columns_name);
 							sign_table.setModel(sign_table_model);		
+							sign_table.getColumnModel().getColumn(1).setPreferredWidth(40);
+							sign_table.getColumnModel().getColumn(4).setPreferredWidth(40);
+							sign_table.getColumnModel().getColumn(10).setPreferredWidth(120);
+							sign_table.getColumnModel().getColumn(11).setPreferredWidth(100);
 							sign_table.setVisible(true);
 							scrollpane_sign.setVisible(true);
 							
@@ -901,7 +905,7 @@ public class Sheets_panel  {
 		
 		lbl_mod_7 = new JLabel("");
 		lbl_mod_7.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbl_mod_7.setBounds(297, 287, 106, 16);
+		lbl_mod_7.setBounds(297, 277, 106, 26);
 		lbl_mod_7.setVisible(false);
 		mod_panel.add(lbl_mod_7);
 		
@@ -1255,7 +1259,7 @@ public class Sheets_panel  {
 									lbl_mod_message.setText("Data loaded");
 									lbl_mod_message.setVisible(true);
 
-								} else if (temp.get(1).equalsIgnoreCase("QUO")) {
+								} else if (temp.get(1).equalsIgnoreCase("QUOT")) {
 
 									lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
 									text_mod_sheetID.setVisible(false);
@@ -1297,7 +1301,7 @@ public class Sheets_panel  {
 									lbl_mod_message.setText("Data loaded");
 									lbl_mod_message.setVisible(true);
 
-								} else if (temp.get(1).equalsIgnoreCase("PUR")) {
+								} else if (temp.get(1).equalsIgnoreCase("PURC")) {
 
 									lbl_mod_sheetID_show.setText(text_mod_sheetID.getText());
 									text_mod_sheetID.setVisible(false);
@@ -1316,22 +1320,22 @@ public class Sheets_panel  {
 									text_mod_supID.setVisible(false);
 
 									lbl_mod_5.setText("Vol :");
-									text_mod_5.setText(temp.get(6));
+									text_mod_5.setText(temp.get(5));
 									lbl_mod_5.setVisible(true);
 									text_mod_5.setVisible(true);
 
 									lbl_mod_6.setText("Unit Price :");
-									text_mod_6.setText(temp.get(7));
+									text_mod_6.setText(temp.get(6));
 									lbl_mod_6.setVisible(true);
 									text_mod_6.setVisible(true);
 
 									lbl_mod_7.setText("ESD :");
-									text_mod_7.setText(temp.get(9));
+									text_mod_7.setText(temp.get(8));
 									lbl_mod_7.setVisible(true);
 									text_mod_7.setVisible(true);
 
 									lbl_mod_8.setText("Date :");
-									text_mod_8.setText(temp.get(10));
+									text_mod_8.setText(temp.get(9));
 									lbl_mod_8.setVisible(true);
 									text_mod_8.setVisible(true);
 
@@ -2335,7 +2339,7 @@ public class Sheets_panel  {
 		lbl_remove_confirm.setVisible(false);
 		remove_panel.add(lbl_remove_confirm);
 
-		text_remove_confirm = new JTextField(8);
+		text_remove_confirm = new JTextField();
 		text_remove_confirm.setHorizontalAlignment(SwingConstants.CENTER);
 		text_remove_confirm.setBounds(204, 289, 611, 26);
 		text_remove_confirm.setColumns(10);
@@ -2427,13 +2431,17 @@ public class Sheets_panel  {
 									temp_array[0][i] = temp_list.get(i);
 								}
 
-								String[] columns_req = { "Sheet ID", "Sheet type", "Project ID", "Product", "Item Name",
-										"Vol.", "Unit Price", "Total_price", "Signature", "Supervisor", "Date" };
+								String[] columns_req = { "Sheet ID", "Type", "Project ID", "Item", "Module",
+										"Vol.", "Unit Price", "Total_price", "Signature", "Supervisor","Name", "Date" };
 
 								DefaultTableModel remove_table_model_req = new DefaultTableModel(temp_array,
 										columns_req);
 								remove_table.setModel(remove_table_model_req);
-
+								remove_table.getColumnModel().getColumn(10).setPreferredWidth(100);
+								remove_table.getColumnModel().getColumn(11).setPreferredWidth(100);
+								remove_table.getColumnModel().getColumn(1).setPreferredWidth(50);
+								remove_table.getColumnModel().getColumn(5).setPreferredWidth(40);
+								
 								remove_table.setVisible(true);
 								scrollpane_remove.setVisible(true);
 								lbl_remove_confirm.setVisible(true);
@@ -2531,7 +2539,7 @@ public class Sheets_panel  {
 
 								if (temp_array[0][1].equalsIgnoreCase("RFQ")) {
 
-									String[] columns_rfq = { "Sheet ID", "Sheet type", "Project ID", "Supplier",
+									String[] columns_rfq = { "Sheet ID", "Type", "Project ID", "Supplier ID","Name",
 											"Product", "Vol.", "Date" };
 
 									DefaultTableModel remove_table_model_rfq = new DefaultTableModel(temp_array,
@@ -2559,7 +2567,7 @@ public class Sheets_panel  {
 
 								} else if (temp_array[0][1].equalsIgnoreCase("QUOT")) {
 
-									String[] columns_quot = { "Sheet ID", "Sheet type", "Project ID", "Supplier",
+									String[] columns_quot = { "Sheet ID", "Type", "Project ID", "Supplier",
 											"Product", "Vol.", "Unit Price", "Total_price", "ESD", "Date" };
 
 									DefaultTableModel remove_table_model_quot = new DefaultTableModel(temp_array,
@@ -2721,11 +2729,15 @@ public class Sheets_panel  {
 
 						lbl_remove_message.setText("Delete succeed");
 						lbl_remove_message.setVisible(true);
+						text_remove_confirm.setText("");
 
 					} else {
 						lbl_remove_message.setText("Delete failed, errors occurred.");
 						lbl_remove_message.setVisible(true);
 					}
+				}else {
+					lbl_remove_message.setText("Text wrong, please check your text.");
+					lbl_remove_message.setVisible(true);
 				}
 			}
 		});
@@ -2749,6 +2761,8 @@ public class Sheets_panel  {
 				lbl_remove_projectID_show.setVisible(false);
 				text_remove_pd.setVisible(true);
 				lbl_remove_pd_show.setVisible(false);
+				text_remove_supID.setVisible(true);
+				lbl_remove_supID_show.setVisible(false);
 
 			}
 		});
@@ -2817,7 +2831,7 @@ public class Sheets_panel  {
 
 				if (temp.length != 0) {
 
-					String[] columns_name = { "Sheet ID", "Sheet Type", "Project ID", "Product", "Item", "Vol.",
+					String[] columns_name = { "Sheet ID", "Type", "Project ID", "Module", "Item", "Vol.",
 							"Unit Price", "Total Price", "Signature", "Supervisor ID", "Name", "Date" };
 
 					lbl_sign_sorry.setVisible(false);
@@ -2828,6 +2842,10 @@ public class Sheets_panel  {
 
 					DefaultTableModel sign_table_model = new DefaultTableModel(temp, columns_name);
 					sign_table.setModel(sign_table_model);
+					sign_table.getColumnModel().getColumn(1).setPreferredWidth(40);
+					sign_table.getColumnModel().getColumn(4).setPreferredWidth(40);
+					sign_table.getColumnModel().getColumn(10).setPreferredWidth(100);
+					sign_table.getColumnModel().getColumn(11).setPreferredWidth(100);
 					sign_table.setVisible(true);
 					scrollpane_sign.setVisible(true);
 
@@ -2902,6 +2920,7 @@ public class Sheets_panel  {
 		lbl_remove_projectID_show.setText("");
 		lbl_remove_pd_show.setText("");
 		lbl_remove_supID_show.setText("");
+		lbl_remove_message.setText("");
 	}
 			
 	private String[][] inquire_all(JTextField first, JTextField second, JTextField third){
@@ -4669,7 +4688,7 @@ public class Sheets_panel  {
 				
 				while(r.next()) {
 					
-					for(int i=1; i<8;i++) {
+					for(int i=1; i<9;i++) {
 	
 							temp.add(r.getString(i));	
 					}
@@ -4694,7 +4713,7 @@ public class Sheets_panel  {
 				
 				while(r.next()) {
 					
-					for(int i=1; i<11;i++)
+					for(int i=1; i<12;i++)
 					
 						temp.add(r.getString(i));	
 				}
@@ -4717,7 +4736,7 @@ public class Sheets_panel  {
 				
 				while(r.next()) {
 					
-					for(int i=1; i<12;i++) {
+					for(int i=1; i<13;i++) {
 						
 						temp.add(r.getString(i));	
 					}
@@ -4734,7 +4753,7 @@ public class Sheets_panel  {
 			
 				
 		}else if(id>=24000000 & id< 25000000) {
-				//PUR
+				//PURC
 			try {	
 				
 				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.view_purchase WHERE (Sheet_ID="+text1.getText()+
@@ -4743,7 +4762,7 @@ public class Sheets_panel  {
 				
 				while(r.next()) {
 					
-					for(int i=1; i<11;i++) {
+					for(int i=1; i<12;i++) {
 						//System.out.print(r.getString(i)+"\t");
 						temp.add(r.getString(i));
 						
@@ -4768,7 +4787,7 @@ public class Sheets_panel  {
 				
 				while(r.next()) {
 					
-					for(int i=1; i<9;i++) {
+					for(int i=1; i<10;i++) {
 						
 						temp.add(r.getString(i));	
 					}
@@ -4791,7 +4810,7 @@ public class Sheets_panel  {
 				
 				while(r.next()) {
 					
-					for(int i=1; i<8;i++) {
+					for(int i=1; i<9;i++) {
 		
 						temp.add(r.getString(i));	
 					}
