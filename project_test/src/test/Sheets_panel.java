@@ -274,7 +274,7 @@ public class Sheets_panel {
 
 					append_table.setVisible(false);
 					scrollpane_append.setVisible(false);
-					btn_append_clear.setVisible(false);
+					btn_append_clear.setVisible(true);
 					lbl_appd_ins.setVisible(true);
 				} else if (function.equalsIgnoreCase("Delete")) {
 					clear_remove_panel();
@@ -337,6 +337,8 @@ public class Sheets_panel {
 			public void actionPerformed(ActionEvent arg0) {
 
 				clear_inq_panel();
+				inq_table.setVisible(false);
+				scrollpane_inq.setVisible(false);
 				btn_inq_clear.setVisible(false);
 			}
 		});
@@ -627,6 +629,8 @@ public class Sheets_panel {
 				text_inq_pd.setVisible(true);
 
 				btn_inq_inquire.setVisible(true);
+				scrollpane_inq.setVisible(false);
+				btn_inq_clear.setVisible(false);
 			}
 		});
 		bg.add(rb_inq_all);
@@ -650,6 +654,8 @@ public class Sheets_panel {
 				text_inq_pd.setVisible(true);
 
 				btn_inq_inquire.setVisible(true);
+				scrollpane_inq.setVisible(false);
+				btn_inq_clear.setVisible(false);
 			}
 		});
 		bg.add(rb_inq_RFQ);
@@ -674,6 +680,8 @@ public class Sheets_panel {
 				text_inq_pd.setVisible(true);
 
 				btn_inq_inquire.setVisible(true);
+				scrollpane_inq.setVisible(false);
+				btn_inq_clear.setVisible(false);
 			}
 		});
 		bg.add(rb_inq_quo);
@@ -697,6 +705,8 @@ public class Sheets_panel {
 				text_inq_pd.setVisible(true);
 
 				btn_inq_inquire.setVisible(true);
+				scrollpane_inq.setVisible(false);
+				btn_inq_clear.setVisible(false);
 			}
 		});
 		bg.add(rb_inq_req);
@@ -720,6 +730,8 @@ public class Sheets_panel {
 				text_inq_pd.setVisible(true);
 
 				btn_inq_inquire.setVisible(true);
+				scrollpane_inq.setVisible(false);
+				btn_inq_clear.setVisible(false);
 			}
 		});
 		bg.add(rb_inq_pur);
@@ -743,6 +755,8 @@ public class Sheets_panel {
 				text_inq_pd.setVisible(true);
 
 				btn_inq_inquire.setVisible(true);
+				scrollpane_inq.setVisible(false);
+				btn_inq_clear.setVisible(false);
 			}
 		});
 		bg.add(rb_inq_exam);
@@ -766,6 +780,8 @@ public class Sheets_panel {
 				text_inq_pd.setVisible(true);
 
 				btn_inq_inquire.setVisible(true);
+				scrollpane_inq.setVisible(false);
+				btn_inq_clear.setVisible(false);
 
 			}
 		});
@@ -2002,6 +2018,11 @@ public class Sheets_panel {
 				lbl_appd_ins.setVisible(true);
 				btn_append_clear.setVisible(true);
 				btn_appd_append.setVisible(true);
+				
+				append_table.setVisible(false);
+				scrollpane_append.setVisible(false);
+				
+				
 
 			}
 		});
@@ -2048,6 +2069,9 @@ public class Sheets_panel {
 				lbl_appd_ins.setVisible(true);
 				btn_appd_append.setVisible(true);
 				btn_append_clear.setVisible(true);
+				
+				append_table.setVisible(false);
+				scrollpane_append.setVisible(false);
 
 			}
 		});
@@ -2093,6 +2117,9 @@ public class Sheets_panel {
 				lbl_appd_ins.setVisible(true);
 				btn_appd_append.setVisible(true);
 				btn_append_clear.setVisible(true);
+				
+				append_table.setVisible(false);
+				scrollpane_append.setVisible(false);
 			}
 		});
 		bg.add(rb_appd_REQ);
@@ -2137,6 +2164,9 @@ public class Sheets_panel {
 				lbl_appd_ins.setVisible(true);
 				btn_appd_append.setVisible(true);
 				btn_append_clear.setVisible(true);
+				
+				append_table.setVisible(false);
+				scrollpane_append.setVisible(false);
 			}
 		});
 		bg.add(rb_appd_PUR);
@@ -2181,6 +2211,9 @@ public class Sheets_panel {
 				lbl_appd_ins.setVisible(true);
 				btn_appd_append.setVisible(true);
 				btn_append_clear.setVisible(true);
+				
+				append_table.setVisible(false);
+				scrollpane_append.setVisible(false);
 			}
 		});
 		bg.add(rb_appd_EXAM);
@@ -2225,6 +2258,9 @@ public class Sheets_panel {
 				lbl_appd_ins.setVisible(true);
 				btn_appd_append.setVisible(true);
 				btn_append_clear.setVisible(true);
+				
+				append_table.setVisible(false);
+				scrollpane_append.setVisible(false);
 
 			}
 		});
@@ -2317,7 +2353,7 @@ public class Sheets_panel {
 		lbl_remove_ins.setVisible(true);
 		remove_panel.add(lbl_remove_ins);
 
-		lbl_remove_confirm = new JLabel("Please write down \" I would like to remove this sheet permenantly.\"");
+		lbl_remove_confirm = new JLabel("Please write down \"I would like to remove this sheet permanently.\"");
 		lbl_remove_confirm.setBounds(206, 276, 555, 16);
 		lbl_remove_confirm.setVisible(false);
 		remove_panel.add(lbl_remove_confirm);
@@ -2392,8 +2428,8 @@ public class Sheets_panel {
 						| text_remove_pd.getText().isBlank()) {
 					// None of them can't be blank
 
-					lbl_mod_message.setText("Format Invalid");
-					lbl_mod_message.setVisible(true);
+					lbl_remove_message.setText("Format Invalid");
+					lbl_remove_message.setVisible(true);
 
 				} else {
 					int what = Integer.parseInt(text_remove_sheetID.getText());
@@ -2442,6 +2478,9 @@ public class Sheets_panel {
 								lbl_remove_projectID_show.setVisible(true);
 								lbl_remove_pd_show.setVisible(true);
 								lbl_remove_supID_show.setVisible(true);
+								
+								lbl_remove_message.setText("Data loaded");
+								lbl_remove_message.setVisible(true);
 							} else {
 								// no found
 
@@ -2546,6 +2585,9 @@ public class Sheets_panel {
 									lbl_remove_projectID_show.setVisible(true);
 									lbl_remove_pd_show.setVisible(true);
 									lbl_remove_supID_show.setVisible(true);
+									
+									lbl_remove_message.setText("Data loaded");
+									lbl_remove_message.setVisible(true);
 
 								} else if (temp_array[0][1].equalsIgnoreCase("QUOT")) {
 
@@ -2574,6 +2616,9 @@ public class Sheets_panel {
 									lbl_remove_projectID_show.setVisible(true);
 									lbl_remove_pd_show.setVisible(true);
 									lbl_remove_supID_show.setVisible(true);
+									
+									lbl_remove_message.setText("Data loaded");
+									lbl_remove_message.setVisible(true);
 
 								} else if (temp_array[0][1].equalsIgnoreCase("PURC")) {
 
@@ -2602,6 +2647,9 @@ public class Sheets_panel {
 									lbl_remove_projectID_show.setVisible(true);
 									lbl_remove_pd_show.setVisible(true);
 									lbl_remove_supID_show.setVisible(true);
+									
+									lbl_remove_message.setText("Data loaded");
+									lbl_remove_message.setVisible(true);
 
 								} else if (temp_array[0][1].equalsIgnoreCase("EXAM")) {
 
@@ -2630,6 +2678,9 @@ public class Sheets_panel {
 									lbl_remove_projectID_show.setVisible(true);
 									lbl_remove_pd_show.setVisible(true);
 									lbl_remove_supID_show.setVisible(true);
+									
+									lbl_remove_message.setText("Data loaded");
+									lbl_remove_message.setVisible(true);
 
 								} else {
 									// temp_array[0][1].equalsIgnoreCase("RCPT")
@@ -2658,6 +2709,9 @@ public class Sheets_panel {
 									lbl_remove_projectID_show.setVisible(true);
 									lbl_remove_pd_show.setVisible(true);
 									lbl_remove_supID_show.setVisible(true);
+									
+									lbl_remove_message.setText("Data loaded");
+									lbl_remove_message.setVisible(true);
 								}
 							} else {
 								// data no found
@@ -2707,7 +2761,7 @@ public class Sheets_panel {
 		btn_remove_confirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (text_remove_confirm.getText().equals("I would like to remove this sheet permenantly.")) {
+				if (text_remove_confirm.getText().equals("I would like to remove this sheet permanently.")) {
 					if (delete() == 1) {
 
 						lbl_remove_message.setText("Delete succeed");
@@ -2838,7 +2892,7 @@ public class Sheets_panel {
 
 					lbl_sign_sorry.setVisible(false);
 					btn_sign_sign.setVisible(false);
-					btn_sign_refresh.setVisible(false);
+					btn_sign_refresh.setVisible(true);
 					sign_table.setVisible(false);
 					scrollpane_sign.setVisible(false);
 				}
@@ -2855,6 +2909,7 @@ public class Sheets_panel {
 		text_inq_sheetID.setText("");
 		text_inq_projectID.setText("");
 		text_inq_pd.setText("");
+		lbl_inq_result.setText("");
 	}
 
 	public void clear_mod_panel() {
@@ -3026,7 +3081,7 @@ public class Sheets_panel {
 
 									String[] pur = new String[11];
 									for (int i = 32; i < 43; i++) {
-										pur[i - 43] = r.getString(i);
+										pur[i - 32] = r.getString(i);
 									}
 									temp.add(pur);
 
@@ -4177,8 +4232,9 @@ public class Sheets_panel {
 
 		try {
 
-			ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.view_append_check WHERE (Project_ID="
-					+ text_appd_1.getText() + " AND Module=\'" + text_appd_2.getText() + "\') LIMIT 1");
+			ResultSet r = Term_project_main.conn.st.executeQuery(
+					"SELECT * FROM test.view_append_check WHERE Project_ID=" + text_appd_1.getText() + " LIMIT 1");
+			System.out.print("SELECT * FROM test.view_append_check WHERE Project_ID=" + text_appd_1.getText() + " LIMIT 1");
 
 			if (r.next()) {
 
@@ -4209,10 +4265,11 @@ public class Sheets_panel {
 					break;
 
 				case "PUR":
+					if (r.getString("REQ_Sheet_ID") != null) {
+						if (r.getString("Signature").equalsIgnoreCase("True")) {
 
-					if (r.getString("Signature").equalsIgnoreCase("True")) {
-
-						result = true;
+							result = true;
+						}
 					}
 					break;
 

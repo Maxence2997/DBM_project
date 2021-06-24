@@ -1073,7 +1073,7 @@ public class Supplier_panel {
 		String new_ID = "";
 		try {
 			ResultSet resultSet = Term_project_main.conn.st
-					.executeQuery("SELECT Supplier_ID FROM tset.SUPPLIER ORDER  BY Supplier_ID DESC");
+					.executeQuery("SELECT Supplier_ID FROM test.SUPPLIER ORDER  BY Supplier_ID DESC");
 			if (resultSet.next()) {
 
 				String previous = resultSet.getString(1);

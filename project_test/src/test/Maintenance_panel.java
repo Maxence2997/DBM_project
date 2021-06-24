@@ -139,7 +139,8 @@ public class Maintenance_panel {
 
 					text_maint_pjID.setVisible(false);
 					btn_maint_check.setVisible(false);
-
+					btn_maint.setVisible(true);
+					btn_clear.setVisible(true);
 					set_visible(true);
 					clear_maint_panel();
 					break;
@@ -158,6 +159,10 @@ public class Maintenance_panel {
 
 				default:
 					cl_maint.show(maint_container_panel, function);
+					lbl_result.setVisible(false);
+					inq_table.setVisible(false);
+					scrollpane.setVisible(false);
+					
 					break;
 
 				}
@@ -261,7 +266,7 @@ public class Maintenance_panel {
 								inq_table.setModel(inq_table_model);
 
 								TableColumnModel column_model = inq_table.getColumnModel();
-
+								inq_table.setVisible(true);
 								scrollpane.setVisible(true);
 								lbl_result.setText("Data load succeed");
 								lbl_result.setVisible(true);
@@ -269,10 +274,14 @@ public class Maintenance_panel {
 							} else {
 								lbl_result.setText("no found");
 								lbl_result.setVisible(true);
+								inq_table.setVisible(false);
+								scrollpane.setVisible(false);
 							}
 						} else {
 							lbl_result.setText("date format Invalid");
 							lbl_result.setVisible(true);
+							inq_table.setVisible(false);
+							scrollpane.setVisible(false);
 						}
 
 					} else {
@@ -299,6 +308,8 @@ public class Maintenance_panel {
 						} else {
 							lbl_result.setText("no found");
 							lbl_result.setVisible(true);
+							inq_table.setVisible(false);
+							scrollpane.setVisible(false);
 						}
 					}
 				} catch (NumberFormatException ex) {
@@ -306,6 +317,8 @@ public class Maintenance_panel {
 
 					lbl_result.setText("Format Invalid");
 					lbl_result.setVisible(true);
+					inq_table.setVisible(false);
+					scrollpane.setVisible(false);
 				}
 			}
 		});
