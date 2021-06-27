@@ -62,7 +62,7 @@ public class Term_project_main {
 	
 	private Inventory_panel inv_panel;
 	
-	private Project_panels pj_panels;
+	
 	
 	public static CardLayout card_layout;
 	public static CardLayout cl_home;
@@ -80,13 +80,19 @@ public class Term_project_main {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				double  time1, time2, time3, time4;
 				
-				  
-				
+				time1 = System.currentTimeMillis();
+				conn = new connection();
+				//conn = new connection(4);
+				time2 = System.currentTimeMillis();
+				System.out.println((time2-time1)/1000);
 				
 				try {
 					Term_project_main window = new Term_project_main();
 					//window.frame.setVisible(true);
+					time3 = System.currentTimeMillis();
+					System.out.println((time3-time1)/1000);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -101,7 +107,9 @@ public class Term_project_main {
 	
 	public Term_project_main() {
 		
-		frame = new JFrame("System");
+		double  time1, time2;
+		time1 = System.currentTimeMillis();
+		frame = new JFrame("Supply Chain System");
 		//frame.setBounds(100, 100, 666, 466);
 		frame.setBounds(100, 100, 1000, 550);
 		
@@ -109,14 +117,17 @@ public class Term_project_main {
 		
 		frame.getContentPane().setLayout(card_layout);
 		
-		conn = new connection();
-		//conn = new connection(4);
-		
 		login_panel();
 		home_panel();
-		
+		new Project_panels();
+		inv_panel = new Inventory_panel();
+		sup_panel = new Supplier_panel();
+		emp_panel = new Employee_panel(); 
+
 		frame.setVisible(true);
 		
+		time2 = System.currentTimeMillis();
+		System.out.println((time2-time1)/1000);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//initialize();
 	}
@@ -151,7 +162,7 @@ public class Term_project_main {
 //					cl_home.show(container_panel, "home");
 					
 					lib = new Library();
-					home_panel();
+					
 					
 					lib.adjust_PROJECT();
 					
@@ -518,10 +529,7 @@ public class Term_project_main {
 			btn_home.setBounds(913, 488, 81, 29);
 			home_panel.add(btn_home);
 			
-			pj_panels = new Project_panels();
-			inv_panel = new Inventory_panel();
-			sup_panel = new Supplier_panel();
-			emp_panel = new Employee_panel(); 
+			
 			
 			
 		}
