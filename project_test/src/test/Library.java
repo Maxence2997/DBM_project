@@ -477,6 +477,166 @@ public class Library {
 		}
 	}
 
+	ArrayList<String> rmv_mod_check(JTextField text1, JTextField text2, JTextField text3, JTextField text4) {
+
+		/**
+		 * @author jyunanyang
+		 * @since 05/06/2021
+		 */
+
+		ArrayList<String> temp = new ArrayList();
+
+		int id = Integer.parseInt(text1.getText());
+
+		if (id >= 21000000 & id < 22000000) {
+			// RFQ
+			try {
+
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.veiw_rfq WHERE (Sheet_ID="
+						+ text1.getText() + " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText()
+						+ "\' AND Supplier_ID=\'" + text4.getText() + "\')");
+
+				while (r.next()) {
+
+					for (int i = 1; i < 9; i++) {
+
+						temp.add(r.getString(i));
+					}
+				}
+				return temp;
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return temp;
+			}
+
+		} else if (id >= 22000000 & id < 23000000) {
+			// QUOT
+			try {
+
+				ResultSet r = Term_project_main.conn.st
+						.executeQuery("SELECT * FROM test.view_quotation WHERE (Sheet_ID=" + text1.getText()
+								+ " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText()
+								+ "\' AND Supplier_ID=\'" + text4.getText() + "\')");
+
+				while (r.next()) {
+
+					for (int i = 1; i < 12; i++)
+
+						temp.add(r.getString(i));
+				}
+				return temp;
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return temp;
+			}
+
+		} else if (id >= 23000000 & id < 24000000) {
+			// REQ
+			try {
+
+				ResultSet r = Term_project_main.conn.st
+						.executeQuery("SELECT * FROM test.view_requisition WHERE (Sheet_ID=" + text1.getText()
+								+ " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText() + "\')");
+
+				while (r.next()) {
+
+					for (int i = 1; i < 13; i++) {
+
+						temp.add(r.getString(i));
+					}
+				}
+				return temp;
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return temp;
+			}
+
+		} else if (id >= 24000000 & id < 25000000) {
+			// PURC
+			try {
+
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.view_purchase WHERE (Sheet_ID="
+						+ text1.getText() + " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText()
+						+ "\' AND Supplier_ID=\'" + text4.getText() + "\')");
+
+				while (r.next()) {
+
+					for (int i = 1; i < 12; i++) {
+						// System.out.print(r.getString(i)+"\t");
+						temp.add(r.getString(i));
+
+					}
+					// System.out.print("\n");
+				}
+				return temp;
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return temp;
+			}
+
+		} else if (id >= 25000000 & id < 26000000) {
+			// EXAM
+			try {
+
+				ResultSet r = Term_project_main.conn.st
+						.executeQuery("SELECT * FROM test.view_examination WHERE (Sheet_ID=" + text1.getText()
+								+ " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText()
+								+ "\' AND Supplier_ID=\'" + text4.getText() + "\')");
+
+				while (r.next()) {
+
+					for (int i = 1; i < 10; i++) {
+
+						temp.add(r.getString(i));
+					}
+				}
+				return temp;
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return temp;
+			}
+
+		} else if (id >= 26000000 & id < 27000000) {
+			// RCPT
+			try {
+
+				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.view_receipt WHERE (Sheet_ID="
+						+ text1.getText() + " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText()
+						+ "\' AND Supplier_ID=\'" + text4.getText() + "\')");
+
+				while (r.next()) {
+
+					for (int i = 1; i < 9; i++) {
+
+						temp.add(r.getString(i));
+					}
+				}
+				return temp;
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return temp;
+			}
+
+		} else {
+
+			return temp;
+		}
+
+	}
+	
+	
 	void sort(String[][] array) {
 		this.temp = array;
 
