@@ -17,7 +17,7 @@ public class Library {
 
 	}
 
-	public String[][] show_unsign_req() {
+	String[][] show_unsign_req() {
 
 		ArrayList<String[]> temp = new ArrayList();
 
@@ -50,7 +50,7 @@ public class Library {
 		return result_array;
 	}
 
-	public void adjust_PROJECT() {
+	void adjust_PROJECT() {
 
 		/**
 		 * @author jyunanyang
@@ -110,7 +110,7 @@ public class Library {
 		}
 	}
 
-	public String[][] show_project_status() {
+	String[][] show_project_status() {
 
 		/**
 		 * @author jyunanyang
@@ -159,7 +159,7 @@ public class Library {
 		return result_array;
 	}
 
-	public boolean num_not_null_check(JTextField num) {
+	boolean num_not_null_check(JTextField num) {
 
 		/**
 		 * @author jyunanyang
@@ -180,7 +180,7 @@ public class Library {
 		return res;
 	}
 
-	public boolean supplier_check(JTextField supID) {
+	boolean supplier_check(JTextField supID) {
 
 		/**
 		 * @author jyunanyang
@@ -209,7 +209,7 @@ public class Library {
 		}
 	}
 
-	public boolean projectID_check(JTextField pjID) {
+	boolean projectID_check(JTextField pjID) {
 
 		/**
 		 * @author jyunanyang
@@ -245,7 +245,7 @@ public class Library {
 		}
 	}
 
-	public boolean module_check(JTextField module) {
+	boolean module_check(JTextField module) {
 
 		/**
 		 * @author jyunanyang
@@ -274,7 +274,7 @@ public class Library {
 		}
 	}
 
-	public boolean tf_check(JTextField tf) {
+	boolean tf_check(JTextField tf) {
 
 		boolean res = false;
 
@@ -289,7 +289,7 @@ public class Library {
 		return res;
 	}
 
-	public boolean emp_check(JTextField empID) {
+	boolean emp_check(JTextField empID) {
 
 		/**
 		 * @author jyunanyang
@@ -322,13 +322,13 @@ public class Library {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			// e.printStackTrace();
 
 			return false;
 		}
 	}
 
-	public boolean supervisor_check(JTextField empID) {
+	boolean supervisor_check(JTextField empID) {
 
 		/**
 		 * @author jyunanyang
@@ -358,7 +358,7 @@ public class Library {
 
 	}
 
-	public boolean date(String strDate) {
+	boolean date(String strDate) {
 
 		/**
 		 * Reference: https://beginnersbook.com/2013/05/java-date-format-validation/
@@ -393,7 +393,7 @@ public class Library {
 
 	}
 
-	public String[] insert(String[] input, String string, int index) {
+	String[] insert(String[] input, String string, int index) {
 
 		/**
 		 * Reference:
@@ -412,7 +412,7 @@ public class Library {
 		return result;
 	}
 
-	public String check_text_fields(JTextField ID, JTextField else1, JTextField else2) {
+	String check_text_fields(JTextField ID, JTextField else1, JTextField else2) {
 		/**
 		 * @author jyunanyang
 		 * @since 06/02/2021 to check how many JTextField are filled by user and return
@@ -454,7 +454,7 @@ public class Library {
 
 	}
 
-	public String check_text_fields(JTextField ID, JTextField else1) {
+	String check_text_fields(JTextField ID, JTextField else1) {
 		/**
 		 * @author jyunanyang
 		 * @since 06/02/2021 to check how many JTextField are filled by user and return
@@ -477,7 +477,7 @@ public class Library {
 		}
 	}
 
-	public void sort(String[][] array) {
+	void sort(String[][] array) {
 		this.temp = array;
 
 		quickSort(0, temp.length - 1);

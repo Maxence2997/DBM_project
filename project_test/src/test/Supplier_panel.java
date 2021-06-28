@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.JScrollBar;
 
-public class Supplier_panel {
+class Supplier_panel {
 
 	/**
 	 * @autohr Jyun-An
@@ -52,20 +52,13 @@ public class Supplier_panel {
 	private JTextField text_sup_mail;
 	private JLabel lbl_sup_supID;
 	private JLabel lbl_sup_name;
-
-	private DefaultTableModel sup_table_model;
 	private JLabel lbl_result;
-
 	private JLabel lbl_sup_supID_show;
 	private JButton btn_clear;
 
-	public Supplier_panel() {
+	Supplier_panel() {
 
 		lib = new Library();
-		panel();
-	}
-
-	private void panel() {
 
 		/*
 		 * New version GUI by Ray 05/27/2021
@@ -786,7 +779,7 @@ public class Supplier_panel {
 
 	}
 
-	public void clear_text() {
+	void clear_text() {
 		/**
 		 * @Author Ray
 		 * @since 05/31 clear all input in JTextField
@@ -1139,43 +1132,8 @@ public class Supplier_panel {
 		}
 	}
 
-	public JComboBox get_combobox_sup() {
+	JComboBox get_combobox_sup() {
 
 		return comboBox_sup;
-	}
-
-	public JTextField get_text_sup_supID() {
-
-		return text_sup_supID;
-	}
-
-	public JTextField get_text_sup_name() {
-
-		return text_sup_name;
-	}
-
-	public JTextField get_text_sup_addr() {
-
-		return text_sup_addr;
-	}
-
-	public JTextField get_text_sup_ctc() {
-
-		return text_sup_ctc;
-	}
-
-	public JTextField get_text_sup_mobile() {
-
-		return text_sup_mobile;
-	}
-
-	public JTextField get_text_sup_mail() {
-
-		return text_sup_mail;
-	}
-
-	public JTable get_sup_table() {
-
-		return sup_table;
 	}
 }

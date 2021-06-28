@@ -10,7 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Project_panels {
+class Project_panels {
 		
 	private Library lib;
 	private JPanel project_panel;
@@ -20,16 +20,10 @@ public class Project_panels {
 	private Sheets_panel sheets_panel;  // sheets panels
 	private Progress_panel prog_panel;
 	
-	public Project_panels() {
-		lib = new Library();
-		panels();
-	}
-	
-	
-	
-	
-	private void panels() {
+	Project_panels() {
 		
+		lib = new Library();
+
 		project_panel = new JPanel();
 		project_panel.setBounds(0, 26, 1000, 450);
 		Term_project_main.container_panel.add(project_panel,"project");

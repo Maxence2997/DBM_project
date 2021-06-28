@@ -27,7 +27,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-public class Sheets_panel {
+class Sheets_panel {
 
 	/**
 	 * @autohr Jyun-An @ver. 1.2.2 05/28 Seperated from Project_test
@@ -37,7 +37,7 @@ public class Sheets_panel {
 
 	private JComboBox comboBox_sheets;
 	private CardLayout cl_sheet;
-	public JPanel core_sheet_panel;
+	JPanel core_sheet_panel;
 
 	private JPanel sheet_container_panel;
 
@@ -116,8 +116,8 @@ public class Sheets_panel {
 	private JRadioButton rb_appd_RCPT;
 	private JLabel lbl_append_message;
 	private JButton btn_append_clear;
-
-	private JTable sign_table;
+	private JLabel lbl_appd_ins;
+	
 
 	private JPanel remove_panel;
 	private JLabel lbl_remove_confirm;
@@ -132,27 +132,23 @@ public class Sheets_panel {
 	private JTextField text_remove_sheetID;
 	private JScrollPane scrollpane_remove;
 	private JLabel lbl_remove_message;
+	private JTextField text_remove_supID;
 	private JLabel lbl_remove_supID_show;
-
+	private JLabel lbl_remove_ins;
+	
+	
 	private JPanel sign_panel;
+	private JTable sign_table;
 	private JLabel lbl_sign_sorry;
 	private JLabel lbl_sign_instr;
 	private JButton btn_sign_sign;
 	private JButton btn_sign_refresh;
 	private JScrollPane scrollpane_sign;
-	private JLabel lbl_remove_ins;
-	private JLabel lbl_appd_ins;
-	private JTextField text_remove_supID;
+	
 
-	public Sheets_panel() {
+	Sheets_panel() {
 
 		lib = new Library();
-
-		panels();
-
-	}
-
-	private void panels() {
 
 		// core sheet panel which contains comboBox
 		core_sheet_panel = new JPanel();
@@ -2904,7 +2900,7 @@ public class Sheets_panel {
 
 	}
 
-	public void clear_inq_panel() {
+	void clear_inq_panel() {
 
 		text_inq_sheetID.setText("");
 		text_inq_projectID.setText("");
@@ -2912,7 +2908,7 @@ public class Sheets_panel {
 		lbl_inq_result.setText("");
 	}
 
-	public void clear_mod_panel() {
+	void clear_mod_panel() {
 
 		text_mod_sheetID.setText("");
 		lbl_mod_sheetID_show.setText("");
@@ -2933,7 +2929,7 @@ public class Sheets_panel {
 		lbl_mod_message.setText("");
 	}
 
-	public void clear_app_panel() {
+	void clear_app_panel() {
 
 		text_appd_1.setText("");
 		text_appd_2.setText("");
@@ -2947,7 +2943,7 @@ public class Sheets_panel {
 
 	}
 
-	public void clear_remove_panel() {
+	void clear_remove_panel() {
 
 		text_remove_sheetID.setText("");
 		text_remove_projectID.setText("");
@@ -4860,7 +4856,7 @@ public class Sheets_panel {
 
 	}
 
-	public JComboBox get_comboBox_sheets() {
+	JComboBox get_comboBox_sheets() {
 
 		return comboBox_sheets;
 	}

@@ -22,7 +22,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-public class Progress_panel {
+class Progress_panel {
 
 	private Library lib;
 	private JPanel progress_panel;
@@ -31,16 +31,12 @@ public class Progress_panel {
 	private JScrollPane scrollpane_prog;
 	private JLabel lbl_prog_message;
 
-	public Progress_panel() {
+	Progress_panel() {
 
 		lib = new Library();
-		panel();
-	}
-
-	private void panel() {
 
 		progress_panel = new JPanel();
-		progress_panel.setBounds(0,26,1000,450);
+		progress_panel.setBounds(0, 26, 1000, 450);
 		Term_project_main.container_panel.add(progress_panel, "progress");
 		progress_panel.setLayout(null);
 
@@ -151,9 +147,7 @@ public class Progress_panel {
 			}// uneditable
 
 		};
-		
-		
-		
+
 		prog_table.setVisible(false);
 
 		scrollpane_prog = new JScrollPane(prog_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -228,7 +222,7 @@ public class Progress_panel {
 
 	}
 
-	public void clear() {
+	void clear() {
 
 		prog_table.setVisible(false);
 		scrollpane_prog.setVisible(false);
@@ -249,7 +243,7 @@ public class Progress_panel {
 
 		ArrayList<String[]> temp = new ArrayList();
 
-		ResultSet r=null;
+		ResultSet r = null;
 		switch (st) {
 
 		case "attention":
@@ -345,11 +339,11 @@ public class Progress_panel {
 				String[] temp_array = new String[12];
 				for (int i = 1; i < 13; i++) {
 
-					if ((i==6)&(r.getString("P_Delivery_pct")!=null))
-						temp_array[i-1]= (r.getString(i)+"%");
-				
-				else
-					temp_array[i - 1] = r.getString(i);
+					if ((i == 6) & (r.getString("P_Delivery_pct") != null))
+						temp_array[i - 1] = (r.getString(i) + "%");
+
+					else
+						temp_array[i - 1] = r.getString(i);
 				}
 				temp.add(temp_array);
 			}

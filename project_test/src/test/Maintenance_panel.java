@@ -27,14 +27,15 @@ import java.util.Arrays;
 import java.util.Date;
 import java.awt.Font;
 
-public class Maintenance_panel {
+class Maintenance_panel {
 
 	/**
-	 * @autohr Jyun-An @ver. 1.2.2 05/28 Seperated from Project_test
+	 * @autohr Jyun-An 
+	 * @ver. 1.2.2 05/28 Seperated from Project_test
 	 **/
 
 	private Library lib;
-	public JPanel core_maint_panel;
+	JPanel core_maint_panel;
 	private JPanel maint_container_panel;
 	private JComboBox comboBox_pj;
 
@@ -44,6 +45,7 @@ public class Maintenance_panel {
 	private JTable inq_table;
 	private JScrollPane scrollpane;
 	private JLabel lbl_result;
+	private JLabel lbl_inq_date_format;
 	private JTextField text_inq_date;
 	private JTextField text_inq_pjID;
 	private JTextField text_inq_empID;
@@ -53,41 +55,35 @@ public class Maintenance_panel {
 	private JLabel lbl_maint_pjID_show;
 	private JLabel lbl_maint_empID;
 	private JTextField text_maint_empID;
+	private JLabel lbl_maint_date;
 	private JTextField text_maint_date;
 	private JLabel lbl_maint_status;
 	private JLabel lbl_maint_pjID;
+	private JLabel lbl_maint_emp_name;
 	private JLabel lbl_maint_emp_name_show;
 	private JLabel lbl_maint_status_show;
 	private JLabel lbl_date_default;
+	private JLabel lbl_maint_result;
+	private JLabel lbl_maint_ins;
+	
+
 
 	private JButton btn_maint;
 
 	private JButton btn_maint_check;
-	private JLabel lbl_maint_date;
-
-	// private JTextField text_inq_pjID;
+	
 
 	private CardLayout cl_maint;
-	// private JTextField text_inq_empID;
+
 	private JButton btn_clear;
-	private JLabel lbl_maint_result;
-	private JLabel lbl_inq_date_format;
-	private JLabel lbl_maint_ins;
-	private JLabel lbl_maint_emp_name;
-//		private JTextField text_inq_month;
-//		private JTextField text_inq_day;
+	
 
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public Maintenance_panel() {
+	Maintenance_panel() {
 
 		lib = new Library();
-		proj_maint_panels();
-
-	}
-
-	private void proj_maint_panels() {
 
 		// core sheet panel which contains comboBox
 		core_maint_panel = new JPanel();
@@ -658,7 +654,7 @@ public class Maintenance_panel {
 
 	}
 
-	public void clear_maint_panel() {
+	void clear_maint_panel() {
 
 		lbl_maint_pjID_show.setText("");
 		text_maint_pjID.setText("");
@@ -1054,7 +1050,7 @@ public class Maintenance_panel {
 		return temp;
 	}
 
-	public void clear_inq_panel() {
+	void clear_inq_panel() {
 
 		text_inq_date.setText("");
 		text_inq_pjID.setText("");
@@ -1062,7 +1058,7 @@ public class Maintenance_panel {
 
 	}
 
-	public JComboBox get_comboBox_project() {
+	JComboBox get_comboBox_project() {
 
 		return comboBox_pj;
 	}

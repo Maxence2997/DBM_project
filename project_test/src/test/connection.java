@@ -6,103 +6,98 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class connection {
+class connection {
 	// mysql
-	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-	
-//	//remote
-//	static final String DB_URL2 = "jdbc:mysql://-:3306/test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-//	//userid&password
-//	static final String USER2 = "myself";
-//	static final String PASS2 = "20210608";
-	
-	//local
-	static final String DB_URL = "jdbc:mysql://localhost:3306/test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-	//userid&password
-	static final String USER = "root";
-	static final String PASS = "qazwsxedc12345678";
-	
-	public static Statement st;
+	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
-	
-//	public connection(int test ) {
-//
-//		// run mysql
-//		connection_mysql(test);
-//		
-//
-//		
-//	}
-	
-	
-	
-	public connection() {
+	// remote (cannot work)
+	private static final String DB_URL2 = "jdbc:mysql://-:3306/test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+	// userid & password
+	private static final String USER2 = "myself";
+	private static final String PASS2 = "20210608";
+
+	// local
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+	// userid & password
+	private static final String USER = "root";
+	private static final String PASS = "qazwsxedc12345678";
+
+	static Statement st;
+
+	connection(int test) {
 
 		// run mysql
-		connection_mysql();
+		connection_mysql(test);
 		
 
 		
 	}
-	public static void connection_mysql() {
-		
+
+	connection() {
+
+		// run mysql
+		connection_mysql();
+
+	}
+
+	static void connection_mysql() {
+
 		/**
 		 * This method is used to connect mySQL localhost
+		 * 
 		 * @author jyunanyang
 		 * 
 		 */
 		try {
-			   Class.forName("com.mysql.cj.jdbc.Driver");
-			   System.out.println("Driver loaded!");
-			  } catch (ClassNotFoundException e) {
-			   System.out.println("Can't find driver");
-			   e.printStackTrace();
-			  }
-		
-		
+			Class.forName(JDBC_DRIVER);
+			System.out.println("Driver loaded!");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Can't find driver");
+			e.printStackTrace();
+		}
+
 		try {
-			  Connection conn =  DriverManager.getConnection(DB_URL, USER, PASS);
-			  System.out.println("mysql Connection Success");
-			  
-			  st= conn.createStatement();
-			  
-			  st.executeUpdate("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
-			  st.executeUpdate("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
-			   
-			  } catch (SQLException e) {
-			   e.printStackTrace();
-			  }
+			Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			System.out.println("mysql Connection Success");
+
+			st = conn.createStatement();
+
+			st.executeUpdate("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+			st.executeUpdate("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
-	
-//	public static void connection_mysql(int i) {
-//		
-//		/**
-//		 * This method is used to connect mySQL localhost
-//		 * @author jyunanyang
-//		 * 
-//		 */
-//		try {
-//			   Class.forName("com.mysql.cj.jdbc.Driver");
-//			   System.out.println("Driver loaded!");
-//			  } catch (ClassNotFoundException e) {
-//			   System.out.println("Can't find driver");
-//			   e.printStackTrace();
-//			  }
-//		
-//		
-//		try {
-//			  Connection conn =  DriverManager.getConnection(DB_URL2, USER2, PASS2);
-//			  System.out.println("mysql Connection Success");
-//			  
-//			  st= conn.createStatement();
-//			  
-//			  st.executeUpdate("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
-//			  st.executeUpdate("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
-//			   
-//			  } catch (SQLException e) {
-//			   e.printStackTrace();
-//			  }
-//	}
-	
+
+	static void connection_mysql(int i) {
+
+		/**
+		 * This method is used to connect mySQL localhost
+		 * 
+		 * @author jyunanyang
+		 * 
+		 */
+		try {
+			Class.forName(JDBC_DRIVER);
+			System.out.println("Driver loaded!");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Can't find driver");
+			e.printStackTrace();
+		}
+
+		try {
+			Connection conn = DriverManager.getConnection(DB_URL2, USER2, PASS2);
+			System.out.println("mysql Connection Success");
+
+			st = conn.createStatement();
+
+			st.executeUpdate("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+			st.executeUpdate("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
