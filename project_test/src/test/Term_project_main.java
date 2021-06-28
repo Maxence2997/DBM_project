@@ -1,43 +1,20 @@
 package test;
 
-//test 1-2
 import java.awt.EventQueue;
-import java.awt.GridLayout;
-
 import javax.swing.JFrame;
-import java.awt.FlowLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
-import java.awt.BorderLayout;
-
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import java.awt.SystemColor;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JRadioButton;
 
 public class Term_project_main {
 
