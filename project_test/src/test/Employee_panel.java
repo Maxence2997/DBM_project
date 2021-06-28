@@ -26,7 +26,7 @@ class Employee_panel {
 	 * @autohr Jyun-An @ver. 1.2.2 05/28 Seperated from Project_test
 	 **/
 
-	private Library lib;
+	
 	private JPanel employee_panel;
 
 	private String function;
@@ -55,7 +55,7 @@ class Employee_panel {
 
 	Employee_panel() {
 
-		lib = new Library();
+		
 		
 		/**
 		 * @author Ray
@@ -214,7 +214,7 @@ class Employee_panel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				function = (String) comboBox_emp_action.getSelectedItem();
-				if (lib.supervisor_check(Term_project_main.field_empID)) {
+				if (Term_project_main.lib.supervisor_check(Term_project_main.field_empID)) {
 					if (function.equals("Show & Adjust")) {
 						// visibility
 
@@ -390,7 +390,7 @@ class Employee_panel {
 						scrollpane.setVisible(true);
 						btn_show_more.setVisible(true);
 
-						if (lib.supervisor_check(Term_project_main.field_empID))
+						if (Term_project_main.lib.supervisor_check(Term_project_main.field_empID))
 
 							btn_emp_execute.setVisible(true);
 
@@ -496,7 +496,7 @@ class Employee_panel {
 		btn_emp_execute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (btn_emp_execute.getText().equalsIgnoreCase("Save Change")) {
-					if ((!text_emp_supervID.getText().isBlank()) & lib.emp_check(text_emp_supervID)) {
+					if ((!text_emp_supervID.getText().isBlank()) & Term_project_main.lib.emp_check(text_emp_supervID)) {
 						if (text_emp_first.getText().isBlank() | text_emp_last.getText().isBlank()
 								| text_emp_addr.getText().isBlank() | text_emp_phone.getText().isBlank()) {
 
@@ -566,7 +566,7 @@ class Employee_panel {
 					}
 				} else if (btn_emp_execute.getText().equalsIgnoreCase("Add")) {
 					System.out.print("IN");
-					if ((!text_emp_supervID.getText().isBlank()) & lib.emp_check(text_emp_supervID)) {
+					if ((!text_emp_supervID.getText().isBlank()) & Term_project_main.lib.emp_check(text_emp_supervID)) {
 						System.out.print("1");
 						if (text_emp_first.getText().isBlank() | text_emp_last.getText().isBlank()
 								| text_emp_addr.getText().isBlank() | text_emp_phone.getText().isBlank()) {
@@ -618,7 +618,7 @@ class Employee_panel {
 						}
 					} else {
 						System.out.print("3");
-						System.out.print(lib.emp_check(text_emp_supervID));
+						System.out.print(Term_project_main.lib.emp_check(text_emp_supervID));
 						lbl_emp_info.setText("Supervisor ID is not in Employee table or format invalid.");
 						lbl_emp_info.setVisible(true);
 					}

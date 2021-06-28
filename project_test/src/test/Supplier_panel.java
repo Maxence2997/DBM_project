@@ -29,7 +29,7 @@ class Supplier_panel {
 	 * @since 05/28 Seperated from Project_test
 	 **/
 
-	private Library lib;
+	
 
 	private JPanel supplier_panel;
 	private JTextField text_sup_supID;
@@ -57,8 +57,6 @@ class Supplier_panel {
 	private JButton btn_clear;
 
 	Supplier_panel() {
-
-		lib = new Library();
 
 		/*
 		 * New version GUI by Ray 05/27/2021
@@ -661,7 +659,7 @@ class Supplier_panel {
 					}
 				} else if (btn_sup_2.getText().equalsIgnoreCase("Add Product")) {
 					// 00
-					if (lib.module_check(text_sup_addr)) {
+					if (Term_project_main.lib.module_check(text_sup_addr)) {
 						// module already exist
 						lbl_result.setText("Request failed because this module already exist.");
 						lbl_result.setVisible(true);
@@ -867,7 +865,7 @@ class Supplier_panel {
 		 **/
 
 		ArrayList<String[]> temp = new ArrayList();
-		switch (lib.check_text_fields(sup_ID, sup_name)) {
+		switch (Term_project_main.lib.check_text_fields(sup_ID, sup_name)) {
 
 		case "11":
 
@@ -951,7 +949,7 @@ class Supplier_panel {
 		 **/
 
 		ArrayList<String[]> temp = new ArrayList();
-		switch (lib.check_text_fields(sup_ID, sup_name)) {
+		switch (Term_project_main.lib.check_text_fields(sup_ID, sup_name)) {
 
 		case "11":
 

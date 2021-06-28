@@ -17,9 +17,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 class Inventory_panel {
-
+	
+	
 	private JPanel inventory_panel;
-	private Library lib;
+	
 	private JTable inv_table;
 
 	private JTextField text_invID;
@@ -31,8 +32,6 @@ class Inventory_panel {
 	private JButton btn_clear;
 
 	Inventory_panel() {
-
-		lib = new Library();
 
 		inventory_panel = new JPanel();
 		inventory_panel.setBounds(0, 26, 1000, 450);
@@ -76,7 +75,7 @@ class Inventory_panel {
 		btn_inv_inquire.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if ((!text_invID.getText().isBlank()) & lib.num_not_null_check(text_invID)) {
+				if ((!text_invID.getText().isBlank()) & Term_project_main.lib.num_not_null_check(text_invID)) {
 
 					String[][] temp = inquire(text_invID, text_inv_item, text_inv_pd);
 					// String [][] temp =
@@ -212,7 +211,7 @@ class Inventory_panel {
 
 		ArrayList<String[]> temp = new ArrayList();
 
-		switch (lib.check_text_fields(InvID, item_name, module_type)) {
+		switch (Term_project_main.lib.check_text_fields(InvID, item_name, module_type)) {
 
 		case "111":
 

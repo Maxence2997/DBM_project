@@ -33,7 +33,7 @@ class Sheets_panel {
 	 * @autohr Jyun-An @ver. 1.2.2 05/28 Seperated from Project_test
 	 **/
 
-	private Library lib;
+	
 
 	private JComboBox comboBox_sheets;
 	private CardLayout cl_sheet;
@@ -148,7 +148,7 @@ class Sheets_panel {
 
 	Sheets_panel() {
 
-		lib = new Library();
+		
 
 		// core sheet panel which contains comboBox
 		core_sheet_panel = new JPanel();
@@ -182,9 +182,9 @@ class Sheets_panel {
 				String function = (String) comboBox_sheets.getSelectedItem(); // get the selected item
 
 				if (function.equalsIgnoreCase("signature")) {
-					if (lib.supervisor_check(Term_project_main.field_empID)) {
+					if (Term_project_main.lib.supervisor_check(Term_project_main.field_empID)) {
 
-						String[][] temp = lib.show_unsign_req();
+						String[][] temp = Term_project_main.lib.show_unsign_req();
 
 						if (temp.length != 0) {
 
@@ -940,24 +940,24 @@ class Sheets_panel {
 
 				if (id >= 21000000 & id < 22000000) {
 					// RFQ
-					if (lib.num_not_null_check(text_mod_5) & lib.date(text_mod_6.getText())) {
+					if (Term_project_main.lib.num_not_null_check(text_mod_5) & Term_project_main.lib.date(text_mod_6.getText())) {
 
 						if (modify() == 1)
 							lbl_mod_message.setText("modification succeed");
 						else
 							lbl_mod_message.setText("modification failed");
 					} else {
-//										System.out.print(lib.supplier_check(text_mod_supID));
-//										System.out.print(lib.num_not_null_check(text_mod_5));
-//										System.out.print(lib.date(text_mod_6.getText()));
+//										System.out.print(Term_project_main.lib.supplier_check(text_mod_supID));
+//										System.out.print(Term_project_main.lib.num_not_null_check(text_mod_5));
+//										System.out.print(Term_project_main.lib.date(text_mod_6.getText()));
 						lbl_mod_message.setText("format Invalid");
 						lbl_mod_message.setVisible(true);
 					}
 
 				} else if (id >= 22000000 & id < 23000000) {
 					// QUOT
-					if (lib.num_not_null_check(text_mod_5) & lib.num_not_null_check(text_mod_6)
-							& lib.date(text_mod_7.getText()) & lib.date(text_mod_8.getText())) {
+					if (Term_project_main.lib.num_not_null_check(text_mod_5) & Term_project_main.lib.num_not_null_check(text_mod_6)
+							& Term_project_main.lib.date(text_mod_7.getText()) & Term_project_main.lib.date(text_mod_8.getText())) {
 
 						if (modify() == 1)
 							lbl_mod_message.setText("Modification succeed");
@@ -969,8 +969,8 @@ class Sheets_panel {
 					}
 				} else if (id >= 23000000 & id < 24000000) {
 					// REQ
-					if (lib.num_not_null_check(text_mod_5) & lib.num_not_null_check(text_mod_6)
-							& lib.supervisor_check(text_mod_7) & lib.date(text_mod_8.getText())) {
+					if (Term_project_main.lib.num_not_null_check(text_mod_5) & Term_project_main.lib.num_not_null_check(text_mod_6)
+							& Term_project_main.lib.supervisor_check(text_mod_7) & Term_project_main.lib.date(text_mod_8.getText())) {
 
 						if (modify() == 1)
 							lbl_mod_message.setText("Modification succeed");
@@ -982,8 +982,8 @@ class Sheets_panel {
 					}
 				} else if (id >= 24000000 & id < 25000000) {
 					// PUR
-					if (lib.num_not_null_check(text_mod_5) & lib.num_not_null_check(text_mod_6)
-							& lib.date(text_mod_7.getText()) & lib.date(text_mod_8.getText())) {
+					if (Term_project_main.lib.num_not_null_check(text_mod_5) & Term_project_main.lib.num_not_null_check(text_mod_6)
+							& Term_project_main.lib.date(text_mod_7.getText()) & Term_project_main.lib.date(text_mod_8.getText())) {
 
 						if (modify() == 1)
 							lbl_mod_message.setText("modification succeed");
@@ -996,7 +996,7 @@ class Sheets_panel {
 
 				} else if (id >= 25000000 & id < 26000000) {
 					// EXAM
-					if (lib.num_not_null_check(text_mod_5) & lib.date(text_mod_6.getText())) {
+					if (Term_project_main.lib.num_not_null_check(text_mod_5) & Term_project_main.lib.date(text_mod_6.getText())) {
 
 						if (modify() == 1)
 							lbl_mod_message.setText("modification succeed");
@@ -1008,7 +1008,7 @@ class Sheets_panel {
 					}
 				} else {
 					// RCPT
-					if (lib.num_not_null_check(text_mod_5) & lib.date(text_mod_6.getText())) {
+					if (Term_project_main.lib.num_not_null_check(text_mod_5) & Term_project_main.lib.date(text_mod_6.getText())) {
 
 						if (modify() == 1)
 							lbl_mod_message.setText("modification succeed");
@@ -1028,7 +1028,7 @@ class Sheets_panel {
 		btn_mod_check.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (!lib.num_not_null_check(text_mod_sheetID) | !lib.num_not_null_check(text_mod_projectID)
+				if (!Term_project_main.lib.num_not_null_check(text_mod_sheetID) | !Term_project_main.lib.num_not_null_check(text_mod_projectID)
 						| text_mod_pd.getText().isBlank()) {
 					// None of them can't be blank
 
@@ -1602,9 +1602,9 @@ class Sheets_panel {
 
 				if (rb_appd_RFQ.isSelected()) {
 					if (append_check("RFQ")) {
-						if (lib.projectID_check(text_appd_1) & lib.module_check(text_appd_2)
-								& lib.supplier_check(text_appd_3) & lib.num_not_null_check(text_appd_4)) {
-							if ((!text_appd_5.getText().isBlank()) & lib.date(text_appd_5.getText())) {
+						if (Term_project_main.lib.projectID_check(text_appd_1) & Term_project_main.lib.module_check(text_appd_2)
+								& Term_project_main.lib.supplier_check(text_appd_3) & Term_project_main.lib.num_not_null_check(text_appd_4)) {
+							if ((!text_appd_5.getText().isBlank()) & Term_project_main.lib.date(text_appd_5.getText())) {
 
 								String[][] temp = append("RFQ");
 								String[] columns = { "Sheet ID", "Sheet type", "Project ID", "Supplier", "Product",
@@ -1641,7 +1641,7 @@ class Sheets_panel {
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
 								}
-							} else if ((!text_appd_5.getText().isBlank()) & (!lib.date(text_appd_5.getText()))) {
+							} else if ((!text_appd_5.getText().isBlank()) & (!Term_project_main.lib.date(text_appd_5.getText()))) {
 								lbl_append_message.setText("Date Format Invalid");
 								lbl_append_message.setVisible(true);
 								append_table.setVisible(false);
@@ -1663,10 +1663,10 @@ class Sheets_panel {
 
 				} else if (rb_appd_QUO.isSelected()) {
 					if (append_check("QUOT")) {
-						if (lib.projectID_check(text_appd_1) & lib.module_check(text_appd_2)
-								& lib.supplier_check(text_appd_3) & lib.num_not_null_check(text_appd_4)
-								& lib.num_not_null_check(text_appd_5) & lib.date(text_appd_6.getText())) {
-							if ((!text_appd_7.getText().isBlank()) & lib.date(text_appd_7.getText())) {
+						if (Term_project_main.lib.projectID_check(text_appd_1) & Term_project_main.lib.module_check(text_appd_2)
+								& Term_project_main.lib.supplier_check(text_appd_3) & Term_project_main.lib.num_not_null_check(text_appd_4)
+								& Term_project_main.lib.num_not_null_check(text_appd_5) & Term_project_main.lib.date(text_appd_6.getText())) {
+							if ((!text_appd_7.getText().isBlank()) & Term_project_main.lib.date(text_appd_7.getText())) {
 
 								String[][] temp = append("QUOT");
 								String[] columns = { "Sheet ID", "Sheet type", "Project ID", "Product", "Supplier",
@@ -1704,7 +1704,7 @@ class Sheets_panel {
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
 								}
-							} else if ((!text_appd_7.getText().isBlank()) & (!lib.date(text_appd_7.getText()))) {
+							} else if ((!text_appd_7.getText().isBlank()) & (!Term_project_main.lib.date(text_appd_7.getText()))) {
 								lbl_append_message.setText("Date Format Invalid");
 								lbl_append_message.setVisible(true);
 								append_table.setVisible(false);
@@ -1725,10 +1725,10 @@ class Sheets_panel {
 
 				} else if (rb_appd_REQ.isSelected()) {
 					if (append_check("REQ")) {
-						if (lib.projectID_check(text_appd_1) & lib.module_check(text_appd_2)
-								& lib.num_not_null_check(text_appd_4) & lib.num_not_null_check(text_appd_5)
-								& lib.supervisor_check(text_appd_6)) {
-							if ((!text_appd_7.getText().isBlank()) & lib.date(text_appd_7.getText())) {
+						if (Term_project_main.lib.projectID_check(text_appd_1) & Term_project_main.lib.module_check(text_appd_2)
+								& Term_project_main.lib.num_not_null_check(text_appd_4) & Term_project_main.lib.num_not_null_check(text_appd_5)
+								& Term_project_main.lib.supervisor_check(text_appd_6)) {
+							if ((!text_appd_7.getText().isBlank()) & Term_project_main.lib.date(text_appd_7.getText())) {
 								String[][] temp = append("REQ");
 								String[] columns = { "Sheet ID", "Sheet type", "Project ID", "Item ", "Module", "Vol.",
 										"Unit Price", "Total_price", "Signature", "Supervisor", "Date" };
@@ -1765,7 +1765,7 @@ class Sheets_panel {
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
 								}
-							} else if ((!text_appd_7.getText().isBlank()) & (!lib.date(text_appd_7.getText()))) {
+							} else if ((!text_appd_7.getText().isBlank()) & (!Term_project_main.lib.date(text_appd_7.getText()))) {
 								lbl_append_message.setText("Date Format Invalid");
 								lbl_append_message.setVisible(true);
 								append_table.setVisible(false);
@@ -1786,10 +1786,10 @@ class Sheets_panel {
 
 				} else if (rb_appd_PUR.isSelected()) {
 					if (append_check("PUR")) {
-						if (lib.projectID_check(text_appd_1) & lib.supplier_check(text_appd_3)
-								& lib.module_check(text_appd_2) & lib.num_not_null_check(text_appd_4)
-								& lib.num_not_null_check(text_appd_5) & lib.date(text_appd_6.getText())) {
-							if ((!text_appd_7.getText().isBlank()) & lib.date(text_appd_7.getText())) {
+						if (Term_project_main.lib.projectID_check(text_appd_1) & Term_project_main.lib.supplier_check(text_appd_3)
+								& Term_project_main.lib.module_check(text_appd_2) & Term_project_main.lib.num_not_null_check(text_appd_4)
+								& Term_project_main.lib.num_not_null_check(text_appd_5) & Term_project_main.lib.date(text_appd_6.getText())) {
+							if ((!text_appd_7.getText().isBlank()) & Term_project_main.lib.date(text_appd_7.getText())) {
 
 								String[][] temp = append("PUR");
 								String[] columns = { "Sheet ID", "Sheet type", "Project ID", "Supplier ID", "Module",
@@ -1827,7 +1827,7 @@ class Sheets_panel {
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
 								}
-							} else if ((!text_appd_7.getText().isBlank()) & (!lib.date(text_appd_7.getText()))) {
+							} else if ((!text_appd_7.getText().isBlank()) & (!Term_project_main.lib.date(text_appd_7.getText()))) {
 								lbl_append_message.setText("Date Format Invalid");
 								lbl_append_message.setVisible(true);
 								append_table.setVisible(false);
@@ -1847,10 +1847,10 @@ class Sheets_panel {
 					}
 				} else if (rb_appd_EXAM.isSelected()) {
 					if (append_check("EXAM")) {
-						if (lib.projectID_check(text_appd_1) & lib.supplier_check(text_appd_3)
-								& lib.module_check(text_appd_2) & lib.num_not_null_check(text_appd_4)
-								& lib.tf_check(text_appd_5)) {
-							if ((!text_appd_6.getText().isBlank()) & lib.date(text_appd_6.getText())) {
+						if (Term_project_main.lib.projectID_check(text_appd_1) & Term_project_main.lib.supplier_check(text_appd_3)
+								& Term_project_main.lib.module_check(text_appd_2) & Term_project_main.lib.num_not_null_check(text_appd_4)
+								& Term_project_main.lib.tf_check(text_appd_5)) {
+							if ((!text_appd_6.getText().isBlank()) & Term_project_main.lib.date(text_appd_6.getText())) {
 
 								String[][] temp = append("EXAM");
 								String[] columns = { "Sheet ID", "Sheet type", "Project ID", "Supplier ID", "Module",
@@ -1887,7 +1887,7 @@ class Sheets_panel {
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
 								}
-							} else if ((!text_appd_6.getText().isBlank()) & (!lib.date(text_appd_6.getText()))) {
+							} else if ((!text_appd_6.getText().isBlank()) & (!Term_project_main.lib.date(text_appd_6.getText()))) {
 								lbl_append_message.setText("Date Format Invalid");
 								lbl_append_message.setVisible(true);
 								append_table.setVisible(false);
@@ -1908,9 +1908,9 @@ class Sheets_panel {
 				} else {
 					// if (rb_appd_RCPT.isSelected()) {
 					if (append_check("RCPT")) {
-						if (lib.projectID_check(text_appd_1) & lib.supplier_check(text_appd_3)
-								& lib.module_check(text_appd_2) & lib.num_not_null_check(text_appd_4)) {
-							if ((!text_appd_5.getText().isBlank()) & lib.date(text_appd_5.getText())) {
+						if (Term_project_main.lib.projectID_check(text_appd_1) & Term_project_main.lib.supplier_check(text_appd_3)
+								& Term_project_main.lib.module_check(text_appd_2) & Term_project_main.lib.num_not_null_check(text_appd_4)) {
+							if ((!text_appd_5.getText().isBlank()) & Term_project_main.lib.date(text_appd_5.getText())) {
 								String[][] temp = append("RCPT");
 								String[] columns = { "Sheet ID", "Sheet type", "Project ID", "Supplier ID", "Module",
 										"Vol.", "Date" };
@@ -1947,7 +1947,7 @@ class Sheets_panel {
 									append_table.setVisible(false);
 									scrollpane_append.setVisible(false);
 								}
-							} else if ((!text_appd_5.getText().isBlank()) & (!lib.date(text_appd_5.getText()))) {
+							} else if ((!text_appd_5.getText().isBlank()) & (!Term_project_main.lib.date(text_appd_5.getText()))) {
 								lbl_append_message.setText("Date Format Invalid");
 								lbl_append_message.setVisible(true);
 								append_table.setVisible(false);
@@ -2420,7 +2420,7 @@ class Sheets_panel {
 		btn_remove_check.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (!lib.num_not_null_check(text_remove_sheetID) | !lib.num_not_null_check(text_remove_projectID)
+				if (!Term_project_main.lib.num_not_null_check(text_remove_sheetID) | !Term_project_main.lib.num_not_null_check(text_remove_projectID)
 						| text_remove_pd.getText().isBlank()) {
 					// None of them can't be blank
 
@@ -2859,7 +2859,7 @@ class Sheets_panel {
 		btn_sign_refresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				String[][] temp = lib.show_unsign_req();
+				String[][] temp = Term_project_main.lib.show_unsign_req();
 
 				if (temp.length != 0) {
 
@@ -2968,7 +2968,7 @@ class Sheets_panel {
 
 		String st_inq_all_sheets = "SELECT * FROM VIEW_6_SHEETS";
 
-		switch (lib.check_text_fields(first, second, third)) {
+		switch (Term_project_main.lib.check_text_fields(first, second, third)) {
 
 		case "011":
 			try {
@@ -3237,7 +3237,7 @@ class Sheets_panel {
 //					}
 //					System.out.println();
 //				}
-		lib.sort(result_array);
+		Term_project_main.lib.sort(result_array);
 		return result_array;
 
 	}
@@ -3260,7 +3260,7 @@ class Sheets_panel {
 					+ "rfq.Supplier_ID, sup.Supplier_name, rfq.Inquiring_product, rfq.Vol, rfq.Date FROM test.RFQ AS rfq \n"
 					+ "LEFT JOIN test.SUPPLIER AS sup ON sup.Supplier_ID=RFQ.Supplier_ID";
 
-			switch (lib.check_text_fields(first, second, third)) {
+			switch (Term_project_main.lib.check_text_fields(first, second, third)) {
 
 			case "111":
 
@@ -3379,7 +3379,7 @@ class Sheets_panel {
 					+ "quo.ESD, quo.Date FROM test.QUOTATION AS quo \n"
 					+ "LEFT JOIN test.SUPPLIER AS sup ON sup.Supplier_ID=quo.Supplier_ID";
 
-			switch (lib.check_text_fields(first, second, third)) {
+			switch (Term_project_main.lib.check_text_fields(first, second, third)) {
 
 			case "111":
 
@@ -3497,7 +3497,7 @@ class Sheets_panel {
 					+ " req.Vol, req.Unit_price, req.Total_price, req.Signature, req.Supervisor_ID,CONCAT(emp.First_name,\' \', emp.Last_name) AS Name,req.Date FROM \n"
 					+ "test.REQUISITION AS req LEFT JOIN test.EMPLOYEE AS emp ON emp.Emp_ID=req.Supervisor_ID";
 
-			switch (lib.check_text_fields(first, second, third)) {
+			switch (Term_project_main.lib.check_text_fields(first, second, third)) {
 
 			case "111":
 
@@ -3615,7 +3615,7 @@ class Sheets_panel {
 					+ "pur.Module_type, pur.Vol, pur.Unit_price, pur.total_price, pur.ESD, pur.Date "
 					+ "FROM PURCHASE AS pur INNER JOIN SUPPLIER AS sup ON sup.Supplier_ID=pur.Supplier_ID";
 
-			switch (lib.check_text_fields(first, second, third)) {
+			switch (Term_project_main.lib.check_text_fields(first, second, third)) {
 
 			case "111":
 
@@ -3733,7 +3733,7 @@ class Sheets_panel {
 			String st_exam = "SELECT ex.EX_Sheet_ID, ex.Sheet_type, ex.Project_ID, ex.Supplier_ID, "
 					+ "sup.Supplier_name, ex.Module_type, ex.Vol, ex.Result, ex.Date FROM EXAMINATION AS ex INNER JOIN SUPPLIER AS sup"
 					+ " ON sup.Supplier_ID = ex.Supplier_ID";
-			switch (lib.check_text_fields(first, second, third)) {
+			switch (Term_project_main.lib.check_text_fields(first, second, third)) {
 
 			case "111":
 
@@ -3850,7 +3850,7 @@ class Sheets_panel {
 			String st_rcpt = "SELECT rcpt.REC_Sheet_ID, rcpt.Sheet_type, rcpt.Project_ID, rcpt.Supplier_ID, "
 					+ "sup.Supplier_name, rcpt.Module_type, rcpt.Vol, rcpt.Date FROM RECEIPT AS rcpt INNER JOIN SUPPLIER AS sup"
 					+ " ON sup.Supplier_ID = rcpt.Supplier_ID";
-			switch (lib.check_text_fields(first, second, third)) {
+			switch (Term_project_main.lib.check_text_fields(first, second, third)) {
 
 			case "111":
 

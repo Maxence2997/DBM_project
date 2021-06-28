@@ -34,7 +34,7 @@ class Maintenance_panel {
 	 * @ver. 1.2.2 05/28 Seperated from Project_test
 	 **/
 
-	private Library lib;
+	
 	JPanel core_maint_panel;
 	private JPanel maint_container_panel;
 	private JComboBox comboBox_pj;
@@ -82,8 +82,6 @@ class Maintenance_panel {
 	 * @wbp.parser.entryPoint
 	 */
 	Maintenance_panel() {
-
-		lib = new Library();
 
 		// core sheet panel which contains comboBox
 		core_maint_panel = new JPanel();
@@ -249,7 +247,7 @@ class Maintenance_panel {
 						Integer.parseInt(text_inq_empID.getText());
 
 					if (!text_inq_date.getText().isBlank()) {
-						if (lib.date(text_inq_date.getText())) {
+						if (Term_project_main.lib.date(text_inq_date.getText())) {
 
 							String[][] temp = inquire(text_inq_pjID, text_inq_empID, text_inq_date);
 
@@ -462,7 +460,7 @@ class Maintenance_panel {
 			public void actionPerformed(ActionEvent arg0) {
 				if (btn_maint.getText().equalsIgnoreCase("Modify")) {
 
-					if (lib.date(text_maint_date.getText())) {
+					if (Term_project_main.lib.date(text_maint_date.getText())) {
 
 						if (modify() == 1) {
 							// send message to user modify succeed
@@ -483,11 +481,11 @@ class Maintenance_panel {
 
 				} else if (btn_maint.getText().equalsIgnoreCase("Append")) {
 
-					if (lib.emp_check(text_maint_empID)) {
+					if (Term_project_main.lib.emp_check(text_maint_empID)) {
 
 						if (!(text_maint_date.getText().isBlank())) {
 
-							if (lib.date(text_maint_date.getText())) {
+							if (Term_project_main.lib.date(text_maint_date.getText())) {
 
 								ArrayList<String> temp = append();
 
@@ -692,7 +690,7 @@ class Maintenance_panel {
 		 **/
 		int resultSet = 0;
 
-		if (text_maint_empID.getText().isBlank() | (!(lib.emp_check(text_maint_empID)))
+		if (text_maint_empID.getText().isBlank() | (!(Term_project_main.lib.emp_check(text_maint_empID)))
 				| text_maint_date.getText().isBlank()) {
 
 			return resultSet;
@@ -724,7 +722,7 @@ class Maintenance_panel {
 
 		ArrayList<String[]> temp = new ArrayList();
 
-		switch (lib.check_text_fields(projectID, empID, est_date)) {
+		switch (Term_project_main.lib.check_text_fields(projectID, empID, est_date)) {
 
 		case "111":
 

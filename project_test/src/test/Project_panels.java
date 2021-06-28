@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 class Project_panels {
 		
-	private Library lib;
+	
 	private JPanel project_panel;
 	
 	private Maintenance_panel pj_subpanels; //project subpanels 
@@ -22,8 +22,6 @@ class Project_panels {
 	
 	Project_panels() {
 		
-		lib = new Library();
-
 		project_panel = new JPanel();
 		project_panel.setBounds(0, 26, 1000, 450);
 		Term_project_main.container_panel.add(project_panel,"project");
@@ -34,7 +32,7 @@ class Project_panels {
 			public void actionPerformed(ActionEvent arg0) {
 				pj_subpanels.get_comboBox_project().setSelectedIndex(0);
 				pj_subpanels.clear_inq_panel();
-				lib.adjust_PROJECT();
+				Term_project_main.lib.adjust_PROJECT();
 				Term_project_main.cl_home.show(Term_project_main.container_panel,"maintenance");
 				// btn_back2Project.setVisible(true);
 			}
@@ -50,7 +48,7 @@ class Project_panels {
 		btn_pj_prog.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				lib.adjust_PROJECT();
+				Term_project_main.lib.adjust_PROJECT();
 				prog_panel.clear();
 				Term_project_main.cl_home.show(Term_project_main.container_panel,"progress");
 				// btn_back2Project.setVisible(true);
@@ -67,7 +65,7 @@ class Project_panels {
 		btn_pj_sheet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-					lib.adjust_PROJECT();
+					Term_project_main.lib.adjust_PROJECT();
 				 sheets_panel.get_comboBox_sheets().setSelectedIndex(0);
 				 Term_project_main.cl_home.show(Term_project_main.container_panel,"sheets");
 				 //btn_back2Project.setVisible(true);

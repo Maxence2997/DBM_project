@@ -24,7 +24,7 @@ import javax.swing.table.TableColumnModel;
 
 class Progress_panel {
 
-	private Library lib;
+	
 	private JPanel progress_panel;
 	private JTextField text_prog_pjID;
 	private JTable prog_table;
@@ -32,8 +32,6 @@ class Progress_panel {
 	private JLabel lbl_prog_message;
 
 	Progress_panel() {
-
-		lib = new Library();
 
 		progress_panel = new JPanel();
 		progress_panel.setBounds(0, 26, 1000, 450);
@@ -172,7 +170,7 @@ class Progress_panel {
 		JButton btnNewButton = new JButton("Inquire");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (lib.num_not_null_check(text_prog_pjID)) {
+				if (Term_project_main.lib.num_not_null_check(text_prog_pjID)) {
 
 					String[][] temp = show_project_status("inquire");
 
@@ -248,7 +246,7 @@ class Progress_panel {
 
 		case "attention":
 
-			if (lib.supervisor_check(Term_project_main.field_empID)) {
+			if (Term_project_main.lib.supervisor_check(Term_project_main.field_empID)) {
 
 				try {
 
@@ -277,7 +275,7 @@ class Progress_panel {
 
 		case "inquire":
 
-			if (lib.supervisor_check(Term_project_main.field_empID)) {
+			if (Term_project_main.lib.supervisor_check(Term_project_main.field_empID)) {
 
 				try {
 
@@ -306,7 +304,7 @@ class Progress_panel {
 
 		default:
 			// all
-			if (lib.supervisor_check(Term_project_main.field_empID)) {
+			if (Term_project_main.lib.supervisor_check(Term_project_main.field_empID)) {
 
 				try {
 

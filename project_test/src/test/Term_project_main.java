@@ -40,7 +40,7 @@ public class Term_project_main {
 
 	static CardLayout card_layout;
 	static CardLayout cl_home;
-	private Library lib;
+	static Library lib = new Library();;
 
 	/**
 	 * Launch the application.
@@ -85,7 +85,7 @@ public class Term_project_main {
 		card_layout = new CardLayout();
 
 		frame.getContentPane().setLayout(card_layout);
-		lib = new Library();
+		
 		login_panel();
 		home_panel();
 		new Project_panels();
