@@ -917,8 +917,9 @@ class Sheet_append_panel {
 
 			ResultSet r = Term_project_main.conn.st.executeQuery(
 					"SELECT * FROM test.view_append_check WHERE Project_ID=" + text_appd_1.getText() + " LIMIT 1");
-			System.out.print(
-					"SELECT * FROM test.view_append_check WHERE Project_ID=" + text_appd_1.getText() + " LIMIT 1");
+			
+//			System.out.print(
+//					"SELECT * FROM test.view_append_check WHERE Project_ID=" + text_appd_1.getText() + " LIMIT 1");
 
 			if (r.next()) {
 
@@ -968,8 +969,9 @@ class Sheet_append_panel {
 				case "RCPT":
 					// case "RCPT"
 					if (r.getString("EX_Sheet_ID") != null) {
-
-						result = true;
+						if (r.getString("Result").equalsIgnoreCase("True")) {
+							result = true;
+						}
 					}
 					break;
 
