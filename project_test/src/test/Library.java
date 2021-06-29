@@ -9,13 +9,11 @@ import java.util.Date;
 
 import javax.swing.JTextField;
 
-public class Library {
+class Library {
 
 	private String[][] temp;
 
-	public Library() {
 
-	}
 
 	String[][] show_unsign_req() {
 
@@ -115,9 +113,11 @@ public class Library {
 		/**
 		 * @author jyunanyang
 		 * @since 06/16/2021
+		 * 
+		 * only used for employee's reminder
 		 */
-
-		final String st_progress = "SELECT * FROM VIEW_PROJECT_PROGRESS";
+		
+		String st_progress = "SELECT * FROM VIEW_PROJECT_PROGRESS";
 
 		ArrayList<String[]> temp = new ArrayList();
 

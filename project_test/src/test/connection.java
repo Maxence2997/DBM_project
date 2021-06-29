@@ -25,19 +25,13 @@ class connection {
 	static Statement st;
 
 	connection(int test) {
-
 		// run mysql
-		connection_mysql(test);
-		
-
-		
+		connection_mysql(test);	
 	}
 
 	connection() {
-
 		// run mysql
 		connection_mysql();
-
 	}
 
 	static void connection_mysql() {

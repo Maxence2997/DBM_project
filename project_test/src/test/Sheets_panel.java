@@ -139,7 +139,7 @@ class Sheets_panel {
 				} else if (function.equalsIgnoreCase("Modify")) {
 
 					mod_panel.clear_mod_panel();
-					mod_panel.set_defalt_visible();
+					mod_panel.set_default_visible();
 
 				} else if (function.equalsIgnoreCase("Append")) {
 

@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class Term_project_main {
+class Term_project_main {
 
 	static connection conn;
 
@@ -74,7 +74,7 @@ public class Term_project_main {
 	 * Create the application.
 	 */
 
-	public Term_project_main() {
+	Term_project_main() {
 
 		double time1, time2;
 		time1 = System.currentTimeMillis();

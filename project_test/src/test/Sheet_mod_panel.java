@@ -773,7 +773,7 @@ class Sheet_mod_panel  {
 		lbl_mod_message.setText("");
 	}
 
-	void set_defalt_visible() {
+	void set_default_visible() {
 		
 		btn_mod_check.setVisible(true);
 		btn_mod_clear.setVisible(false);
