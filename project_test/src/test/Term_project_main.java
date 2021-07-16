@@ -17,6 +17,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 class Term_project_main {
+	
+	// local
+	static final String DB_URL = "jdbc:mysql://localhost:3306/test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+	// userid & password
+	static final String USER = "root";
+	static final String PASS = "qazwsxedc12345678";
 
 	static connection conn;
 
