@@ -34,16 +34,14 @@ abstract class Sheets {
 	
 	abstract String[][] inquire(String[] temp);
 	
-	abstract String[][] inquire(String non_filled, String first, String second);
 	
-	abstract String[][] inquire(String filled, String first);
 	
 	
 	abstract String[][] append();
 	
 	abstract int modify();
 	
-	abstract int sign();
+	
 	
 	abstract int remove();
 

@@ -100,17 +100,14 @@ class Sheet_inq_panel  {
 
 					if (!text_inq_projectID.getText().isBlank())
 						Integer.parseInt(text_inq_projectID.getText());
+					
+				
 
 					if (rb_inq_all.isSelected()) {
 
 						String[][] temp = inquire_all(text_inq_sheetID, text_inq_projectID, text_inq_pd);
 
-						// for(int i=0; i<temp.length;i++) {
-						// for(int j=0; j<temp[i].length;j++) {
-						// System.out.print(temp[i][j]+"\t");
-						// }
-						// System.out.println();
-						// }
+						
 						if (temp.length != 0) {
 
 							String[] columns_name = { "Sheet ID", "Type", "Column 3", "Project ID", "Column 5",
@@ -133,10 +130,19 @@ class Sheet_inq_panel  {
 							lbl_inq_result.setVisible(true);
 						}
 
-					} else if (rb_inq_RFQ.isSelected()) {
-
-						String[][] temp = inquire("RFQ", text_inq_sheetID, text_inq_projectID, text_inq_pd);
-						if (temp.length != 0) {
+					}
+					
+					
+					if (rb_inq_RFQ.isSelected()) {
+						
+						RFQ rfq = new RFQ();
+						
+						//String[][] temp = inquire("RFQ", text_inq_sheetID, text_inq_projectID, text_inq_pd);
+						
+						
+						String[][] temp = rfq.inquire(new String[] {text_inq_sheetID.getText(), text_inq_projectID.getText(), 
+						                                  text_inq_pd.getText()});
+						if (temp != null) {
 
 							String[] columns_name = { "Sheet ID", "Type", "Project ID", "Supplier ID", "Name",
 									"Inquiring Product", "Vol.", "Date" };
@@ -149,14 +155,16 @@ class Sheet_inq_panel  {
 							lbl_inq_result.setVisible(true);
 
 						} else {
-							// temp.length==0
+							// temp==null
 							inq_table.setVisible(false);
 							scrollpane_inq.setVisible(false);
 							lbl_inq_result.setText("Data no found");
 							lbl_inq_result.setVisible(true);
 						}
 
-					} else if (rb_inq_quo.isSelected()) {
+					} 
+					
+					if (rb_inq_quo.isSelected()) {
 
 						String[][] temp = inquire("QUO", text_inq_sheetID, text_inq_projectID, text_inq_pd);
 						if (temp.length != 0) {
@@ -179,7 +187,9 @@ class Sheet_inq_panel  {
 							lbl_inq_result.setVisible(true);
 						}
 
-					} else if (rb_inq_req.isSelected()) {
+					} 
+					
+					if (rb_inq_req.isSelected()) {
 
 						String[][] temp = inquire("REQ", text_inq_sheetID, text_inq_projectID, text_inq_pd);
 						if (temp.length != 0) {
@@ -207,7 +217,9 @@ class Sheet_inq_panel  {
 							lbl_inq_result.setVisible(true);
 						}
 
-					} else if (rb_inq_pur.isSelected()) {
+					} 
+					
+					if (rb_inq_pur.isSelected()) {
 
 						String[][] temp = inquire("PUR", text_inq_sheetID, text_inq_projectID, text_inq_pd);
 						if (temp.length != 0) {
@@ -231,7 +243,9 @@ class Sheet_inq_panel  {
 							lbl_inq_result.setVisible(true);
 						}
 
-					} else if (rb_inq_exam.isSelected()) {
+					} 
+					
+					if (rb_inq_exam.isSelected()) {
 
 						String[][] temp = inquire("EXAM", text_inq_sheetID, text_inq_projectID, text_inq_pd);
 						if (temp.length != 0) {
@@ -255,8 +269,9 @@ class Sheet_inq_panel  {
 							lbl_inq_result.setVisible(true);
 						}
 
-					} else {
-						// else if(rb_inq_rec.isSelected())
+					} 
+					
+					if(rb_inq_rec.isSelected()){
 						String[][] temp = inquire("RCPT", text_inq_sheetID, text_inq_projectID, text_inq_pd);
 						if (temp.length != 0) {
 
@@ -279,13 +294,13 @@ class Sheet_inq_panel  {
 							lbl_inq_result.setVisible(true);
 						}
 					}
-
 				} catch (NumberFormatException ex) {
 					// handle exception here
 
 					lbl_inq_result.setText("Format Invalid");
 					lbl_inq_result.setVisible(true);
 				}
+				
 			}
 		});
 		btn_inq_inquire.setVisible(false);

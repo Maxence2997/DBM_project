@@ -13,8 +13,6 @@ class Library {
 
 	private String[][] temp;
 
-
-
 	String[][] show_unsign_req() {
 
 		ArrayList<String[]> temp = new ArrayList();
@@ -114,9 +112,9 @@ class Library {
 		 * @author jyunanyang
 		 * @since 06/16/2021
 		 * 
-		 * only used for employee's reminder
+		 *        only used for employee's reminder
 		 */
-		
+
 		String st_progress = "SELECT * FROM VIEW_PROJECT_PROGRESS";
 
 		ArrayList<String[]> temp = new ArrayList();
@@ -414,9 +412,9 @@ class Library {
 
 	String check_text_fields(JTextField ID, JTextField else1, JTextField else2) {
 		/**
-		 * @author jyunanyang
+		 * @author maxence2997
 		 * @since 06/02/2021 to check how many JTextField are filled by user and return
-		 *        a String to be represente the status for switch case in inquire
+		 *        a String to be represent the status for switch case in inquire
 		 *        function.
 		 */
 
@@ -450,6 +448,63 @@ class Library {
 		} else {
 			// 0-0-1
 			return "001";
+		}
+
+	}
+
+	String which_is_blank(String temp[]) {
+		/**
+		 * @author jyunanyang
+		 * @since 07/17/2021 
+		 * 
+		 * to check which String is/are blank and return a String to  represent the status 
+		 * for switch case in inquire function.
+		 */
+
+		if (!(temp[0].isBlank())) {
+			// 1
+			if (!(temp[1].isBlank())) {
+				// 1-1
+				if (!(temp[2].isBlank())) {
+					// 1-1-1
+					return "None of them";
+				} else {
+					// 1-1-0
+					return "the third one";
+				}
+			} else {
+				// 1-0
+				if (!(temp[2].isBlank())) {
+
+					// 1-0-1
+					return "the second one";
+					
+				} else {
+					// 1-0-0
+					return "the second and the third one";
+				}
+			}
+		} else {
+			// 0
+			if (!(temp[1].isBlank())) {
+				// 0-1
+				if (!(temp[2].isBlank())) {
+					// 0-1-1
+					return "the first one";
+				} else {
+					// 0-1-0
+					return "the first and the third one";
+				}
+			} else {
+				// 0-0
+				if (!temp[2].isBlank())
+					// 0-0-1
+					return "the first and the second one";
+
+				else
+					// 0-0-0
+					return "All";
+			}
 		}
 
 	}
@@ -635,8 +690,7 @@ class Library {
 		}
 
 	}
-	
-	
+
 	void sort(String[][] array) {
 		this.temp = array;
 
