@@ -58,7 +58,7 @@ class Term_project_main {
 				double time1, time2, time3, time4;
 
 				time1 = System.currentTimeMillis();
-				conn = new connection();
+				
 				// conn = new connection(4);
 				time2 = System.currentTimeMillis();
 				System.out.println((time2 - time1) / 1000);
@@ -87,7 +87,7 @@ class Term_project_main {
 		frame = new JFrame("Supply Chain System");
 		// frame.setBounds(100, 100, 666, 466);
 		frame.setBounds(100, 100, 1000, 550);
-
+		conn = new connection();
 		card_layout = new CardLayout();
 
 		frame.getContentPane().setLayout(card_layout);
