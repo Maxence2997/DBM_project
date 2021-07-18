@@ -24,7 +24,7 @@ class Term_project_main {
 	static final String USER = "root";
 	static final String PASS = "qazwsxedc12345678";
 
-	static connection conn;
+	//static connection conn;
 
 	private JFrame frame;
 
@@ -43,7 +43,7 @@ class Term_project_main {
 	private Supplier_panel sup_panel;
 
 	private Inventory_panel inv_panel;
-
+	static connection conn;
 	static CardLayout card_layout;
 	static CardLayout cl_home;
 	static Library lib = new Library();;

@@ -1,5 +1,8 @@
 package test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -15,20 +18,28 @@ class Library {
 
 	String[][] show_unsign_req() {
 
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet result = null;
+
 		ArrayList<String[]> temp = new ArrayList();
 
 		try {
-			ResultSet r = Term_project_main.conn.st
-					.executeQuery("SELECT * FROM test.view_unsigned_req WHERE Supervisor_ID="
-							+ Term_project_main.field_empID.getText());
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
 
-			while (r.next()) {
+			ps = conn.prepareStatement("SELECT * FROM test.view_unsigned_req WHERE Supervisor_ID=?");
+			ps.setString(1, Term_project_main.field_empID.getText());
+
+			result = ps.executeQuery();
+
+			while (result.next()) {
 
 				String[] temp_array = new String[12];
 
 				for (int i = 1; i < 13; i++) {
 
-					temp_array[i - 1] = r.getString(i);
+					temp_array[i - 1] = result.getString(i);
 				}
 				temp.add(temp_array);
 			}
@@ -36,6 +47,25 @@ class Library {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (result != null) {
+					result.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			} finally {
+				System.out.println("closed");
+			}
 		}
 
 		String[][] result_array = new String[temp.size()][12];
@@ -55,25 +85,39 @@ class Library {
 		 *        to update whole PROJECT table
 		 */
 
+		Connection conn = null;
+		PreparedStatement ps = null;
+		PreparedStatement ps1 = null;
+		PreparedStatement ps2 = null;
+		ResultSet result = null;
+
 		ArrayList<String[]> temp = new ArrayList();
 
 		try {
-			ResultSet r = Term_project_main.conn.st
-					.executeQuery("SELECT pj.Project_ID,RFQ.Sheet_type,QUOT.Sheet_type, REQ.Sheet_type, \n"
-							+ "PUR.Sheet_type, EXAM.Sheet_type, RCPT.Sheet_type\n"
-							+ "FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
-							+ "LEFT JOIN test.QUOTATION AS QUOT ON QUOT.Project_ID = pj.Project_ID \n"
-							+ "LEFT JOIN test.REQUISITION AS REQ ON REQ.Project_ID = pj.Project_ID\n"
-							+ "LEFT JOIN test.PURCHASE AS PUR ON PUR.Project_ID = pj.Project_ID\n"
-							+ "LEFT JOIN test.EXAMINATION AS EXAM ON EXAM.Project_ID = pj.Project_ID\n"
-							+ "LEFT JOIN test.RECEIPT AS RCPT ON RCPT.Project_ID = pj.Project_ID GROUP BY pj.Project_ID");
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+			ps1 = conn.prepareStatement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+			ps1.executeUpdate();
+			ps2 = conn.prepareStatement("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+			ps2.executeUpdate();
 
-			while (r.next()) {
+			ps = conn.prepareStatement("SELECT pj.Project_ID,RFQ.Sheet_type,QUOT.Sheet_type, REQ.Sheet_type, \n"
+					+ "PUR.Sheet_type, EXAM.Sheet_type, RCPT.Sheet_type\n"
+					+ "FROM PROJECT AS pj LEFT JOIN RFQ ON pj.Project_ID = RFQ.Project_ID \n"
+					+ "LEFT JOIN test.QUOTATION AS QUOT ON QUOT.Project_ID = pj.Project_ID \n"
+					+ "LEFT JOIN test.REQUISITION AS REQ ON REQ.Project_ID = pj.Project_ID\n"
+					+ "LEFT JOIN test.PURCHASE AS PUR ON PUR.Project_ID = pj.Project_ID\n"
+					+ "LEFT JOIN test.EXAMINATION AS EXAM ON EXAM.Project_ID = pj.Project_ID\n"
+					+ "LEFT JOIN test.RECEIPT AS RCPT ON RCPT.Project_ID = pj.Project_ID GROUP BY pj.Project_ID");
+
+			result = ps.executeQuery();
+
+			while (result.next()) {
 				String[] temp_array = new String[2];
 				for (int i = 2; i < 8; i++) {
-					temp_array[0] = r.getString(1);
+					temp_array[0] = result.getString(1);
 
-					if (r.getString(i) == null) {
+					if (result.getString(i) == null) {
 						if (i == 2) {
 							temp_array[1] = "just started";
 							break;
@@ -81,7 +125,7 @@ class Library {
 							break;
 						}
 					} else {
-						temp_array[1] = r.getString(i);
+						temp_array[1] = result.getString(i);
 					}
 				}
 				temp.add(temp_array);
@@ -90,18 +134,63 @@ class Library {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (result != null) {
+					result.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			} finally {
+				System.out.println("closed");
+			}
 		}
 
 		for (int l = 0; l < temp.size(); l++) {
 
 			try {
-				int resultSet = Term_project_main.conn.st.executeUpdate("UPDATE test.PROJECT SET Project_status=\'"
-						+ temp.get(l)[1] + "\' WHERE Project_ID=" + temp.get(l)[0]);
 
-				;
+				conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+						Term_project_main.PASS);
+
+				ps = conn.prepareStatement("UPDATE test.PROJECT SET Project_status=? WHERE Project_ID=?");
+
+				ps.setString(1, temp.get(l)[1]);
+				ps.setString(2, temp.get(l)[0]);
+
+				ps.executeUpdate();
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally {
+
+				try {
+					if (result != null) {
+						result.close();
+					}
+					if (ps != null) {
+						ps.close();
+					}
+					if (conn != null) {
+						conn.close();
+					}
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				} finally {
+					System.out.println("closed");
+				}
 			}
 		}
 	}
@@ -115,28 +204,33 @@ class Library {
 		 *        only used for employee's reminder
 		 */
 
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet result = null;
+
 		String st_progress = "SELECT * FROM VIEW_PROJECT_PROGRESS";
 
 		ArrayList<String[]> temp = new ArrayList();
 
 		try {
-//				System.out.print(st_progress + " WHERE (P_Delivery_pct<50 AND Date_diff>29 AND Emp_ID="
-//						+ Term_project_main.field_empID.getText() + ") ORDER BY Date_diff DESC");
-//				
-			ResultSet r = Term_project_main.conn.st
-					.executeQuery(st_progress + " WHERE (P_Delivery_pct<50 AND Date_diff>29 AND Emp_ID="
-							+ Term_project_main.field_empID.getText() + ") ORDER BY Date_diff DESC");
 
-			while (r.next()) {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+			ps = conn.prepareStatement(
+					"SELECT * FROM VIEW_PROJECT_PROGRESS  WHERE (P_Delivery_pct<50 AND Date_diff>29 AND Emp_ID=?) ORDER BY Date_diff DESC");
+			ps.setString(1, Term_project_main.field_empID.getText());
+			result = ps.executeQuery();
+
+			while (result.next()) {
 
 				String[] temp_array = new String[12];
 				for (int i = 1; i < 13; i++) {
 
 					if (i == 6)
-						temp_array[i - 1] = (r.getString(i) + "%");
+						temp_array[i - 1] = (result.getString(i) + "%");
 
 					else
-						temp_array[i - 1] = r.getString(i);
+						temp_array[i - 1] = result.getString(i);
 					// System.out.print(temp_array[i-1]);
 				}
 				temp.add(temp_array);
@@ -146,6 +240,25 @@ class Library {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+
+			try {
+				if (result != null) {
+					result.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			} finally {
+				System.out.println("closed");
+			}
 		}
 
 		String[][] result_array = new String[temp.size()][12];
@@ -188,13 +301,21 @@ class Library {
 		 *        Supplier table or not
 		 */
 
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet result = null;
+
 		boolean res = false;
 
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery(
-					"SELECT Supplier_ID FROM test.SUPPLIER WHERE Supplier_ID=\'" + supID.getText() + "\'");
 
-			if (r.next()) {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+			ps = conn.prepareStatement("SELECT Supplier_ID FROM test.SUPPLIER WHERE Supplier_ID=?");
+			ps.setString(1, supID.getText());
+			result = ps.executeQuery();
+
+			if (result.next()) {
 
 				res = true;
 			}
@@ -204,6 +325,25 @@ class Library {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return res;
+		} finally {
+
+			try {
+				if (result != null) {
+					result.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			} finally {
+				System.out.println("closed");
+			}
 		}
 	}
 
@@ -216,6 +356,10 @@ class Library {
 		 *        to test projectID.getText() is blank or alphabet and verify it's in
 		 *        our PORJECT table or not
 		 */
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet result = null;
 		boolean res = false;
 		try {
 			Integer.parseInt(pjID.getText());
@@ -227,10 +371,15 @@ class Library {
 		}
 
 		try {
-			ResultSet r = Term_project_main.conn.st
-					.executeQuery("SELECT Project_ID FROM test.PROJECT WHERE Project_ID=" + pjID.getText());
 
-			if (r.next()) {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+
+			ps = conn.prepareStatement("SELECT Project_ID FROM test.PROJECT WHERE Project_ID=?");
+			ps.setString(1, pjID.getText());
+			result = ps.executeQuery();
+
+			if (result.next()) {
 
 				res = true;
 			}
@@ -240,6 +389,25 @@ class Library {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 			return res;
+		} finally {
+
+			try {
+				if (result != null) {
+					result.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			} finally {
+				System.out.println("closed");
+			}
 		}
 	}
 
@@ -253,13 +421,20 @@ class Library {
 		 *        PORJECT table or not
 		 */
 
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet result = null;
 		boolean res = false;
 
 		try {
-			ResultSet r = Term_project_main.conn.st.executeQuery(
-					"SELECT Module_type FROM test.PRODUCT WHERE Module_type=\'" + module.getText() + "\'");
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
 
-			if (r.next()) {
+			ps = conn.prepareStatement("SELECT Module_type FROM test.PRODUCT WHERE Module_type=?");
+			ps.setString(1, module.getText());
+			result = ps.executeQuery();
+
+			if (result.next()) {
 
 				res = true;
 			}
@@ -307,16 +482,25 @@ class Library {
 			return false;
 		}
 
-		try {
-			ResultSet r = Term_project_main.conn.st
-					.executeQuery("SELECT Emp_ID FROM test.EMPLOYEE WHERE Emp_ID=" + empID.getText());
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet result = null;
 
-			if (r.next()) {
+		try {
+
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+
+			ps = conn.prepareStatement("SELECT Emp_ID FROM test.EMPLOYEE WHERE Emp_ID=?");
+			ps.setString(1, empID.getText());
+			result = ps.executeQuery();
+
+			if (result.next()) {
 
 				return true;
 			}
 
-			return false;
+			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -324,6 +508,7 @@ class Library {
 
 			return false;
 		}
+		return false;
 	}
 
 	boolean supervisor_check(JTextField empID) {
@@ -334,12 +519,20 @@ class Library {
 		 */
 
 		boolean res = false;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet result = null;
 
 		try {
-			ResultSet r = Term_project_main.conn.st
-					.executeQuery("SELECT Supervisor_ID FROM test.EMPLOYEE WHERE Supervisor_ID=" + empID.getText());
 
-			if (r.next()) {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+
+			ps = conn.prepareStatement("SELECT Supervisor_ID FROM test.EMPLOYEE WHERE Supervisor_ID=?");
+			ps.setString(1, empID.getText());
+			result = ps.executeQuery();
+
+			if (result.next()) {
 
 				// System.out.println(r.getString(1));
 				res = true;
@@ -455,10 +648,10 @@ class Library {
 	String which_is_blank(String temp[]) {
 		/**
 		 * @author jyunanyang
-		 * @since 07/17/2021 
+		 * @since 07/17/2021
 		 * 
-		 * to check which String is/are blank and return a String to  represent the status 
-		 * for switch case in inquire function.
+		 *        to check which String is/are blank and return a String to represent
+		 *        the status for switch case in inquire function.
 		 */
 
 		if (!(temp[0].isBlank())) {
@@ -478,7 +671,7 @@ class Library {
 
 					// 1-0-1
 					return "the second one";
-					
+
 				} else {
 					// 1-0-0
 					return "the second and the third one";
@@ -539,155 +732,176 @@ class Library {
 		 * @since 05/06/2021
 		 */
 
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet result = null;
+
 		ArrayList<String> temp = new ArrayList();
 
 		int id = Integer.parseInt(text1.getText());
 
-		if (id >= 21000000 & id < 22000000) {
-			// RFQ
-			try {
+		try {
 
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.veiw_rfq WHERE (Sheet_ID="
-						+ text1.getText() + " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText()
-						+ "\' AND Supplier_ID=\'" + text4.getText() + "\')");
+			if (id >= 21000000 & id < 22000000) {
+				// RFQ
 
-				while (r.next()) {
+				conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+						Term_project_main.PASS);
+
+				ps = conn.prepareStatement(
+						"SELECT * FROM test.veiw_rfq WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?");
+				ps.setString(1, text1.getText());
+				ps.setString(2, text2.getText());
+				ps.setString(3, text3.getText());
+				ps.setString(4, text4.getText());
+				result = ps.executeQuery();
+
+				while (result.next()) {
 
 					for (int i = 1; i < 9; i++) {
 
-						temp.add(r.getString(i));
+						temp.add(result.getString(i));
 					}
 				}
-				return temp;
 
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return temp;
-			}
+			} else if (id >= 22000000 & id < 23000000) {
+				// QUOT
 
-		} else if (id >= 22000000 & id < 23000000) {
-			// QUOT
-			try {
+				conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+						Term_project_main.PASS);
 
-				ResultSet r = Term_project_main.conn.st
-						.executeQuery("SELECT * FROM test.view_quotation WHERE (Sheet_ID=" + text1.getText()
-								+ " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText()
-								+ "\' AND Supplier_ID=\'" + text4.getText() + "\')");
+				ps = conn.prepareStatement(
+						"SELECT * FROM test.view_quotation WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?");
+				ps.setString(1, text1.getText());
+				ps.setString(2, text2.getText());
+				ps.setString(3, text3.getText());
+				ps.setString(4, text4.getText());
+				result = ps.executeQuery();
 
-				while (r.next()) {
+				while (result.next()) {
 
 					for (int i = 1; i < 12; i++)
 
-						temp.add(r.getString(i));
+						temp.add(result.getString(i));
 				}
-				return temp;
 
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return temp;
-			}
+			} else if (id >= 23000000 & id < 24000000) {
+				// REQ
 
-		} else if (id >= 23000000 & id < 24000000) {
-			// REQ
-			try {
+				conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+						Term_project_main.PASS);
 
-				ResultSet r = Term_project_main.conn.st
-						.executeQuery("SELECT * FROM test.view_requisition WHERE (Sheet_ID=" + text1.getText()
-								+ " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText() + "\')");
+				ps = conn.prepareStatement(
+						"SELECT * FROM test.view_requisition WHERE (Sheet_ID=? AND Project_ID=? AND Module=?");
+				ps.setString(1, text1.getText());
+				ps.setString(2, text2.getText());
+				ps.setString(3, text3.getText());
 
-				while (r.next()) {
+				result = ps.executeQuery();
+
+				while (result.next()) {
 
 					for (int i = 1; i < 13; i++) {
 
-						temp.add(r.getString(i));
+						temp.add(result.getString(i));
 					}
 				}
-				return temp;
 
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return temp;
-			}
+			} else if (id >= 24000000 & id < 25000000) {
+				// PURC
 
-		} else if (id >= 24000000 & id < 25000000) {
-			// PURC
-			try {
+				conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+						Term_project_main.PASS);
 
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.view_purchase WHERE (Sheet_ID="
-						+ text1.getText() + " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText()
-						+ "\' AND Supplier_ID=\'" + text4.getText() + "\')");
+				ps = conn.prepareStatement(
+						"SELECT * FROM test.view_purchase WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?");
+				ps.setString(1, text1.getText());
+				ps.setString(2, text2.getText());
+				ps.setString(3, text3.getText());
+				ps.setString(4, text4.getText());
+				result = ps.executeQuery();
 
-				while (r.next()) {
+				while (result.next()) {
 
 					for (int i = 1; i < 12; i++) {
 						// System.out.print(r.getString(i)+"\t");
-						temp.add(r.getString(i));
+						temp.add(result.getString(i));
 
 					}
 					// System.out.print("\n");
 				}
-				return temp;
 
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return temp;
-			}
+			} else if (id >= 25000000 & id < 26000000) {
+				// EXAM
 
-		} else if (id >= 25000000 & id < 26000000) {
-			// EXAM
-			try {
+				conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+						Term_project_main.PASS);
 
-				ResultSet r = Term_project_main.conn.st
-						.executeQuery("SELECT * FROM test.view_examination WHERE (Sheet_ID=" + text1.getText()
-								+ " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText()
-								+ "\' AND Supplier_ID=\'" + text4.getText() + "\')");
+				ps = conn.prepareStatement(
+						"SELECT * FROM test.view_examination WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?");
+				ps.setString(1, text1.getText());
+				ps.setString(2, text2.getText());
+				ps.setString(3, text3.getText());
+				ps.setString(4, text4.getText());
+				result = ps.executeQuery();
 
-				while (r.next()) {
+				while (result.next()) {
 
 					for (int i = 1; i < 10; i++) {
 
-						temp.add(r.getString(i));
+						temp.add(result.getString(i));
 					}
 				}
-				return temp;
 
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return temp;
-			}
+			} else if (id >= 26000000 & id < 27000000) {
+				// RCPT
 
-		} else if (id >= 26000000 & id < 27000000) {
-			// RCPT
-			try {
+				conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+						Term_project_main.PASS);
 
-				ResultSet r = Term_project_main.conn.st.executeQuery("SELECT * FROM test.view_receipt WHERE (Sheet_ID="
-						+ text1.getText() + " AND Project_ID=" + text2.getText() + " AND Module=\'" + text3.getText()
-						+ "\' AND Supplier_ID=\'" + text4.getText() + "\')");
+				ps = conn.prepareStatement(
+						"SELECT * FROM test.view_receipt WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?");
+				ps.setString(1, text1.getText());
+				ps.setString(2, text2.getText());
+				ps.setString(3, text3.getText());
+				ps.setString(4, text4.getText());
+				result = ps.executeQuery();
 
-				while (r.next()) {
+				while (result.next()) {
 
 					for (int i = 1; i < 9; i++) {
 
-						temp.add(r.getString(i));
+						temp.add(result.getString(i));
 					}
 				}
-				return temp;
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return temp;
 			}
 
-		} else {
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 
-			return temp;
+		} finally {
+
+			try {
+				if (result != null) {
+					result.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			} finally {
+				System.out.println("closed");
+
+			}
 		}
+		return temp;
 
 	}
 
