@@ -22,22 +22,21 @@ class Requisition extends Sheets {
 	Requisition(int sheet_ID, String type, int project_ID, String module, Date date, int vol, String item,
 			int unit_price, int total_price, boolean signature, int supervisor_ID, Date ESD) {
 		// TODO Auto-generated constructor stub
-				/**
-				 * @author maxence2997
-				 * @date 07/18/2021
-				 * @version 1.0
-				 * 
-				 **/
-		
+		/**
+		 * @author maxence2997
+		 * @date 07/18/2021
+		 * @version 1.0
+		 * 
+		 **/
+
 		super(sheet_ID, type, project_ID, module, date, vol);
-		
-		this.item =item;
-		this.unit_price=unit_price;
-		this.total_price=total_price;
-		this.signature=signature;
-		this.supervisor_ID=supervisor_ID;
-		this.ESD=ESD;
-		
+
+		this.item = item;
+		this.unit_price = unit_price;
+		this.total_price = total_price;
+		this.signature = signature;
+		this.supervisor_ID = supervisor_ID;
+		this.ESD = ESD;
 
 	}
 
@@ -45,7 +44,7 @@ class Requisition extends Sheets {
 	}
 
 	@Override
-	
+
 	String[][] inquire(String[] temp) {
 		// TODO Auto-generated method stub
 		/**
@@ -83,7 +82,7 @@ class Requisition extends Sheets {
 				e.printStackTrace();
 
 			} finally {
-				
+
 				try {
 					if (this.result != null) {
 						this.result.close();
@@ -96,9 +95,9 @@ class Requisition extends Sheets {
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
-				} finally {
-					System.out.println("closed");
 				}
+				System.out.println("closed");
+
 			}
 
 			break;
@@ -227,9 +226,8 @@ class Requisition extends Sheets {
 			} catch (SQLException e) {
 				e.printStackTrace();
 
-			} finally {
-				System.out.println("closed");
 			}
+			System.out.println("closed");
 
 			if (temp.size() > 0) {
 
@@ -318,9 +316,8 @@ class Requisition extends Sheets {
 			} catch (SQLException e) {
 				e.printStackTrace();
 
-			} finally {
-				System.out.println("closed");
 			}
+			System.out.println("closed");
 
 			if (temp.size() > 0) {
 
@@ -346,21 +343,62 @@ class Requisition extends Sheets {
 
 		return null;
 	}
-	
+
 	boolean sign() {
 		return false;
 	}
-	
+
 	@Override
-	int modify() {
+	int modify(int id, String[] temp) {
 		// TODO Auto-generated method stub
+
 		/**
 		 * @author maxence2997
-		 * @date 07/18/2021
-		 * @version 1.0 Description:
+		 * @date 07/19/2021
+		 * @version 1.0
 		 **/
 
-		return 0;
+		int r = 0;
+
+		try {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+
+			ps = conn.prepareStatement(
+					"UPDATE test.REQUISITION SET Item_name=?, Vol=?, Unit_price=?, Supervisor_ID=?, Date=? WHERE (REQ_Sheet_ID=? AND Project_ID=? AND Inquiring_product=?)");
+			ps.setString(1, temp[0]);
+			ps.setString(2, temp[1]);
+			ps.setString(3, temp[2]);
+			ps.setString(4, temp[3]);
+			ps.setString(5, temp[4]);
+			ps.setString(6, temp[5]);
+			ps.setString(7, temp[6]);
+			ps.setString(8, temp[7]);
+			r = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			try {
+				if (this.result != null) {
+					this.result.close();
+				}
+				if (this.ps != null) {
+					this.ps.close();
+				}
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			System.out.println("closed");
+
+		}
+		return r;
+
 	}
 
 	@Override

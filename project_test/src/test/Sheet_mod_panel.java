@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-class Sheet_mod_panel  {
+class Sheet_mod_panel {
 
 	private JPanel mod_panel;
 	private JLabel lbl_mod_sheetID;
@@ -193,14 +193,17 @@ class Sheet_mod_panel  {
 					if (Term_project_main.lib.num_not_null_check(text_mod_5)
 							& Term_project_main.lib.date(text_mod_6.getText())) {
 
-						if (modify() == 1)
+						RFQ rfq = new RFQ();
+						String[] input = { text_mod_supID.getText(), text_mod_5.getText(), text_mod_6.getText(),
+								lbl_mod_sheetID_show.getText(), lbl_mod_projectID_show.getText(),
+								lbl_mod_pd_show.getText() };
+
+						if (rfq.modify(id, input) == 1)
 							lbl_mod_message.setText("modification succeed");
 						else
 							lbl_mod_message.setText("modification failed");
 					} else {
-//											System.out.print(Term_project_main.lib.supplier_check(text_mod_supID));
-//											System.out.print(Term_project_main.lib.num_not_null_check(text_mod_5));
-//											System.out.print(Term_project_main.lib.date(text_mod_6.getText()));
+
 						lbl_mod_message.setText("format Invalid");
 						lbl_mod_message.setVisible(true);
 					}
@@ -212,7 +215,12 @@ class Sheet_mod_panel  {
 							& Term_project_main.lib.date(text_mod_7.getText())
 							& Term_project_main.lib.date(text_mod_8.getText())) {
 
-						if (modify() == 1)
+						Quotation quotation = new Quotation();
+						String[] input = { text_mod_supID.getText(), text_mod_5.getText(), text_mod_6.getText(),
+								text_mod_7.getText(), text_mod_8.getText(), lbl_mod_sheetID_show.getText(),
+								lbl_mod_projectID_show.getText(), lbl_mod_pd_show.getText() };
+
+						if (quotation.modify(id, input) == 1)
 							lbl_mod_message.setText("Modification succeed");
 						else
 							lbl_mod_message.setText("Modification failed");
@@ -227,7 +235,12 @@ class Sheet_mod_panel  {
 							& Term_project_main.lib.supervisor_check(text_mod_7)
 							& Term_project_main.lib.date(text_mod_8.getText())) {
 
-						if (modify() == 1)
+						Requisition requisition = new Requisition();
+						String[] input = { text_mod_supID.getText(), text_mod_5.getText(), text_mod_6.getText(),
+								text_mod_7.getText(), text_mod_8.getText(), lbl_mod_sheetID_show.getText(),
+								lbl_mod_projectID_show.getText(), lbl_mod_pd_show.getText() };
+
+						if (requisition.modify(id, input) == 1)
 							lbl_mod_message.setText("Modification succeed");
 						else
 							lbl_mod_message.setText("Modification failed");
@@ -242,7 +255,12 @@ class Sheet_mod_panel  {
 							& Term_project_main.lib.date(text_mod_7.getText())
 							& Term_project_main.lib.date(text_mod_8.getText())) {
 
-						if (modify() == 1)
+						Purchase purchase = new Purchase();
+						String[] input = { text_mod_5.getText(), text_mod_6.getText(), text_mod_7.getText(),
+								text_mod_8.getText(), lbl_mod_sheetID_show.getText(), lbl_mod_projectID_show.getText(),
+								lbl_mod_pd_show.getText() };
+
+						if (purchase.modify(id, input) == 1)
 							lbl_mod_message.setText("modification succeed");
 						else
 							lbl_mod_message.setText("modification failed");
@@ -256,7 +274,11 @@ class Sheet_mod_panel  {
 					if (Term_project_main.lib.num_not_null_check(text_mod_5)
 							& Term_project_main.lib.date(text_mod_6.getText())) {
 
-						if (modify() == 1)
+						Examination examination = new Examination();
+						String[] input = { text_mod_5.getText(), text_mod_6.getText(), lbl_mod_sheetID_show.getText(),
+								lbl_mod_projectID_show.getText(), lbl_mod_pd_show.getText() };
+
+						if (examination.modify(id, input) == 1)
 							lbl_mod_message.setText("modification succeed");
 						else
 							lbl_mod_message.setText("modification failed");
@@ -269,7 +291,11 @@ class Sheet_mod_panel  {
 					if (Term_project_main.lib.num_not_null_check(text_mod_5)
 							& Term_project_main.lib.date(text_mod_6.getText())) {
 
-						if (modify() == 1)
+						Receipt receipt = new Receipt();
+						String[] input = { text_mod_5.getText(), text_mod_6.getText(), lbl_mod_sheetID_show.getText(),
+								lbl_mod_projectID_show.getText(), lbl_mod_pd_show.getText() };
+						
+						if (receipt.modify(id, input) == 1)
 							lbl_mod_message.setText("modification succeed");
 						else
 							lbl_mod_message.setText("modification failed");
@@ -571,22 +597,22 @@ class Sheet_mod_panel  {
 									text_mod_supID.setVisible(false);
 
 									lbl_mod_5.setText("Vol :");
-									text_mod_5.setText(temp.get(5));
+									text_mod_5.setText(temp.get(6));
 									lbl_mod_5.setVisible(true);
 									text_mod_5.setVisible(true);
 
 									lbl_mod_6.setText("Unit Price :");
-									text_mod_6.setText(temp.get(6));
+									text_mod_6.setText(temp.get(7));
 									lbl_mod_6.setVisible(true);
 									text_mod_6.setVisible(true);
 
 									lbl_mod_7.setText("ESD :");
-									text_mod_7.setText(temp.get(8));
+									text_mod_7.setText(temp.get(9));
 									lbl_mod_7.setVisible(true);
 									text_mod_7.setVisible(true);
 
 									lbl_mod_8.setText("Date :");
-									text_mod_8.setText(temp.get(9));
+									text_mod_8.setText(temp.get(10));
 									lbl_mod_8.setVisible(true);
 									text_mod_8.setVisible(true);
 
@@ -774,7 +800,7 @@ class Sheet_mod_panel  {
 	}
 
 	void set_default_visible() {
-		
+
 		btn_mod_check.setVisible(true);
 		btn_mod_clear.setVisible(false);
 		btn_mod_modify.setVisible(false);
@@ -814,75 +840,80 @@ class Sheet_mod_panel  {
 		int id = Integer.parseInt(lbl_mod_sheetID_show.getText());
 
 		int r = 0;
-		if (id >= 21000000 & id < 22000000) {
+//		if (id >= 21000000 & id < 22000000) {
+//
+//			try {
+//
+//				r = Term_project_main.conn.st
+//						.executeUpdate("UPDATE test.RFQ SET Supplier_ID=\'" + text_mod_supID.getText() + "\', Vol="
+//								+ text_mod_5.getText() + ", Date=\'" + text_mod_6.getText() + "\' WHERE (RFQ_Sheet_ID="
+//								+ lbl_mod_sheetID_show.getText() + " AND Project_ID=" + lbl_mod_projectID_show.getText()
+//								+ " AND Inquiring_product=\'" + lbl_mod_pd_show.getText() + "\')");
+//				return r;
+//
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				return r;
+//			}
 
-			try {
+//		} else 
+//		if (id >= 22000000 & id < 23000000) {
+//
+//			try {
+//
+//				r = Term_project_main.conn.st.executeUpdate("UPDATE test.QUOTATION SET Supplier_ID=\'"
+//						+ text_mod_supID.getText() + "\', Vol=" + text_mod_5.getText() + ", Unit_price="
+//						+ text_mod_6.getText() + ", ESD=\'" + text_mod_7.getText() + "\', Date=\'"
+//						+ text_mod_8.getText() + "\' WHERE (QUO_Sheet_ID=" + lbl_mod_sheetID_show.getText()
+//						+ " AND Project_ID=" + lbl_mod_projectID_show.getText() + " AND Inquiring_product=\'"
+//						+ lbl_mod_pd_show.getText() + "\')");
+//				return r;
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				return r;
+//			}
+//
+//		} else 
+//		if (id >= 23000000 & id < 24000000) {
+//
+//			try {
+//
+//				r = Term_project_main.conn.st.executeUpdate("UPDATE test.REQUISITION SET Item_name=\'"
+//						+ text_mod_supID.getText() + "\', Vol=" + text_mod_5.getText() + ", Unit_price="
+//						+ text_mod_6.getText() + ", Supervisor_ID=\'" + text_mod_7.getText() + "\', Date=\'"
+//						+ text_mod_8.getText() + "\' WHERE (REQ_Sheet_ID=" + lbl_mod_sheetID_show.getText()
+//						+ " AND Project_ID=" + lbl_mod_projectID_show.getText() + " AND Inquiring_product=\'"
+//						+ lbl_mod_pd_show.getText() + "\')");
+//				return r;
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				return r;
+//			}
+//
+//		} else 
+//		if (id >= 24000000 & id < 25000000) {
+//
+//			try {
+//
+//				r = Term_project_main.conn.st.executeUpdate("UPDATE test.PURCHASE SET Vol=" + text_mod_5.getText()
+//						+ ", Unit_price=" + text_mod_6.getText() + ", ESD=\'" + text_mod_7.getText() + "\', Date=\'"
+//						+ text_mod_8.getText() + "\' WHERE (PUR_Sheet_ID=" + lbl_mod_sheetID_show.getText()
+//						+ " AND Project_ID=" + lbl_mod_projectID_show.getText() + " AND Module_type=\'"
+//						+ lbl_mod_pd_show.getText() + "\')");
+//				return r;
+//
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				return r;
+//			}
+//
+//		} else 
 
-				r = Term_project_main.conn.st
-						.executeUpdate("UPDATE test.RFQ SET Supplier_ID=\'" + text_mod_supID.getText() + "\', Vol="
-								+ text_mod_5.getText() + ", Date=\'" + text_mod_6.getText() + "\' WHERE (RFQ_Sheet_ID="
-								+ lbl_mod_sheetID_show.getText() + " AND Project_ID=" + lbl_mod_projectID_show.getText()
-								+ " AND Inquiring_product=\'" + lbl_mod_pd_show.getText() + "\')");
-				return r;
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-
-		} else if (id >= 22000000 & id < 23000000) {
-
-			try {
-
-				r = Term_project_main.conn.st.executeUpdate("UPDATE test.QUOTATION SET Supplier_ID=\'"
-						+ text_mod_supID.getText() + "\', Vol=" + text_mod_5.getText() + ", Unit_price="
-						+ text_mod_6.getText() + ", ESD=\'" + text_mod_7.getText() + "\', Date=\'"
-						+ text_mod_8.getText() + "\' WHERE (QUO_Sheet_ID=" + lbl_mod_sheetID_show.getText()
-						+ " AND Project_ID=" + lbl_mod_projectID_show.getText() + " AND Inquiring_product=\'"
-						+ lbl_mod_pd_show.getText() + "\')");
-				return r;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-
-		} else if (id >= 23000000 & id < 24000000) {
-
-			try {
-
-				r = Term_project_main.conn.st.executeUpdate("UPDATE test.REQUISITION SET Item_name=\'"
-						+ text_mod_supID.getText() + "\', Vol=" + text_mod_5.getText() + ", Unit_price="
-						+ text_mod_6.getText() + ", Supervisor_ID=\'" + text_mod_7.getText() + "\', Date=\'"
-						+ text_mod_8.getText() + "\' WHERE (REQ_Sheet_ID=" + lbl_mod_sheetID_show.getText()
-						+ " AND Project_ID=" + lbl_mod_projectID_show.getText() + " AND Inquiring_product=\'"
-						+ lbl_mod_pd_show.getText() + "\')");
-				return r;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-
-		} else if (id >= 24000000 & id < 25000000) {
-
-			try {
-
-				r = Term_project_main.conn.st.executeUpdate("UPDATE test.PURCHASE SET Vol=" + text_mod_5.getText()
-						+ ", Unit_price=" + text_mod_6.getText() + ", ESD=\'" + text_mod_7.getText() + "\', Date=\'"
-						+ text_mod_8.getText() + "\' WHERE (PUR_Sheet_ID=" + lbl_mod_sheetID_show.getText()
-						+ " AND Project_ID=" + lbl_mod_projectID_show.getText() + " AND Module_type=\'"
-						+ lbl_mod_pd_show.getText() + "\')");
-				return r;
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-
-		} else if (id >= 25000000 & id < 26000000) {
+		if (id >= 25000000 & id < 26000000) {
 
 			try {
 
