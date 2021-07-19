@@ -10,10 +10,7 @@ import java.sql.SQLException;
 
 class RFQ extends Sheets {
 
-	
 	private String supplier_ID;
-	
-	
 
 	RFQ() {
 
@@ -21,7 +18,7 @@ class RFQ extends Sheets {
 
 	RFQ(int sheet_ID, String type, int project_ID, String module, Date date, int vol, String supplier_ID) {
 		super(sheet_ID, type, project_ID, module, date, vol);
-		this.supplier_ID=supplier_ID;
+		this.supplier_ID = supplier_ID;
 
 		// TODO Auto-generated constructor stub
 	}
@@ -30,18 +27,18 @@ class RFQ extends Sheets {
 	String[][] inquire(String[] temp) {
 		// TODO Auto-generated method stub
 		/**
-		*@author maxence2997
-		*@date 07/17/2021
-		*@version 1.0
-
-		**/
+		 * @author maxence2997
+		 * @date 07/17/2021
+		 * @version 1.0
+		 * 
+		 **/
 
 		String[][] rfq = null;
 
 		switch (Term_project_main.lib.which_is_blank(temp)) {
 
 		case "None of them":
-			
+
 			try {
 				conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
 						Term_project_main.PASS);
@@ -76,9 +73,9 @@ class RFQ extends Sheets {
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
-				} finally {
+				} 
 					System.out.println("closed");
-				}
+				
 			}
 
 			break;
@@ -131,11 +128,11 @@ class RFQ extends Sheets {
 	private String[][] inquire(String non_filled, String first, String second) {
 		// TODO Auto-generated method stub
 		/**
-		*@author maxence2997
-		*@date 07/17/2021
-		*@version 1.0
-
-		**/
+		 * @author maxence2997
+		 * @date 07/17/2021
+		 * @version 1.0
+		 * 
+		 **/
 
 		String[][] rfq = null;
 		ArrayList<String[]> temp = new ArrayList();
@@ -214,10 +211,10 @@ class RFQ extends Sheets {
 
 			} catch (SQLException e) {
 				e.printStackTrace();
-
-			} finally {
-				System.out.println("closed");
 			}
+			
+				System.out.println("closed");
+			
 
 			if (temp.size() > 0) {
 
@@ -234,12 +231,11 @@ class RFQ extends Sheets {
 	private String[][] inquire(String filled, String first) {
 		// TODO Auto-generated method stub
 		/**
-		*@author maxence2997
-		*@date 07/17/2021
-		*@version 1.0
-
-		**/
-
+		 * @author maxence2997
+		 * @date 07/17/2021
+		 * @version 1.0
+		 * 
+		 **/
 
 		String[][] rfq = null;
 		ArrayList<String[]> temp = new ArrayList();
@@ -313,9 +309,9 @@ class RFQ extends Sheets {
 			} catch (SQLException e) {
 				e.printStackTrace();
 
-			} finally {
+			} 
 				System.out.println("closed");
-			}
+			
 
 			if (temp.size() > 0) {
 
@@ -337,9 +333,55 @@ class RFQ extends Sheets {
 	}
 
 	@Override
-	int modify() {
+	int modify(int id, String[] temp) {
 		// TODO Auto-generated method stub
-		return 0;
+		/**
+		*@author maxence2997
+		*@date 07/19/2021
+		*@version 1.0
+		*Description:
+		**/
+
+
+		int r = 0;
+
+		try {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+
+			ps = conn.prepareStatement(
+					"UPDATE test.RFQ SET Supplier_ID=?, Vol=?, Date=? WHERE (RFQ_Sheet_ID=? AND Project_ID=? AND Inquiring_product=?)");
+			ps.setString(1, temp[0]);
+			ps.setString(2, temp[1]);
+			ps.setString(3, temp[2]);
+			ps.setString(4, temp[3]);
+			ps.setString(5, temp[4]);
+			ps.setString(6, temp[5]);
+			r = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			try {
+				if (this.result != null) {
+					this.result.close();
+				}
+				if (this.ps != null) {
+					this.ps.close();
+				}
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			System.out.println("closed");
+
+		}
+		return r;
+
 	}
 
 	@Override

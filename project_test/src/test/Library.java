@@ -63,9 +63,9 @@ class Library {
 			} catch (SQLException e) {
 				e.printStackTrace();
 
-			} finally {
-				System.out.println("closed");
 			}
+			System.out.println("closed");
+
 		}
 
 		String[][] result_array = new String[temp.size()][12];
@@ -130,6 +130,14 @@ class Library {
 				}
 				temp.add(temp_array);
 			}
+			
+			for (int l = 0; l < temp.size(); l++) {
+
+				ps = conn.prepareStatement("UPDATE test.PROJECT SET Project_status=? WHERE Project_ID=?");
+				ps.setString(1, temp.get(l)[1]);
+				ps.setString(2, temp.get(l)[0]);
+				ps.executeUpdate();
+		}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -150,49 +158,12 @@ class Library {
 			} catch (SQLException e) {
 				e.printStackTrace();
 
-			} finally {
+			} 
 				System.out.println("closed");
-			}
+			
 		}
 
-		for (int l = 0; l < temp.size(); l++) {
 
-			try {
-
-				conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
-						Term_project_main.PASS);
-
-				ps = conn.prepareStatement("UPDATE test.PROJECT SET Project_status=? WHERE Project_ID=?");
-
-				ps.setString(1, temp.get(l)[1]);
-				ps.setString(2, temp.get(l)[0]);
-
-				ps.executeUpdate();
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-
-				try {
-					if (result != null) {
-						result.close();
-					}
-					if (ps != null) {
-						ps.close();
-					}
-					if (conn != null) {
-						conn.close();
-					}
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-
-				} finally {
-					System.out.println("closed");
-				}
-			}
-		}
 	}
 
 	String[][] show_project_status() {
@@ -256,9 +227,9 @@ class Library {
 			} catch (SQLException e) {
 				e.printStackTrace();
 
-			} finally {
-				System.out.println("closed");
 			}
+			System.out.println("closed");
+
 		}
 
 		String[][] result_array = new String[temp.size()][12];
@@ -341,9 +312,9 @@ class Library {
 			} catch (SQLException e) {
 				e.printStackTrace();
 
-			} finally {
-				System.out.println("closed");
 			}
+			System.out.println("closed");
+
 		}
 	}
 
@@ -405,9 +376,9 @@ class Library {
 			} catch (SQLException e) {
 				e.printStackTrace();
 
-			} finally {
-				System.out.println("closed");
 			}
+			System.out.println("closed");
+
 		}
 	}
 
@@ -438,13 +409,33 @@ class Library {
 
 				res = true;
 			}
-			return res;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
-			return res;
+
+		} finally {
+
+			try {
+				if (result != null) {
+					result.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			}
+			System.out.println("closed");
+
 		}
+
+		return res;
 	}
 
 	boolean tf_check(JTextField tf) {
@@ -500,13 +491,29 @@ class Library {
 				return true;
 			}
 
-			
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 
-			return false;
+		} finally {
+
+			try {
+				if (result != null) {
+					result.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			}
+			System.out.println("closed");
+
 		}
 		return false;
 	}
@@ -538,15 +545,31 @@ class Library {
 				res = true;
 			}
 
-			return res;
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 
-			return res;
-		}
+		} finally {
 
+			try {
+				if (result != null) {
+					result.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			}
+			System.out.println("closed");
+
+		}
+		return res;
 	}
 
 	boolean date(String strDate) {
@@ -749,11 +772,12 @@ class Library {
 						Term_project_main.PASS);
 
 				ps = conn.prepareStatement(
-						"SELECT * FROM test.veiw_rfq WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?");
+						"SELECT * FROM test.view_rfq WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?)");
 				ps.setString(1, text1.getText());
 				ps.setString(2, text2.getText());
 				ps.setString(3, text3.getText());
 				ps.setString(4, text4.getText());
+				System.out.print(ps);
 				result = ps.executeQuery();
 
 				while (result.next()) {
@@ -771,7 +795,7 @@ class Library {
 						Term_project_main.PASS);
 
 				ps = conn.prepareStatement(
-						"SELECT * FROM test.view_quotation WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?");
+						"SELECT * FROM test.view_quotation WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?)");
 				ps.setString(1, text1.getText());
 				ps.setString(2, text2.getText());
 				ps.setString(3, text3.getText());
@@ -792,7 +816,7 @@ class Library {
 						Term_project_main.PASS);
 
 				ps = conn.prepareStatement(
-						"SELECT * FROM test.view_requisition WHERE (Sheet_ID=? AND Project_ID=? AND Module=?");
+						"SELECT * FROM test.view_requisition WHERE (Sheet_ID=? AND Project_ID=? AND Module=?)");
 				ps.setString(1, text1.getText());
 				ps.setString(2, text2.getText());
 				ps.setString(3, text3.getText());
@@ -814,7 +838,7 @@ class Library {
 						Term_project_main.PASS);
 
 				ps = conn.prepareStatement(
-						"SELECT * FROM test.view_purchase WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?");
+						"SELECT * FROM test.view_purchase WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?)");
 				ps.setString(1, text1.getText());
 				ps.setString(2, text2.getText());
 				ps.setString(3, text3.getText());
@@ -838,7 +862,7 @@ class Library {
 						Term_project_main.PASS);
 
 				ps = conn.prepareStatement(
-						"SELECT * FROM test.view_examination WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?");
+						"SELECT * FROM test.view_examination WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?)");
 				ps.setString(1, text1.getText());
 				ps.setString(2, text2.getText());
 				ps.setString(3, text3.getText());
@@ -860,7 +884,7 @@ class Library {
 						Term_project_main.PASS);
 
 				ps = conn.prepareStatement(
-						"SELECT * FROM test.view_receipt WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?");
+						"SELECT * FROM test.view_receipt WHERE (Sheet_ID=? AND Project_ID=? AND Module=? AND Supplier_ID=?)");
 				ps.setString(1, text1.getText());
 				ps.setString(2, text2.getText());
 				ps.setString(3, text3.getText());
@@ -896,10 +920,8 @@ class Library {
 			} catch (SQLException e) {
 				e.printStackTrace();
 
-			} finally {
-				System.out.println("closed");
-
 			}
+			System.out.println("closed");
 		}
 		return temp;
 

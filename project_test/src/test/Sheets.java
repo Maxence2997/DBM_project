@@ -24,6 +24,7 @@ abstract class Sheets {
 	protected PreparedStatement ps = null;
 	protected ResultSet result = null;
 	
+	
 	Sheets(int sheet_ID, String type, int project_ID, String module, Date date, int vol) {
 		super();
 		this.sheet_ID = sheet_ID;
@@ -45,7 +46,7 @@ abstract class Sheets {
 	
 	abstract String[][] append();
 	
-	abstract int modify();
+	abstract int modify(int id, String[] temp);
 	
 	
 	
