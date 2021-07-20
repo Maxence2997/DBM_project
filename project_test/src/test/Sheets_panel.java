@@ -86,7 +86,7 @@ class Sheets_panel {
 				String function = (String) comboBox_sheets.getSelectedItem(); // get the selected item
 
 				if (function.equalsIgnoreCase("signature")) {
-					if (Term_project_main.lib.supervisor_check(Term_project_main.field_empID)) {
+					if (Term_project_main.supervisor_check) {
 
 						String[][] temp = Term_project_main.lib.show_unsign_req();
 
@@ -212,8 +212,9 @@ class Sheets_panel {
 		btn_sign_sign = new JButton("Sign all");
 		btn_sign_sign.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				if (sign_all() == 0) {
+					
+				Requisition requisition = new Requisition();
+				if (requisition.sign() == 0) {
 					lbl_sign_instr.setText("Oops errors occurred");
 					lbl_sign_instr.setVisible(true);
 
@@ -272,21 +273,7 @@ class Sheets_panel {
 
 	}
 
-	private int sign_all() {
 
-		int r = 0;
-		try {
-			r = Term_project_main.conn.st
-					.executeUpdate("UPDATE test.REQUISITION SET Signature=\'True\' WHERE Supervisor_ID="
-							+ Term_project_main.field_empID.getText());
-			return r;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return r;
-		}
-
-	}
 
 	JComboBox get_comboBox_sheets() {
 

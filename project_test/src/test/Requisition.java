@@ -480,8 +480,45 @@ class Requisition extends Sheets {
 		return result_array;
 	}
 
-	boolean sign() {
-		return false;
+	int sign() {
+		
+		
+		int r = 0;
+		
+		try {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+
+			ps = conn.prepareStatement(
+					"UPDATE test.REQUISITION SET Signature=? WHERE Supervisor_ID=?");
+			ps.setString(1, "True");
+			ps.setString(2,Term_project_main.field_empID.getText());
+			
+			r = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}finally {
+			try {
+				if (this.result != null) {
+					this.result.close();
+				}
+				if (this.ps != null) {
+					this.ps.close();
+				}
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			System.out.println("closed");
+
+		}
+		
+		return r;
 	}
 
 	@Override
@@ -534,19 +571,53 @@ class Requisition extends Sheets {
 	}
 
 	@Override
-	int remove() {
+	int remove(int id, String[] temp) {
 		// TODO Auto-generated method stub
 		/**
 		 * @author maxence2997
-		 * @date 07/18/2021
+		 * @date 07/20/2021
 		 * @version 1.0 Description:
 		 **/
 
-		return 0;
+		int r = 0;
+
+		try {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+
+			
+			ps = conn.prepareStatement(
+					"DELETE FROM test.REQUISITION WHERE (REQ_Sheet_ID=? AND Project_ID=? AND Inquiring_product=?)");
+
+			for (int i = 0; i < 3; i++)
+				ps.setString(i + 1, temp[i]);
+			
+			//System.out.print(ps);
+			r = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			try {
+				if (this.result != null) {
+					this.result.close();
+				}
+				if (this.ps != null) {
+					this.ps.close();
+				}
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			System.out.println("closed");
+
+		}
+
+		return r;
 	}
-	/**
-	 * @author maxence2997
-	 * @date 07/18/2021
-	 * @version 1.0 Description:
-	 **/
+	
 }

@@ -259,6 +259,7 @@ class Sheet_append_panel {
 							& lib.num_not_null_check(text_appd_4) & lib.num_not_null_check(text_appd_5)
 							& lib.supervisor_check(text_appd_6)
 							& (text_appd_7.getText().isBlank() | date_format_check)) {
+						
 						Requisition requisition = new Requisition();
 
 						if (requisition.append_check(text_appd_1.getText())) {
@@ -309,6 +310,7 @@ class Sheet_append_panel {
 							& (text_appd_7.getText().isBlank() | date_format_check)) {
 
 						Purchase purchase = new Purchase();
+						
 						if (purchase.append_check(text_appd_1.getText())) {
 
 							String[] input = { text_appd_1.getText(), text_appd_2.getText(), text_appd_3.getText(),

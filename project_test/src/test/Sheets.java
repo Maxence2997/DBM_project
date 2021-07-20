@@ -52,6 +52,6 @@ abstract class Sheets {
 	
 	
 	
-	abstract int remove();
+	abstract int remove(int id, String[] temp);
 
 }

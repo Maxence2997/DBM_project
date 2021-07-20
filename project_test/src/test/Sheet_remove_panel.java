@@ -93,16 +93,78 @@ class Sheet_remove_panel {
 		text_remove_confirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (text_remove_confirm.getText().equals("I would like to remove this sheet permenantly.")) {
-					if (delete() == 1) {
+				if (text_remove_confirm.getText().equals("I would like to remove this sheet permanently.")) {
 
+					int id = Integer.parseInt(lbl_remove_sheetID_show.getText());
+					String[] temp = { lbl_remove_sheetID_show.getText(), lbl_remove_projectID_show.getText(),
+							lbl_remove_pd_show.getText(), lbl_remove_supID_show.getText() };
+					int r = 0;
+					
+					if (id >= 21000000 & id < 22000000) {
+						// RFQ
+						RFQ rfq = new RFQ();
+						r = rfq.remove(id, temp);
+
+					} else if (id >= 22000000 & id < 23000000) {
+						// QUOTATION
+						Quotation quotation = new Quotation();
+						r=quotation.remove(id, temp);
+
+					} else if (id >= 23000000 & id < 24000000) {
+						// REQUISITION
+						Requisition requisition = new Requisition();
+						r= requisition.remove(id, temp);
+
+					} else if (id >= 24000000 & id < 25000000) {
+						// PURCHASE
+						Purchase purchase = new Purchase();
+						r= purchase.remove(id, temp);
+						
+
+					} else if (id >= 25000000 & id < 26000000) {
+						// EXAMINATION
+						Examination examination = new Examination();
+						r= examination.remove(id, temp);
+
+					} else {
+						// if (id >= 26000000 & id < 27000000) {
+						// RECEIPT
+						Receipt receipt = new Receipt();
+						r= receipt.remove(id, temp);
+
+					}
+
+					// result output
+					if (r == 1) {
+
+
+						clear_remove_panel();
+						scrollpane_remove.setVisible(false);
+						remove_table.setVisible(false);
+						lbl_remove_confirm.setVisible(false);
+						text_remove_confirm.setVisible(false);
+						btn_remove_confirm.setVisible(false);
+						text_remove_sheetID.setVisible(true);
+						lbl_remove_sheetID_show.setVisible(false);
+						text_remove_projectID.setVisible(true);
+						lbl_remove_projectID_show.setVisible(false);
+						text_remove_pd.setVisible(true);
+						lbl_remove_pd_show.setVisible(false);
+						text_remove_supID.setVisible(true);
+						lbl_remove_supID_show.setVisible(false);
 						lbl_remove_message.setText("Delete succeed");
 						lbl_remove_message.setVisible(true);
+						text_remove_confirm.setText("");
+						
 
 					} else {
 						lbl_remove_message.setText("Delete failed, errors occurred.");
 						lbl_remove_message.setVisible(true);
 					}
+				} else {
+					lbl_remove_message.setText("Text wrong, please check your text.");
+					lbl_remove_message.setVisible(true);
+					text_remove_confirm.setText("");
 				}
 			}
 		});
@@ -490,11 +552,68 @@ class Sheet_remove_panel {
 			public void actionPerformed(ActionEvent arg0) {
 
 				if (text_remove_confirm.getText().equals("I would like to remove this sheet permanently.")) {
-					if (delete() == 1) {
 
+					int id = Integer.parseInt(lbl_remove_sheetID_show.getText());
+					String[] temp = { lbl_remove_sheetID_show.getText(), lbl_remove_projectID_show.getText(),
+							lbl_remove_pd_show.getText(), lbl_remove_supID_show.getText() };
+					int r = 0;
+					
+					if (id >= 21000000 & id < 22000000) {
+						// RFQ
+						RFQ rfq = new RFQ();
+						r = rfq.remove(id, temp);
+
+					} else if (id >= 22000000 & id < 23000000) {
+						// QUOTATION
+						Quotation quotation = new Quotation();
+						r=quotation.remove(id, temp);
+
+					} else if (id >= 23000000 & id < 24000000) {
+						// REQUISITION
+						Requisition requisition = new Requisition();
+						r= requisition.remove(id, temp);
+
+					} else if (id >= 24000000 & id < 25000000) {
+						// PURCHASE
+						Purchase purchase = new Purchase();
+						r= purchase.remove(id, temp);
+						
+
+					} else if (id >= 25000000 & id < 26000000) {
+						// EXAMINATION
+						Examination examination = new Examination();
+						r= examination.remove(id, temp);
+
+					} else {
+						// if (id >= 26000000 & id < 27000000) {
+						// RECEIPT
+						Receipt receipt = new Receipt();
+						r= receipt.remove(id, temp);
+
+					}
+
+					// result output
+					if (r == 1) {
+
+						
+						clear_remove_panel();
+						scrollpane_remove.setVisible(false);
+						remove_table.setVisible(false);
+						lbl_remove_confirm.setVisible(false);
+						text_remove_confirm.setVisible(false);
+						btn_remove_confirm.setVisible(false);
+						text_remove_sheetID.setVisible(true);
+						lbl_remove_sheetID_show.setVisible(false);
+						text_remove_projectID.setVisible(true);
+						lbl_remove_projectID_show.setVisible(false);
+						text_remove_pd.setVisible(true);
+						lbl_remove_pd_show.setVisible(false);
+						text_remove_supID.setVisible(true);
+						lbl_remove_supID_show.setVisible(false);
 						lbl_remove_message.setText("Delete succeed");
 						lbl_remove_message.setVisible(true);
 						text_remove_confirm.setText("");
+						
 
 					} else {
 						lbl_remove_message.setText("Delete failed, errors occurred.");
@@ -503,6 +622,7 @@ class Sheet_remove_panel {
 				} else {
 					lbl_remove_message.setText("Text wrong, please check your text.");
 					lbl_remove_message.setVisible(true);
+					text_remove_confirm.setText("");
 				}
 			}
 		});
@@ -562,117 +682,4 @@ class Sheet_remove_panel {
 		text_remove_pd.setVisible(true);
 		lbl_remove_pd_show.setVisible(false);
 	}
-
-	private int delete() {
-
-		/*
-		 * *@author jyunanyang
-		 * 
-		 * @since 06/06/2021
-		 * 
-		 */
-
-		int id = Integer.parseInt(lbl_remove_sheetID_show.getText());
-		int r = 0;
-
-		if (id >= 21000000 & id < 22000000) {
-			// RFQ
-			try {
-
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.RFQ WHERE (RFQ_Sheet_ID="
-						+ lbl_remove_sheetID_show.getText() + " AND Project_ID=" + lbl_remove_projectID_show.getText()
-						+ " AND Inquiring_product=\'" + lbl_remove_pd_show.getText() + "\')");
-
-				return r;
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-
-		} else if (id >= 22000000 & id < 23000000) {
-			// QUOT
-			try {
-
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.QUOTATION WHERE (QUO_Sheet_ID="
-						+ lbl_remove_sheetID_show.getText() + " AND Project_ID=" + lbl_remove_projectID_show.getText()
-						+ " AND Inquiring_product=\'" + lbl_remove_pd_show.getText() + "\')");
-
-				return r;
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-
-		} else if (id >= 23000000 & id < 24000000) {
-			// REQ
-			try {
-
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.REQUISITION WHERE (REQ_Sheet_ID="
-						+ lbl_remove_sheetID_show.getText() + " AND Project_ID=" + lbl_remove_projectID_show.getText()
-						+ " AND Inquiring_product=\'" + lbl_remove_pd_show.getText() + "\')");
-
-				return r;
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-
-		} else if (id >= 24000000 & id < 25000000) {
-			// PUR
-			try {
-
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.PURCHASE WHERE (PUR_Sheet_ID="
-						+ lbl_remove_sheetID_show.getText() + " AND Project_ID=" + lbl_remove_projectID_show.getText()
-						+ " AND Module_type=\'" + lbl_remove_pd_show.getText() + "\')");
-
-				return r;
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-
-		} else if (id >= 25000000 & id < 26000000) {
-			// EXAM
-			try {
-
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.EXAMINATION WHERE (EX_Sheet_ID="
-						+ lbl_remove_sheetID_show.getText() + " AND Project_ID=" + lbl_remove_projectID_show.getText()
-						+ " AND Module_type=\'" + lbl_remove_pd_show.getText() + "\')");
-
-				return r;
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-
-		} else if (id >= 26000000 & id < 27000000) {
-			// RCPT
-			try {
-
-				r = Term_project_main.conn.st.executeUpdate("DELETE FROM test.RECEIPT WHERE (REC_Sheet_ID="
-						+ lbl_remove_sheetID_show.getText() + " AND Project_ID=" + lbl_remove_projectID_show.getText()
-						+ " AND Module_type=\'" + lbl_remove_pd_show.getText() + "\')");
-
-				return r;
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-
-		} else
-			return r;
-	}
-
 }

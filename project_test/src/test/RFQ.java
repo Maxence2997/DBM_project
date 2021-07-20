@@ -342,7 +342,7 @@ class RFQ extends Sheets {
 
 			if (result.next()) {
 				if (result.getString("Project_ID") != null) {
-					
+
 					return true;
 				}
 
@@ -393,17 +393,17 @@ class RFQ extends Sheets {
 
 				ps = conn.prepareStatement(
 						"INSERT INTO test.RFQ (Project_ID, Inquiring_product, Supplier_ID, Vol, Date) VALUE (?, ?, ?, ?, ?)");
-				
-				for(int i=0;i<5;i++) 
-					ps.setString(i+1, temp[i]);
+
+				for (int i = 0; i < 5; i++)
+					ps.setString(i + 1, temp[i]);
 
 			} else {
 				// temp[4].isBlank()
 				ps = conn.prepareStatement(
 						"INSERT INTO test.RFQ (Project_ID, Inquiring_product, Supplier_ID, Vol) VALUE (?, ?, ?, ?)");
-				
-				for(int i=0;i<4;i++) 
-					ps.setString(i+1, temp[i]);
+
+				for (int i = 0; i < 4; i++)
+					ps.setString(i + 1, temp[i]);
 
 			}
 
@@ -466,10 +466,10 @@ class RFQ extends Sheets {
 
 			ps = conn.prepareStatement(
 					"UPDATE test.RFQ SET Supplier_ID=?, Vol=?, Date=? WHERE (RFQ_Sheet_ID=? AND Project_ID=? AND Inquiring_product=?)");
-			
-			for(int i=0;i<6;i++) 
-				ps.setString(i+1, temp[i]);
-			
+
+			for (int i = 0; i < 6; i++)
+				ps.setString(i + 1, temp[i]);
+
 			r = ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -498,9 +498,53 @@ class RFQ extends Sheets {
 	}
 
 	@Override
-	int remove() {
+	int remove(int id, String[] temp) {
 		// TODO Auto-generated method stub
-		return 0;
+		/**
+		 * @author maxence2997
+		 * @date 07/20/2021
+		 * @version 1.0 Description:
+		 **/
+
+		int r = 0;
+
+		try {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+
+			
+			ps = conn.prepareStatement(
+					"DELETE FROM test.RFQ WHERE (RFQ_Sheet_ID=? AND Project_ID=? AND Inquiring_product=? AND Supplier_ID=?)");
+
+			for (int i = 0; i < 4; i++)
+				ps.setString(i + 1, temp[i]);
+			
+			//System.out.print(ps);
+			r = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			try {
+				if (this.result != null) {
+					this.result.close();
+				}
+				if (this.ps != null) {
+					this.ps.close();
+				}
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			System.out.println("closed");
+
+		}
+
+		return r;
 	}
 
 }

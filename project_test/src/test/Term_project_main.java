@@ -46,6 +46,7 @@ class Term_project_main {
 	static connection conn;
 	static CardLayout card_layout;
 	static CardLayout cl_home;
+	static boolean supervisor_check;
 	static Library lib = new Library();;
 
 	/**
@@ -121,7 +122,7 @@ class Term_project_main {
 		login_result.setBounds(286, 246, 438, 26);
 		login_panel.add(login_result);
 
-		field_empID = new JTextField(8);
+		field_empID = new JTextField();
 		field_empID.setBounds(415, 187, 163, 26);
 		login_panel.add(field_empID);
 		field_empID.setColumns(10);
@@ -148,7 +149,9 @@ class Term_project_main {
 						}// uneditable
 					};
 
-					if (lib.supervisor_check(Term_project_main.field_empID)) {
+					supervisor_check = lib.supervisor_check(field_empID);
+
+					if (supervisor_check) {
 						if (lib.show_unsign_req().length != 0) {
 
 							String[] columns_name = { "Sheet ID", "Type", "Project ID", "Product", "Item", "Vol.",
@@ -219,7 +222,9 @@ class Term_project_main {
 						}// uneditable
 					};
 
-					if (lib.supervisor_check(Term_project_main.field_empID)) {
+					supervisor_check = lib.supervisor_check(field_empID);
+
+					if (supervisor_check) {
 						if (lib.show_unsign_req().length != 0) {
 
 							String[] columns_name = { "Sheet ID", "Type", "Project ID", "Product", "Item", "Vol.",

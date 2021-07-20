@@ -214,7 +214,7 @@ class Employee_panel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				function = (String) comboBox_emp_action.getSelectedItem();
-				if (Term_project_main.lib.supervisor_check(Term_project_main.field_empID)) {
+				if (Term_project_main.supervisor_check) {
 					if (function.equals("Show & Adjust")) {
 						// visibility
 

@@ -516,19 +516,52 @@ class Examination extends Sheets {
 	}
 
 	@Override
-	int remove() {
+	int remove(int id, String[] temp) {
 		// TODO Auto-generated method stub
 		/**
 		 * @author maxence2997
-		 * @date 07/18/2021
+		 * @date 07/20/2021
 		 * @version 1.0 Description:
 		 **/
 
-		return 0;
+		int r = 0;
+
+		try {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+
+			
+			ps = conn.prepareStatement(
+					"DELETE FROM test.EXAMINATION WHERE (EX_Sheet_ID=? AND Project_ID=? AND Module_type=? AND Supplier_ID=?)");
+
+			for (int i = 0; i < 4; i++)
+				ps.setString(i + 1, temp[i]);
+			
+			//System.out.print(ps);
+			r = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			try {
+				if (this.result != null) {
+					this.result.close();
+				}
+				if (this.ps != null) {
+					this.ps.close();
+				}
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			System.out.println("closed");
+
+		}
+
+		return r;
 	}
-	/**
-	 * @author maxence2997
-	 * @date 07/18/2021
-	 * @version 1.0 Description:
-	 **/
 }
