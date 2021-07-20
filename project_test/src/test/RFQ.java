@@ -73,9 +73,9 @@ class RFQ extends Sheets {
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
-				} 
-					System.out.println("closed");
-				
+				}
+				System.out.println("closed");
+
 			}
 
 			break;
@@ -212,9 +212,8 @@ class RFQ extends Sheets {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
-				System.out.println("closed");
-			
+
+			System.out.println("closed");
 
 			if (temp.size() > 0) {
 
@@ -309,9 +308,8 @@ class RFQ extends Sheets {
 			} catch (SQLException e) {
 				e.printStackTrace();
 
-			} 
-				System.out.println("closed");
-			
+			}
+			System.out.println("closed");
 
 			if (temp.size() > 0) {
 
@@ -327,21 +325,138 @@ class RFQ extends Sheets {
 	}
 
 	@Override
-	String[][] append() {
+	boolean append_check(String project_ID) {
 		// TODO Auto-generated method stub
-		return null;
+		/**
+		 * @author maxence2997
+		 * @date 07/19/2021
+		 * @version 1.0
+		 **/
+
+		try {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+			ps = conn.prepareStatement("SELECT * FROM test.view_append_check WHERE Project_ID=? LIMIT 1");
+			ps.setString(1, project_ID);
+			result = ps.executeQuery();
+
+			if (result.next()) {
+				if (result.getString("Project_ID") != null) {
+					
+					return true;
+				}
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (this.result != null) {
+					this.result.close();
+				}
+				if (this.ps != null) {
+					this.ps.close();
+				}
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			System.out.println("closed");
+
+		}
+		return false;
+	}
+
+	@Override
+	String[][] append(String[] temp) {
+		// TODO Auto-generated method stub
+		/**
+		 * @author maxence2997
+		 * @date 07/19/2021
+		 * @version 1.0
+		 **/
+
+		String[][] result_array = null;
+
+		int r = 0;
+
+		try {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+
+			if (!temp[4].isBlank()) {
+
+				ps = conn.prepareStatement(
+						"INSERT INTO test.RFQ (Project_ID, Inquiring_product, Supplier_ID, Vol, Date) VALUE (?, ?, ?, ?, ?)");
+				
+				for(int i=0;i<5;i++) 
+					ps.setString(i+1, temp[i]);
+
+			} else {
+				// temp[4].isBlank()
+				ps = conn.prepareStatement(
+						"INSERT INTO test.RFQ (Project_ID, Inquiring_product, Supplier_ID, Vol) VALUE (?, ?, ?, ?)");
+				
+				for(int i=0;i<4;i++) 
+					ps.setString(i+1, temp[i]);
+
+			}
+
+			r = ps.executeUpdate();
+
+			if (r == 1) {
+
+				result_array = new String[1][7];
+				PreparedStatement ps2 = conn
+						.prepareStatement("SELECT * FROM test.RFQ ORDER BY RFQ_Sheet_ID DESC LIMIT 1");
+
+				result = ps2.executeQuery();
+				if (result.next()) {
+
+					for (int i = 1; i < 8; i++) {
+						result_array[0][i - 1] = result.getString(i);
+					}
+				}
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			try {
+				if (this.result != null) {
+					this.result.close();
+				}
+				if (this.ps != null) {
+					this.ps.close();
+				}
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			System.out.println("closed");
+
+		}
+
+		return result_array;
 	}
 
 	@Override
 	int modify(int id, String[] temp) {
 		// TODO Auto-generated method stub
 		/**
-		*@author maxence2997
-		*@date 07/19/2021
-		*@version 1.0
-		*Description:
-		**/
-
+		 * @author maxence2997
+		 * @date 07/19/2021
+		 * @version 1.0 Description:
+		 **/
 
 		int r = 0;
 
@@ -351,12 +466,10 @@ class RFQ extends Sheets {
 
 			ps = conn.prepareStatement(
 					"UPDATE test.RFQ SET Supplier_ID=?, Vol=?, Date=? WHERE (RFQ_Sheet_ID=? AND Project_ID=? AND Inquiring_product=?)");
-			ps.setString(1, temp[0]);
-			ps.setString(2, temp[1]);
-			ps.setString(3, temp[2]);
-			ps.setString(4, temp[3]);
-			ps.setString(5, temp[4]);
-			ps.setString(6, temp[5]);
+			
+			for(int i=0;i<6;i++) 
+				ps.setString(i+1, temp[i]);
+			
 			r = ps.executeUpdate();
 
 		} catch (SQLException e) {

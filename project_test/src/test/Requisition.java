@@ -1,6 +1,7 @@
 package test;
 
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -332,16 +333,151 @@ class Requisition extends Sheets {
 		return requisition;
 	}
 
+	
 	@Override
-	String[][] append() {
+	boolean append_check(String project_ID) {
 		// TODO Auto-generated method stub
 		/**
 		 * @author maxence2997
-		 * @date 07/18/2021
-		 * @version 1.0 Description:
+		 * @date 07/19/2021
+		 * @version 1.0
 		 **/
 
-		return null;
+		try {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+			ps = conn.prepareStatement("SELECT * FROM test.view_append_check WHERE Project_ID=? LIMIT 1");
+			ps.setString(1, project_ID);
+			result = ps.executeQuery();
+			
+			if (result.next()) {
+				if (result.getString("QUO_Sheet_ID") != null) {
+					
+					return true;
+				}
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (this.result != null) {
+					this.result.close();
+				}
+				if (this.ps != null) {
+					this.ps.close();
+				}
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			System.out.println("closed");
+
+		}
+		return false;
+	}
+	
+	
+	@Override
+	String[][] append(String[] temp) {
+		// TODO Auto-generated method stub
+		/**
+		 * @author maxence2997
+		 * @date 07/19/2021
+		 * @version 1.0
+		 **/
+
+		String[][] result_array = null;
+
+		int r = 0;
+		
+		String item;
+
+		if (temp[1].substring(0, 1).equals("C"))
+
+			item = "CPU";
+
+		else if ((temp[1].substring(0, 1).equals("G")))
+
+			item = "GPU";
+
+		else if (temp[1].substring(0, 1).equals("R"))
+
+			item = "RAM";
+
+		else
+			item = "Unknown";
+		
+		try {
+			conn = DriverManager.getConnection(Term_project_main.DB_URL, Term_project_main.USER,
+					Term_project_main.PASS);
+			
+
+			if (!temp[6].isBlank()) {
+
+				ps = conn.prepareStatement(
+						"INSERT INTO test.REQUISITION (Project_ID, Inquiring_product, Item_name, Vol, Unit_price, Supervisor_ID, Date) VALUE (?, ?, ?, ?, ?,?,?)");
+				
+				for(int i=0;i<7;i++) 
+					ps.setString(i+1, (i==2)? item:temp[i]);
+						//ps.setString(i+1, temp[i]);
+				
+				
+			} else {
+				// temp[6].isBlank()
+				ps = conn.prepareStatement(
+						"INSERT INTO test.REQUISITION (Project_ID, Inquiring_product, Item_name, Vol, Unit_price, Supervisor_ID) VALUE (?, ?, ?, ?, ?,?)");
+				
+				for(int i=0;i<6;i++)
+					ps.setString(i+1, (i==2)? item:temp[i]);
+					//ps.setString(i+1, temp[i]);
+
+			}
+
+			r = ps.executeUpdate();
+
+			if (r == 1) {
+
+				result_array = new String[1][11];
+				PreparedStatement ps2 = conn
+						.prepareStatement("SELECT * FROM test.REQUISITION ORDER BY REQ_Sheet_ID DESC LIMIT 1");
+
+				result = ps2.executeQuery();
+				if (result.next()) {
+
+					for (int i = 1; i < 12; i++) {
+						result_array[0][i - 1] = result.getString(i);
+					}
+				}
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			try {
+				if (this.result != null) {
+					this.result.close();
+				}
+				if (this.ps != null) {
+					this.ps.close();
+				}
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			System.out.println("closed");
+
+		}
+
+		return result_array;
 	}
 
 	boolean sign() {
@@ -366,14 +502,10 @@ class Requisition extends Sheets {
 
 			ps = conn.prepareStatement(
 					"UPDATE test.REQUISITION SET Item_name=?, Vol=?, Unit_price=?, Supervisor_ID=?, Date=? WHERE (REQ_Sheet_ID=? AND Project_ID=? AND Inquiring_product=?)");
-			ps.setString(1, temp[0]);
-			ps.setString(2, temp[1]);
-			ps.setString(3, temp[2]);
-			ps.setString(4, temp[3]);
-			ps.setString(5, temp[4]);
-			ps.setString(6, temp[5]);
-			ps.setString(7, temp[6]);
-			ps.setString(8, temp[7]);
+			
+			for(int i=0;i<8;i++) 
+				ps.setString(i+1, temp[i]);
+			
 			r = ps.executeUpdate();
 
 		} catch (SQLException e) {

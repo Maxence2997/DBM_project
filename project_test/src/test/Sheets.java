@@ -42,9 +42,11 @@ abstract class Sheets {
 	abstract String[][] inquire(String[] temp);
 	
 	
+	abstract boolean append_check(String project_ID);
+	
+	abstract String[][] append(String[] temp);
 	
 	
-	abstract String[][] append();
 	
 	abstract int modify(int id, String[] temp);
 	
