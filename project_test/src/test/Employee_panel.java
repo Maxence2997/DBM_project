@@ -376,8 +376,9 @@ class Employee_panel {
 
 						comboBox_emp_perf.setVisible(true);
 						comboBox_emp_perf.setSelectedItem(temp.get(6));
-
-						String[][] temp2 = show_table();
+						
+						Employee employee = new Employee();
+						String[][] temp2 = employee. (text_emp_empID.getText());
 						String[] column_names = { "Emp. ID", "Name", "Address", "Phone Num", "Perf.", "Super. ID",
 								"Name" };
 
@@ -390,7 +391,7 @@ class Employee_panel {
 						scrollpane.setVisible(true);
 						btn_show_more.setVisible(true);
 
-						if (Term_project_main.lib.supervisor_check(Term_project_main.field_empID))
+						if (Term_project_main.supervisor_check)
 
 							btn_emp_execute.setVisible(true);
 
@@ -633,16 +634,17 @@ class Employee_panel {
 		btn_show_more = new JButton("Show more");
 		btn_show_more.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				Employee employee = new Employee();
+				String[][] temp = employee.show_more(text_emp_empID.getText());
 
-				String[][] temp = show_more();
-
-				if (temp.length == 0) {
+				if (temp == null) {
 
 					lbl_emp_info.setText("the emp. whom you inquire doesn't participate any project.");
 					lbl_emp_info.setVisible(true);
 
 				} else {
-					// temp.length!=0
+					// temp!=null
 
 					String[] column_names = { "Emp. ID", "Name", "Project ID", "P.status", "Est. Date" };
 
@@ -670,33 +672,33 @@ class Employee_panel {
 
 	}
 
-	private String[][] show_more() {
-
-		ArrayList<String[]> temp = new ArrayList();
-
-		try {
-			ResultSet resultSet = Term_project_main.conn.st
-					.executeQuery("SELECT * FROM VIEW_EMPLOYEE_PROJECT WHERE Emp_ID=" + text_emp_empID.getText());
-
-			while (resultSet.next()) {
-				String[] array = new String[5];
-				for (int i = 1; i < 6; i++) {
-					array[i - 1] = resultSet.getString(i);
-				}
-				temp.add(array);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		String[][] result_array = new String[temp.size()][5];
-		int i = 0;
-		for (String[] array_in_temp : temp) {
-			result_array[i++] = array_in_temp;
-		}
-		return result_array;
-	}
+//	private String[][] show_more() {
+//
+//		ArrayList<String[]> temp = new ArrayList();
+//
+//		try {
+//			ResultSet resultSet = Term_project_main.conn.st
+//					.executeQuery("SELECT * FROM VIEW_EMPLOYEE_PROJECT WHERE Emp_ID=" + text_emp_empID.getText());
+//
+//			while (resultSet.next()) {
+//				String[] array = new String[5];
+//				for (int i = 1; i < 6; i++) {
+//					array[i - 1] = resultSet.getString(i);
+//				}
+//				temp.add(array);
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		String[][] result_array = new String[temp.size()][5];
+//		int i = 0;
+//		for (String[] array_in_temp : temp) {
+//			result_array[i++] = array_in_temp;
+//		}
+//		return result_array;
+//	}
 
 	private String[][] show_table() {
 
