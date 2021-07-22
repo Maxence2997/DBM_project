@@ -43,7 +43,7 @@ class Term_project_main {
 	private Supplier_panel sup_panel;
 
 	private Inventory_panel inv_panel;
-	//static connection conn;
+	static connection conn;
 	static CardLayout card_layout;
 	static CardLayout cl_home;
 	static boolean supervisor_check;
@@ -132,10 +132,14 @@ class Term_project_main {
 //					card_layout.show(frame.getContentPane(), "home");
 //					cl_home.show(container_panel, "home");
 
-				lib.adjust_PROJECT();
-
-				if (lib.emp_check(field_empID)) {
-
+				
+				Employee employee = new Employee();
+				
+				if (employee.emp_check(field_empID)) {
+					
+					lib.adjust_PROJECT();
+					supervisor_check = employee.supervisor_check(field_empID);
+					
 					card_layout.show(frame.getContentPane(), "home");
 					cl_home.show(container_panel, "home");
 
@@ -149,7 +153,7 @@ class Term_project_main {
 						}// uneditable
 					};
 
-					supervisor_check = lib.supervisor_check(field_empID);
+					
 
 					if (supervisor_check) {
 						if (lib.show_unsign_req().length != 0) {
@@ -205,10 +209,14 @@ class Term_project_main {
 //					card_layout.show(frame.getContentPane(), "home");
 //					cl_home.show(container_panel, "home");
 
-				lib.adjust_PROJECT();
-
-				if (lib.emp_check(field_empID)) {
-
+				
+				Employee employee = new Employee();
+				
+				if (employee.emp_check(field_empID)) {
+					
+					lib.adjust_PROJECT();
+					supervisor_check = employee.supervisor_check(field_empID);
+					
 					card_layout.show(frame.getContentPane(), "home");
 					cl_home.show(container_panel, "home");
 
@@ -222,7 +230,7 @@ class Term_project_main {
 						}// uneditable
 					};
 
-					supervisor_check = lib.supervisor_check(field_empID);
+					
 
 					if (supervisor_check) {
 						if (lib.show_unsign_req().length != 0) {
@@ -318,8 +326,8 @@ class Term_project_main {
 						return false;
 					}// uneditable
 				};
-
-				if (lib.supervisor_check(Term_project_main.field_empID)) {
+				Employee employee = new Employee();
+				if (employee.supervisor_check(Term_project_main.field_empID)) {
 
 					String[] columns_name = { "Sheet ID", "Type", "Project ID", "Product", "Item", "Vol.", "Unit Price",
 							"Total Price", "Signature", "Supervisor ID", "Supervisor", "Date" };

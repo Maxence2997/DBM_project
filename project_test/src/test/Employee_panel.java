@@ -26,7 +26,6 @@ class Employee_panel {
 	 * @autohr Jyun-An @ver. 1.2.2 05/28 Seperated from Project_test
 	 **/
 
-	
 	private JPanel employee_panel;
 
 	private String function;
@@ -55,8 +54,6 @@ class Employee_panel {
 
 	Employee_panel() {
 
-		
-		
 		/**
 		 * @author Ray
 		 * @since 05/25/2021
@@ -64,7 +61,7 @@ class Employee_panel {
 		 * @editor jyun-an
 		 * @since 06/28/2021
 		 */
-		
+
 		employee_panel = new JPanel();
 		employee_panel.setBounds(0, 26, 1000, 450);
 		Term_project_main.container_panel.add(employee_panel, "employee");
@@ -337,8 +334,8 @@ class Employee_panel {
 
 //	            		String []temp = new String[] {"11047602","Abner","Williams",
 //	            										"Taoyuan","(09)11091002","11047600","C"}; //for testing without connection
-
-					ArrayList<String> temp = check(text_emp_empID);
+					Employee employee = new Employee();
+					ArrayList<String> temp = employee.check(text_emp_empID.getText());
 					if (temp.size() != 0) {
 
 						// if(comboBox_emp_action.getSelectedItem().equals("Delete Employee")) {
@@ -376,9 +373,8 @@ class Employee_panel {
 
 						comboBox_emp_perf.setVisible(true);
 						comboBox_emp_perf.setSelectedItem(temp.get(6));
-						
-						Employee employee = new Employee();
-						String[][] temp2 = employee. (text_emp_empID.getText());
+
+						String[][] temp2 = employee.show_table(text_emp_empID.getText());
 						String[] column_names = { "Emp. ID", "Name", "Address", "Phone Num", "Perf.", "Super. ID",
 								"Name" };
 
@@ -397,13 +393,13 @@ class Employee_panel {
 
 						else
 							btn_emp_execute.setVisible(false);
-						
-						if (function.equals("Show & Adjust")) 
+
+						if (function.equals("Show & Adjust"))
 							lbl_emp_info.setText("Data loaded");
 						else
-							lbl_emp_info.setText("the projects and subordinates in his/her charge will be transfered to the supervisor automatically");
+							lbl_emp_info.setText(
+									"the projects and subordinates in his/her charge will be transfered to the supervisor automatically");
 						lbl_emp_info.setVisible(true);
-						
 
 					} else {
 						// temp.size()==0
@@ -411,7 +407,7 @@ class Employee_panel {
 						lbl_emp_info.setVisible(true);
 
 						lbl_empID_show.setText("");
-						;
+
 						lbl_empID_show.setVisible(false);
 						text_emp_empID.setVisible(true);
 
@@ -496,16 +492,30 @@ class Employee_panel {
 		btn_emp_execute = new JButton(); // btn_save_change. btn_add and btn_delete
 		btn_emp_execute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				Employee employee = new Employee();
+
+				boolean emp_check = (text_emp_supervID.getText().isBlank()
+						| ((!text_emp_supervID.getText().isBlank()) & employee.emp_check(text_emp_supervID)));
+
+				boolean blanks_in_JTextFields = (text_emp_first.getText().isBlank() | text_emp_last.getText().isBlank()
+						| text_emp_addr.getText().isBlank() | text_emp_phone.getText().isBlank());
+
+				
+
 				if (btn_emp_execute.getText().equalsIgnoreCase("Save Change")) {
-					if ((!text_emp_supervID.getText().isBlank()) & Term_project_main.lib.emp_check(text_emp_supervID)) {
-						if (text_emp_first.getText().isBlank() | text_emp_last.getText().isBlank()
-								| text_emp_addr.getText().isBlank() | text_emp_phone.getText().isBlank()) {
+
+					if (emp_check) {
+						if (blanks_in_JTextFields) {
 
 							lbl_emp_info.setText("Employee infos cannot be blank.");
 							lbl_emp_info.setVisible(true);
 
 						} else {
-							if (save_change(text_emp_empID) == 1) {
+							String[] input = { text_emp_first.getText(), text_emp_last.getText(), text_emp_addr.getText(),
+									text_emp_phone.getText(), text_emp_supervID.getText(),
+									(String) comboBox_emp_perf.getSelectedItem(), lbl_empID_show.getText() };
+							if (employee.save_change(input) == 1) {
 
 								lbl_emp_info.setText("Modification succeed");
 								lbl_emp_info.setVisible(true);
@@ -516,32 +526,15 @@ class Employee_panel {
 								lbl_emp_info.setVisible(true);
 							}
 						}
-					} else if (text_emp_supervID.getText().isBlank()) {
-						if (text_emp_first.getText().isBlank() | text_emp_last.getText().isBlank()
-								| text_emp_addr.getText().isBlank() | text_emp_phone.getText().isBlank()) {
 
-							lbl_emp_info.setText("Employee infos cannot be blank.");
-							lbl_emp_info.setVisible(true);
-
-						} else {
-							if (save_change(text_emp_empID) == 1) {
-
-								lbl_emp_info.setText("Modification succeed");
-								lbl_emp_info.setVisible(true);
-
-							} else {
-								// save_change(text_emp_empID)==0
-								lbl_emp_info.setText("Modification failed");
-								lbl_emp_info.setVisible(true);
-							}
-						}
 					} else {
 						lbl_emp_info.setText("Supervisor ID is not in Employee table or format invalid.");
 						lbl_emp_info.setVisible(true);
 					}
 				} else if (btn_emp_execute.getText().equalsIgnoreCase("Delete")) {
 
-					if (delete_emp(text_emp_empID) == 1) {
+					int result = employee.delete_emp(text_emp_empID.getText());
+					if (result == 1) {
 
 						btn_clear.setVisible(false);
 
@@ -554,7 +547,7 @@ class Employee_panel {
 						lbl_emp_info.setVisible(true);
 
 					} else {
-						// delete_emp(text_emp_empID)==0
+						// result<0
 						btn_clear.setVisible(false);
 
 						lbl_emp_info.setVisible(false);
@@ -562,28 +555,35 @@ class Employee_panel {
 						text_emp_empID.setVisible(true);
 						clear_text();
 						set_visible(false);
-						lbl_emp_info.setText("Request failed");
+						if (result == -1)
+							lbl_emp_info.setText("Request failed, errors occured.");
+						else // result==-2
+							lbl_emp_info.setText(
+									"Request failed,you should re-assign manually his works to someone else first");
 						lbl_emp_info.setVisible(true);
 					}
 				} else if (btn_emp_execute.getText().equalsIgnoreCase("Add")) {
-					System.out.print("IN");
-					if ((!text_emp_supervID.getText().isBlank()) & Term_project_main.lib.emp_check(text_emp_supervID)) {
-						System.out.print("1");
-						if (text_emp_first.getText().isBlank() | text_emp_last.getText().isBlank()
-								| text_emp_addr.getText().isBlank() | text_emp_phone.getText().isBlank()) {
+
+					if (emp_check) {
+
+						if (blanks_in_JTextFields) {
 
 							lbl_emp_info.setText("Employee infos cannot be blank.");
 							lbl_emp_info.setVisible(true);
 
 						} else {
-							String[] temp = add();
-							if (temp[0] != null) {
+							String[] input = { text_emp_first.getText(), text_emp_last.getText(), text_emp_addr.getText(),
+									text_emp_phone.getText(), text_emp_supervID.getText(),
+									(String) comboBox_emp_perf.getSelectedItem() };
+							String temp = employee.add(input);
+
+							if (temp != null) {
 
 								lbl_emp_info.setText("Employee added");
 								lbl_emp_info.setVisible(true);
 
 								text_emp_empID.setVisible(false);
-								lbl_empID_show.setText(temp[0]);
+								lbl_empID_show.setText(temp);
 								lbl_empID_show.setVisible(true);
 
 							} else {
@@ -592,34 +592,8 @@ class Employee_panel {
 								lbl_emp_info.setVisible(true);
 							}
 						}
-					} else if (text_emp_supervID.getText().isBlank()) {
-						System.out.print("2");
-						if (text_emp_first.getText().isBlank() | text_emp_last.getText().isBlank()
-								| text_emp_addr.getText().isBlank() | text_emp_phone.getText().isBlank()) {
 
-							lbl_emp_info.setText("Employee infos cannot be blank.");
-							lbl_emp_info.setVisible(true);
-
-						} else {
-							String[] temp = add();
-							if (temp[0] != null) {
-
-								lbl_emp_info.setText("Employee added");
-								lbl_emp_info.setVisible(true);
-
-								text_emp_empID.setVisible(false);
-								lbl_empID_show.setText(temp[0]);
-								lbl_empID_show.setVisible(true);
-
-							} else {
-								// save_change(text_emp_empID)==0
-								lbl_emp_info.setText("Request failed");
-								lbl_emp_info.setVisible(true);
-							}
-						}
 					} else {
-						System.out.print("3");
-						System.out.print(Term_project_main.lib.emp_check(text_emp_supervID));
 						lbl_emp_info.setText("Supervisor ID is not in Employee table or format invalid.");
 						lbl_emp_info.setVisible(true);
 					}
@@ -634,7 +608,7 @@ class Employee_panel {
 		btn_show_more = new JButton("Show more");
 		btn_show_more.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				Employee employee = new Employee();
 				String[][] temp = employee.show_more(text_emp_empID.getText());
 
@@ -660,7 +634,7 @@ class Employee_panel {
 					table.setModel(emp_table_model);
 					scrollpane.setPreferredSize(new Dimension(600, 125));
 					scrollpane.setViewportView(table);
-					//table.getColumnModel().getColumn(4).setPreferredWidth(30);
+					// table.getColumnModel().getColumn(4).setPreferredWidth(30);
 					JOptionPane.showMessageDialog(null, scrollpane, "Employees' infos of the projects", 1);
 
 				}
@@ -672,285 +646,19 @@ class Employee_panel {
 
 	}
 
-//	private String[][] show_more() {
-//
-//		ArrayList<String[]> temp = new ArrayList();
-//
-//		try {
-//			ResultSet resultSet = Term_project_main.conn.st
-//					.executeQuery("SELECT * FROM VIEW_EMPLOYEE_PROJECT WHERE Emp_ID=" + text_emp_empID.getText());
-//
-//			while (resultSet.next()) {
-//				String[] array = new String[5];
-//				for (int i = 1; i < 6; i++) {
-//					array[i - 1] = resultSet.getString(i);
-//				}
-//				temp.add(array);
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		String[][] result_array = new String[temp.size()][5];
-//		int i = 0;
-//		for (String[] array_in_temp : temp) {
-//			result_array[i++] = array_in_temp;
-//		}
-//		return result_array;
-//	}
-
-	private String[][] show_table() {
-
-		ArrayList<String[]> temp = new ArrayList();
-
-		try {
-			ResultSet resultSet = Term_project_main.conn.st
-					.executeQuery("SELECT * FROM VIEW_EMPLOYEE_SUPERVISOR WHERE Emp_ID=" + text_emp_empID.getText());
-
-			while (resultSet.next()) {
-				String[] array = new String[7];
-				for (int i = 1; i < 8; i++) {
-					array[i - 1] = resultSet.getString(i);
-				}
-				temp.add(array);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		String[][] result_array = new String[temp.size()][7];
-		int i = 0;
-		for (String[] array_in_temp : temp) {
-			result_array[i++] = array_in_temp;
-		}
-		return result_array;
-	}
-
-	private ArrayList<String> check(JTextField empID) {
-		/**
-		 * @author jyunanyang
-		 * @since 05/30/2021
-		 * 
-		 *        the action after click button confirm in employee panel- show and
-		 *        adjust set instruction of SQL
-		 */
-		ArrayList<String> temp = new ArrayList();
-		try {
-			ResultSet resultSet = Term_project_main.conn.st
-					.executeQuery("SELECT * FROM EMPLOYEE WHERE Emp_ID=" + empID.getText());
-			if (resultSet.next()) {
-
-				for (int i = 1; i < 8; i++) {
-					temp.add(resultSet.getString(i));
-				}
-			}
-			return temp;
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return temp;
-		}
-	}
-
-	private String[] add() {
-		/**
-		 * @author jyunanyang
-		 * @since 06/09/2021
-		 */
-
-		int r = 0;
-		String[] temp = new String[1];
-		if (!text_emp_supervID.getText().isBlank()) {
-
-			try {
-				r = Term_project_main.conn.st.executeUpdate(
-						"INSERT INTO test.EMPLOYEE(First_name, Last_name, Address, Phone_number, Supervisor_ID, Performance)"
-								+ " VALUE(\'" + text_emp_first.getText() + "\', \'" + text_emp_last.getText() + "\', \'"
-								+ text_emp_addr.getText() + "\', \'" + text_emp_phone.getText() + "\', "
-								+ text_emp_supervID.getText() + ", \'" + comboBox_emp_perf.getSelectedItem() + "\')");
-				if (r == 1) {
-					// employee added
-					ResultSet r2 = Term_project_main.conn.st
-							.executeQuery("SELECT Emp_ID FROM EMPLOYEE ORDER BY Emp_ID DESC LIMIT 1 ");
-
-					if (r2.next()) {
-						temp[0] = r2.getString(1);
-					}
-
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return temp;
-			}
-			return temp;
-
-		} else {
-			// text_emp_supervID.getText().isBlank()
-			try {
-				r = Term_project_main.conn.st.executeUpdate(
-						"INSERT INTO test.EMPLOYEE(First_name, Last_name, Address, Phone_number, Performance)"
-								+ " VALUE(\'" + text_emp_first.getText() + "\', \'" + text_emp_last.getText() + "\', \'"
-								+ text_emp_addr.getText() + "\', \'" + text_emp_phone.getText() + "\', \'"
-								+ comboBox_emp_perf.getSelectedItem() + "\')");
-				if (r == 1) {
-					// employee added
-					ResultSet r2 = Term_project_main.conn.st
-							.executeQuery("SELECT Emp_ID FROM EMPLOYEE ORDER BY Emp_ID DESC LIMIT 1");
-
-					if (r2.next()) {
-						temp[0] = r2.getString(1);
-					}
-
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return temp;
-			}
-			return temp;
-
-		}
-	}
-
-	private int save_change(JTextField empID) {
-		/**
-		 * @author jyunanyang
-		 * @since 05/30/2021 the action after click button save_change in employee
-		 *        panel- show and adjust
-		 */
-		int r = 0;
-		if (!text_emp_supervID.getText().isBlank()) {
-			try {
-				r = Term_project_main.conn.st.executeUpdate("UPDATE test.EMPLOYEE SET First_name=\'"
-						+ text_emp_first.getText() + "\', Last_name=\'" + text_emp_last.getText() + "\', Address=\'"
-						+ text_emp_addr.getText() + "\', Phone_number=\'" + text_emp_phone.getText()
-						+ "\', Supervisor_ID=" + text_emp_supervID.getText() + ", Performance=\'"
-						+ comboBox_emp_perf.getSelectedItem() + "\' WHERE Emp_ID=" + lbl_empID_show.getText());
-				return r;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-		} else {
-			// !text_emp_supervID.getText().isBlank()
-			try {
-				r = Term_project_main.conn.st.executeUpdate("UPDATE test.EMPLOYEE SET First_name=\'"
-						+ text_emp_first.getText() + "\', Last_name=\'" + text_emp_last.getText() + "\', Address=\'"
-						+ text_emp_addr.getText() + "\', Phone_number=\'" + text_emp_phone.getText()
-						+ "\', Supervisor_ID=null" + ", Performance=\'" + comboBox_emp_perf.getSelectedItem()
-						+ "\' WHERE Emp_ID=" + lbl_empID_show.getText());
-				return r;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return r;
-			}
-		}
-	}
-
-	private int delete_emp(JTextField empID) {
-
-		int r = 0;
-		String temp_supv = "";
-		try {
-			// re-assign supervisor for subordinates of the employee who is going to be
-			// deleted
-			ResultSet r2 = Term_project_main.conn.st
-					.executeQuery("SELECT Supervisor_ID FROM EMPLOYEE WHERE Emp_ID =" + empID.getText());
-
-			if (r2.next()) {
-				// if employee who is going to be deleted has supervisor
-
-				temp_supv = r2.getString(1);
-
-			}
-
-			ArrayList<String> emps = new ArrayList();
-
-			ResultSet r3 = Term_project_main.conn.st
-					.executeQuery("SELECT Emp_ID FROM EMPLOYEE WHERE Supervisor_ID =" + empID.getText());
-
-			while (r3.next()) {
-				// if employee who is going to be deleted has subordinates
-
-				emps.add(r3.getString(1));
-			}
-
-			// check his project
-			ArrayList<String> pjs = new ArrayList();
-
-			ResultSet r4 = Term_project_main.conn.st
-					.executeQuery("SELECT Project_ID FROM PROJECT WHERE Emp_ID =" + empID.getText());
-
-			while (r4.next()) {
-				// if employee who is going to be deleted has basic emp under him/her
-
-				pjs.add(r4.getString(1));
-			}
-
-			if (!temp_supv.isBlank()) {
-				// has supervisor
-				if (emps.size() != 0) {
-					// hse subordinates
-
-					for (int i = 0; i < emps.size(); i++) {
-						Term_project_main.conn.st.executeUpdate(
-								"UPDATE test.EMPLOYEE SET Supervisor_ID=" + temp_supv + "WHERE Emp_ID=" + emps.get(i));
-					}
-				}
-
-				if (pjs.size() != 0) {
-					// has projects
-					for (int i = 0; i < emps.size(); i++) {
-						Term_project_main.conn.st.executeUpdate(
-								"UPDATE test.PROJECT SET Emp_ID=" + temp_supv + "WHERE Project_ID=" + pjs.get(i));
-					}
-				}
-				r = Term_project_main.conn.st
-						.executeUpdate("DELETE FROM test.EMPLOYEE WHERE Emp_ID=" + empID.getText());
-
-			} else {
-				// doesn't have supvervisor
-				if (emps.size() == 0 & pjs.size() == 0) {
-					// hse no subordinate
-
-					r = Term_project_main.conn.st
-							.executeUpdate("DELETE FROM test.EMPLOYEE WHERE Emp_ID=" + empID.getText());
-
-				} else {
-					lbl_emp_info.setText("You would have to re-assign his works to someone else first");
-				}
-			}
-			return r;
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			lbl_emp_info.setText("Request failed");
-			return r;
-		}
-
-	}
-
 	void clear_text() {
-		
+
 		/**
 		 * @author Ray
 		 * @since 05/25/2021
 		 * 
-		 * clear all input in JTextField
+		 *        clear all input in JTextField
 		 * 
 		 * 
 		 * @editor jyun-an
 		 * @since 06/28/2021
 		 */
-		
-		
+
 		text_emp_empID.setText("");
 		text_emp_first.setText("");
 		text_emp_last.setText("");
