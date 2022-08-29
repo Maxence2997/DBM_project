@@ -19,7 +19,7 @@ public class Supplier
 	@Id
 	@Column(name = "Supplier_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private int id;
 	
 	@Column(name = "Supplier_name")
 	private String supplierName;
@@ -35,6 +35,6 @@ public class Supplier
 	@Column(name="Contact_email")
 	private String contactEmail;
 	
-	@OneToMany(mappedBy = "moduleType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Product> productList;
 }

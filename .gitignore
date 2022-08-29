@@ -1,0 +1,6 @@
+*.bak
+/lib/
+/bin/
+project_test/.classpath
+project_test/src/database.properties
+project_test/.settings/

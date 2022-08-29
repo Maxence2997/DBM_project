@@ -7,8 +7,8 @@ import javax.persistence.*;
 public class Product
 {
 	@Id
-	@Column(name = "Module_type")
-	private String moduleType;
+	@Column(name = "Module_ID")
+	private String id;
 	
 	@Column(name = "Item_name")
 	private String itemName;
@@ -16,5 +16,5 @@ public class Product
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "Supplier_ID")
-	private Integer supplierId;
+	private Supplier supplier;
 }

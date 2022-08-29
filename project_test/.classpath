@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="image"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-14">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
@@ -12,5 +12,92 @@
 	<classpathentry kind="lib" path="lib/jgoodies-forms-1.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.23.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/byte-buddy-1.12.7.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/classmate-1.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/FastInfoset-1.2.15.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/hibernate-commons-annotations-5.1.2.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/hibernate-core-5.6.5.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/istack-commons-runtime-3.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/jandex-2.4.2.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/javax.activation-api-1.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/javax.persistence-api-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/jaxb-api-2.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/jaxb-runtime-2.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/jboss-logging-3.4.3.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/jboss-transaction-api_1.2_spec-1.1.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/stax-ex-1.8.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace2/DBM_project/required/txw2-2.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-aop-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-aop-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-aop-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-aspects-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-aspects-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-aspects-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-beans-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-beans-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-beans-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-context-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-context-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-context-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-context-indexer-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-context-indexer-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-context-indexer-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-context-support-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-context-support-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-context-support-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-core-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-core-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-core-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-expression-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-expression-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-expression-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-instrument-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-instrument-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-instrument-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-jcl-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-jcl-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-jcl-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-jdbc-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-jdbc-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-jdbc-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-jms-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-jms-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-jms-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-messaging-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-messaging-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-messaging-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-orm-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-orm-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-orm-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-oxm-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-oxm-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-oxm-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-r2dbc-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-r2dbc-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-r2dbc-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-test-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-test-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-test-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-tx-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-tx-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-tx-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-web-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-web-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-web-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-webflux-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-webflux-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-webflux-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-webmvc-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-webmvc-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-webmvc-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-websocket-5.3.9.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-websocket-5.3.9-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/spring-websocket-5.3.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/stax-ex-1.8.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/txw2-2.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/lombok.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/mchange-commons-java-0.2.19.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/CommonLib/c3p0-0.9.5.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
