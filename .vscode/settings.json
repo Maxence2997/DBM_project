@@ -1,0 +1,20 @@
+{
+  "markdown.preview.fontSize": 14,
+  "editor.fontSize": 18,
+  "editor.tabSize": 4,
+  "editor.detectIndentation": false,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "markdown.extension.tableFormatter.normalizeIndentation": false,
+  "editor.tabCompletion": "onlySnippets",
+  "editor.insertSpaces": false,
+  "editor.acceptSuggestionOnEnter": "smart",
+  "markdown-preview-enhanced.enableExtendedTableSyntax": false,
+  "editor.wordWrap": "on",
+  "editor.wrappingStrategy": "advanced",
+  "workbench.editor.wrapTabs": true,
+  "markdown.preview.scrollPreviewWithEditor": true,
+  "markdown.preview.scrollEditorWithPreview": true,
+  "git.ignoreLimitWarning": true
+}

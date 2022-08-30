@@ -2,7 +2,6 @@ package com.entities;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +31,10 @@ public class Project
 	@Column(name = "Established_date", columnDefinition = "DATE")
 	private LocalDate date;
 
-	@OneToMany(mappedBy = "id", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+	@Column(name = "Project_status")
+	private String status;
+
+	@OneToMany(mappedBy = "project", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	private List<Inventory> inventoryList;
 }
