@@ -29,3 +29,5 @@
 - [ ] Purchase
 - [ ] Examination
 - [ ] Receipt
+
+<http://www.java2s.com/Tutorial/Java/0355__JPA/AbstractClassAsMappedSuperclass.htm>
