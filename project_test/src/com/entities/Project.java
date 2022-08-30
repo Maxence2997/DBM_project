@@ -30,7 +30,7 @@ public class Project
 	private Employee employee;
 
 	@Column(name = "Established_date", columnDefinition = "DATE")
-	private LocalDate localDate;
+	private LocalDate date;
 
 	@OneToMany(mappedBy = "id", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH }, fetch = FetchType.LAZY)
