@@ -18,26 +18,25 @@ import lombok.ToString;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "Employee")
+@Table(name = "employee")
 public class Employee extends BaseEntity
 {
-	@Column(name = "Emp_ID")
+	@Column(name = "emp_id")
 	private String employeeId;
 	
-	@Column(name = "First_name")
+	@Column(name = "first_name")
 	private String firstName;
 	
-	@Column(name = "Last_name")
+	@Column(name = "last_name")
 	private String lastName;
 	
-	@Column(name = "Address")
+	@Column(name = "address")
 	private String address;
 	
-	@Column(name = "Phone_number")
-	private String phoneNumber;
+	@Column(name = "phone_number")
+	private String phoneNum;
 	
 	// For self joining: https://stackoverflow.com/questions/31668522/hibernate-self-join-confusion
 	
@@ -45,11 +44,11 @@ public class Employee extends BaseEntity
 	@NotFound(action = NotFoundAction.IGNORE)
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "Supervisor_ID")
+	@JoinColumn(name = "supervisor_id")
 	private Employee supervisor;
 	
-	@Column(name = "Performance")
-	private String Performance;
+	@Column(name = "performance")
+	private String performance;
 	
 	@ToString.Exclude
 	@OneToMany(mappedBy = "supervisor", fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE,

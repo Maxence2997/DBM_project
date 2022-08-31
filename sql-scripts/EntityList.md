@@ -2,6 +2,7 @@
 
 ## Entities
 
+- [ ] Definition
 - [ ] BaseEntity
 - [ ] Employee
   - [ ] SubordinateList

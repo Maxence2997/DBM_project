@@ -1,6 +1,7 @@
 package com.entities;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Data;
@@ -13,7 +14,8 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "Rfq")
+@Table(name = "sheet")
+@DiscriminatorValue("RFQ")
 public class Rfq extends Sheet
 {
 	@Column(name = "Inquiring_product")

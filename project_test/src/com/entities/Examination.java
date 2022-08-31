@@ -13,13 +13,13 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "Examination")
+@Table(name = "examination")
 public class Examination extends Sheet
 {
-	@Column(name = "Module_ID")
+	@Column(name = "product_id")
 	private String moduleId;
 	
-	@Column(name = "Yield")
+	@Column(name = "yield")
 	private double yield;
 	
 	@Column(name = "Result")

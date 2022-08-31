@@ -3,188 +3,122 @@ USE `project_tracker`;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS `Employee`;
-CREATE TABLE `Employee` (
-  `Emp_ID` int unsigned NOT NULL AUTO_INCREMENT,
-  `First_name` varchar(128) NOT NULL,
-  `Last_name` varchar(128) NOT NULL,
-  `Address` varchar(128) DEFAULT NULL,
-  `Phone_number` varchar(15) DEFAULT NULL,
-  `Supervisor_ID` int unsigned DEFAULT NULL,
-  `Performance` varchar(3) NOT NULL,
-  PRIMARY KEY (`Emp_ID`),
-  KEY `FK_Supervisor_ID` (`Supervisor_ID`),
-  CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`Supervisor_ID`) 
-  REFERENCES `Employee` (`Emp_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `employee`;
+CREATE TABLE `employee` (
+  `uuid` varchar(64) NOT NULL,
+  `emp_id` varchar(64) NOT NULL,
+  `first_name` varchar(64) NOT NULL,
+  `last_name` varchar(64) NOT NULL,
+  `address` varchar(64) DEFAULT NULL,
+  `phone_number` varchar(32) DEFAULT NULL,
+  `supervisor_id` varchar(64) DEFAULT NULL,
+  `performance` varchar(64) NOT NULL,
+  `create_time` timestamp default current_timestamp,
+  `modify_time` timestamp default null,
+  PRIMARY KEY (`uuid`),
+  KEY `FK_supervisor_id` (`supervisor_id`),
+  CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`supervisor_id`) 
+  REFERENCES `employee` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1  COLLATE latin1_general_ci;
 
-DROP TABLE IF EXISTS `Project`;
-CREATE TABLE `Project` (
-  `Project_ID` int unsigned NOT NULL AUTO_INCREMENT,
-  `Emp_ID` int unsigned NOT NULL,
-  `Established_date` date NOT NULL DEFAULT (date_format(curdate(),_utf8mb4'%Y-%m-%d')),
-  `Project_status` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`Project_ID`),
-  KEY `Emp_ID` (`Emp_ID`),
-  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`Emp_ID`) 
-  REFERENCES `Employee` (`Emp_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `project`;
+CREATE TABLE `project` (
+  `uuid` varchar(64) NOT NULL,
+  `project_id` varchar(64) NOT NULL,
+  `emp_id` varchar(64) NOT NULL,
+  `project_status` varchar(64) DEFAULT NULL,
+  `create_time` timestamp default current_timestamp,
+  `modify_time` timestamp default null,
+  PRIMARY KEY (`uuid`),
+  KEY `fk_emp_id` (`emp_id`),
+  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`emp_id`) 
+  REFERENCES `employee` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1  COLLATE latin1_general_ci;
 
-DROP TABLE IF EXISTS `Supplier`;
-CREATE TABLE `Supplier` (
-  `Supplier_ID` int unsigned NOT NULL AUTO_INCREMENT,
-  `Supplier_name` varchar(128) NOT NULL,
-  `Supplier_address` varchar(128) NOT NULL,
-  `Contact_name` varchar(128) NOT NULL,
-  `Contact_mobile` varchar(15) NOT NULL,
-  `Contact_email` varchar(128) NOT NULL,
-  PRIMARY KEY (`Supplier_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `supplier`;
+CREATE TABLE `supplier` (
+  `uuid` varchar(64) NOT NULL,
+  `supplier_id` varchar(64) NOT NULL,
+  `supplier_name` varchar(64) NOT NULL,
+  `supplier_address` varchar(64) NOT NULL,
+  `contact_name` varchar(64) NOT NULL,
+  `contact_mobile` varchar(64) NOT NULL,
+  `contact_email` varchar(64) NOT NULL,
+  `create_time` timestamp default current_timestamp,
+  `modify_time` timestamp default null,
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1  COLLATE latin1_general_ci;
 
-DROP TABLE IF EXISTS `Product`;
-CREATE TABLE `Product` (
-  `Module_ID` varchar(128) NOT NULL,
-  `Item_name` varchar(128) NOT NULL,
-  `Supplier_ID` int unsigned NOT NULL,
-  PRIMARY KEY (`Module_ID`),
-  KEY `Supplier_ID` (`Supplier_ID`),
-  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`Supplier_ID`) 
-  REFERENCES `Supplier` (`Supplier_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `uuid` varchar(64) NOT NULL,
+  `product_id` varchar(64) NOT NULL,
+  `product_name` varchar(64) NOT NULL,
+  `supplier_id` varchar(64) NOT NULL,
+  `create_time` timestamp default current_timestamp,
+  `modify_time` timestamp default null,
+  PRIMARY KEY (`uuid`),
+  KEY `supplier_id` (`supplier_id`),
+  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`supplier_id`) 
+  REFERENCES `supplier` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1  COLLATE latin1_general_ci;
 
-DROP TABLE IF EXISTS `Examination`;
-CREATE TABLE `Examination` (
-  `Sheet_ID` int unsigned NOT NULL AUTO_INCREMENT,
-  `Sheet_type` varchar(15) NOT NULL DEFAULT 'Examination',
-  `Project_ID` int  unsigned NOT NULL,
-  `Supplier_ID` int unsigned NOT NULL,
-  `Module_ID` varchar(128) NOT NULL,
-  `Vol` int unsigned NOT NULL,
-  `Result` boolean NOT NULL DEFAULT false,
-  `Date` date NOT NULL DEFAULT (date_format(curdate(),_utf8mb4'%Y-%m-%d')),
-  PRIMARY KEY (`Sheet_ID`,`Supplier_ID`,`Project_ID`),
-  KEY `FK_Project_ID` (`Project_ID`),
-  CONSTRAINT `FK_Examination_1` FOREIGN KEY (`Project_ID`) 
-  REFERENCES `Project` (`Project_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  KEY `Supplier_ID` (`Supplier_ID`),
-  CONSTRAINT `FK_Examination_2` FOREIGN KEY (`Supplier_ID`) 
-  REFERENCES `SUPPLIER` (`Supplier_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `inventory`;
+CREATE TABLE `inventory` (
+  `uuid` varchar(64) NOT NULL,
+  `inventory_id` varchar(64) NOT NULL,
+  `project_id`  varchar(64) NOT NULL,
+  `product_id` varchar(64) NOT NULL,
+  `create_time` timestamp default current_timestamp,
+  `modify_time` timestamp default null,
+  PRIMARY KEY (`uuid`),
+  KEY `project_ID` (`project_id`),
+  CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`project_id`) 
+  REFERENCES `project` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `inventory_ibfk_2` FOREIGN KEY (`product_id`) 
+  REFERENCES `product` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1  COLLATE latin1_general_ci;
 
-DROP TABLE IF EXISTS `Purchase`;
-CREATE TABLE `purchase` (
-  `Sheet_ID` int unsigned NOT NULL AUTO_INCREMENT,
-  `Sheet_type` varchar(15) NOT NULL DEFAULT 'Purchase',
-  `Project_ID` int unsigned NOT NULL,
-  `Supplier_ID` int unsigned NOT NULL,
-  `Module_ID` varchar(128) NOT NULL,
-  `Vol` int NOT NULL,
-  `Unit_price` int unsigned NOT NULL,
-  `Total_price` int GENERATED ALWAYS AS ((`Vol` * `Unit_price`)) VIRTUAL,
-  `ESD` date NOT NULL DEFAULT (date_format((curdate() + interval 30 day),_utf8mb4'%Y-%m-%d')),
-  `Date` date NOT NULL DEFAULT (date_format(curdate(),_utf8mb4'%Y-%m-%d')),
-  PRIMARY KEY (`Sheet_ID`,`Supplier_ID`,`Project_ID`),
-  KEY `Project_ID` (`Project_ID`),
-  CONSTRAINT `purchase_ibfk_1` FOREIGN KEY (`Project_ID`) 
-  REFERENCES `PROJECT` (`Project_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  KEY `Supplier_ID` (`Supplier_ID`),
-  CONSTRAINT `purchase_ibfk_2` FOREIGN KEY (`Supplier_ID`) 
-  REFERENCES `SUPPLIER` (`Supplier_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `sheet`;
+CREATE TABLE `sheet` (
+  `uuid` varchar(64) NOT NULL,
+  `sheet_id` varchar(64) NOT NULL,
+  `sheet_type` varchar(15) NOT NULL,
+  `project_id` varchar(64) NOT NULL,
+  `product_id` varchar(64) NOT NULL,
+  `supplier_id` varchar(64) NOT NULL,
+  `volume` int unsigned NOT NULL,
+  `unit_price` int unsigned NOT NULL,
+  `total_price` int unsigned NOT NULL,
+  `yield` varchar(64) default null,
+  `signature` boolean NOT NULL DEFAULT false,
+  `supervisor_id` varchar(64) NOT NULL,
+  `esd_date` date NOT NULL DEFAULT (date_format(curdate(),_utf8mb4'%Y-%m-%d')),
+  `create_time` timestamp default current_timestamp,
+  `modify_time` timestamp default null,
+  PRIMARY KEY (`uuid`),
+  KEY `project_id` (`project_id`),
+  CONSTRAINT `sheet_ibfk_1` FOREIGN KEY (`project_id`) 
+  REFERENCES `project` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `supervisor_id` (`supervisor_id`),
+  CONSTRAINT `sheet_ibfk_2` FOREIGN KEY (`supervisor_id`) 
+  REFERENCES `employee` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `supplier_id` (`supplier_id`),
+  CONSTRAINT `sheet_ibfk_3` FOREIGN KEY (`supplier_id`) 
+  REFERENCES `supplier` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `sheet_ibfk_4` FOREIGN KEY (`product_id`) 
+  REFERENCES `product` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1  COLLATE latin1_general_ci;
 
-DROP TABLE IF EXISTS `Quotation`;
-CREATE TABLE `Quotation` (
-  `Sheet_ID` int unsigned NOT NULL AUTO_INCREMENT,
-  `Sheet_type` varchar(15) NOT NULL DEFAULT 'Quotation',
-  `Project_ID` int unsigned NOT NULL,
-  `Inquiring_product` varchar(128) NOT NULL,
-  `Supplier_ID` int unsigned NOT NULL,
-  `Vol` int unsigned NOT NULL,
-  `Unit_price` int unsigned NOT NULL,
-  `ESD` date NOT NULL DEFAULT (date_format((curdate() + interval 30 day),_utf8mb4'%Y-%m-%d')),
-  `Date` date NOT NULL DEFAULT (date_format(curdate(),_utf8mb4'%Y-%m-%d')),
-  `Total_price` int GENERATED ALWAYS AS ((`Vol` * `Unit_price`)) VIRTUAL,
-  PRIMARY KEY (`Sheet_ID`,`Project_ID`,`Supplier_ID`),
-  KEY `Project_ID` (`Project_ID`),
-  CONSTRAINT `quotation_ibfk_1` FOREIGN KEY (`Project_ID`) 
-  REFERENCES `PROJECT` (`Project_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  KEY `Supplier_ID` (`Supplier_ID`),
-  CONSTRAINT `quotation_ibfk_2` FOREIGN KEY (`Supplier_ID`) 
-  REFERENCES `SUPPLIER` (`Supplier_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `Receipt`;
-CREATE TABLE `Receipt` (
-  `Sheet_ID` int unsigned NOT NULL AUTO_INCREMENT,
-  `Sheet_type` varchar(15) NOT NULL DEFAULT 'Receipt',
-  `Project_ID`int unsigned NOT NULL,
-  `Supplier_ID` int unsigned NOT NULL,
-  `Module_ID` varchar(128) NOT NULL,
-  `Vol` int unsigned NOT NULL,
-  `Date` date NOT NULL DEFAULT (date_format(curdate(),_utf8mb4'%Y-%m-%d')),
-  PRIMARY KEY (`Sheet_ID`,`Project_ID`,`Supplier_ID`),
-  KEY `Project_ID` (`Project_ID`),
-  CONSTRAINT `receipt_ibfk_1` FOREIGN KEY (`Project_ID`) 
-  REFERENCES `PROJECT` (`Project_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  KEY `Supplier_ID` (`Supplier_ID`),
-  CONSTRAINT `receipt_ibfk_2` FOREIGN KEY (`Supplier_ID`) 
-  REFERENCES `SUPPLIER` (`Supplier_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `Requisition`;
-CREATE TABLE `Requisition` (
-  `Sheet_ID` int unsigned NOT NULL AUTO_INCREMENT,
-  `Sheet_type` varchar(15) NOT NULL DEFAULT 'Requisition',
-  `Project_ID`int unsigned NOT NULL,
-  `Inquiring_product` varchar(128) NOT NULL,
-  `Item_name` varchar(128) NOT NULL,
-  `Supplier_ID` int unsigned NOT NULL,
-  `Vol` int unsigned NOT NULL,
-  `Unit_price` int unsigned NOT NULL,
-  `Total_price` int GENERATED ALWAYS AS ((`Vol` * `Unit_price`)) VIRTUAL,
-  `Signature` boolean NOT NULL DEFAULT false,
-  `Supervisor_ID` int unsigned NOT NULL,
-  `Date` date NOT NULL DEFAULT (date_format(curdate(),_utf8mb4'%Y-%m-%d')),
-  PRIMARY KEY (`Sheet_ID`,`Project_ID`,`Supplier_ID`),
-  KEY `Project_ID` (`Project_ID`),
-  CONSTRAINT `requisition_ibfk_1` FOREIGN KEY (`Project_ID`) 
-  REFERENCES `PROJECT` (`Project_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  KEY `Supervisor_ID` (`Supervisor_ID`),
-  CONSTRAINT `requisition_ibfk_2` FOREIGN KEY (`Supervisor_ID`) 
-  REFERENCES `EMPLOYEE` (`Emp_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  KEY `Supplier_ID` (`Supplier_ID`),
-  CONSTRAINT `requisition_ibfk_3` FOREIGN KEY (`Supplier_ID`) 
-  REFERENCES `SUPPLIER` (`Supplier_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `RFQ`;
-CREATE TABLE `RFQ` (
-  `Sheet_ID` int unsigned NOT NULL AUTO_INCREMENT,
-  `Sheet_type` varchar(15) NOT NULL DEFAULT 'RFQ',
-  `Project_ID` int unsigned NOT NULL,
-  `Supplier_ID` int unsigned NOT NULL,
-  `Inquiring_product` varchar(128) NOT NULL,
-  `Vol` int unsigned NOT NULL,
-  `Date` date NOT NULL DEFAULT (date_format(curdate(),_utf8mb4'%Y-%m-%d')),
-  PRIMARY KEY (`Sheet_ID`,`Project_ID`,`Supplier_ID`),
-  KEY `Project_ID` (`Project_ID`),
-  CONSTRAINT `rfq_ibfk_1` FOREIGN KEY (`Project_ID`) 
-  REFERENCES `project` (`Project_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  KEY `Supplier_ID` (`Supplier_ID`),
-  CONSTRAINT `rfq_ibfk_2` FOREIGN KEY (`Supplier_ID`) 
-  REFERENCES `SUPPLIER` (`Supplier_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `Inventory`;
-CREATE TABLE `Inventory` (
-  `Inventory_ID`  int unsigned NOT NULL AUTO_INCREMENT,
-  `Project_ID`  int unsigned NOT NULL,
-  `Item_name` varchar(128) NOT NULL,
-  `Module_ID` varchar(128) NOT NULL,
-  PRIMARY KEY (`Inventory_ID`),
-  KEY `Project_ID` (`Project_ID`),
-  CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`Project_ID`) 
-  REFERENCES `Project` (`Project_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `Definition`;
+CREATE TABLE `Definition` (
+  `key_def` varchar(64) NOT NULL,
+  `value_def`  varchar(64) NOT NULL,
+  `create_time` timestamp default current_timestamp,
+  `modify_time` timestamp default null,
+  PRIMARY KEY (`key_def`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1  COLLATE latin1_general_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -13,7 +13,7 @@ public class EmployeeDao implements EmployeeDaoInterface
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void createEmployee()
+	public void createEmployee(Employee employee)
 	{
 		// TODO Auto-generated method stub
 	}
