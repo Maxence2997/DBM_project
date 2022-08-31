@@ -1,40 +1,44 @@
 package com.entities;
 
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@NoArgsConstructor
 @Entity
 @Table(name = "Supplier")
-public class Supplier
+public class Supplier extends BaseEntity
 {
-	@Id
 	@Column(name = "Supplier_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private String supplierId;
 	
 	@Column(name = "Supplier_name")
 	private String supplierName;
 	
-	@Column(name="Supplier_address")
+	@Column(name = "Supplier_address")
 	private String supplierAddress;
 	
-	@Column(name="Contact_name")
+	@Column(name = "Contact_name")
 	private String contactName;
-	@Column(name="Contact_mobile")
+	
+	@Column(name = "Contact_mobile")
 	private String contactMobile;
 	
-	@Column(name="Contact_email")
+	@Column(name = "Contact_email")
 	private String contactEmail;
 	
-	@OneToMany(mappedBy = "id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
+	@OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Product> productList;
 }

@@ -1,45 +1,42 @@
 package com.entities;
 
-import java.io.Serializable;
-import java.time.LocalDate;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@MappedSuperclass
-public abstract class Sheet
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@NoArgsConstructor
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Sheet extends BaseEntity
 {
-	@Data
-	@NoArgsConstructor
-	@Embeddable
-	public class SheetId implements Serializable
-	{
-		@Column(name = "Sheet_ID")
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private int sheetId;
-
-		@Column(name = "Project_ID")
-		private int proejctId;
-
-		@Column(name = "Supplier_ID")
-		private int supplierId;
-	}
-
-	@EmbeddedId
-	protected SheetId sheetId;
-
+	@Column(name = "Sheet_ID")
+	protected String sheetId;
+	
+	@Column(name = "Sheet_type")
 	protected String sheetType;
-
-	protected int moduleId;
-
+	
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	@JoinColumn(name = "Project_ID")
+	protected Project project;
+	
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	@JoinColumn(name = "Supplier_ID")
+	protected Supplier supplier;
+	
+	@Column(name = "Vol")
 	protected int volume;
-
-	protected LocalDate date;
-
-	protected abstract Sheet getSheet();
 }
