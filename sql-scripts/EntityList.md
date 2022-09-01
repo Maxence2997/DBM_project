@@ -52,3 +52,12 @@
 1. [Hibernate Inheritance Mapping](https://www.baeldung.com/hibernate-inheritance)
 2. [How To Use UUIDs With Hibernate And MySQL](https://phauer.com/2016/uuids-hibernate-mysql/)
 3. [JPA 2.2 Support for Java 8 Date/Time Types](https://www.baeldung.com/jpa-java-time)
+4. [Derived Query Methods in Spring Data JPA Repositories](https://www.baeldung.com/spring-data-derived-queries)
+5. [Working with Spring Data Repositories](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories)
+6. [HQL Tutorial](https://tw.gitbook.net/hibernate/hibernate_query_language.html)
+7. [Hibernate Session javadoc](https://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/Session.html)
+
+
+## Note
+
+1. 徒手query DB的話建議用`JDBC Template`
