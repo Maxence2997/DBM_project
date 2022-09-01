@@ -10,21 +10,19 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 public class Product extends BaseEntity
 {
-	@Column(name = "Module_ID")
-	private String moduleId;
+	@Column(name = "product_id")
+	private String productId;
 	
-	@Column(name = "Item_name")
-	private String itemName;
+	@Column(name = "product_name")
+	private String productName;
 	
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH }, fetch = FetchType.EAGER)

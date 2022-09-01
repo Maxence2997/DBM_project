@@ -1,5 +1,5 @@
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import com.dao.EmployeeDaoInterface;
+import com.dao.EmpDaoInterface;
 import com.entities.Employee;
 
 public class TestDao
@@ -10,7 +10,7 @@ public class TestDao
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
 		// retrieve bean from spring container
-		EmployeeDaoInterface employee = context.getBean("EmployeeDao", EmployeeDaoInterface.class);
+		EmpDaoInterface employee = context.getBean("EmployeeDao", EmpDaoInterface.class);
 		Employee emp = employee.getEmployee(1);
 
 		System.out.println(emp);

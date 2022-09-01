@@ -1,7 +1,7 @@
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.entities.Employee;
-import com.service.EmployeeServiceInterface;
+import com.service.EmpServiceInterface;
 
 public class TestService
 {
@@ -11,7 +11,7 @@ public class TestService
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
 		// retrieve bean from spring container
-		EmployeeServiceInterface employeeService = context.getBean("EmployeeService", EmployeeServiceInterface.class);
+		EmpServiceInterface employeeService = context.getBean("EmployeeService", EmpServiceInterface.class);
 		Employee emp = employeeService.getEmployee(1);
 
 		System.out.println(emp);

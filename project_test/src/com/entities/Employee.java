@@ -59,4 +59,32 @@ public class Employee extends BaseEntity
 	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE,
 			CascadeType.PERSIST, CascadeType.REFRESH })
 	private List<Project> projectList;
+	
+	public Employee(String firstName, String lastName, String address, String phoneNum,
+			Employee supervisor, String performance)
+	{
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.phoneNum = phoneNum;
+		this.supervisor = supervisor;
+		this.performance = performance;
+	}
+	
+	public Employee(String firstName, String lastName)
+	{
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+	public Employee(String firstName, String lastName, String address, String phoneNum)
+	{
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.phoneNum = phoneNum;
+	}
 }

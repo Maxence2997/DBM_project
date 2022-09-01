@@ -7,25 +7,27 @@ import org.springframework.stereotype.Repository;
 import com.entities.Employee;
 
 @Repository
-public class EmployeeDao implements EmployeeDaoInterface
+public class EmployeeDao implements EmpDaoInterface
 {
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	
 	@Override
 	public void createEmployee(Employee employee)
 	{
-		// TODO Auto-generated method stub
+		// get the current hibernate session
+		Session session = sessionFactory.getCurrentSession();
+		session.save(employee);
 	}
-
+	
 	@Override
 	public Employee getEmployee(int id)
 	{
 		// get the current hibernate session
-		Session currentSession = sessionFactory.getCurrentSession();
-
+		Session session = sessionFactory.getCurrentSession();
+		
 		// retrieve/read from database using the primary key
-		Employee employee = currentSession.get(Employee.class, id);
+		Employee employee = session.get(Employee.class, id);
 		return employee;
 	}
 }

@@ -16,21 +16,20 @@ import lombok.ToString;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "project")
 public class Project extends BaseEntity
 {
-	@Column(name = "Project_ID")
+	@Column(name = "proj_id")
 	private String projectId;
 
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "Emp_ID")
+	@JoinColumn(name = "emp_id")
 	private Employee employee;
 
-	@Column(name = "Project_status")
+	@Column(name = "status")
 	private String status;
 	
 	@ToString.Exclude

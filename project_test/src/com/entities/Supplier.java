@@ -20,22 +20,22 @@ import lombok.ToString;
 @Table(name = "Supplier")
 public class Supplier extends BaseEntity
 {
-	@Column(name = "Supplier_ID")
+	@Column(name = "sup_id")
 	private String supplierId;
 	
-	@Column(name = "Supplier_name")
+	@Column(name = "sup_name")
 	private String supplierName;
 	
-	@Column(name = "Supplier_address")
+	@Column(name = "sup_address")
 	private String supplierAddress;
 	
-	@Column(name = "Contact_name")
+	@Column(name = "contact_name")
 	private String contactName;
 	
-	@Column(name = "Contact_mobile")
+	@Column(name = "contact_mobile")
 	private String contactMobile;
 	
-	@Column(name = "Contact_email")
+	@Column(name = "contact_email")
 	private String contactEmail;
 	
 	@ToString.Exclude
