@@ -1,11 +1,11 @@
 package com.entities;
 
-import javax.persistence.CascadeType;
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -28,21 +28,40 @@ public abstract class Sheet extends BaseEntity
 	@Column(name = "sheet_type")
 	protected String sheetType;
 	
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-			CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	@ManyToOne
+	@JoinColumn(name = "prod_id")
+	protected Product product;
+	
+	@ManyToOne
 	@JoinColumn(name = "proj_id")
 	protected Project project;
 	
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-			CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "sup_id")
 	protected Supplier supplier;
 	
 	@Column(name = "volume")
 	protected int volume;
 	
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-			CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "supervisor_id")
 	protected Employee supervisor;
+	
+	@Column(name = "unit_price")
+	private int unitPrice;
+	
+	@Column(name = "total_price")
+	private int totalPrice;
+	
+	@Column(name="signature")
+	private boolean sign;
+	
+	@Column(name = "esd_date")
+	private LocalDate esdDate;	// Estimated Shipment Delivery Date
+	
+	@Column(name = "yield")
+	private double yield;
+	
+	@Column(name = "result")
+	private boolean result;	// represent pass or not
 }

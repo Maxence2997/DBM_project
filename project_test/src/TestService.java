@@ -11,9 +11,9 @@ public class TestService
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
 		// retrieve bean from spring container
-		EmpServiceInterface employeeService = context.getBean("EmployeeService", EmpServiceInterface.class);
-		Employee emp = employeeService.getEmployee(1);
-
-		System.out.println(emp);
+		EmpServiceInterface employeeService = context.getBean("employeeService", EmpServiceInterface.class);
+		employeeService.createEmployee("DaDa", "Xi");
+		
+		System.out.println();
 	}
 }

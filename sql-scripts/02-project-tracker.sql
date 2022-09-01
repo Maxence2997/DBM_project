@@ -10,9 +10,9 @@ CREATE TABLE `employee` (
   `first_name` varchar(64) NOT NULL,
   `last_name` varchar(64) NOT NULL,
   `address` varchar(64) DEFAULT NULL,
-  `phone_numb` varchar(32) DEFAULT NULL,
+  `phone_num` varchar(32) DEFAULT NULL,
   `supervisor_id` varchar(64) DEFAULT NULL,
-  `performance` varchar(64) NOT NULL,
+  `performance` varchar(64) DEFAULT NULL,
   `create_time` timestamp default current_timestamp,
   `modify_time` timestamp default current_timestamp,
   PRIMARY KEY (`uuid`),
@@ -75,7 +75,7 @@ CREATE TABLE `inventory` (
   KEY `project_ID` (`proj_id`),
   CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`proj_id`) 
   REFERENCES `project` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  KEY `product_id` (`product_id`),
+  KEY `product_id` (`prod_id`),
   CONSTRAINT `inventory_ibfk_2` FOREIGN KEY (`prod_id`) 
   REFERENCES `product` (`uuid`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1  COLLATE latin1_general_ci;
@@ -92,9 +92,10 @@ CREATE TABLE `sheet` (
   `unit_price` int unsigned default NULL,
   `total_price` int unsigned default NULL,
   `yield` varchar(64) default null,
+  `result` boolean NOT NULL DEFAULT false,
   `signature` boolean NOT NULL DEFAULT false,
   `supervisor_id` varchar(64) NOT NULL,
-  `esd_date` date DEFAULT NULL (date_format(curdate(),_utf8mb4'%Y-%m-%d')),
+  `esd_date` date DEFAULT NULL,
   `create_time` timestamp default current_timestamp,
   `modify_time` timestamp default current_timestamp,
   PRIMARY KEY (`uuid`),

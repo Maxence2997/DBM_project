@@ -15,13 +15,13 @@ public abstract class BaseEntity
 {
 	@Id
 	@ToString.Exclude
-	@Column(name="uuid")
+	@Column(name = "uuid")
 	private String uuid;
-	
+
 	@ToString.Exclude
 	@Column(name = "create_time", columnDefinition = "TIMESTAMP")
 	private LocalDateTime createTime;
-	
+
 	@ToString.Exclude
 	@Column(name = "modify_time", columnDefinition = "TIMESTAMP")
 	private LocalDateTime modifyTime;

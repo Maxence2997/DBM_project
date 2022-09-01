@@ -16,10 +16,10 @@ import lombok.ToString;
 public class Definition
 {
 	@Id
-	@Column(name = "key_def")
+	@Column(name = "param_key")
 	private String key;
 
-	@Column(name = "value_def")
+	@Column(name = "param_value")
 	private String value;
 
 	@ToString.Exclude

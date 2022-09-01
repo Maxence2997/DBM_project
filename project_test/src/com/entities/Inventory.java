@@ -1,9 +1,7 @@
 package com.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,11 +19,11 @@ public class Inventory extends BaseEntity
 	@Column(name = "inv_id")
 	private String inventoryId;
 	
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-			CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "proj_id")
 	private Project project;
 	
-	@Column(name = "prod_id")
-	private Product productId;
+	@ManyToOne
+	@JoinColumn(name = "prod_id")
+	private Product product;
 }

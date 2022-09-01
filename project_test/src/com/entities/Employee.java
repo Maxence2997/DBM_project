@@ -1,16 +1,12 @@
 package com.entities;
 
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -35,15 +31,13 @@ public class Employee extends BaseEntity
 	@Column(name = "address")
 	private String address;
 	
-	@Column(name = "phone_number")
+	@Column(name = "phone_num")
 	private String phoneNum;
 	
 	// For self joining: https://stackoverflow.com/questions/31668522/hibernate-self-join-confusion
 	
 	@ToString.Exclude
-	@NotFound(action = NotFoundAction.IGNORE)
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-			CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "supervisor_id")
 	private Employee supervisor;
 	
@@ -51,13 +45,11 @@ public class Employee extends BaseEntity
 	private String performance;
 	
 	@ToString.Exclude
-	@OneToMany(mappedBy = "supervisor", fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE,
-			CascadeType.PERSIST, CascadeType.REFRESH })
+	@OneToMany(mappedBy = "supervisor")
 	private List<Employee> subordinateList;
 	
 	@ToString.Exclude
-	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE,
-			CascadeType.PERSIST, CascadeType.REFRESH })
+	@OneToMany(mappedBy = "employee")
 	private List<Project> projectList;
 	
 	public Employee(String firstName, String lastName, String address, String phoneNum,

@@ -1,10 +1,8 @@
 package com.entities;
 
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -24,8 +22,7 @@ public class Project extends BaseEntity
 	@Column(name = "proj_id")
 	private String projectId;
 
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-			CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "emp_id")
 	private Employee employee;
 
@@ -33,7 +30,6 @@ public class Project extends BaseEntity
 	private String status;
 	
 	@ToString.Exclude
-	@OneToMany(mappedBy = "project", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-			CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "project")
 	private List<Inventory> inventoryList;
 }
