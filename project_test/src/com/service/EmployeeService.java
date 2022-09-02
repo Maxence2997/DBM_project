@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.dao.EmployeeDao;
 import com.entities.Employee;
-import com.util.UuidLibInterface;
+import com.util.EntityIdLibInterface;
 
 @Service
 public class EmployeeService implements EmpServiceInterface
@@ -13,11 +13,11 @@ public class EmployeeService implements EmpServiceInterface
 	@Autowired
 	EmployeeDao employeeDao;
 	
-	@Autowired
-	private DefinitionService definitionService;
+	// @Autowired
+	// private DefinitionService definitionService;
 	
 	@Autowired
-	private UuidLibInterface uuidlib;
+	private EntityIdLibInterface entityIdLib;
 	
 	@Override
 	@Transactional
@@ -44,11 +44,11 @@ public class EmployeeService implements EmpServiceInterface
 				performance);
 		
 		// get new emp_id from table - definition
-		String emp_id = definitionService.getNewKeyId(Employee.class);
+		String emp_id = entityIdLib.generateKeyId(Employee.class.getName());
 		employee.setEmployeeId(emp_id);
 		
 		// create uuid
-		String uuid = uuidlib.prepareUuid();
+		String uuid = entityIdLib.prepareUuid();
 		employee.setUuid(uuid);
 		
 		employeeDao.createEmployee(employee);

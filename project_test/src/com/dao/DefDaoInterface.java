@@ -1,6 +1,8 @@
 package com.dao;
 
+import java.util.Optional;
+
 public interface DefDaoInterface
 {
-	public String getLastKeyId(String keyName);
+	public Optional<String> getLastKeyId(String keyName);
 }

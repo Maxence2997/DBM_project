@@ -3,16 +3,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/mvc
-		http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/tx 
-		http://www.springframework.org/schema/tx/spring-tx.xsd">
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util     
+        http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<!-- Add support for component scanning -->
 	<context:annotation-config />
@@ -21,6 +21,10 @@
 	<!-- load the properties file: database.properties -->
 	<context:property-placeholder
 		location="classpath:database.properties" />
+	<util:properties id="entityKeyMap"
+		location="classpath:entityKey.properties" />
+	<util:properties id="entityInitValueMap"
+		location="classpath:entityInitValue.properties" />
 
 	<!-- Step 1: Define Database DataSource / connection pool -->
 	<bean id="dataSource"
@@ -63,7 +67,7 @@
 
 	<bean id="employeeDao" class="com.dao.EmployeeDao"></bean>
 	<bean id="employeeService" class="com.service.EmployeeService"></bean>
-	<bean id="uuidlib" class="com.util.Library"></bean>
+	<bean id="entityIdLib" class="com.util.Library" scope="property"></bean>
 	<bean id="definitionDao" class="com.dao.DefinitionDao"></bean>
 	<bean id="definitionService" class="com.service.DefinitionService"></bean>
 </beans>

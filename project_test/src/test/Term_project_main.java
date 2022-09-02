@@ -128,110 +128,33 @@ class Term_project_main {
 		field_empID.setColumns(10);
 		field_empID.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-//					card_layout.show(frame.getContentPane(), "home");
-//					cl_home.show(container_panel, "home");
-
-				
-				Employee employee = new Employee();
-				
-				if (employee.emp_check(field_empID)) {
-					
-					lib.adjust_PROJECT();
-					supervisor_check = employee.supervisor_check(field_empID);
-					
-					card_layout.show(frame.getContentPane(), "home");
-					cl_home.show(container_panel, "home");
-
-					lbl_empID.setText(" Employee ID: " + field_empID.getText());
-
-					JScrollPane scrollpane = new JScrollPane();
-					JTable table = new JTable() {
-						@Override
-						public boolean isCellEditable(int row, int column) {
-							return false;
-						}// uneditable
-					};
-
-					
-
-					if (supervisor_check) {
-						if (lib.show_unsign_req().length != 0) {
-
-							String[] columns_name = { "Sheet ID", "Type", "Project ID", "Product", "Item", "Vol.",
-									"Unit Price", "Total Price", "Signature", "Supervisor ID", "Supervisor", "Date" };
-
-							DefaultTableModel table_model = new DefaultTableModel(lib.show_unsign_req(), columns_name);
-							table.setModel(table_model);
-							scrollpane.setPreferredSize(new Dimension(1000, 125));
-							scrollpane.setViewportView(table);
-							table.getColumnModel().getColumn(1).setPreferredWidth(50);
-							table.getColumnModel().getColumn(10).setPreferredWidth(120);
-							table.getColumnModel().getColumn(11).setPreferredWidth(100);
-							JOptionPane.showMessageDialog(home_panel, scrollpane, "Unsigned Documents", 2);
-						}
-					} else {
-						if (lib.show_project_status().length != 0) {
-
-							String[] columns_name = { "Project ID", "P.status", "Employee ID", "Name", "Module",
-									"*P.D.P", "Supplier ID", "Name", "*E.S.D", "Receipt Date", "Contract" };
-
-							DefaultTableModel table_model = new DefaultTableModel(lib.show_project_status(),
-									columns_name);
-							table.setModel(table_model);
-							scrollpane.setPreferredSize(new Dimension(800, 125));
-							scrollpane.setViewportView(table);
-							table.getColumnModel().getColumn(0).setPreferredWidth(90);
-							table.getColumnModel().getColumn(1).setPreferredWidth(50);
-							table.getColumnModel().getColumn(2).setPreferredWidth(100);
-							table.getColumnModel().getColumn(3).setPreferredWidth(100);
-							table.getColumnModel().getColumn(5).setPreferredWidth(50);
-							table.getColumnModel().getColumn(6).setPreferredWidth(100);
-							table.getColumnModel().getColumn(8).setPreferredWidth(100);
-							table.getColumnModel().getColumn(9).setPreferredWidth(100);
-
-							JOptionPane.showMessageDialog(home_panel, scrollpane, "Delivery Caution", 2);
-						}
-					}
-				} else
-
-					login_result.setText("Employee ID is invalid, please refill it.");
-				// Term_project_main.field_empID.setText("");
-//						
-			}
-
-		});
-
-		JButton button_login = new JButton("Log-in");
-		button_login.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-//					card_layout.show(frame.getContentPane(), "home");
-//					cl_home.show(container_panel, "home");
-
-				
-				Employee employee = new Employee();
-				
-				if (employee.emp_check(field_empID)) {
-					
+//
+////					card_layout.show(frame.getContentPane(), "home");
+////					cl_home.show(container_panel, "home");
+//
+//				
+//				Employee employee = new Employee();
+//				
+//				if (employee.emp_check(field_empID)) {
+//					
 //					lib.adjust_PROJECT();
-					supervisor_check = employee.supervisor_check(field_empID);
-					
-					card_layout.show(frame.getContentPane(), "home");
-					cl_home.show(container_panel, "home");
-
-					lbl_empID.setText(" Employee ID: " + field_empID.getText());
-
-					JScrollPane scrollpane = new JScrollPane();
-					JTable table = new JTable() {
-						@Override
-						public boolean isCellEditable(int row, int column) {
-							return false;
-						}// uneditable
-					};
-
-					
-
+//					supervisor_check = employee.supervisor_check(field_empID);
+//					
+//					card_layout.show(frame.getContentPane(), "home");
+//					cl_home.show(container_panel, "home");
+//
+//					lbl_empID.setText(" Employee ID: " + field_empID.getText());
+//
+//					JScrollPane scrollpane = new JScrollPane();
+//					JTable table = new JTable() {
+//						@Override
+//						public boolean isCellEditable(int row, int column) {
+//							return false;
+//						}// uneditable
+//					};
+//
+//					
+//
 //					if (supervisor_check) {
 //						if (lib.show_unsign_req().length != 0) {
 //
@@ -270,10 +193,87 @@ class Term_project_main {
 //							JOptionPane.showMessageDialog(home_panel, scrollpane, "Delivery Caution", 2);
 //						}
 //					}
-				} else
+//				} else
+//
+//					login_result.setText("Employee ID is invalid, please refill it.");
+//				// Term_project_main.field_empID.setText("");
+////						
+			}
 
-					login_result.setText("Employee ID is invalid, please refill it.");
-//						
+		});
+
+		JButton button_login = new JButton("Log-in");
+		button_login.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+					card_layout.show(frame.getContentPane(), "home");
+					cl_home.show(container_panel, "home");
+//
+//				
+//				Employee employee = new Employee();
+//				
+//				if (employee.emp_check(field_empID)) {
+//					
+////					lib.adjust_PROJECT();
+//					supervisor_check = employee.supervisor_check(field_empID);
+//					
+//					card_layout.show(frame.getContentPane(), "home");
+//					cl_home.show(container_panel, "home");
+//
+//					lbl_empID.setText(" Employee ID: " + field_empID.getText());
+//
+//					JScrollPane scrollpane = new JScrollPane();
+//					JTable table = new JTable() {
+//						@Override
+//						public boolean isCellEditable(int row, int column) {
+//							return false;
+//						}// uneditable
+//					};
+//
+//					
+//
+////					if (supervisor_check) {
+////						if (lib.show_unsign_req().length != 0) {
+////
+////							String[] columns_name = { "Sheet ID", "Type", "Project ID", "Product", "Item", "Vol.",
+////									"Unit Price", "Total Price", "Signature", "Supervisor ID", "Supervisor", "Date" };
+////
+////							DefaultTableModel table_model = new DefaultTableModel(lib.show_unsign_req(), columns_name);
+////							table.setModel(table_model);
+////							scrollpane.setPreferredSize(new Dimension(1000, 125));
+////							scrollpane.setViewportView(table);
+////							table.getColumnModel().getColumn(1).setPreferredWidth(50);
+////							table.getColumnModel().getColumn(10).setPreferredWidth(120);
+////							table.getColumnModel().getColumn(11).setPreferredWidth(100);
+////							JOptionPane.showMessageDialog(home_panel, scrollpane, "Unsigned Documents", 2);
+////						}
+////					} else {
+////						if (lib.show_project_status().length != 0) {
+////
+////							String[] columns_name = { "Project ID", "P.status", "Employee ID", "Name", "Module",
+////									"*P.D.P", "Supplier ID", "Name", "*E.S.D", "Receipt Date", "Contract" };
+////
+////							DefaultTableModel table_model = new DefaultTableModel(lib.show_project_status(),
+////									columns_name);
+////							table.setModel(table_model);
+////							scrollpane.setPreferredSize(new Dimension(800, 125));
+////							scrollpane.setViewportView(table);
+////							table.getColumnModel().getColumn(0).setPreferredWidth(90);
+////							table.getColumnModel().getColumn(1).setPreferredWidth(50);
+////							table.getColumnModel().getColumn(2).setPreferredWidth(100);
+////							table.getColumnModel().getColumn(3).setPreferredWidth(100);
+////							table.getColumnModel().getColumn(5).setPreferredWidth(50);
+////							table.getColumnModel().getColumn(6).setPreferredWidth(100);
+////							table.getColumnModel().getColumn(8).setPreferredWidth(100);
+////							table.getColumnModel().getColumn(9).setPreferredWidth(100);
+////
+////							JOptionPane.showMessageDialog(home_panel, scrollpane, "Delivery Caution", 2);
+////						}
+////					}
+//				} else
+//
+//					login_result.setText("Employee ID is invalid, please refill it.");
+////						
 			}
 
 		});
@@ -311,56 +311,56 @@ class Term_project_main {
 		JButton btn_reminder = new JButton("Reminder");
 		btn_reminder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				/**
-				 * @author Ray
-				 * @since 06/15/2021
-				 * 
-				 * @editor Jyun An
-				 * @since 06/16/2021
-				 */
-				JScrollPane scrollpane = new JScrollPane();
-				JTable table = new JTable() {
-					@Override
-					public boolean isCellEditable(int row, int column) {
-						return false;
-					}// uneditable
-				};
-				Employee employee = new Employee();
-				if (employee.supervisor_check(Term_project_main.field_empID)) {
-
-					String[] columns_name = { "Sheet ID", "Type", "Project ID", "Product", "Item", "Vol.", "Unit Price",
-							"Total Price", "Signature", "Supervisor ID", "Supervisor", "Date" };
-
-					DefaultTableModel table_model = new DefaultTableModel(lib.show_unsign_req(), columns_name);
-					table.setModel(table_model);
-					scrollpane.setPreferredSize(new Dimension(1000, 125));
-					scrollpane.setViewportView(table);
-					table.getColumnModel().getColumn(1).setPreferredWidth(50);
-					table.getColumnModel().getColumn(10).setPreferredWidth(120);
-					table.getColumnModel().getColumn(11).setPreferredWidth(100);
-					JOptionPane.showMessageDialog(home_panel, scrollpane, "Unsigned Documents", 2);
-				} else {
-
-					String[] columns_name = { "Project ID", "P.status", "Employee ID", "Name", "Module", "*P.D.P",
-							"Supplier ID", "Name", "*E.S.D", "Receipt Date", "Contract" };
-
-					DefaultTableModel table_model = new DefaultTableModel(lib.show_project_status(), columns_name);
-
-					table.setModel(table_model);
-					scrollpane.setPreferredSize(new Dimension(800, 125));
-					scrollpane.setViewportView(table);
-					table.getColumnModel().getColumn(0).setPreferredWidth(90);
-					table.getColumnModel().getColumn(1).setPreferredWidth(50);
-					table.getColumnModel().getColumn(2).setPreferredWidth(100);
-					table.getColumnModel().getColumn(3).setPreferredWidth(100);
-					table.getColumnModel().getColumn(5).setPreferredWidth(50);
-					table.getColumnModel().getColumn(6).setPreferredWidth(100);
-					table.getColumnModel().getColumn(8).setPreferredWidth(100);
-					table.getColumnModel().getColumn(9).setPreferredWidth(100);
-
-					JOptionPane.showMessageDialog(home_panel, scrollpane, "Delivery Caution", 2);
-				}
+//
+//				/**
+//				 * @author Ray
+//				 * @since 06/15/2021
+//				 * 
+//				 * @editor Jyun An
+//				 * @since 06/16/2021
+//				 */
+//				JScrollPane scrollpane = new JScrollPane();
+//				JTable table = new JTable() {
+//					@Override
+//					public boolean isCellEditable(int row, int column) {
+//						return false;
+//					}// uneditable
+//				};
+//				Employee employee = new Employee();
+//				if (employee.supervisor_check(Term_project_main.field_empID)) {
+//
+//					String[] columns_name = { "Sheet ID", "Type", "Project ID", "Product", "Item", "Vol.", "Unit Price",
+//							"Total Price", "Signature", "Supervisor ID", "Supervisor", "Date" };
+//
+//					DefaultTableModel table_model = new DefaultTableModel(lib.show_unsign_req(), columns_name);
+//					table.setModel(table_model);
+//					scrollpane.setPreferredSize(new Dimension(1000, 125));
+//					scrollpane.setViewportView(table);
+//					table.getColumnModel().getColumn(1).setPreferredWidth(50);
+//					table.getColumnModel().getColumn(10).setPreferredWidth(120);
+//					table.getColumnModel().getColumn(11).setPreferredWidth(100);
+//					JOptionPane.showMessageDialog(home_panel, scrollpane, "Unsigned Documents", 2);
+//				} else {
+//
+//					String[] columns_name = { "Project ID", "P.status", "Employee ID", "Name", "Module", "*P.D.P",
+//							"Supplier ID", "Name", "*E.S.D", "Receipt Date", "Contract" };
+//
+//					DefaultTableModel table_model = new DefaultTableModel(lib.show_project_status(), columns_name);
+//
+//					table.setModel(table_model);
+//					scrollpane.setPreferredSize(new Dimension(800, 125));
+//					scrollpane.setViewportView(table);
+//					table.getColumnModel().getColumn(0).setPreferredWidth(90);
+//					table.getColumnModel().getColumn(1).setPreferredWidth(50);
+//					table.getColumnModel().getColumn(2).setPreferredWidth(100);
+//					table.getColumnModel().getColumn(3).setPreferredWidth(100);
+//					table.getColumnModel().getColumn(5).setPreferredWidth(50);
+//					table.getColumnModel().getColumn(6).setPreferredWidth(100);
+//					table.getColumnModel().getColumn(8).setPreferredWidth(100);
+//					table.getColumnModel().getColumn(9).setPreferredWidth(100);
+//
+//					JOptionPane.showMessageDialog(home_panel, scrollpane, "Delivery Caution", 2);
+//				}
 			}
 		});
 		btn_reminder.setBounds(891, 0, 109, 26);
@@ -380,7 +380,7 @@ class Term_project_main {
 		btn_project.setBounds(334, 71, 103, 29);
 		btn_project.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cl_home.show(container_panel, "project");
+//				cl_home.show(container_panel, "project");
 
 			}
 		});
@@ -399,13 +399,13 @@ class Term_project_main {
 		btn_invent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				/**
-				 * @editor: jyun an
-				 * 
-				 * @since: 06/09/2021
-				 */
-				inv_panel.clear();
-				cl_home.show(container_panel, "inventory");
+//				/**
+//				 * @editor: jyun an
+//				 * 
+//				 * @since: 06/09/2021
+//				 */
+//				inv_panel.clear();
+//				cl_home.show(container_panel, "inventory");
 
 			}
 		});
@@ -424,17 +424,17 @@ class Term_project_main {
 			public void actionPerformed(ActionEvent arg0) {
 				sup_panel.get_combobox_sup().setSelectedIndex(0);
 
-				/**
-				 * @editor: jyun an
-				 * 
-				 * @since: 06/09/2021
-				 */
-				sup_panel.clear_text();
-
-				// clear table
-				// sup_panel.get_sup_table().
-
-				cl_home.show(container_panel, "supplier");
+//				/**
+//				 * @editor: jyun an
+//				 * 
+//				 * @since: 06/09/2021
+//				 */
+//				sup_panel.clear_text();
+//
+//				// clear table
+//				// sup_panel.get_sup_table().
+//
+//				cl_home.show(container_panel, "supplier");
 
 			}
 		});
@@ -450,16 +450,16 @@ class Term_project_main {
 		JButton btn_emp = new JButton("Employee");
 		btn_emp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				emp_panel.get_comboBox_employeeAction().setSelectedIndex(0);
-
-				/**
-				 * @editor: Jyun-An
-				 * @since:06/08/2021 add emp_panel.set_visible(false);
-				 */
-				emp_panel.set_visible(false);
-				emp_panel.clear_text();
-
-				cl_home.show(container_panel, "employee");
+//				emp_panel.get_comboBox_employeeAction().setSelectedIndex(0);
+//
+//				/**
+//				 * @editor: Jyun-An
+//				 * @since:06/08/2021 add emp_panel.set_visible(false);
+//				 */
+//				emp_panel.set_visible(false);
+//				emp_panel.clear_text();
+//
+//				cl_home.show(container_panel, "employee");
 			}
 		});
 		btn_emp.setBounds(334, 346, 103, 29);

@@ -1,6 +1,8 @@
 package com.service;
 
+import java.util.Optional;
+
 public interface DefServiceInterface
 {
-	public <T> String getNewKeyId(Class<T> classType);
+	public Optional<String> getLastKeyId(String paramKey);
 }
