@@ -56,6 +56,9 @@
 5. [Working with Spring Data Repositories](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories)
 6. [HQL Tutorial](https://tw.gitbook.net/hibernate/hibernate_query_language.html)
 7. [Hibernate Session javadoc](https://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/Session.html)
+8. [Java 8 Optional Guide](https://www.baeldung.com/java-optional)
+9. [java 8 Optional-orElse() vs orElseGet()](https://www.baeldung.com/java-optional-or-else-vs-or-else-get)
+10. [Optional simple guide](http://blog.tonycube.com/2015/10/java-java8-4-optional.html)
 
 
 ## Note
