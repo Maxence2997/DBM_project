@@ -20,11 +20,13 @@
 
 	<!-- load the properties file: database.properties -->
 	<context:property-placeholder
-		location="classpath:database.properties" />
-	<util:properties id="entityKeyMap"
-		location="classpath:entityKey.properties" />
+		location="classpath:./resources/database.properties" />
+	<util:properties id="paramKeyMap"
+		location="classpath:./resources/paramKey.properties" />
 	<util:properties id="entityInitValueMap"
-		location="classpath:entityInitValue.properties" />
+		location="classpath:./resources/entityInitValue.properties" />
+		<util:properties id="customKeyMap"
+		location="classpath:./resources/customKey.properties" />
 
 	<!-- Step 1: Define Database DataSource / connection pool -->
 	<bean id="dataSource"
@@ -67,7 +69,8 @@
 
 	<bean id="employeeDao" class="com.dao.EmployeeDao"></bean>
 	<bean id="employeeService" class="com.service.EmployeeService"></bean>
-	<bean id="entityIdLib" class="com.util.Library" scope="property"></bean>
+	<bean id="generalLib" class="com.util.GeneralLibrary" ></bean>
 	<bean id="definitionDao" class="com.dao.DefinitionDao"></bean>
 	<bean id="definitionService" class="com.service.DefinitionService"></bean>
+	<bean id="generalDao" class="com.dao.GeneralDao"></bean>
 </beans>

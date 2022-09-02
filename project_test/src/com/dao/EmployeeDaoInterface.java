@@ -2,7 +2,7 @@ package com.dao;
 
 import com.entities.Employee;
 
-public interface EmployeeDaoInterface extends DaoInterface<Employee>
+public interface EmployeeDaoInterface 
 {
 	public void createEmployee(Employee employee);
 	
