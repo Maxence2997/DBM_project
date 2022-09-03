@@ -5,6 +5,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
@@ -20,6 +21,7 @@ import lombok.ToString;
 @Table(name = "Supplier")
 public class Supplier extends BaseEntity
 {
+	@Id
 	@Column(name = "sup_id")
 	private String supplierId;
 	

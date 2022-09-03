@@ -24,6 +24,7 @@ public class GeneralLibrary implements GeneralLibInterface
 	private DefServiceInterface definitionService;
 
 	@Override
+	@Deprecated
 	public String prepareUuid()
 	{
 		UUID uuid = UUID.randomUUID();

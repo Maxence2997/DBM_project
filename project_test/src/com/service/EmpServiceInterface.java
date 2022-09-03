@@ -5,8 +5,6 @@ import com.entities.Employee;
 
 public interface EmpServiceInterface
 {
-	public Optional<Employee> getEmployee(int id);
-
 	public Optional<Employee> getEmployee(String empId);
 
 	public void createEmployee(String firstName, String lastName, String address, String phoneNum,

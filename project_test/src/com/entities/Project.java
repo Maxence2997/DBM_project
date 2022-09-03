@@ -3,6 +3,7 @@ package com.entities;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,6 +20,7 @@ import lombok.ToString;
 @Table(name = "project")
 public class Project extends BaseEntity
 {
+	@Id
 	@Column(name = "proj_id")
 	private String projectId;
 

@@ -2,6 +2,7 @@ package com.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "inventory")
 public class Inventory extends BaseEntity
 {
+	@Id
 	@Column(name = "inv_id")
 	private String inventoryId;
 	

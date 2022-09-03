@@ -21,13 +21,14 @@ public class EmployeeDao implements EmpDaoInterface
 	}
 
 	@Override
-	public Employee getEmployee(int id)
+	public Employee getEmployee(String empId)
 	{
 		// get the current hibernate session
 		Session session = sessionFactory.getCurrentSession();
 
 		// retrieve/read from database using the primary key
-		Employee employee = session.get(Employee.class, id);
+		Employee employee = session.get(Employee.class, empId);
 		return employee;
 	}
+	
 }

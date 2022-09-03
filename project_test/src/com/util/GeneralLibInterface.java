@@ -2,6 +2,7 @@ package com.util;
 
 public interface GeneralLibInterface
 {
+	@Deprecated
 	public String prepareUuid();
 
 	public String generateKeyId(String entityType);

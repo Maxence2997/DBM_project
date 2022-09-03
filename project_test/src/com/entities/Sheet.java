@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,6 +17,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "sheet")
 public abstract class Sheet extends BaseEntity
 {
+	@Id
 	@Column(name = "sheet_id")
 	protected String sheetId;
 	

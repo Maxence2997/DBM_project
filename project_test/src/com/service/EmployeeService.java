@@ -1,8 +1,6 @@
 package com.service;
 
 import java.util.Optional;
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +13,7 @@ import com.util.GeneralLibInterface;
 public class EmployeeService implements EmpServiceInterface
 {
 	@Autowired
-	EmployeeDao employeeDao;
+	private EmployeeDao employeeDao;
 
 	@Autowired
 	private GeneralLibInterface generalLib;
@@ -25,31 +23,17 @@ public class EmployeeService implements EmpServiceInterface
 
 	@Override
 	@Transactional
-	public Optional<Employee> getEmployee(int id)
-	{
-		Employee employee = employeeDao.getEmployee(id);
-
-		return Optional.ofNullable(employee);
-	}
-
-	@Override
-	@Transactional
 	public Optional<Employee> getEmployee(String empId)
 	{
 		Employee employee = null;
 
 		try
 		{
-			employee = generalDao.findByCustomKey(Employee.class, empId);
+			employee = employeeDao.getEmployee(empId);
 		}
-		catch (NoResultException nre)
+		catch (Exception e)
 		{
-			System.out.println("No found for querying entity Employee with " + empId);
-		}
-		catch (NonUniqueResultException nure)
-		{
-			System.out.println("There are more than 1 result for querying entity Employee with "
-					+ empId + ", please try to use XXX()");
+			e.printStackTrace();
 		}
 		return Optional.ofNullable(employee);
 	}
@@ -73,10 +57,6 @@ public class EmployeeService implements EmpServiceInterface
 		String classShortName = generalLib.getShortNameOfClass(Employee.class);
 		String emp_id = generalLib.generateKeyId(classShortName);
 		employee.setEmployeeId(emp_id);
-
-		// create uuid
-		String uuid = generalLib.prepareUuid();
-		employee.setUuid(uuid);
 
 		employeeDao.createEmployee(employee);
 	}

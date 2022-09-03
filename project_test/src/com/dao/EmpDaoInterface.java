@@ -6,5 +6,5 @@ public interface EmpDaoInterface
 {
 	public void createEmployee(Employee employee);
 
-	public Employee getEmployee(int id);
+	public Employee getEmployee(String id);
 }
