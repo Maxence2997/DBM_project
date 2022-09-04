@@ -14,6 +14,25 @@ BEGIN
 END$$
 DELIMITER ;
 
+DROP TRIGGER IF EXISTS before_employee_insert;
+DELIMITER $$
+CREATE TRIGGER before_employee_insert
+Before INSERT ON employee FOR EACH ROW 
+BEGIN
+    SET new.create_time =current_time(), new.modify_time=current_time();
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS before_employee_update;
+DELIMITER $$
+CREATE TRIGGER before_employee_update
+Before UPDATE ON employee FOR EACH ROW 
+BEGIN
+    SET new.modify_time=current_time();
+END$$
+DELIMITER ;
+
+
 DROP TRIGGER IF EXISTS after_inventory_insert;
 DELIMITER $$
 CREATE TRIGGER after_inventory_insert
@@ -27,6 +46,24 @@ BEGIN
     ELSE
 		UPDATE definition set param_value = new.inv_id, modify_time=current_time() where param_key='inv_id';
     END IF;
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS before_inventory_update;
+DELIMITER $$
+CREATE TRIGGER before_inventory_update
+Before UPDATE ON inventory FOR EACH ROW 
+BEGIN
+    SET new.modify_time=current_time();
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS before_inventory_insert;
+DELIMITER $$
+CREATE TRIGGER before_inventory_insert
+Before INSERT ON inventory FOR EACH ROW 
+BEGIN
+    SET new.create_time =current_time(), new.modify_time=current_time();
 END$$
 DELIMITER ;
 
@@ -46,6 +83,24 @@ BEGIN
 END$$
 DELIMITER ;
 
+DROP TRIGGER IF EXISTS before_product_update;
+DELIMITER $$
+CREATE TRIGGER before_product_update
+Before UPDATE ON product FOR EACH ROW 
+BEGIN
+    SET new.modify_time=current_time();
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS before_product_insert;
+DELIMITER $$
+CREATE TRIGGER before_product_insert
+Before INSERT ON product FOR EACH ROW 
+BEGIN
+    SET new.create_time =current_time(), new.modify_time=current_time();
+END$$
+DELIMITER ;
+
 DROP TRIGGER IF EXISTS after_project_insert;
 DELIMITER $$
 CREATE TRIGGER after_project_insert
@@ -59,6 +114,24 @@ BEGIN
     ELSE
 		UPDATE definition set param_value = new.proj_id, modify_time=current_time() where param_key='proj_id';
     END IF;
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS before_project_update;
+DELIMITER $$
+CREATE TRIGGER before_project_update
+Before UPDATE ON project FOR EACH ROW 
+BEGIN
+    SET new.modify_time=current_time();
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS before_project_insert;
+DELIMITER $$
+CREATE TRIGGER before_project_insert
+Before INSERT ON project FOR EACH ROW 
+BEGIN
+    SET new.create_time =current_time(), new.modify_time=current_time();
 END$$
 DELIMITER ;
 
@@ -78,6 +151,24 @@ BEGIN
 END$$
 DELIMITER ;
 
+DROP TRIGGER IF EXISTS before_supplier_update;
+DELIMITER $$
+CREATE TRIGGER before_supplier_update
+Before UPDATE ON supplier FOR EACH ROW 
+BEGIN
+    SET new.modify_time=current_time();
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS before_supplier_insert;
+DELIMITER $$
+CREATE TRIGGER before_supplier_insert
+Before INSERT ON supplier FOR EACH ROW 
+BEGIN
+    SET new.create_time =current_time(), new.modify_time=current_time();
+END$$
+DELIMITER ;
+
 DROP TRIGGER IF EXISTS after_sheet_insert;
 DELIMITER $$
 CREATE TRIGGER after_sheet_insert
@@ -94,3 +185,20 @@ BEGIN
 END$$
 DELIMITER ;
 
+DROP TRIGGER IF EXISTS before_sheet_update;
+DELIMITER $$
+CREATE TRIGGER before_sheet_update
+Before UPDATE ON sheet FOR EACH ROW 
+BEGIN
+    SET new.modify_time=current_time();
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS before_sheet_insert;
+DELIMITER $$
+CREATE TRIGGER before_sheet_insert
+Before INSERT ON sheet FOR EACH ROW 
+BEGIN
+    SET new.create_time =current_time(), new.modify_time=current_time();
+END$$
+DELIMITER ;

@@ -12,8 +12,8 @@ CREATE TABLE `employee` (
   `phone_num` varchar(32) DEFAULT NULL,
   `supervisor_id` varchar(64) DEFAULT NULL,
   `performance` varchar(64) DEFAULT NULL,
-  `create_time` timestamp default current_timestamp,
-  `modify_time` timestamp default current_timestamp,
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`emp_id`),
   KEY `FK_supervisor_id` (`supervisor_id`),
   CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`supervisor_id`) 
@@ -25,8 +25,8 @@ CREATE TABLE `project` (
   `proj_id` varchar(64) NOT NULL,
   `emp_id` varchar(64) NOT NULL,
   `status` varchar(64) DEFAULT NULL,
-  `create_time` timestamp default current_timestamp,
-  `modify_time` timestamp default current_timestamp,
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`proj_id`),
   KEY `fk_emp_id` (`emp_id`),
   CONSTRAINT `project_ibfk_1` FOREIGN KEY (`emp_id`) 
@@ -41,8 +41,8 @@ CREATE TABLE `supplier` (
   `contact_name` varchar(64) NOT NULL,
   `contact_mobile` varchar(64) NOT NULL,
   `contact_email` varchar(64) NOT NULL,
-  `create_time` timestamp default current_timestamp,
-  `modify_time` timestamp default current_timestamp,
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`sup_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1  COLLATE latin1_general_ci;
 
@@ -51,8 +51,8 @@ CREATE TABLE `product` (
   `prod_id` varchar(64) NOT NULL,
   `prod_name` varchar(64) NOT NULL,
   `sup_id` varchar(64) NOT NULL,
-  `create_time` timestamp default current_timestamp,
-  `modify_time` timestamp default current_timestamp,
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`prod_id`),
   KEY `supplier_id` (`sup_id`),
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`sup_id`) 
@@ -64,8 +64,8 @@ CREATE TABLE `inventory` (
   `inv_id` varchar(64) NOT NULL,
   `proj_id`  varchar(64) NOT NULL,
   `prod_id` varchar(64) NOT NULL,
-  `create_time` timestamp default current_timestamp,
-  `modify_time` timestamp default current_timestamp,
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`inv_id`),
   KEY `project_ID` (`proj_id`),
   CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`proj_id`) 
@@ -90,8 +90,8 @@ CREATE TABLE `sheet` (
   `signature` boolean NOT NULL DEFAULT false,
   `supervisor_id` varchar(64) NOT NULL,
   `esd_date` date DEFAULT NULL,
-  `create_time` timestamp default current_timestamp,
-  `modify_time` timestamp default current_timestamp,
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`sheet_id`),
   KEY `proj_id` (`proj_id`),
   CONSTRAINT `sheet_ibfk_1` FOREIGN KEY (`proj_id`) 
@@ -111,8 +111,8 @@ DROP TABLE IF EXISTS `Definition`;
 CREATE TABLE `Definition` (
   `param_key` varchar(64) NOT NULL,
   `param_value`  varchar(64) NOT NULL,
-  `create_time` timestamp default current_timestamp,
-  `modify_time` timestamp default current_timestamp,
+  `create_time` datetime DEFAULT now(),
+  `modify_time` datetime DEFAULT now(),
   PRIMARY KEY (`param_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1  COLLATE latin1_general_ci;
 

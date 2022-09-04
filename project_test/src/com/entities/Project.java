@@ -9,16 +9,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "project")
-public class Project extends BaseEntity
+public class Project 
 {
 	@Id
 	@Column(name = "proj_id")

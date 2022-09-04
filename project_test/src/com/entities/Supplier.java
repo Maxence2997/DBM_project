@@ -14,12 +14,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "Supplier")
-public class Supplier extends BaseEntity
+@Table(name = "supplier")
+public class Supplier 
 {
 	@Id
 	@Column(name = "sup_id")

@@ -11,8 +11,6 @@ public class TestDao
 
 		// retrieve bean from spring container
 		EmpDaoInterface employee = context.getBean("EmployeeDao", EmpDaoInterface.class);
-		Employee emp = employee.getEmployee(1);
 
-		System.out.println(emp);
 	}
 }

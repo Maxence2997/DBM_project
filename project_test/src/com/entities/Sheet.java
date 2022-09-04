@@ -9,13 +9,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "sheet")
-public abstract class Sheet extends BaseEntity
+public class Sheet 
 {
 	@Id
 	@Column(name = "sheet_id")
@@ -59,5 +57,5 @@ public abstract class Sheet extends BaseEntity
 	private double yield;
 	
 	@Column(name = "result")
-	private boolean result;	// represent pass or not
+	private boolean inspectionResult;	// represent pass or not
 }
