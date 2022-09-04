@@ -13,8 +13,6 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import com.entities.BaseEntity;
-import com.entities.Employee;
 import com.service.DefServiceInterface;
 
 @Repository
