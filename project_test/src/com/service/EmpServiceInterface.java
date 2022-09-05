@@ -1,8 +1,9 @@
 package com.service;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
 import com.entities.Employee;
 
 public interface EmpServiceInterface
@@ -23,7 +24,7 @@ public interface EmpServiceInterface
 	public void createEmployee(String firstName, String lastName, String address, String phoneNum,
 			Employee supervisor, String performance);
 
-	public void updateEmployee(HashMap<String, Object> empFieldsMap) throws Exception;
+	public void updateEmployee(Map<String, String> empFieldsMap) throws Exception;
 
 	public Employee getSupervisor(String supervisorId);
 	

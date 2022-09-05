@@ -140,6 +140,7 @@ public class SupplierPage
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				clearLabelAndField();
 			}
 		});
 		clearBtn.setBounds(616, 133, 88, 29);
@@ -330,7 +331,7 @@ public class SupplierPage
 		supplierPanel.add(supIdLabel);
 	}
 	
-	public static void clearText()
+	public static void clearLabelAndField()
 	{
 		supIdTextField.setText("");
 		supNameTextField.setText("");

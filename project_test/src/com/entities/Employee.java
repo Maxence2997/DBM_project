@@ -21,38 +21,43 @@ public class Employee
 	@Id
 	@Column(name = "emp_id")
 	private String employeeId;
-
+	
 	@Column(name = "first_name")
 	private String firstName;
-
+	
 	@Column(name = "last_name")
 	private String lastName;
-
+	
 	@Column(name = "address")
 	private String address;
-
+	
 	@Column(name = "phone_num")
 	private String phoneNum;
-
+	
 	// For self joining: https://stackoverflow.com/questions/31668522/hibernate-self-join-confusion
-
+	
 	@ToString.Exclude
 	@ManyToOne
 	@JoinColumn(name = "supervisor_id")
 	private Employee supervisor;
-
+	
 	@Column(name = "performance")
 	private String performance;
-
+	
 	@ToString.Exclude
 	@OneToMany(mappedBy = "supervisor")
 	private List<Employee> subordinateList;
-
+	
 	@ToString.Exclude
 	@OneToMany(mappedBy = "employee")
 	private List<Project> projectList;
-
-	public Employee(String firstName, String lastName, String address, String phoneNum,
+	
+	private Employee(String empId)
+	{
+		this.employeeId = empId;
+	}
+	
+	private Employee(String firstName, String lastName, String address, String phoneNum,
 			Employee supervisor, String performance)
 	{
 		this.firstName = firstName;
@@ -62,23 +67,51 @@ public class Employee
 		this.supervisor = supervisor;
 		this.performance = performance;
 	}
-
-	public Employee(String firstName, String lastName)
+	
+	public static Employee of(String firstName, String lastName, String address, String phoneNum,
+			Employee supervisor, String performance)
 	{
-		this.firstName = firstName;
-		this.lastName = lastName;
+		Employee emp = new Employee(firstName, lastName, address, phoneNum, supervisor,
+				performance);
+		
+		return emp;
 	}
-
-	public Employee(String firstName, String lastName, String address, String phoneNum)
+	
+	public static Employee of(String empId)
+	{
+		Employee employee = new Employee(empId);
+		
+		return employee;
+	}
+	
+	public Employee setFields(String firstName, String lastName, String address, String phoneNum,
+			Employee supervisor, String performance)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.phoneNum = phoneNum;
+		this.supervisor = supervisor;
+		this.performance = performance;
+		
+		return this;
 	}
-
-	public Employee(String empId)
+	
+	public Employee setFields(String firstName, String lastName, String address, String phoneNum)
 	{
-		this.employeeId = empId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.phoneNum = phoneNum;
+		
+		return this;
+	}
+	
+	public Employee setFields(String firstName, String lastName)
+	{
+		this.firstName = firstName;
+		this.lastName = lastName;
+		
+		return this;
 	}
 }

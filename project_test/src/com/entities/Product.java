@@ -16,20 +16,40 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name = "product")
-public class Product 
+public class Product
 {
 	@Id
 	@Column(name = "prod_id")
 	private String productId;
-
+	
 	@Column(name = "prod_name")
 	private String productName;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "sup_id")
 	private Supplier supplier;
-
+	
 	@ToString.Exclude
 	@OneToMany(mappedBy = "product")
 	private List<Sheet> sheetList;
+	
+	private Product(String productId)
+	{
+		this.productId = productId;
+	}
+	
+	public static Product of(String productId)
+	{
+		Product pd = new Product(productId);
+		
+		return pd;
+	}
+	
+	public Product setFields(String productName, Supplier supplier)
+	{
+		this.productName = productName;
+		this.supplier = supplier;
+		
+		return this;
+	}
 }

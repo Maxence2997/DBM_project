@@ -1,7 +1,6 @@
 package com.entities;
 
 import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +12,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "sheet")
-public class Sheet 
+public class Sheet
 {
 	@Id
 	@Column(name = "sheet_id")
@@ -47,7 +46,7 @@ public class Sheet
 	@Column(name = "total_price")
 	private int totalPrice;
 	
-	@Column(name="signature")
+	@Column(name = "signature")
 	private boolean sign;
 	
 	@Column(name = "esd_date")
@@ -58,4 +57,27 @@ public class Sheet
 	
 	@Column(name = "result")
 	private boolean inspectionResult;	// represent pass or not
+	
+	private Sheet(String sheetId, String sheetType)
+	{
+		this.sheetId = sheetId;
+		this.sheetType = sheetType;
+	}
+	
+	public static Sheet of(String sheetId, String sheetType)
+	{
+		Sheet sh = new Sheet(sheetId, sheetType);
+		
+		return sh;
+	}
+	
+	public Sheet setFields(Product product, Project project, Supplier supplier, Employee supervisor)
+	{
+		this.product = product;
+		this.project = project;
+		this.supplier = supplier;
+		this.supervisor = supervisor;
+		
+		return this;
+	}
 }

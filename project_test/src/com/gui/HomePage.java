@@ -119,7 +119,7 @@ public class HomePage
 			public void actionPerformed(ActionEvent arg0)
 			{
 				SupplierPage.supComboBox.setSelectedIndex(0);
-				SupplierPage.clearText();
+				SupplierPage.clearLabelAndField();
 				homeCardLayout.show(Frame.containerPanel, SupplierPage.SUPPLIER);
 			}
 		});

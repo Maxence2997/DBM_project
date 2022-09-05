@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "inventory")
-public class Inventory 
+public class Inventory
 {
 	@Id
 	@Column(name = "inv_id")
@@ -26,4 +26,24 @@ public class Inventory
 	@ManyToOne
 	@JoinColumn(name = "prod_id")
 	private Product product;
+	
+	private Inventory(String inventoryId)
+	{
+		this.inventoryId = inventoryId;
+	}
+	
+	public static Inventory of(String inventoryId)
+	{
+		Inventory inv = new Inventory(inventoryId);
+		
+		return inv;
+	}
+	
+	public Inventory setFields(Project project, Product product)
+	{
+		this.project = project;
+		this.product = product;
+		
+		return this;
+	}
 }
