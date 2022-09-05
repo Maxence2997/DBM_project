@@ -39,8 +39,12 @@ public class Supplier
 	private String contactEmail;
 	
 	@ToString.Exclude
-	@OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "supplier")
 	private List<Product> productList;
+	
+	@ToString.Exclude
+	@OneToMany(mappedBy = "supplier")
+	private List<Sheet> sheetList;
 	
 	private Supplier(String supId)
 	{

@@ -1,66 +1,58 @@
 package com.dao;
 
-import java.util.List;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.entities.Inventory;
-import com.util.EntitiesColumn;
+import com.entities.Sheet;
 
 @Repository
-public class InventoryDao implements InvDaoInterface
+public class SheetDao implements SheetDaoInterface
 {
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	
 	@Override
 	@Deprecated
-	public void createOrUpdateInventory(Inventory inventory)
+	public void createOrUpdateSheet(Sheet sheet)
 	{
 		// get the current hibernate session
 		Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(inventory);
+		session.saveOrUpdate(sheet);
 	}
-
+	
 	@Override
-	public Inventory getInventory(String inventoryId)
+	public Sheet getSheet(String sheetId)
 	{
 		// get the current hibernate session
 		Session session = sessionFactory.getCurrentSession();
-
+		
 		// retrieve/read from database using the primary key
-		Inventory inventory = session.get(Inventory.class, inventoryId);
-		return inventory;
+		Sheet sheet = session.get(Sheet.class, sheetId);
+		return sheet;
 	}
-
+	
 	@Override
-	public void createInventory(Inventory inventory)
+	public void createSheet(Sheet sheet)
 	{
 		// get the current hibernate session
 		Session session = sessionFactory.getCurrentSession();
-		session.save(inventory);
+		session.save(sheet);
 	}
-
+	
 	@Override
-	public void updateInventory(Inventory inventory)
+	public void updateSheet(Sheet sheet)
 	{
 		// get the current hibernate session
 		Session session = sessionFactory.getCurrentSession();
-		session.update(inventory);
+		session.update(sheet);
 	}
-
+	
 	@Override
-	public void deleteInventory(Inventory inventory)
+	public void deleteSheet(Sheet sheet)
 	{
 		Session session = sessionFactory.getCurrentSession();
-
-		session.delete(inventory);
+		
+		session.delete(sheet);
 	}
-
 }

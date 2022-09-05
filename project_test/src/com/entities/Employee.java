@@ -52,6 +52,10 @@ public class Employee
 	@OneToMany(mappedBy = "employee")
 	private List<Project> projectList;
 	
+	@ToString.Exclude
+	@OneToMany(mappedBy = "supervisor")
+	private List<Sheet> sheetList;
+	
 	private Employee(String empId)
 	{
 		this.employeeId = empId;

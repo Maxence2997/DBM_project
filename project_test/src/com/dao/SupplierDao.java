@@ -1,66 +1,58 @@
 package com.dao;
 
-import java.util.List;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.entities.Inventory;
-import com.util.EntitiesColumn;
+import com.entities.Supplier;
 
 @Repository
-public class InventoryDao implements InvDaoInterface
+public class SupplierDao implements SupDaoInterface
 {
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	
 	@Override
 	@Deprecated
-	public void createOrUpdateInventory(Inventory inventory)
+	public void createOrUpdateSupplier(Supplier supplier)
 	{
 		// get the current hibernate session
 		Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(inventory);
+		session.saveOrUpdate(supplier);
 	}
-
+	
 	@Override
-	public Inventory getInventory(String inventoryId)
+	public Supplier getSupplier(String supplierId)
 	{
 		// get the current hibernate session
 		Session session = sessionFactory.getCurrentSession();
-
+		
 		// retrieve/read from database using the primary key
-		Inventory inventory = session.get(Inventory.class, inventoryId);
-		return inventory;
+		Supplier supplier = session.get(Supplier.class, supplierId);
+		return supplier;
 	}
-
+	
 	@Override
-	public void createInventory(Inventory inventory)
+	public void createSupplier(Supplier supplier)
 	{
 		// get the current hibernate session
 		Session session = sessionFactory.getCurrentSession();
-		session.save(inventory);
+		session.save(supplier);
 	}
-
+	
 	@Override
-	public void updateInventory(Inventory inventory)
+	public void updateSupplier(Supplier supplier)
 	{
 		// get the current hibernate session
 		Session session = sessionFactory.getCurrentSession();
-		session.update(inventory);
+		session.update(supplier);
 	}
-
+	
 	@Override
-	public void deleteInventory(Inventory inventory)
+	public void deleteSupplier(Supplier supplier)
 	{
 		Session session = sessionFactory.getCurrentSession();
-
-		session.delete(inventory);
+		
+		session.delete(supplier);
 	}
-
 }

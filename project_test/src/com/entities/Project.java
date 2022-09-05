@@ -33,6 +33,10 @@ public class Project
 	@OneToMany(mappedBy = "project")
 	private List<Inventory> inventoryList;
 	
+	@ToString.Exclude
+	@OneToMany(mappedBy = "project")
+	private List<Sheet> sheetList;
+	
 	private Project(String projId)
 	{
 		this.projectId = projId;

@@ -33,6 +33,10 @@ public class Product
 	@OneToMany(mappedBy = "product")
 	private List<Sheet> sheetList;
 	
+	@ToString.Exclude
+	@OneToMany(mappedBy = "product")
+	private List<Inventory> inventoryList;
+	
 	private Product(String productId)
 	{
 		this.productId = productId;
