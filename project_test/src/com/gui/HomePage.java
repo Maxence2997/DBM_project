@@ -4,7 +4,6 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -43,7 +42,14 @@ public class HomePage
 	
 	private JLabel empBtnDescriptionLabel;
 	
-	public HomePage()
+	@SuppressWarnings(value = { "unused" })
+	public static void initialize() {
+		
+		HomePage page = new HomePage();
+		
+	}
+	
+	private HomePage()
 	{
 		// home panel which contains only EMPID, button log-out, btn_reminder and button
 		
@@ -97,6 +103,9 @@ public class HomePage
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				EmployeePage.actionComboBox.setSelectedIndex(0);
+				homeCardLayout.show(Frame.containerPanel, EmployeePage.EMPLOYEE);
+				
 			}
 		});
 		employeeBtn.setBounds(334, 346, 103, 29);
@@ -118,7 +127,7 @@ public class HomePage
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				SupplierPage.supComboBox.setSelectedIndex(0);
+				SupplierPage.actionComboBox.setSelectedIndex(0);
 				homeCardLayout.show(Frame.containerPanel, SupplierPage.SUPPLIER);
 			}
 		});
@@ -173,6 +182,7 @@ public class HomePage
 				if (option == JOptionPane.YES_OPTION)
 				{
 					Frame.cardLayout.show(Frame.frame.getContentPane(), LogInPage.LOGIN);
+					LogInPage.clearTextField();
 				}
 			}
 		});

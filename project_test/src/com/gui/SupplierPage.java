@@ -19,56 +19,62 @@ public class SupplierPage
 {
 	public static final String SUPPLIER = "supplier";
 	
-	private JPanel supplierPanel;
+	private JPanel panel;
 	
-	private JTextField supIdTextField;
+	private JTextField idTextField;
 	
-	private JTextField supNameTextField;
+	private JTextField nameTextField;
 	
-	private JTable supTable;
+	private JTable table;
 	
 	private JScrollPane scrollpane;
 	
-	private JLabel supAddressLabel;
+	private JLabel addressLabel;
 	
-	private JLabel supContactLabel;
+	private JLabel contactLabel;
 	
-	private JLabel supMobileLabel;
+	private JLabel mobileLabel;
 	
-	private JLabel supMailLabel;
+	private JLabel mailLabel;
 	
-	public static JComboBox supComboBox;
+	public static JComboBox actionComboBox;
 	
 	private JButton btn1;
 	
 	private JButton btn2;
 	
-	private JTextField supAddressTextField;
+	private JTextField addressTextField;
 	
-	private JTextField supContactTextField;
+	private JTextField contactTextField;
 	
-	private JTextField supMobileTextField;
+	private JTextField mobileTextField;
 	
-	private JTextField supMailTextField;
+	private JTextField mailTextField;
 	
-	private JLabel supIdLabel;
+	private JLabel idLabel;
 	
-	private JLabel supNameLabel;
+	private JLabel nameLabel;
 	
 	private JLabel resultLabel;
 	
-	private JLabel supIdShowLabel;
+	private JLabel idShowLabel;
 	
 	private JButton clearBtn;
 	
 	private JButton showMoreBtn;
 	
+	@SuppressWarnings(value = { "unused" })
+	public static void initialize()
+	{
+		SupplierPage page = new SupplierPage();
+	}
+	
 	public SupplierPage()
 	{
-		supplierPanel = new JPanel();
-		supplierPanel.setBounds(0, 26, 1000, 450);
-		supplierPanel.setLayout(null);
-		Frame.containerPanel.add(supplierPanel, SUPPLIER);
+		panel = new JPanel();
+		panel.setBounds(0, 26, 1000, 450);
+		panel.setLayout(null);
+		Frame.containerPanel.add(panel, SUPPLIER);
 		
 		setSupIdLabel();
 		setSupIdTextField();
@@ -132,7 +138,7 @@ public class SupplierPage
 		});
 		btn2.setBounds(672, 219, 104, 29);
 		btn2.setVisible(false);
-		supplierPanel.add(btn2);
+		panel.add(btn2);
 	}
 	
 	private void setBtn1()
@@ -145,12 +151,12 @@ public class SupplierPage
 			public void actionPerformed(ActionEvent arg0)
 			{
 				String function = btn1.getText().toLowerCase();
-				String functionOfComboBox = ((String) supComboBox.getSelectedItem()).toLowerCase();
+				String actionOfComboBox = ((String) actionComboBox.getSelectedItem()).toLowerCase();
 				
 				switch (function)
 				{
 					case "check":
-						boolean checkForDeleting = functionOfComboBox.equals("delete");
+						boolean checkForDeleting = actionOfComboBox.equals("delete");
 						if (checkForDeleting)
 						{
 							btn1CheckForDeleting();
@@ -178,7 +184,7 @@ public class SupplierPage
 				}
 			}
 		});
-		supplierPanel.add(btn1);
+		panel.add(btn1);
 	}
 	
 	private void setClearBtn()
@@ -194,44 +200,44 @@ public class SupplierPage
 		});
 		clearBtn.setBounds(616, 133, 88, 29);
 		clearBtn.setVisible(false);
-		supplierPanel.add(clearBtn);
+		panel.add(clearBtn);
 	}
 	
 	private void setComboBox()
 	{
 		String[] function = { "Inquire", "Add Supplier", "Add Product", "Delete" };
-		supComboBox = new JComboBox();
-		supComboBox.setBounds(447, 43, 135, 27);
-		supComboBox.setModel(new DefaultComboBoxModel(function));
+		actionComboBox = new JComboBox();
+		actionComboBox.setBounds(447, 43, 135, 27);
+		actionComboBox.setModel(new DefaultComboBoxModel(function));
 		// supplierFunction = (String) supComboBox.getSelectedItem();
-		supComboBox.addActionListener(new ActionListener()
+		actionComboBox.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				String functionOfComboBox = ((String) supComboBox.getSelectedItem()).toLowerCase();
+				String actionOfComboBox = ((String) actionComboBox.getSelectedItem()).toLowerCase();
 				
-				setElementsByComboBox(functionOfComboBox);
+				setElementsByComboBox(actionOfComboBox);
 			}
 		});
-		supComboBox.setVisible(true);
-		supplierPanel.add(supComboBox);
+		actionComboBox.setVisible(true);
+		panel.add(actionComboBox);
 	}
 	
 	private void setScrollpane()
 	{
-		scrollpane = new JScrollPane(supTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		scrollpane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollpane.setBounds(229, 287, 563, 81);
 		scrollpane.setVisible(false);
 		// scrollpane.setPreferredSize(new Dimension(563, 50)); //whole scrollpane and
 		// table will disapear
-		supplierPanel.add(scrollpane);
+		panel.add(scrollpane);
 	}
 	
 	private void setSupTable()
 	{
-		supTable = new JTable()
+		table = new JTable()
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -239,9 +245,9 @@ public class SupplierPage
 				return false;
 			}// uneditable
 		};
-		supTable.setFillsViewportHeight(true);
+		table.setFillsViewportHeight(true);
 		// supTable.setBounds(48,288,563,30);
-		supTable.setVisible(false);
+		table.setVisible(false);
 	}
 	
 	private void setShowMoreBtn()
@@ -287,7 +293,7 @@ public class SupplierPage
 		showMoreBtn.setBounds(675, 386, 117, 29);
 		showMoreBtn.setVisible(false);
 		
-		supplierPanel.add(showMoreBtn);
+		panel.add(showMoreBtn);
 	}
 	
 	private void setResultLabel()
@@ -296,133 +302,133 @@ public class SupplierPage
 		resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		resultLabel.setBounds(229, 258, 560, 16);
 		resultLabel.setVisible(false);
-		supplierPanel.add(resultLabel);
+		panel.add(resultLabel);
 	}
 	
 	private void setSupMailTextField()
 	{
-		supMailTextField = new JTextField();
-		supMailTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		supMailTextField.setBounds(426, 220, 178, 26);
-		supMailTextField.setVisible(false);
-		supplierPanel.add(supMailTextField);
-		supMailTextField.setColumns(14);
+		mailTextField = new JTextField();
+		mailTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		mailTextField.setBounds(426, 220, 178, 26);
+		mailTextField.setVisible(false);
+		panel.add(mailTextField);
+		mailTextField.setColumns(14);
 	}
 	
 	private void setSupMailLabel()
 	{
-		supMailLabel = new JLabel("Mail :");
-		supMailLabel.setBounds(384, 225, 34, 16);
-		supMailLabel.setVisible(false);
-		supplierPanel.add(supMailLabel);
+		mailLabel = new JLabel("Mail :");
+		mailLabel.setBounds(384, 225, 34, 16);
+		mailLabel.setVisible(false);
+		panel.add(mailLabel);
 	}
 	
 	private void setSupMobileTextField()
 	{
-		supMobileTextField = new JTextField();
-		supMobileTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		supMobileTextField.setBounds(426, 193, 178, 26);
-		supMobileTextField.setVisible(false);
-		supMobileTextField.setColumns(14);
-		supplierPanel.add(supMobileTextField);
+		mobileTextField = new JTextField();
+		mobileTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		mobileTextField.setBounds(426, 193, 178, 26);
+		mobileTextField.setVisible(false);
+		mobileTextField.setColumns(14);
+		panel.add(mobileTextField);
 	}
 	
 	private void setSupMobileLabel()
 	{
-		supMobileLabel = new JLabel("Mobile :");
-		supMobileLabel.setBounds(368, 198, 50, 16);
-		supMobileLabel.setVisible(false);
-		supplierPanel.add(supMobileLabel);
+		mobileLabel = new JLabel("Mobile :");
+		mobileLabel.setBounds(368, 198, 50, 16);
+		mobileLabel.setVisible(false);
+		panel.add(mobileLabel);
 	}
 	
 	private void setSupContactTextField()
 	{
-		supContactTextField = new JTextField();
-		supContactTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		supContactTextField.setBounds(426, 167, 178, 26);
-		supContactTextField.setVisible(false);
-		supContactTextField.setColumns(14);
-		supplierPanel.add(supContactTextField);
+		contactTextField = new JTextField();
+		contactTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		contactTextField.setBounds(426, 167, 178, 26);
+		contactTextField.setVisible(false);
+		contactTextField.setColumns(14);
+		panel.add(contactTextField);
 	}
 	
 	private void setSupContactLabel()
 	{
-		supContactLabel = new JLabel("Contact :");
-		supContactLabel.setBounds(361, 172, 57, 16);
-		supContactLabel.setVisible(false);
-		supplierPanel.add(supContactLabel);
+		contactLabel = new JLabel("Contact :");
+		contactLabel.setBounds(361, 172, 57, 16);
+		contactLabel.setVisible(false);
+		panel.add(contactLabel);
 	}
 	
 	private void setSupAddressTextField()
 	{
-		supAddressTextField = new JTextField();
-		supAddressTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		supAddressTextField.setBounds(426, 141, 178, 26);
-		supAddressTextField.setColumns(14);
-		supAddressTextField.setVisible(false);
-		supplierPanel.add(supAddressTextField);
+		addressTextField = new JTextField();
+		addressTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		addressTextField.setBounds(426, 141, 178, 26);
+		addressTextField.setColumns(14);
+		addressTextField.setVisible(false);
+		panel.add(addressTextField);
 	}
 	
 	private void setSupAddressLabel()
 	{
-		supAddressLabel = new JLabel("");
-		supAddressLabel.setBounds(359, 146, 59, 16);
-		supAddressLabel.setVisible(false);
-		supplierPanel.add(supAddressLabel);
+		addressLabel = new JLabel("");
+		addressLabel.setBounds(359, 146, 59, 16);
+		addressLabel.setVisible(false);
+		panel.add(addressLabel);
 	}
 	
 	private void setSupNameTextField()
 	{
-		supNameTextField = new JTextField();
-		supNameTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		supNameTextField.setBounds(426, 115, 178, 26);
-		supplierPanel.add(supNameTextField);
-		supNameTextField.setColumns(14);
+		nameTextField = new JTextField();
+		nameTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		nameTextField.setBounds(426, 115, 178, 26);
+		panel.add(nameTextField);
+		nameTextField.setColumns(14);
 	}
 	
 	private void setSupNameLabel()
 	{
-		supNameLabel = new JLabel("Name :");
-		supNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		supNameLabel.setBounds(319, 120, 99, 16);
-		supplierPanel.add(supNameLabel);
+		nameLabel = new JLabel("Name :");
+		nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		nameLabel.setBounds(319, 120, 99, 16);
+		panel.add(nameLabel);
 	}
 	
 	private void setSupIdShowLabel()
 	{
-		supIdShowLabel = new JLabel("");
-		supIdShowLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		supIdShowLabel.setBounds(430, 94, 174, 16);
-		supIdShowLabel.setVisible(false);
-		supplierPanel.add(supIdShowLabel);
+		idShowLabel = new JLabel("");
+		idShowLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		idShowLabel.setBounds(430, 94, 174, 16);
+		idShowLabel.setVisible(false);
+		panel.add(idShowLabel);
 	}
 	
 	private void setSupIdTextField()
 	{
-		supIdTextField = new JTextField();
-		supIdTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		supIdTextField.setBounds(426, 89, 178, 26);
-		supplierPanel.add(supIdTextField);
-		supIdTextField.setColumns(14);
+		idTextField = new JTextField();
+		idTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		idTextField.setBounds(426, 89, 178, 26);
+		panel.add(idTextField);
+		idTextField.setColumns(14);
 	}
 	
 	private void setSupIdLabel()
 	{
-		supIdLabel = new JLabel("Supplier ID :");
-		supIdLabel.setBounds(341, 94, 77, 16);
-		supIdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		supplierPanel.add(supIdLabel);
+		idLabel = new JLabel("Supplier ID :");
+		idLabel.setBounds(341, 94, 77, 16);
+		idLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel.add(idLabel);
 	}
 	
 	private void clearLabelAndField()
 	{
-		supIdTextField.setText("");
-		supNameTextField.setText("");
-		supAddressTextField.setText("");
-		supContactTextField.setText("");
-		supMobileTextField.setText("");
-		supMailTextField.setText("");
-		supIdShowLabel.setText("");
+		idTextField.setText("");
+		nameTextField.setText("");
+		addressTextField.setText("");
+		contactTextField.setText("");
+		mobileTextField.setText("");
+		mailTextField.setText("");
+		idShowLabel.setText("");
 		resultLabel.setText("");
 	}
 	
@@ -433,27 +439,27 @@ public class SupplierPage
 		switch (function)
 		{
 			case "add supplier":
-				supIdLabel.setVisible(true);
-				supIdTextField.setVisible(false);
-				supIdShowLabel.setVisible(true);
+				idLabel.setVisible(true);
+				idTextField.setVisible(false);
+				idShowLabel.setVisible(true);
 				
-				supNameLabel.setVisible(true);
-				supNameTextField.setVisible(true);
+				nameLabel.setVisible(true);
+				nameTextField.setVisible(true);
 				
-				supAddressLabel.setText("Address :");
-				supAddressLabel.setVisible(true);
-				supAddressTextField.setVisible(true);
+				addressLabel.setText("Address :");
+				addressLabel.setVisible(true);
+				addressTextField.setVisible(true);
 				
-				supContactLabel.setVisible(true);
-				supContactTextField.setVisible(true);
+				contactLabel.setVisible(true);
+				contactTextField.setVisible(true);
 				
-				supMobileLabel.setVisible(true);
-				supMobileTextField.setVisible(true);
+				mobileLabel.setVisible(true);
+				mobileTextField.setVisible(true);
 				
-				supMailLabel.setVisible(true);
-				supMailTextField.setVisible(true);
+				mailLabel.setVisible(true);
+				mailTextField.setVisible(true);
 				
-				supTable.setVisible(false);
+				table.setVisible(false);
 				scrollpane.setVisible(false);
 				showMoreBtn.setVisible(false);
 				
@@ -475,31 +481,31 @@ public class SupplierPage
 				
 				clearBtn.setVisible(false);
 				
-				supIdTextField.setVisible(true);
+				idTextField.setVisible(true);
 				
-				supAddressLabel.setText("Module :");
-				supAddressLabel.setVisible(false);
-				supAddressTextField.setVisible(false);
+				addressLabel.setText("Module :");
+				addressLabel.setVisible(false);
+				addressTextField.setVisible(false);
 				
-				supContactLabel.setVisible(false);
-				supContactTextField.setVisible(false);
+				contactLabel.setVisible(false);
+				contactTextField.setVisible(false);
 				
-				supMobileLabel.setVisible(false);
-				supMobileTextField.setVisible(false);
+				mobileLabel.setVisible(false);
+				mobileTextField.setVisible(false);
 				
-				supMailLabel.setVisible(false);
-				supMailTextField.setVisible(false);
+				mailLabel.setVisible(false);
+				mailTextField.setVisible(false);
 				
-				supNameLabel.setVisible(false);
-				supNameTextField.setVisible(false);
+				nameLabel.setVisible(false);
+				nameTextField.setVisible(false);
 				
-				supTable.setVisible(false);
+				table.setVisible(false);
 				scrollpane.setVisible(false);
 				showMoreBtn.setVisible(false);
 				
-				supIdTextField.setVisible(true);
+				idTextField.setVisible(true);
 				
-				supIdShowLabel.setVisible(false);
+				idShowLabel.setVisible(false);
 				break;
 			
 			case "delete":
@@ -511,57 +517,57 @@ public class SupplierPage
 				
 				clearBtn.setVisible(false);
 				
-				supIdTextField.setVisible(true);
+				idTextField.setVisible(true);
 				
-				supAddressLabel.setText("Address :");
-				supAddressLabel.setVisible(false);
-				supAddressTextField.setVisible(false);
+				addressLabel.setText("Address :");
+				addressLabel.setVisible(false);
+				addressTextField.setVisible(false);
 				
-				supContactLabel.setVisible(false);
-				supContactTextField.setVisible(false);
+				contactLabel.setVisible(false);
+				contactTextField.setVisible(false);
 				
-				supMobileLabel.setVisible(false);
-				supMobileTextField.setVisible(false);
+				mobileLabel.setVisible(false);
+				mobileTextField.setVisible(false);
 				
-				supMailLabel.setVisible(false);
-				supMailTextField.setVisible(false);
+				mailLabel.setVisible(false);
+				mailTextField.setVisible(false);
 				
-				supNameLabel.setVisible(false);
-				supNameTextField.setVisible(false);
+				nameLabel.setVisible(false);
+				nameTextField.setVisible(false);
 				
-				supTable.setVisible(false);
+				table.setVisible(false);
 				scrollpane.setVisible(false);
 				
 				showMoreBtn.setVisible(false);
 				
-				supIdTextField.setVisible(true);
-				supIdShowLabel.setVisible(false);
+				idTextField.setVisible(true);
+				idShowLabel.setVisible(false);
 				break;
 			
 			default:
 			case "inquire":
 				
-				supIdLabel.setVisible(true);
-				supIdTextField.setVisible(true);
-				supIdShowLabel.setVisible(false);
+				idLabel.setVisible(true);
+				idTextField.setVisible(true);
+				idShowLabel.setVisible(false);
 				
-				supNameLabel.setVisible(true);
-				supNameTextField.setVisible(true);
+				nameLabel.setVisible(true);
+				nameTextField.setVisible(true);
 				
-				supAddressLabel.setText("Address :");
-				supAddressLabel.setVisible(false);
-				supAddressTextField.setVisible(false);
+				addressLabel.setText("Address :");
+				addressLabel.setVisible(false);
+				addressTextField.setVisible(false);
 				
-				supContactLabel.setVisible(false);
-				supContactTextField.setVisible(false);
+				contactLabel.setVisible(false);
+				contactTextField.setVisible(false);
 				
-				supMobileLabel.setVisible(false);
-				supMobileTextField.setVisible(false);
+				mobileLabel.setVisible(false);
+				mobileTextField.setVisible(false);
 				
-				supMailLabel.setVisible(false);
-				supMailTextField.setVisible(false);
+				mailLabel.setVisible(false);
+				mailTextField.setVisible(false);
 				
-				supTable.setVisible(false);
+				table.setVisible(false);
 				scrollpane.setVisible(false);
 				showMoreBtn.setVisible(false);
 				
@@ -584,29 +590,29 @@ public class SupplierPage
 		clearBtn.setVisible(false);
 		btn2.setVisible(false);
 		
-		supAddressTextField.setVisible(true);
-		supAddressLabel.setVisible(false);
-		supAddressTextField.setVisible(false);
+		addressTextField.setVisible(true);
+		addressLabel.setVisible(false);
+		addressTextField.setVisible(false);
 		
-		supContactLabel.setVisible(false);
-		supContactTextField.setVisible(false);
+		contactLabel.setVisible(false);
+		contactTextField.setVisible(false);
 		
-		supMobileLabel.setVisible(false);
-		supMobileTextField.setVisible(false);
+		mobileLabel.setVisible(false);
+		mobileTextField.setVisible(false);
 		
-		supMailLabel.setVisible(false);
-		supMailTextField.setVisible(false);
+		mailLabel.setVisible(false);
+		mailTextField.setVisible(false);
 		
-		supTable.setVisible(false);
+		table.setVisible(false);
 		scrollpane.setVisible(false);
 		showMoreBtn.setVisible(false);
 		
-		supNameLabel.setVisible(false);
-		supNameTextField.setVisible(false);
+		nameLabel.setVisible(false);
+		nameTextField.setVisible(false);
 		
-		supIdTextField.setVisible(true);
+		idTextField.setVisible(true);
 		
-		supIdShowLabel.setVisible(false);
+		idShowLabel.setVisible(false);
 		
 		resultLabel.setText("Data no found");
 		resultLabel.setVisible(true);
@@ -649,26 +655,26 @@ public class SupplierPage
 		btn1.setVisible(true);
 		btn2.setVisible(false);
 		clearBtn.setVisible(false);
-		supIdShowLabel.setVisible(false);
-		supIdTextField.setVisible(true);
+		idShowLabel.setVisible(false);
+		idTextField.setVisible(true);
 		
-		supAddressLabel.setVisible(false);
-		supAddressTextField.setVisible(false);
+		addressLabel.setVisible(false);
+		addressTextField.setVisible(false);
 		
-		supContactLabel.setVisible(false);
-		supContactTextField.setVisible(false);
+		contactLabel.setVisible(false);
+		contactTextField.setVisible(false);
 		
-		supMobileLabel.setVisible(false);
-		supMobileTextField.setVisible(false);
-		supMailLabel.setVisible(false);
-		supMailTextField.setVisible(false);
+		mobileLabel.setVisible(false);
+		mobileTextField.setVisible(false);
+		mailLabel.setVisible(false);
+		mailTextField.setVisible(false);
 		
-		supNameLabel.setVisible(false);
-		supNameTextField.setVisible(false);
+		nameLabel.setVisible(false);
+		nameTextField.setVisible(false);
 		
-		supIdTextField.setVisible(true);
+		idTextField.setVisible(true);
 		
-		supTable.setVisible(false);
+		table.setVisible(false);
 		scrollpane.setVisible(false);
 		showMoreBtn.setVisible(false);
 	}

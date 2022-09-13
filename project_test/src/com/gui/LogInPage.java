@@ -11,25 +11,31 @@ public class LogInPage
 {
 	public static final String LOGIN = "login";
 	
-	private JPanel loginPanel;
+	private JPanel panel;
 	
 	private JLabel empIdLabel;
 	
 	private JLabel resultLabel;
 	
-	private JTextField empIdTextField;
+	public static JTextField empIdTextField;
 	
 	private JButton loginBtn;
 	
 	private String tempAccount = "A005759";
 	
-	public LogInPage()
+	@SuppressWarnings(value = { "unused" })
+	public static void initialize()
+	{
+		LogInPage page = new LogInPage();
+	}
+	
+	private LogInPage()
 	{
 		// JPanel containerPanel = frame.getContainerPanel();
 		
-		loginPanel = new JPanel();
-		Frame.frame.getContentPane().add(loginPanel, LOGIN);
-		loginPanel.setLayout(null);
+		panel = new JPanel();
+		Frame.frame.getContentPane().add(panel, LOGIN);
+		panel.setLayout(null);
 		
 		setEmpIdLabel();
 		setResultLabel();
@@ -44,47 +50,57 @@ public class LogInPage
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				
-				if (empIdTextField.getText().equals(tempAccount))
-				{
-					Frame.cardLayout.show(Frame.frame.getContentPane(), HomePage.HOME);
-					HomePage.homeCardLayout.show(Frame.containerPanel, HomePage.HOME);
-				}
-				else
-				{
-					resultLabel.setText("Employee ID is invalid, please refill it.");
-				}
+				logInAction();
 			}
 		});
 		loginBtn.setBounds(607, 187, 117, 29);
-		loginPanel.add(loginBtn);
+		panel.add(loginBtn);
 	}
 	
 	private void setEmpIdTextField()
 	{
 		empIdTextField = new JTextField();
 		empIdTextField.setBounds(415, 187, 163, 26);
-		loginPanel.add(empIdTextField);
+		panel.add(empIdTextField);
 		empIdTextField.setColumns(10);
 		empIdTextField.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				logInAction();
 			}
 		});
+	}
+	
+	private void logInAction()
+	{
+		if (empIdTextField.getText().equals(tempAccount))
+		{
+			Frame.cardLayout.show(Frame.frame.getContentPane(), HomePage.HOME);
+			HomePage.homeCardLayout.show(Frame.containerPanel, HomePage.HOME);
+		}
+		else
+		{
+			resultLabel.setText("Employee ID is invalid, please refill it.");
+		}
 	}
 	
 	private void setResultLabel()
 	{
 		resultLabel = new JLabel("");
 		resultLabel.setBounds(286, 246, 438, 26);
-		loginPanel.add(resultLabel);
+		panel.add(resultLabel);
 	}
 	
 	private void setEmpIdLabel()
 	{
 		empIdLabel = new JLabel("Employee ID :");
 		empIdLabel.setBounds(286, 192, 104, 16);
-		loginPanel.add(empIdLabel);
+		panel.add(empIdLabel);
+	}
+	
+	public static void clearTextField()
+	{
+		empIdTextField.setText("");
 	}
 }

@@ -13,7 +13,13 @@ public class Frame
 	
 	public static JPanel containerPanel;
 	
-	public Frame()
+	@SuppressWarnings(value = { "unused" })
+	public static void initialize()
+	{
+		Frame frame = new Frame();
+	}
+	
+	private Frame()
 	{
 		setFrame();
 		setContainerPanel();
