@@ -1,16 +1,19 @@
 package com.gui;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 public class SupplierPage
 {
@@ -18,16 +21,13 @@ public class SupplierPage
 	
 	private JPanel supplierPanel;
 	
-	public static JTextField supIdTextField;
+	private JTextField supIdTextField;
 	
-	public static JTextField supNameTextField;
+	private JTextField supNameTextField;
 	
 	private JTable supTable;
 	
 	private JScrollPane scrollpane;
-	
-	// supplier panel variables needed for comboBox actionListener
-	private String supplierFunction;
 	
 	private JLabel supAddressLabel;
 	
@@ -39,25 +39,25 @@ public class SupplierPage
 	
 	public static JComboBox supComboBox;
 	
-	private JButton btn_sup_1;
+	private JButton btn1;
 	
-	private JButton btn_sup_2;
+	private JButton btn2;
 	
-	public static JTextField supAddressTextField;
+	private JTextField supAddressTextField;
 	
-	public static JTextField supContactTextField;
+	private JTextField supContactTextField;
 	
-	public static JTextField supMobileTextField;
+	private JTextField supMobileTextField;
 	
-	public static JTextField supMailTextField;
+	private JTextField supMailTextField;
 	
 	private JLabel supIdLabel;
 	
 	private JLabel supNameLabel;
 	
-	public static JLabel resultLabel;
+	private JLabel resultLabel;
 	
-	public static JLabel supIDShowLabel;
+	private JLabel supIdShowLabel;
 	
 	private JButton clearBtn;
 	
@@ -72,7 +72,7 @@ public class SupplierPage
 		
 		setSupIdLabel();
 		setSupIdTextField();
-		setSupIDShowLabel();
+		setSupIdShowLabel();
 		
 		setSupNameLabel();
 		setSupNameTextField();
@@ -98,39 +98,87 @@ public class SupplierPage
 		
 		setComboBox();
 		
-		setSupBtn1();
+		setBtn1();
 		
-		setSupBtn2();
+		setBtn2();
 		
 		setClearBtn();
 	}
 	
-	private void setSupBtn2()
+	private void setBtn2()
 	{
-		btn_sup_2 = new JButton("");
-		btn_sup_2.addActionListener(new ActionListener()
+		btn2 = new JButton("");
+		btn2.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				String function = btn2.getText().toLowerCase();
+				
+				switch (function)
+				{
+					case "delete":
+						// do delete by service
+						break;
+					
+					case "add supplier":
+						// add supplier by service
+						break;
+					
+					case "add product":
+						// add product by service
+						break;
+				}
 			}
 		});
-		btn_sup_2.setBounds(672, 219, 104, 29);
-		btn_sup_2.setVisible(false);
-		supplierPanel.add(btn_sup_2);
+		btn2.setBounds(672, 219, 104, 29);
+		btn2.setVisible(false);
+		supplierPanel.add(btn2);
 	}
 	
-	private void setSupBtn1()
+	private void setBtn1()
 	{
-		btn_sup_1 = new JButton("");
-		btn_sup_1.setBounds(616, 90, 88, 26);
-		btn_sup_1.setVisible(true);
-		btn_sup_1.addActionListener(new ActionListener()
+		btn1 = new JButton("");
+		btn1.setBounds(616, 90, 88, 26);
+		btn1.setVisible(true);
+		btn1.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				String function = btn1.getText().toLowerCase();
+				String functionOfComboBox = ((String) supComboBox.getSelectedItem()).toLowerCase();
+				
+				switch (function)
+				{
+					case "check":
+						boolean checkForDeleting = functionOfComboBox.equals("delete");
+						if (checkForDeleting)
+						{
+							btn1CheckForDeleting();
+						}
+						else
+						{
+							// check for adding product- check the supplier exists or not.
+							btn1CheckForAddingProduct();
+						}
+						break;
+					
+					case "inquire":
+						// query by service and show on the page
+						boolean found = true;
+						if (found)
+						{
+							// show something
+						}
+						else
+						{
+							showDataNotFound();
+						}
+						
+						break;
+				}
 			}
 		});
-		supplierPanel.add(btn_sup_1);
+		supplierPanel.add(btn1);
 	}
 	
 	private void setClearBtn()
@@ -141,6 +189,7 @@ public class SupplierPage
 			public void actionPerformed(ActionEvent arg0)
 			{
 				clearLabelAndField();
+				setPage();
 			}
 		});
 		clearBtn.setBounds(616, 133, 88, 29);
@@ -150,16 +199,19 @@ public class SupplierPage
 	
 	private void setComboBox()
 	{
+		String[] function = { "Inquire", "Add Supplier", "Add Product", "Delete" };
 		supComboBox = new JComboBox();
 		supComboBox.setBounds(447, 43, 135, 27);
-		supComboBox.setModel(new DefaultComboBoxModel(
-				new String[] { "Inquire", "Add Supplier", "Add Product", "Delete" }));
-		supplierFunction = (String) supComboBox.getSelectedItem();
+		supComboBox.setModel(new DefaultComboBoxModel(function));
+		// supplierFunction = (String) supComboBox.getSelectedItem();
 		supComboBox.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				String functionOfComboBox = ((String) supComboBox.getSelectedItem()).toLowerCase();
+				
+				setElementsByComboBox(functionOfComboBox);
 			}
 		});
 		supComboBox.setVisible(true);
@@ -188,7 +240,7 @@ public class SupplierPage
 			}// uneditable
 		};
 		supTable.setFillsViewportHeight(true);
-		// sup_table.setBounds(48,288,563,30);
+		// supTable.setBounds(48,288,563,30);
 		supTable.setVisible(false);
 	}
 	
@@ -199,6 +251,37 @@ public class SupplierPage
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				// query by service
+				String[][] data = null;
+				boolean found = true;
+				
+				if (found)
+				{
+					String[] column_names = { "SupplierID", "Name", "Item", "Module" };
+					
+					JScrollPane scrollpane = new JScrollPane();
+					JTable table = new JTable()
+					{
+						@Override
+						public boolean isCellEditable(int row, int column)
+						{
+							return false;
+						}// uneditable
+					};
+					
+					DefaultTableModel supplierTableModel = new DefaultTableModel(data,
+							column_names);
+					table.setModel(supplierTableModel);
+					scrollpane.setPreferredSize(new Dimension(600, 125));
+					scrollpane.setViewportView(table);
+					JOptionPane.showMessageDialog(null, scrollpane, "Supplier products Info", 1);
+				}
+				else
+				{
+					// not found
+					resultLabel.setVisible(true);
+					resultLabel.setText("No record for the products of the supplier");
+				}
 			}
 		});
 		showMoreBtn.setBounds(675, 386, 117, 29);
@@ -305,13 +388,13 @@ public class SupplierPage
 		supplierPanel.add(supNameLabel);
 	}
 	
-	private void setSupIDShowLabel()
+	private void setSupIdShowLabel()
 	{
-		supIDShowLabel = new JLabel("");
-		supIDShowLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		supIDShowLabel.setBounds(430, 94, 174, 16);
-		supIDShowLabel.setVisible(false);
-		supplierPanel.add(supIDShowLabel);
+		supIdShowLabel = new JLabel("");
+		supIdShowLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		supIdShowLabel.setBounds(430, 94, 174, 16);
+		supIdShowLabel.setVisible(false);
+		supplierPanel.add(supIdShowLabel);
 	}
 	
 	private void setSupIdTextField()
@@ -331,7 +414,7 @@ public class SupplierPage
 		supplierPanel.add(supIdLabel);
 	}
 	
-	public static void clearLabelAndField()
+	private void clearLabelAndField()
 	{
 		supIdTextField.setText("");
 		supNameTextField.setText("");
@@ -339,7 +422,254 @@ public class SupplierPage
 		supContactTextField.setText("");
 		supMobileTextField.setText("");
 		supMailTextField.setText("");
-		supIDShowLabel.setText("");
+		supIdShowLabel.setText("");
 		resultLabel.setText("");
+	}
+	
+	private void setElementsByComboBox(String function)
+	{
+		clearLabelAndField();
+		
+		switch (function)
+		{
+			case "add supplier":
+				supIdLabel.setVisible(true);
+				supIdTextField.setVisible(false);
+				supIdShowLabel.setVisible(true);
+				
+				supNameLabel.setVisible(true);
+				supNameTextField.setVisible(true);
+				
+				supAddressLabel.setText("Address :");
+				supAddressLabel.setVisible(true);
+				supAddressTextField.setVisible(true);
+				
+				supContactLabel.setVisible(true);
+				supContactTextField.setVisible(true);
+				
+				supMobileLabel.setVisible(true);
+				supMobileTextField.setVisible(true);
+				
+				supMailLabel.setVisible(true);
+				supMailTextField.setVisible(true);
+				
+				supTable.setVisible(false);
+				scrollpane.setVisible(false);
+				showMoreBtn.setVisible(false);
+				
+				btn1.setText("");
+				btn1.setVisible(false);
+				
+				btn2.setText("Add Supplier");
+				btn2.setVisible(true);
+				
+				clearBtn.setVisible(true);
+				break;
+			
+			case "add product":
+				btn1.setText("Check");
+				btn1.setVisible(true);
+				
+				btn2.setText("Add Product");
+				btn2.setVisible(false);
+				
+				clearBtn.setVisible(false);
+				
+				supIdTextField.setVisible(true);
+				
+				supAddressLabel.setText("Module :");
+				supAddressLabel.setVisible(false);
+				supAddressTextField.setVisible(false);
+				
+				supContactLabel.setVisible(false);
+				supContactTextField.setVisible(false);
+				
+				supMobileLabel.setVisible(false);
+				supMobileTextField.setVisible(false);
+				
+				supMailLabel.setVisible(false);
+				supMailTextField.setVisible(false);
+				
+				supNameLabel.setVisible(false);
+				supNameTextField.setVisible(false);
+				
+				supTable.setVisible(false);
+				scrollpane.setVisible(false);
+				showMoreBtn.setVisible(false);
+				
+				supIdTextField.setVisible(true);
+				
+				supIdShowLabel.setVisible(false);
+				break;
+			
+			case "delete":
+				btn1.setText("Check");
+				btn1.setVisible(true);
+				
+				btn2.setText("Delete");
+				btn2.setVisible(false);
+				
+				clearBtn.setVisible(false);
+				
+				supIdTextField.setVisible(true);
+				
+				supAddressLabel.setText("Address :");
+				supAddressLabel.setVisible(false);
+				supAddressTextField.setVisible(false);
+				
+				supContactLabel.setVisible(false);
+				supContactTextField.setVisible(false);
+				
+				supMobileLabel.setVisible(false);
+				supMobileTextField.setVisible(false);
+				
+				supMailLabel.setVisible(false);
+				supMailTextField.setVisible(false);
+				
+				supNameLabel.setVisible(false);
+				supNameTextField.setVisible(false);
+				
+				supTable.setVisible(false);
+				scrollpane.setVisible(false);
+				
+				showMoreBtn.setVisible(false);
+				
+				supIdTextField.setVisible(true);
+				supIdShowLabel.setVisible(false);
+				break;
+			
+			default:
+			case "inquire":
+				
+				supIdLabel.setVisible(true);
+				supIdTextField.setVisible(true);
+				supIdShowLabel.setVisible(false);
+				
+				supNameLabel.setVisible(true);
+				supNameTextField.setVisible(true);
+				
+				supAddressLabel.setText("Address :");
+				supAddressLabel.setVisible(false);
+				supAddressTextField.setVisible(false);
+				
+				supContactLabel.setVisible(false);
+				supContactTextField.setVisible(false);
+				
+				supMobileLabel.setVisible(false);
+				supMobileTextField.setVisible(false);
+				
+				supMailLabel.setVisible(false);
+				supMailTextField.setVisible(false);
+				
+				supTable.setVisible(false);
+				scrollpane.setVisible(false);
+				showMoreBtn.setVisible(false);
+				
+				btn1.setText("Inquire");
+				btn1.setVisible(true);
+				
+				btn2.setVisible(false);
+				
+				clearBtn.setVisible(false);
+				
+				resultLabel.setVisible(false);
+				
+				break;
+		}
+	}
+	
+	private void showDataNotFound()
+	{
+		btn1.setVisible(true);
+		clearBtn.setVisible(false);
+		btn2.setVisible(false);
+		
+		supAddressTextField.setVisible(true);
+		supAddressLabel.setVisible(false);
+		supAddressTextField.setVisible(false);
+		
+		supContactLabel.setVisible(false);
+		supContactTextField.setVisible(false);
+		
+		supMobileLabel.setVisible(false);
+		supMobileTextField.setVisible(false);
+		
+		supMailLabel.setVisible(false);
+		supMailTextField.setVisible(false);
+		
+		supTable.setVisible(false);
+		scrollpane.setVisible(false);
+		showMoreBtn.setVisible(false);
+		
+		supNameLabel.setVisible(false);
+		supNameTextField.setVisible(false);
+		
+		supIdTextField.setVisible(true);
+		
+		supIdShowLabel.setVisible(false);
+		
+		resultLabel.setText("Data no found");
+		resultLabel.setVisible(true);
+	}
+	
+	private void btn1CheckForDeleting()
+	{
+		// query by service
+		boolean found = true;
+		
+		if (found)
+		{
+			// show something
+		}
+		else
+		{
+			// not found
+			showDataNotFound();
+		}
+	}
+	
+	private void btn1CheckForAddingProduct()
+	{
+		// query by service
+		boolean found = true;
+		
+		if (found)
+		{
+			// show something
+		}
+		else
+		{
+			// not found
+			showDataNotFound();
+		}
+	}
+	
+	private void setPage()
+	{
+		btn1.setVisible(true);
+		btn2.setVisible(false);
+		clearBtn.setVisible(false);
+		supIdShowLabel.setVisible(false);
+		supIdTextField.setVisible(true);
+		
+		supAddressLabel.setVisible(false);
+		supAddressTextField.setVisible(false);
+		
+		supContactLabel.setVisible(false);
+		supContactTextField.setVisible(false);
+		
+		supMobileLabel.setVisible(false);
+		supMobileTextField.setVisible(false);
+		supMailLabel.setVisible(false);
+		supMailTextField.setVisible(false);
+		
+		supNameLabel.setVisible(false);
+		supNameTextField.setVisible(false);
+		
+		supIdTextField.setVisible(true);
+		
+		supTable.setVisible(false);
+		scrollpane.setVisible(false);
+		showMoreBtn.setVisible(false);
 	}
 }
