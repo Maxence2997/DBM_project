@@ -81,93 +81,286 @@ public class EmployeePage
 		Frame.containerPanel.add(panel, EMPLOYEE);
 		panel.setLayout(null);
 		
-		showIdLabel = new JLabel("");
-		showIdLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		showIdLabel.setBounds(393, 75, 202, 16);
-		showIdLabel.setVisible(false);
-		panel.add(showIdLabel);
+		setShowIdLabel();
 		
-		idLabel = new JLabel("Employee ID :");
-		idLabel.setBounds(271, 75, 86, 16);
-		panel.add(idLabel);
+		setIdLabel();
+		setIdTextField();
 		
-		idTextField = new JTextField();
-		idTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		idTextField.setBounds(393, 68, 202, 26);
-		panel.add(idTextField);
-		idTextField.setColumns(16);
+		setFirstNameLabel();
+		setFirstNameTextField();
 		
+		setLastNameLabel();
+		setLastNameTextField();
+		
+		setAddressLabel();
+		setAddressTextField();
+		
+		setPhoneLabel();
+		setPhoneTextField();
+		
+		setSupervIdLabel();
+		setSupervIdTextField();
+		
+		setPerfLabel();
+		setPerfComboBox();
+		
+		setInfoLabel();
+		
+		setTable();
+		
+		setScrollpane();
+		
+		setClearBtn();
+		
+		setActionComboBox();
+		
+		setCheckIdBtn();
+		
+		setExecuteBtn();
+		
+		setShowMoreBtn();
+	}
+	
+	public void setActionComboBox()
+	{
+		String[] action = { "Show & Adjust", "Add Employee", "Delete Employee" };
+		actionComboBox = new JComboBox();
+		actionComboBox.setBounds(414, 36, 160, 27);
+		actionComboBox.setModel(new DefaultComboBoxModel(action));
+		actionComboBox.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				clearLabelAndField();
+				String actionOfComboBox = ((String) actionComboBox.getSelectedItem()).toLowerCase();
+				
+				// supervisor check
+				boolean isSuperv = true;
+				
+				if (isSuperv)
+				{
+					showMoreBtn.setVisible(false);
+					table.setVisible(false);
+					scrollpane.setVisible(false);
+					infoLabel.setVisible(false);
+					idLabel.setVisible(true);
+					
+					switch (actionOfComboBox)
+					{
+						case "show & adjust":
+							executeBtn.setText("Save Change");
+							setElementsVisible(false);
+							
+							showIdLabel.setVisible(false);
+							idTextField.setVisible(true);
+							checkIdBtn.setVisible(true);
+							clearBtn.setVisible(false);
+							
+							break;
+							
+						case "add employee":
+							executeBtn.setText("Add");
+							setElementsVisible(true);
+							showIdLabel.setText("");
+							showIdLabel.setVisible(true);
+							idTextField.setVisible(false);
+							checkIdBtn.setVisible(false);
+							clearBtn.setVisible(true);
+							
+							break;
+						
+						case "delete":
+							executeBtn.setText("Delete");
+							setElementsVisible(false);
+							showIdLabel.setVisible(false);
+							checkIdBtn.setVisible(true);
+							idTextField.setVisible(true);
+							clearBtn.setVisible(false);
+							
+							break;
+					}
+				}
+				else
+				{
+				}
+			}
+		});
+		panel.add(actionComboBox);
+	}
+	
+	private void setFirstNameLabel()
+	{
 		firstNameLabel = new JLabel("First Name :");
 		firstNameLabel.setBounds(271, 103, 76, 16);
 		firstNameLabel.setVisible(false);
 		panel.add(firstNameLabel);
-		
+	}
+	
+	private void setFirstNameTextField()
+	{
 		firstNameTextField = new JTextField();
 		firstNameTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		firstNameTextField.setBounds(393, 97, 202, 26);
 		firstNameTextField.setVisible(false);
 		panel.add(firstNameTextField);
 		firstNameTextField.setColumns(16);
-		
+	}
+	
+	private void setLastNameLabel()
+	{
 		lastNameLabel = new JLabel("Last Name :");
 		lastNameLabel.setBounds(271, 129, 74, 16);
 		lastNameLabel.setVisible(false);
 		panel.add(lastNameLabel);
-		
+	}
+	
+	private void setLastNameTextField()
+	{
 		lastNameTextField = new JTextField();
 		lastNameTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		lastNameTextField.setBounds(393, 123, 202, 26);
 		lastNameTextField.setVisible(false);
 		panel.add(lastNameTextField);
 		lastNameTextField.setColumns(16);
-		
-		addressTextField = new JTextField();
-		addressTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		addressTextField.setBounds(393, 149, 202, 26);
-		addressTextField.setVisible(false);
-		
+	}
+	
+	private void setAddressLabel()
+	{
 		addressLabel = new JLabel("Address :");
 		addressLabel.setBounds(271, 155, 59, 16);
 		addressLabel.setVisible(false);
 		panel.add(addressLabel);
-		panel.add(addressTextField);
+	}
+	
+	private void setAddressTextField()
+	{
+		addressTextField = new JTextField();
+		addressTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		addressTextField.setBounds(393, 149, 202, 26);
+		addressTextField.setVisible(false);
 		addressTextField.setColumns(16);
-		
+		panel.add(addressTextField);
+	}
+	
+	private void setPhoneLabel()
+	{
 		phoneLabel = new JLabel("Phone Number :");
 		phoneLabel.setBounds(271, 181, 100, 16);
 		phoneLabel.setVisible(false);
 		panel.add(phoneLabel);
-		
+	}
+	
+	private void setPhoneTextField()
+	{
 		phoneTextField = new JTextField();
 		phoneTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		phoneTextField.setBounds(393, 175, 202, 26);
 		phoneTextField.setVisible(false);
-		panel.add(phoneTextField);
 		phoneTextField.setColumns(16);
-		
+		panel.add(phoneTextField);
+	}
+	
+	private void setSupervIdLabel()
+	{
 		supervIdLabel = new JLabel("Supervisor ID :");
 		supervIdLabel.setBounds(271, 207, 92, 16);
 		supervIdLabel.setVisible(false);
 		panel.add(supervIdLabel);
-		
+	}
+	
+	private void setSupervIdTextField()
+	{
 		supervIdTextField = new JTextField();
 		supervIdTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		supervIdTextField.setBounds(393, 201, 202, 26);
 		supervIdTextField.setVisible(false);
-		panel.add(supervIdTextField);
 		supervIdTextField.setColumns(16);
-		
+		panel.add(supervIdTextField);
+	}
+	
+	private void setPerfLabel()
+	{
 		perfLabel = new JLabel("Performance :");
 		perfLabel.setBounds(271, 236, 86, 16);
 		perfLabel.setVisible(false);
 		panel.add(perfLabel);
-		
+	}
+	
+	private void setPerfComboBox()
+	{
+		perfComboBox = new JComboBox();
+		perfComboBox.setBounds(393, 230, 65, 27);
+		perfComboBox.setForeground(Color.BLACK);
+		perfComboBox.setModel(new DefaultComboBoxModel(new String[] { "A", "B", "C" }));
+		perfComboBox.setVisible(false);
+		panel.add(perfComboBox);
+	}
+	
+	private void setCheckIdBtn()
+	{
+		checkIdBtn = new JButton("Confirm");
+		checkIdBtn.setBounds(623, 68, 95, 29);
+		checkIdBtn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+			}
+		});
+		panel.add(checkIdBtn);
+	}
+	
+	private void setExecuteBtn()
+	{
+		executeBtn = new JButton(); // btn_save_change. btn_add and btn_delete
+		executeBtn.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+			}
+		});
+		executeBtn.setBounds(605, 236, 114, 29);
+		executeBtn.setVisible(false);
+		panel.add(executeBtn);
+	}
+	
+	private void setShowIdLabel()
+	{
+		showIdLabel = new JLabel("");
+		showIdLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		showIdLabel.setBounds(393, 75, 202, 16);
+		showIdLabel.setVisible(false);
+		panel.add(showIdLabel);
+	}
+	
+	private void setInfoLabel()
+	{
 		infoLabel = new JLabel("Message of execute result");
 		infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		infoLabel.setBounds(178, 302, 650, 16);
 		infoLabel.setVisible(false);
 		panel.add(infoLabel);
-		
+	}
+	
+	private void setIdLabel()
+	{
+		idLabel = new JLabel("Employee ID :");
+		idLabel.setBounds(271, 75, 86, 16);
+		panel.add(idLabel);
+	}
+	
+	private void setIdTextField()
+	{
+		idTextField = new JTextField();
+		idTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		idTextField.setBounds(393, 68, 202, 26);
+		panel.add(idTextField);
+		idTextField.setColumns(16);
+	}
+	
+	private void setTable()
+	{
 		table = new JTable()
 		{
 			@Override
@@ -179,7 +372,10 @@ public class EmployeePage
 		table.setFillsViewportHeight(true);
 		// emp_table.setBounds(48,288,563,30);
 		table.setVisible(false);
-		
+	}
+	
+	private void setScrollpane()
+	{
 		scrollpane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollpane.setBounds(178, 330, 650, 80);
@@ -187,7 +383,23 @@ public class EmployeePage
 		// scrollpane.setPreferredSize(new Dimension(563, 50)); //whole scrollpane and
 		// table will disapear
 		panel.add(scrollpane);
-		
+	}
+	
+	private void setShowMoreBtn()
+	{
+		showMoreBtn = new JButton("Show more");
+		showMoreBtn.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+			}
+		});
+		showMoreBtn.setBounds(734, 264, 100, 29);
+		panel.add(showMoreBtn);
+	}
+	
+	private void setClearBtn()
+	{
 		clearBtn = new JButton("Clear");
 		clearBtn.addActionListener(new ActionListener()
 		{
@@ -196,7 +408,7 @@ public class EmployeePage
 				clearLabelAndField();
 				
 				if (actionComboBox.getSelectedItem().equals("Delete Employee")
-						| actionComboBox.getSelectedItem().equals("Show & Adjust"))
+						|| actionComboBox.getSelectedItem().equals("Show & Adjust"))
 				{
 					clearBtn.setVisible(false);
 					
@@ -210,62 +422,6 @@ public class EmployeePage
 		});
 		clearBtn.setBounds(623, 115, 95, 29);
 		panel.add(clearBtn);
-		
-		perfComboBox = new JComboBox();
-		perfComboBox.setBounds(393, 230, 65, 27);
-		perfComboBox.setForeground(Color.BLACK);
-		perfComboBox.setModel(new DefaultComboBoxModel(new String[] { "A", "B", "C" }));
-		perfComboBox.setVisible(false);
-		panel.add(perfComboBox);
-		
-		actionComboBox = new JComboBox();
-		actionComboBox.setBounds(414, 36, 160, 27);
-		actionComboBox.setModel(new DefaultComboBoxModel(
-				new String[] { "Show & Adjust", "Add Employee", "Delete Employee" }));
-		actionComboBox.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				String actionOfComboBox = ((String) actionComboBox.getSelectedItem()).toLowerCase();
-			}
-		});
-		panel.add(actionComboBox);
-		
-		checkIdBtn = new JButton("Confirm");
-		checkIdBtn.setBounds(623, 68, 95, 29);
-		checkIdBtn.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				
-			}
-		});
-		panel.add(checkIdBtn);
-		
-		executeBtn = new JButton(); // btn_save_change. btn_add and btn_delete
-		executeBtn.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				
-			}
-		});
-		executeBtn.setBounds(605, 236, 114, 29);
-		executeBtn.setVisible(false);
-		panel.add(executeBtn);
-		
-		showMoreBtn = new JButton("Show more");
-		showMoreBtn.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				
-			}
-		});
-		showMoreBtn.setBounds(734, 264, 100, 29);
-		panel.add(showMoreBtn);
 	}
 	
 	private void clearLabelAndField()
