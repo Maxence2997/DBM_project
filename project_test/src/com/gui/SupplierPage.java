@@ -17,8 +17,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class SupplierPage
 {
-	public static final String SUPPLIER = "supplier";
-	
 	private JPanel panel;
 	
 	private JTextField idTextField;
@@ -74,7 +72,7 @@ public class SupplierPage
 		panel = new JPanel();
 		panel.setBounds(0, 26, 1000, 450);
 		panel.setLayout(null);
-		Frame.containerPanel.add(panel, SUPPLIER);
+		Frame.containerPanel.add(panel, PageConstant.SUPPLIER);
 		
 		setSupIdLabel();
 		setSupIdTextField();

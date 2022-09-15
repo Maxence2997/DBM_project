@@ -10,8 +10,6 @@ import javax.swing.JPanel;
 
 public class HomePage
 {
-	public static final String HOME = "home";
-	
 	private JPanel homePanel;
 	
 	public static CardLayout homeCardLayout;
@@ -32,7 +30,9 @@ public class HomePage
 	
 	private JButton employeeBtn;
 	
-	private JLabel empIdLabel;
+	public static JLabel empIdLabel;
+	
+	public static boolean userIsSuperv = false;
 	
 	private JLabel prjBtnDescriptionLabel;
 	
@@ -43,10 +43,9 @@ public class HomePage
 	private JLabel empBtnDescriptionLabel;
 	
 	@SuppressWarnings(value = { "unused" })
-	public static void initialize() {
-		
+	public static void initialize()
+	{
 		HomePage page = new HomePage();
-		
 	}
 	
 	private HomePage()
@@ -54,7 +53,7 @@ public class HomePage
 		// home panel which contains only EMPID, button log-out, btn_reminder and button
 		
 		homePanel = new JPanel();
-		Frame.frame.getContentPane().add(homePanel, HOME);
+		Frame.frame.getContentPane().add(homePanel, PageConstant.HOME);
 		homePanel.setLayout(null);
 		
 		setLogoutBtn();
@@ -89,7 +88,7 @@ public class HomePage
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				homeCardLayout.show(containerPanel, HOME);
+				homeCardLayout.show(containerPanel, PageConstant.HOME);
 			}
 		});
 		homeBtn.setBounds(913, 488, 81, 29);
@@ -104,8 +103,7 @@ public class HomePage
 			public void actionPerformed(ActionEvent arg0)
 			{
 				EmployeePage.actionComboBox.setSelectedIndex(0);
-				homeCardLayout.show(Frame.containerPanel, EmployeePage.EMPLOYEE);
-				
+				homeCardLayout.show(Frame.containerPanel, PageConstant.EMPLOYEE);
 			}
 		});
 		employeeBtn.setBounds(334, 346, 103, 29);
@@ -128,7 +126,7 @@ public class HomePage
 			public void actionPerformed(ActionEvent arg0)
 			{
 				SupplierPage.actionComboBox.setSelectedIndex(0);
-				homeCardLayout.show(Frame.containerPanel, SupplierPage.SUPPLIER);
+				homeCardLayout.show(Frame.containerPanel, PageConstant.SUPPLIER);
 			}
 		});
 		coreHomePanel.add(supplierBtn);
@@ -149,13 +147,8 @@ public class HomePage
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				// /**
-				// * @editor: jyun an
-				// *
-				// * @since: 06/09/2021
-				// */
-				// inv_panel.clear();
-				// cl_home.show(container_panel, "inventory");
+				InventoryPage.resetPageUI();
+				homeCardLayout.show(Frame.containerPanel, PageConstant.INVENTORY);
 			}
 		});
 		coreHomePanel.add(inventoryBtn);
@@ -181,7 +174,7 @@ public class HomePage
 				
 				if (option == JOptionPane.YES_OPTION)
 				{
-					Frame.cardLayout.show(Frame.frame.getContentPane(), LogInPage.LOGIN);
+					Frame.cardLayout.show(Frame.frame.getContentPane(), PageConstant.LOGIN);
 					LogInPage.clearTextField();
 				}
 			}

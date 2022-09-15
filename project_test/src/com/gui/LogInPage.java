@@ -9,8 +9,6 @@ import javax.swing.JTextField;
 
 public class LogInPage
 {
-	public static final String LOGIN = "login";
-	
 	private JPanel panel;
 	
 	private JLabel empIdLabel;
@@ -34,7 +32,7 @@ public class LogInPage
 		// JPanel containerPanel = frame.getContainerPanel();
 		
 		panel = new JPanel();
-		Frame.frame.getContentPane().add(panel, LOGIN);
+		Frame.frame.getContentPane().add(panel, PageConstant.LOGIN);
 		panel.setLayout(null);
 		
 		setEmpIdLabel();
@@ -74,10 +72,16 @@ public class LogInPage
 	
 	private void logInAction()
 	{
-		if (empIdTextField.getText().equals(tempAccount))
+		// query DB by service
+		String empId = empIdTextField.getText();
+		
+		if (empId.equals(tempAccount))
 		{
-			Frame.cardLayout.show(Frame.frame.getContentPane(), HomePage.HOME);
-			HomePage.homeCardLayout.show(Frame.containerPanel, HomePage.HOME);
+			Frame.cardLayout.show(Frame.frame.getContentPane(), PageConstant.HOME);
+			HomePage.homeCardLayout.show(Frame.containerPanel, PageConstant.HOME);
+			HomePage.empIdLabel.setText(empId);
+			// query DB by service to check the user is supervisor or not.
+			HomePage.userIsSuperv = true;
 		}
 		else
 		{

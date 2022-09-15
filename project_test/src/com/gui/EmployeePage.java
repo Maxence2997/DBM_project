@@ -16,11 +16,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class EmployeePage
 {
-	public static final String EMPLOYEE = "employee";
-	
 	public static JComboBox actionComboBox;
 	
 	private JPanel panel;
@@ -78,7 +77,7 @@ public class EmployeePage
 	{
 		panel = new JPanel();
 		panel.setBounds(0, 26, 1000, 450);
-		Frame.containerPanel.add(panel, EMPLOYEE);
+		Frame.containerPanel.add(panel, PageConstant.EMPLOYEE);
 		panel.setLayout(null);
 		
 		setShowIdLabel();
@@ -135,54 +134,19 @@ public class EmployeePage
 				clearLabelAndField();
 				String actionOfComboBox = ((String) actionComboBox.getSelectedItem()).toLowerCase();
 				
-				// supervisor check
-				boolean isSuperv = true;
-				
-				if (isSuperv)
+				switch (actionOfComboBox)
 				{
-					showMoreBtn.setVisible(false);
-					table.setVisible(false);
-					scrollpane.setVisible(false);
-					infoLabel.setVisible(false);
-					idLabel.setVisible(true);
+					case "show & adjust":
+						setShowAndAdjustUI();
+						break;
 					
-					switch (actionOfComboBox)
-					{
-						case "show & adjust":
-							executeBtn.setText("Save Change");
-							setElementsVisible(false);
-							
-							showIdLabel.setVisible(false);
-							idTextField.setVisible(true);
-							checkIdBtn.setVisible(true);
-							clearBtn.setVisible(false);
-							
-							break;
-							
-						case "add employee":
-							executeBtn.setText("Add");
-							setElementsVisible(true);
-							showIdLabel.setText("");
-							showIdLabel.setVisible(true);
-							idTextField.setVisible(false);
-							checkIdBtn.setVisible(false);
-							clearBtn.setVisible(true);
-							
-							break;
-						
-						case "delete":
-							executeBtn.setText("Delete");
-							setElementsVisible(false);
-							showIdLabel.setVisible(false);
-							checkIdBtn.setVisible(true);
-							idTextField.setVisible(true);
-							clearBtn.setVisible(false);
-							
-							break;
-					}
-				}
-				else
-				{
+					case "add employee":
+						setAddEmpUI(HomePage.userIsSuperv);
+						break;
+					
+					case "delete employee":
+						setDeleteUI(HomePage.userIsSuperv);
+						break;
 				}
 			}
 		});
@@ -299,13 +263,15 @@ public class EmployeePage
 	
 	private void setCheckIdBtn()
 	{
-		checkIdBtn = new JButton("Confirm");
+		checkIdBtn = new JButton("Check Id");
 		checkIdBtn.setBounds(623, 68, 95, 29);
 		checkIdBtn.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				// query employee details by service
+				// and display the details on the UI
 			}
 		});
 		panel.add(checkIdBtn);
@@ -313,11 +279,12 @@ public class EmployeePage
 	
 	private void setExecuteBtn()
 	{
-		executeBtn = new JButton(); // btn_save_change. btn_add and btn_delete
+		executeBtn = new JButton();
 		executeBtn.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				execute();
 			}
 		});
 		executeBtn.setBounds(605, 236, 114, 29);
@@ -462,5 +429,200 @@ public class EmployeePage
 		table.setVisible(bl);
 		scrollpane.setVisible(bl);
 		showMoreBtn.setVisible(bl);
+	}
+	
+	private void setShowAndAdjustUI()
+	{
+		executeBtn.setText("Save Change");
+		setElementsVisible(false);
+		infoLabel.setVisible(false);
+		idLabel.setVisible(true);
+		showIdLabel.setVisible(false);
+		idTextField.setVisible(true);
+		checkIdBtn.setVisible(true);
+		clearBtn.setVisible(false);
+		showIdLabel.setVisible(false);
+		idTextField.setVisible(true);
+		checkIdBtn.setVisible(true);
+		clearBtn.setVisible(false);
+	}
+	
+	private void setAddEmpUI(boolean isSuperv)
+	{
+		executeBtn.setText("Add");
+		
+		idTextField.setVisible(false);
+		checkIdBtn.setVisible(false);
+		
+		if (isSuperv)
+		{
+			setElementsVisible(true);
+			table.setVisible(false);
+			scrollpane.setVisible(false);
+			showMoreBtn.setVisible(false);
+			infoLabel.setVisible(false);
+			idLabel.setVisible(true);
+			showIdLabel.setText("");
+			showIdLabel.setVisible(true);
+			clearBtn.setVisible(true);
+		}
+		else
+		{
+			setElementsVisible(false);
+			
+			idLabel.setVisible(false);
+			sendMsgByInfoLabel("Sorry, this function is only for supervisor.");
+			showIdLabel.setVisible(false);
+			clearBtn.setVisible(false);
+		}
+	}
+	
+	private void setDeleteUI(boolean isSuperv)
+	{
+		executeBtn.setText("Delete");
+		
+		setElementsVisible(false);
+		
+		clearBtn.setVisible(false);
+		showIdLabel.setVisible(false);
+		
+		if (isSuperv)
+		{
+			idLabel.setVisible(true);
+			infoLabel.setVisible(false);
+			idTextField.setVisible(true);
+			checkIdBtn.setVisible(true);
+		}
+		else
+		{
+			idLabel.setVisible(false);
+			sendMsgByInfoLabel("Sorry, this function is only for supervisor.");
+			idTextField.setVisible(false);
+			checkIdBtn.setVisible(false);
+		}
+	}
+	
+	private void sendMsgByInfoLabel(String msg)
+	{
+		infoLabel.setText(msg);
+		infoLabel.setVisible(true);
+	}
+	
+	private void saveChange()
+	{
+		
+		try
+		{
+			// update at DB by service
+			
+			sendMsgByInfoLabel("Modification succeed");
+		}
+		catch (Exception e)
+		{
+			sendMsgByInfoLabel("Modification failed");
+			e.printStackTrace();
+		}
+	}
+	
+	private boolean verifySuperv()
+	{
+		String supervId = supervIdLabel.getText();
+		boolean supervBlank = supervId.isBlank();
+		
+		boolean supervExists = false;
+		
+		if (!supervBlank)
+		{
+			supervExists = true;
+		}
+		// query DB by service to verify the supervisor id
+		
+		return (supervBlank || supervExists);
+	}
+	
+	private void execute()
+	{
+		String action = executeBtn.getText().toLowerCase();
+		String firstName = firstNameTextField.getText();
+		String lastName = lastNameTextField.getText();
+		boolean textFieldsvalid = true;
+		boolean supervValid = true;
+		
+		if (action.equals("save change") || action.equals("add"))
+		{
+			textFieldsvalid = (!firstName.isBlank() && !lastName.isBlank());
+			
+			String msg = "";
+			
+			if (!textFieldsvalid)
+			{
+				msg += "Employee infos cannot be blank.";
+			}
+			supervValid = verifySuperv();
+			
+			if (!supervValid)
+			{
+				msg += "\nSupervisor ID is not in Employee table or format invalid.";
+			}
+			sendMsgByInfoLabel(msg);
+		}
+		
+		if (textFieldsvalid && supervValid)
+		{
+			
+			switch (action)
+			{
+				case "save change":
+					saveChange();
+					break;
+				
+				case "add":
+					addEmployee();
+					break;
+				
+				case "delete":
+					deleteEmployee();
+					break;
+			}
+		}
+	}
+	
+	private void deleteEmployee()
+	{
+		
+		try
+		{
+			// delete data into DB by service
+			
+			setDeleteUI(true);
+			
+			clearLabelAndField();
+			sendMsgByInfoLabel("Request succeed");
+		}
+		catch (Exception e)
+		{
+			sendMsgByInfoLabel("Request failed");
+			e.printStackTrace();
+		}
+	}
+	
+	private void addEmployee()
+	{
+		
+		try
+		{
+			// insert data into DB by service
+			// show new empId on the UI
+			
+			String newId = "EP000001";
+			showIdLabel.setText(newId);
+			showIdLabel.setVisible(true);
+			sendMsgByInfoLabel("Employee added");
+		}
+		catch (Exception e)
+		{
+			sendMsgByInfoLabel("Request failed");
+			e.printStackTrace();
+		}
 	}
 }
